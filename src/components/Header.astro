@@ -1,0 +1,423 @@
+---
+import { graphQLClient, gql } from '../graphql/client.ts';
+
+// Obtener información del sitio para el header
+let siteTitle = "Blixel";
+let siteDescription = "";
+let siteIcon = "";
+
+try {
+  // Query GraphQL para obtener información general del sitio incluyendo el favicon
+  const SITE_INFO_QUERY = gql`
+    query GetSiteInfo {
+      generalSettings {
+        title
+        description
+        url
+      }
+      favicon {
+        mediaItemUrl
+        sourceUrl
+      }
+    }
+  `;
+
+  const siteInfoResult = await graphQLClient.query({
+    query: SITE_INFO_QUERY,
+  });
+
+  if (siteInfoResult.data?.generalSettings) {
+    const settings = siteInfoResult.data.generalSettings;
+    if (settings.title) {
+      siteTitle = settings.title;
+    }
+    if (settings.description) {
+      siteDescription = settings.description;
+    }
+  }
+
+  // Intentar obtener el favicon desde GraphQL
+  if (siteInfoResult.data?.favicon) {
+    const favicon = siteInfoResult.data.favicon;
+    if (favicon.sourceUrl) {
+      siteIcon = favicon.sourceUrl;
+    } else if (favicon.mediaItemUrl) {
+      siteIcon = favicon.mediaItemUrl;
+    }
+  }
+
+  // Intentar obtener el icono del sitio desde la API REST como respaldo
+  if (!siteIcon) {
+    try {
+      const restResponse = await fetch('https://blixel.es/wp-json/wp/v2/settings');
+      if (restResponse.ok) {
+        const restData = await restResponse.json();
+        if (restData.site_icon_url) {
+          siteIcon = restData.site_icon_url;
+        }
+      }
+    } catch (restError) {
+      console.log('Error obteniendo icono desde REST API:', restError);
+    }
+  }
+
+  // Si no tenemos icono, intentar desde el endpoint base
+  if (!siteIcon) {
+    try {
+      const baseResponse = await fetch('https://blixel.es/wp-json/');
+      if (baseResponse.ok) {
+        const baseData = await baseResponse.json();
+        if (baseData.site_icon_url) {
+          siteIcon = baseData.site_icon_url;
+        }
+      }
+    } catch (baseError) {
+      console.log('Error obteniendo icono desde endpoint base:', baseError);
+    }
+  }
+
+} catch (error) {
+  console.log('Error obteniendo datos del sitio:', error);
+  // Valores por defecto si falla todo
+  siteTitle = "Blixel";
+  siteDescription = "";
+}
+
+const { className = 'main-header' } = Astro.props;
+---
+
+<header class={className}>
+  <div class="container">
+    <!-- Logo y título -->
+    <div class="logo-section">
+      <a href="/" class="logo-link">
+        <div class="logo">
+          {siteIcon ? (
+            <img src={siteIcon} alt="Blixel Logo" class="logo-icon-img" />
+          ) : (
+            <div class="logo-fallback">BLIXEL</div>
+          )}
+        </div>
+      </a>
+    </div>
+
+    <!-- Navegación principal -->
+    <nav class="main-nav">
+      <ul class="nav-menu">
+        <li><a href="/" class="nav-link">Inicio</a></li>
+        <li><a href="/servicios" class="nav-link">Servicios</a></li>
+        <li><a href="/sobre-nosotros" class="nav-link">Sobre Nosotros</a></li>
+        <li><a href="/blog" class="nav-link">Blog</a></li>
+        <li><a href="/contacto" class="nav-link">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <!-- Botón CTA -->
+    <div class="cta-section">
+      <a href="/contacto" class="cta-button">
+        Automatiza tu Empresa
+      </a>
+    </div>
+
+    <!-- Menú móvil -->
+    <button class="mobile-menu-toggle" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <!-- Menú móvil desplegable -->
+  <div class="mobile-menu">
+    <nav class="mobile-nav">
+      <ul class="mobile-nav-menu">
+        <li><a href="/" class="mobile-nav-link">Inicio</a></li>
+        <li><a href="/servicios" class="mobile-nav-link">Servicios</a></li>
+        <li><a href="/sobre-nosotros" class="mobile-nav-link">Sobre Nosotros</a></li>
+        <li><a href="/blog" class="mobile-nav-link">Blog</a></li>
+        <li><a href="/contacto" class="mobile-nav-link">Contacto</a></li>
+      </ul>
+      <div class="mobile-cta">
+        <a href="/contacto" class="mobile-cta-button">
+          Automatiza tu Empresa
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .main-header {
+    background: #0a0a0a;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+
+  /* Ajuste para compensar el header fijo */
+  body {
+    padding-top: 80px;
+  }
+
+  /* Efectos visuales removidos para diseño minimalista */
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    height: 80px;
+  }
+
+  .logo-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    position: relative;
+  }
+
+  /* Efectos de pulso removidos para diseño minimalista */
+
+  .logo-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .logo-icon {
+    font-size: 1.75rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  }
+
+  .logo-icon-img {
+    width: 6rem;
+    height: 6rem;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: transform 0.3s ease;
+  }
+
+  .logo-icon-img:hover {
+    transform: scale(1.05);
+  }
+
+  .logo-fallback {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #4a5bff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  }
+
+
+
+
+
+  /* Navegación principal */
+  .main-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2rem;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
+    padding: 0.75rem 1rem;
+    position: relative;
+    transition: color 0.2s ease;
+    border-radius: 4px;
+  }
+
+  .nav-link:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  /* Botón CTA */
+  .cta-section {
+    display: flex;
+    align-items: center;
+  }
+
+  .cta-button {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    padding: 0.625rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .cta-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Menú móvil */
+  .mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    gap: 0.25rem;
+  }
+
+  .mobile-menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: rgba(241, 245, 249, 0.9);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-menu {
+    display: none;
+    background: #0a0a0a;
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+
+  .mobile-nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+  }
+
+  .mobile-nav-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .mobile-nav-link {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: color 0.2s ease;
+    display: block;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+  }
+
+  .mobile-nav-link:hover {
+    color: white;
+  }
+
+  .mobile-cta {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  .mobile-cta-button {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    font-weight: 400;
+    display: inline-block;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .mobile-cta-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+    }
+
+    .main-nav {
+      display: none;
+    }
+
+    .cta-section {
+      display: none;
+    }
+
+    .mobile-menu-toggle {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      gap: 1rem;
+    }
+
+    .logo {
+      gap: 0.5rem;
+    }
+
+    .logo-icon {
+      font-size: 1.5rem;
+    }
+
+    .logo-icon-img {
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+</style>
+
+<script>
+  // Funcionalidad del menú móvil
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    
+    if (toggle && mobileMenu) {
+      toggle.addEventListener('click', function() {
+        const isOpen = mobileMenu.style.display === 'block';
+        mobileMenu.style.display = isOpen ? 'none' : 'block';
+        
+        // Animar el botón
+        toggle.classList.toggle('active');
+      });
+    }
+  });
+</script>

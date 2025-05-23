@@ -1,0 +1,114 @@
+---
+// src/components/DebugInfo.astro
+// Componente temporal para mostrar información de debug
+
+import { getTemplateData } from '../graphql/template-queries';
+
+const debugData = await getTemplateData();
+---
+
+<div class="debug-container">
+  <details class="debug-panel">
+    <summary class="debug-title">🔍 Debug Info - Datos de WordPress</summary>
+    
+    <div class="debug-content">
+      <h3>📋 Datos del Sitio</h3>
+      <p><strong>Título:</strong> {debugData.siteTitle}</p>
+      <p><strong>Descripción:</strong> {debugData.siteDescription}</p>
+      <p><strong>Icono:</strong> {debugData.siteIcon ? '✅ Configurado' : '❌ No configurado'}</p>
+      
+      <h3>🎯 Datos del Hero</h3>
+      <p><strong>Título:</strong> {debugData.heroTitle}</p>
+      <p><strong>Descripción:</strong> {debugData.heroDescription}</p>
+      
+      <h3>📊 Datos Raw</h3>
+      <details>
+        <summary>Ver datos completos de GraphQL</summary>
+        <pre class="json-data">{JSON.stringify(debugData.rawData, null, 2)}</pre>
+      </details>
+      
+      <h3>💡 Instrucciones</h3>
+      <ul>
+        <li>Si ves "[Título no configurado...]" es que no se están obteniendo datos reales</li>
+        <li>Verifica que tengas una página con slug "home" o "inicio" en WordPress</li>
+        <li>Asegúrate de que Yoast SEO esté instalado y configurado</li>
+        <li>Configura el título SEO y meta descripción en esa página</li>
+      </ul>
+    </div>
+  </details>
+</div>
+
+<style>
+  .debug-container {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 9999;
+    max-width: 400px;
+  }
+
+  .debug-panel {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 1rem;
+    color: #fff;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .debug-title {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0.5rem;
+    background: #1a1a1a;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+
+  .debug-title:hover {
+    background: #2a2a2a;
+  }
+
+  .debug-content h3 {
+    color: #4a5bff;
+    margin: 1rem 0 0.5rem 0;
+    font-size: 14px;
+  }
+
+  .debug-content p {
+    margin: 0.25rem 0;
+    word-break: break-word;
+  }
+
+  .debug-content ul {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .debug-content li {
+    margin: 0.25rem 0;
+  }
+
+  .json-data {
+    background: #111;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow: auto;
+    max-height: 200px;
+    font-size: 10px;
+    margin: 0.5rem 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .debug-container {
+      position: relative;
+      top: auto;
+      right: auto;
+      max-width: none;
+      margin: 1rem;
+    }
+  }
+</style>

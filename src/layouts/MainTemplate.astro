@@ -1,0 +1,131 @@
+---
+// src/layouts/MainTemplate.astro
+import { getTemplateData } from '../graphql/template-queries';
+import HeaderMinimal from '../components/HeaderMinimal.astro';
+import HeroMinimal from '../components/HeroMinimal.astro';
+import Footer from '../components/Footer.astro';
+
+// Obtener todos los datos necesarios para la plantilla desde WordPress
+const templateData = await getTemplateData();
+
+const {
+  siteTitle,
+  siteDescription,
+  siteIcon,
+  heroTitle,
+  heroDescription
+} = templateData;
+
+const { title, description, className = '' } = Astro.props;
+const pageTitle = title || heroTitle;
+const pageDescription = description || heroDescription;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content={pageDescription}>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{pageTitle}</title>
+  {siteIcon ? (
+    <link rel="icon" type="image/png" href={siteIcon}>
+    <link rel="apple-touch-icon" href={siteIcon}>
+  ) : (
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  )}
+  
+  <!-- SEO Meta Tags -->
+  <meta property="og:title" content={pageTitle}>
+  <meta property="og:description" content={pageDescription}>
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={pageTitle}>
+  <meta name="twitter:description" content={pageDescription}>
+</head>
+
+<body class={className}>
+  <!-- Header -->
+  <HeaderMinimal siteTitle={siteTitle} siteIcon={siteIcon} />
+
+  <!-- Hero Section -->
+  <HeroMinimal title={heroTitle} description={heroDescription} />
+
+  <!-- Content Slot -->
+  <div class="page-content">
+    <slot />
+  </div>
+
+  <!-- Footer -->
+  <Footer siteTitle={siteTitle} siteDescription={siteDescription} siteIcon={siteIcon} />
+</body>
+</html>
+
+<style>
+  /* Reset y variables globales */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --text-primary: rgba(255, 255, 255, 0.9);
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --accent-color: #4a5bff;
+    --accent-hover: #3a4bef;
+  }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    padding-top: 120px; /* Compensar header más alto */
+    overflow-x: hidden;
+  }
+
+  /* Content spacing */
+  .page-content {
+    position: relative;
+    z-index: 10;
+    min-height: 200px; /* Espaciado mínimo entre hero y footer */
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    body {
+      padding-top: 100px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    body {
+      padding-top: 90px;
+    }
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Accessibility improvements */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>

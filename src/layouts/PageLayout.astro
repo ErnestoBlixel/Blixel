@@ -1,0 +1,66 @@
+---
+import Layout from './Layout.astro';
+import Hero from '../components/Hero.astro';
+import { getPageData } from '../utils/getPageData';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  className?: string;
+  pageSlug?: string;
+  heroVariant?: 'default' | 'gradient' | 'dark' | 'minimal';
+  hideHero?: boolean;
+}
+
+const { 
+  title,
+  description,
+  className = '',
+  pageSlug = 'home',
+  heroVariant,
+  hideHero = false
+} = Astro.props;
+
+// Obtener datos de la página y configuración del Hero
+const { pageData, heroData, siteTitle } = await getPageData(pageSlug);
+
+// Usar títulos específicos o fallback
+const pageTitle = title || pageData?.seo?.title || pageData?.title || heroData.title;
+const pageDescription = description || pageData?.seo?.description || heroData.description;
+
+// Override hero variant si se especifica
+if (heroVariant) {
+  heroData.variant = heroVariant;
+}
+---
+
+<Layout 
+  title={pageTitle} 
+  description={pageDescription}
+  className={className}
+>
+  <!-- Hero Section -->
+  {!hideHero && (
+    <Hero 
+      title={heroData.title}
+      subtitle={heroData.subtitle}
+      description={heroData.description}
+      variant={heroData.variant}
+      showCTA={heroData.showCTA}
+      ctaText={heroData.ctaText}
+      ctaLink={heroData.ctaLink}
+    />
+  )}
+  
+  <!-- Page Content -->
+  <div class="page-content">
+    <slot />
+  </div>
+</Layout>
+
+<style>
+  .page-content {
+    position: relative;
+    z-index: 10;
+  }
+</style>

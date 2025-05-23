@@ -1,0 +1,75 @@
+---
+// Test de conexión con WordPress
+let connectionStatus = {
+  graphql: false,
+  rest: false,
+  error: null
+};
+
+// Test GraphQL
+try {
+  const graphqlResponse = await fetch('https://blixel.es/graphql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: `
+        query TestConnection {
+          generalSettings {
+            title
+          }
+        }
+      `
+    })
+  });
+  
+  if (graphqlResponse.ok) {
+    const data = await graphqlResponse.json();
+    connectionStatus.graphql = true;
+    console.log('GraphQL Response:', data);
+  }
+} catch (error) {
+  connectionStatus.error = error.message;
+}
+
+// Test REST API
+try {
+  const restResponse = await fetch('https://blixel.es/wp-json/');
+  if (restResponse.ok) {
+    connectionStatus.rest = true;
+  }
+} catch (error) {
+  connectionStatus.error = error.message;
+}
+---
+
+<div class="test-connection">
+  <h2>Estado de Conexión</h2>
+  <ul>
+    <li>GraphQL: {connectionStatus.graphql ? '✅ Conectado' : '❌ Error'}</li>
+    <li>REST API: {connectionStatus.rest ? '✅ Conectado' : '❌ Error'}</li>
+    {connectionStatus.error && <li>Error: {connectionStatus.error}</li>}
+  </ul>
+</div>
+
+<style>
+  .test-connection {
+    background: #f5f5f5;
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    padding: 0.5rem 0;
+    font-family: monospace;
+  }
+</style>
+</file_content>
+</invoke>

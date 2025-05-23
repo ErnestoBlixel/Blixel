@@ -1,0 +1,82 @@
+---
+import { GraphQLClient } from 'graphql-request';
+import { graphQLClient } from '../graphql/client';
+
+interface WordPressPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  slug: string;
+}
+
+interface GraphQLResponse {
+  data: {
+    posts: {
+      nodes: WordPressPost[];
+    };
+  };
+}
+
+// Configuración del cliente GraphQL
+const wpGraphQlClient = graphQLClient;
+
+// Query GraphQL para obtener posts
+const query = `
+  query GetPosts {
+    posts(first: 5) {
+      nodes {
+        id
+        title
+        excerpt
+        date
+        slug
+      }
+    }
+  }
+`;
+
+let posts: WordPressPost[] = [];
+
+try {
+  const response: GraphQLResponse = await wpGraphQlClient.query(query);
+  if (response.data?.posts?.nodes) {
+    posts = response.data.posts.nodes;
+  } else {
+    console.error('Invalid response structure:', response);
+    throw new Error('Invalid response structure');
+  }
+} catch (error) {
+  console.error('Error fetching WordPress posts:', error);
+  posts = [
+    {
+      id: '1',
+      title: 'Post de ejemplo',
+      excerpt: 'Este es un post de ejemplo mientras configuras tu WordPress.',
+      date: new Date().toISOString(),
+      slug: 'post-ejemplo'
+    }
+  ];
+}
+
+const { className = 'wordpress-posts' } = Astro.props;
+---
+
+<div class={className}>
+  <h2>Últimas Entradas del Blog</h2>
+  <ul>
+    {posts.map(post => (
+      <li>
+        <h3>{post.title}</h3>
+        <p set:html={post.excerpt}></p>
+        <small>
+          Publicado: {new Date(post.date).toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </small>
+      </li>
+    ))}
+  </ul>
+</div>

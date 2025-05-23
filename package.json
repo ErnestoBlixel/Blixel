@@ -1,0 +1,33 @@
+{
+  "name": "wordpress-astro-cloudflare",
+  "version": "1.0.0",
+  "description": "Proyecto Astro con WordPress Headless para Cloudflare Pages",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "start": "astro dev"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.13.8",
+    "@astrojs/cloudflare": "^8.0.0",
+    "@astrojs/react": "^4.3.0",
+    "@types/graphql": "^14.2.3",
+    "@types/react": "^19.1.5",
+    "@types/react-dom": "^19.1.5",
+    "astro": "^4.0.0",
+    "axios": "^1.6.2",
+    "graphql": "^16.11.0",
+    "graphql-request": "^6.0.0",
+    "node-fetch": "^3.3.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
