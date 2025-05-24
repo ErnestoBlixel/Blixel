@@ -1,24 +1,36 @@
 ---
-// src/pages/template.astro
-// Página ejemplo que usa la nueva plantilla minimalista
-import MainTemplate from '../layouts/MainTemplate.astro';
+import Layout from '../layouts/Layout.astro';
+
+// 1) Define aquí tu query con comillas backtick (template literal)
+const GQL = `
+  query GetHome {
+    paginaHome(id: "home", idType: URI) {
+      title
+      content
+    }
+  }
+`;
+
+// 2) Haz el fetch usando la variable de entorno
+const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
+if (!graphqlUrl) {
+  throw new Error('PUBLIC_WP_GRAPHQL_URL no está configurada');
+}
+
+const res = await fetch(graphqlUrl, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ query: GQL })
+});
+if (!res.ok) throw new Error(`Error GraphQL: ${res.status}`);
+const { data } = await res.json();
+
+// 3) Extrae de "data" lo que necesites
+const home = data.paginaHome;
 ---
 
-<MainTemplate 
-  title="Blixel - Automatización con IA"
-  description="Transformamos tu empresa con inteligencia artificial. Implementamos soluciones que revolucionan la forma en que las empresas operan y crecen."
-  className="template-page"
->
-  <!-- Aquí puedes agregar contenido adicional si lo necesitas -->
-  <div class="template-content">
-    <!-- Este div está disponible para contenido futuro -->
-    <!-- Por ahora permanece vacío para mantener el diseño minimalista -->
-  </div>
-</MainTemplate>
-
-<style>
-  .template-content {
-    /* Espacio reservado para contenido futuro */
-    min-height: 100px;
-  }
-</style>
+<!-- 4) Ahora ya en el template puedes renderizar "home" -->
+<Layout>
+  <h1>{home.title}</h1>
+  <div innerHTML={home.content} />
+</Layout>
