@@ -5,6 +5,8 @@ export interface Props {
   title?: string;
   description?: string;
   className?: string;
+  logoUrl?: string;
+  logoAlt?: string;
 }
 
 // Obtener información del sitio para meta tags
@@ -29,7 +31,9 @@ try {
 const { 
   title = siteTitle, 
   description = siteDescription,
-  className = ''
+  className = '',
+  logoUrl,
+  logoAlt
 } = Astro.props;
 
 // Construir título completo
@@ -68,7 +72,7 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
 </head>
 <body class={className}>
   <!-- Header global -->
-  <Header />
+  <Header logoUrl={logoUrl} logoAlt={logoAlt} />
   
   <!-- Contenido principal -->
   <main id="main-content">

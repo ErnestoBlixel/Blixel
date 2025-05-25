@@ -1,13 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// Query específico para buscar la página "inicio"
+// Query mejorado para obtener el icono del sitio
 const GQL = `
-  query GetHomePage {
+  query GetHomePageAndSiteIcon {
     page(id: "inicio", idType: URI) {
       title
       content
       databaseId
+    }
+    generalSettings {
+      title
+      description
+      url
+    }
+    # Intentar obtener el icono del sitio por varios métodos
+    mediaItems(where: {search: "BLIXEL"}, first: 5) {
+      nodes {
+        id
+        title
+        sourceUrl
+        altText
+        mediaDetails {
+          width
+          height
+        }
+      }
     }
   }
 `;
@@ -28,6 +46,7 @@ const res = await fetch(graphqlUrl, {
 if (!res.ok) throw new Error(`Error GraphQL: ${res.status}`);
 
 const result = await res.json();
+console.log('📊 WordPress Response:', JSON.stringify(result, null, 2));
 
 // Verificar si hay errores en la respuesta
 if (result.errors) {
@@ -40,8 +59,33 @@ if (!result.data) {
   throw new Error('No data returned from GraphQL');
 }
 
-// 3) Usar la página "inicio" o datos por defecto
+// 3) Extraer datos
 const home = result.data.page;
+const siteSettings = result.data.generalSettings;
+const mediaItems = result.data.mediaItems?.nodes || [];
+
+// Buscar el logo de BLIXEL entre los media items
+let siteIcon = null;
+
+// Buscar por diferentes criterios
+siteIcon = mediaItems.find(item => 
+  item.title?.toLowerCase().includes('logo') && 
+  item.title?.toLowerCase().includes('blixel')
+) || mediaItems.find(item => 
+  item.sourceUrl?.includes('logo') || 
+  item.altText?.toLowerCase().includes('logo')
+) || mediaItems[0]; // Como fallback, usar el primero encontrado
+
+// Si no encuentra nada, usar la URL que sabemos que existe
+if (!siteIcon) {
+  siteIcon = {
+    sourceUrl: 'https://cms.blixel.es/wp-content/uploads/2025/05/cropped-Copia-de-BLIXEL-STUDIO_logo-500500.png',
+    altText: 'BLIXEL logo',
+    mediaDetails: { width: 512, height: 512 }
+  };
+}
+
+console.log('🎨 Logo seleccionado:', siteIcon);
 
 // Si existe la página "inicio", usarla; si no, datos por defecto
 const pageData = home || {
@@ -51,10 +95,31 @@ const pageData = home || {
     <p>Descubre cómo nuestras soluciones pueden optimizar tus procesos empresariales y aumentar tu productividad.</p>
   `
 };
+
+// Datos del logo para pasar al Layout
+const logoData = {
+  url: siteIcon.sourceUrl,
+  alt: siteIcon.altText || 'BLIXEL logo',
+  width: siteIcon.mediaDetails?.width || 512,
+  height: siteIcon.mediaDetails?.height || 512
+};
 ---
 
-<!-- 4) Renderizar el contenido -->
-<Layout>
+<!-- 4) Renderizar el contenido con el logo -->
+<Layout logoUrl={logoData.url} logoAlt={logoData.alt}>
   <h1>{pageData.title}</h1>
   <div innerHTML={pageData.content} />
+  
+  <!-- Debug info para ver el logo (solo en desarrollo) -->
+  {import.meta.env.DEV && (
+    <div style="background: #f0f0f0; padding: 20px; margin-top: 20px; border-radius: 8px;">
+      <h3>🎨 Debug Info - Logo del sitio:</h3>
+      <p><strong>URL del logo:</strong> <a href={logoData.url} target="_blank">{logoData.url}</a></p>
+      <p><strong>Alt text:</strong> {logoData.alt}</p>
+      <p><strong>Dimensiones:</strong> {logoData.width} x {logoData.height}px</p>
+      <p><strong>Media items encontrados:</strong> {mediaItems.length}</p>
+      <p><strong>Preview del logo:</strong></p>
+      <img src={logoData.url} alt={logoData.alt} style="max-width: 100px; border: 1px solid #ccc;" />
+    </div>
+  )}
 </Layout>

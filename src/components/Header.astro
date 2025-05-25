@@ -1,89 +1,10 @@
 ---
-import { graphQLClient, gql } from '../graphql/client.ts';
+// Obtener logo desde la props o usar la URL conocida de tu logo
+const { logoUrl, logoAlt, className = 'main-header' } = Astro.props;
 
-// Obtener información del sitio para el header
-let siteTitle = "Blixel";
-let siteDescription = "";
-let siteIcon = "";
-
-try {
-  // Query GraphQL para obtener información general del sitio incluyendo el favicon
-  const SITE_INFO_QUERY = gql`
-    query GetSiteInfo {
-      generalSettings {
-        title
-        description
-        url
-      }
-      favicon {
-        mediaItemUrl
-        sourceUrl
-      }
-    }
-  `;
-
-  const siteInfoResult = await graphQLClient.query({
-    query: SITE_INFO_QUERY,
-  });
-
-  if (siteInfoResult.data?.generalSettings) {
-    const settings = siteInfoResult.data.generalSettings;
-    if (settings.title) {
-      siteTitle = settings.title;
-    }
-    if (settings.description) {
-      siteDescription = settings.description;
-    }
-  }
-
-  // Intentar obtener el favicon desde GraphQL
-  if (siteInfoResult.data?.favicon) {
-    const favicon = siteInfoResult.data.favicon;
-    if (favicon.sourceUrl) {
-      siteIcon = favicon.sourceUrl;
-    } else if (favicon.mediaItemUrl) {
-      siteIcon = favicon.mediaItemUrl;
-    }
-  }
-
-  // Intentar obtener el icono del sitio desde la API REST como respaldo
-  if (!siteIcon) {
-    try {
-      const restResponse = await fetch('https://blixel.es/wp-json/wp/v2/settings');
-      if (restResponse.ok) {
-        const restData = await restResponse.json();
-        if (restData.site_icon_url) {
-          siteIcon = restData.site_icon_url;
-        }
-      }
-    } catch (restError) {
-      console.log('Error obteniendo icono desde REST API:', restError);
-    }
-  }
-
-  // Si no tenemos icono, intentar desde el endpoint base
-  if (!siteIcon) {
-    try {
-      const baseResponse = await fetch('https://blixel.es/wp-json/');
-      if (baseResponse.ok) {
-        const baseData = await baseResponse.json();
-        if (baseData.site_icon_url) {
-          siteIcon = baseData.site_icon_url;
-        }
-      }
-    } catch (baseError) {
-      console.log('Error obteniendo icono desde endpoint base:', baseError);
-    }
-  }
-
-} catch (error) {
-  console.log('Error obteniendo datos del sitio:', error);
-  // Valores por defecto si falla todo
-  siteTitle = "Blixel";
-  siteDescription = "";
-}
-
-const { className = 'main-header' } = Astro.props;
+// URL de tu logo desde WordPress
+const blixelLogoUrl = logoUrl || 'https://cms.blixel.es/wp-content/uploads/2025/05/cropped-Copia-de-BLIXEL-STUDIO_logo-500500.png';
+const logoAltText = logoAlt || 'BLIXEL logo';
 ---
 
 <header class={className}>
@@ -92,11 +13,7 @@ const { className = 'main-header' } = Astro.props;
     <div class="logo-section">
       <a href="/" class="logo-link">
         <div class="logo">
-          {siteIcon ? (
-            <img src={siteIcon} alt="Blixel Logo" class="logo-icon-img" />
-          ) : (
-            <div class="logo-fallback">BLIXEL</div>
-          )}
+          <img src={blixelLogoUrl} alt={logoAltText} class="logo-icon-img" />
         </div>
       </a>
     </div>
@@ -162,13 +79,6 @@ const { className = 'main-header' } = Astro.props;
     overflow: hidden;
   }
 
-  /* Ajuste para compensar el header fijo */
-  body {
-    padding-top: 80px;
-  }
-
-  /* Efectos visuales removidos para diseño minimalista */
-
   .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -187,8 +97,6 @@ const { className = 'main-header' } = Astro.props;
     position: relative;
   }
 
-  /* Efectos de pulso removidos para diseño minimalista */
-
   .logo-link {
     text-decoration: none;
     color: inherit;
@@ -200,37 +108,18 @@ const { className = 'main-header' } = Astro.props;
     gap: 0.75rem;
   }
 
-  .logo-icon {
-    font-size: 1.75rem;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-  }
-
   .logo-icon-img {
-    width: 6rem;
-    height: 6rem;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
     transition: transform 0.3s ease;
+    border-radius: 8px;
   }
 
   .logo-icon-img:hover {
     transform: scale(1.05);
   }
-
-  .logo-fallback {
-    font-size: 3rem;
-    font-weight: 700;
-    color: #4a5bff;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-  }
-
-
-
-
 
   /* Navegación principal */
   .main-nav {
@@ -382,6 +271,11 @@ const { className = 'main-header' } = Astro.props;
     .mobile-menu-toggle {
       display: flex;
     }
+
+    .logo-icon-img {
+      width: 40px;
+      height: 40px;
+    }
   }
 
   @media (max-width: 480px) {
@@ -393,13 +287,9 @@ const { className = 'main-header' } = Astro.props;
       gap: 0.5rem;
     }
 
-    .logo-icon {
-      font-size: 1.5rem;
-    }
-
     .logo-icon-img {
-      width: 4rem;
-      height: 4rem;
+      width: 35px;
+      height: 35px;
     }
   }
 </style>
