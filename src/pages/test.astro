@@ -1,12 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// Query corregido usando tipos estándar de WordPress
+// Query alternativo: obtener todas las páginas y usar la primera o buscar por título
 const GQL = `
-  query GetHome {
-    page(id: "home", idType: URI) {
-      title
-      content
+  query GetPages {
+    pages(first: 10) {
+      nodes {
+        title
+        content
+        slug
+        isFrontPage
+      }
     }
   }
 `;
@@ -35,17 +39,18 @@ if (result.errors) {
 }
 
 // Verificar si tenemos data
-if (!result.data) {
-  throw new Error('No data returned from GraphQL');
+if (!result.data || !result.data.pages) {
+  throw new Error('No pages found');
 }
 
-// 3) Extrae de "data" lo que necesites
-const home = result.data.page;
+// 3) Buscar la página de inicio o usar la primera
+const pages = result.data.pages.nodes;
+const home = pages.find(page => page.isFrontPage) || pages[0];
 
-// Si no existe la página "home", usar datos por defecto
+// Si no existe, usar datos por defecto
 const pageData = home || {
-  title: "Bienvenido a Blixel AI",
-  content: "Tu página de inicio está lista para ser configurada."
+  title: "Blixel AI - Automatización Inteligente",
+  content: "<p>Transformamos tu empresa con Inteligencia Artificial y automatización avanzada.</p>"
 };
 ---
 

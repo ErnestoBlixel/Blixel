@@ -1,10 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// 1) Define aquí tu query con comillas backtick (template literal)
+// Query para obtener la página de inicio configurada en WordPress
 const GQL = `
-  query GetHome {
-    paginaHome(id: "home", idType: URI) {
+  query GetHomePage {
+    readingSettings {
+      pageOnFront
+    }
+    page(id: "front-page", idType: URI) {
       title
       content
     }
@@ -22,15 +25,35 @@ const res = await fetch(graphqlUrl, {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ query: GQL })
 });
+
 if (!res.ok) throw new Error(`Error GraphQL: ${res.status}`);
-const { data } = await res.json();
+
+const result = await res.json();
+console.log('GraphQL Response:', result);
+
+// Verificar si hay errores en la respuesta
+if (result.errors) {
+  console.error('GraphQL Errors:', result.errors);
+  throw new Error(`GraphQL Error: ${result.errors[0].message}`);
+}
+
+// Verificar si tenemos data
+if (!result.data) {
+  throw new Error('No data returned from GraphQL');
+}
 
 // 3) Extrae de "data" lo que necesites
-const home = data.paginaHome;
+const home = result.data.page;
+
+// Si no existe, usar datos por defecto
+const pageData = home || {
+  title: "Blixel AI - Automatización Inteligente",
+  content: "<p>Transformamos tu empresa con Inteligencia Artificial y automatización avanzada.</p>"
+};
 ---
 
-<!-- 4) Ahora ya en el template puedes renderizar "home" -->
+<!-- 4) Ahora ya en el template puedes renderizar -->
 <Layout>
-  <h1>{home.title}</h1>
-  <div innerHTML={home.content} />
+  <h1>{pageData.title}</h1>
+  <div innerHTML={pageData.content} />
 </Layout>
