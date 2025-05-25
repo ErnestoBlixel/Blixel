@@ -14,7 +14,6 @@ const GQL = `
 
 // 2) Haz el fetch usando la variable de entorno
 const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
-console.log('🌐 Usando GraphQL URL:', graphqlUrl);
 
 if (!graphqlUrl) {
   throw new Error('PUBLIC_WP_GRAPHQL_URL no está configurada');
@@ -29,7 +28,6 @@ const res = await fetch(graphqlUrl, {
 if (!res.ok) throw new Error(`Error GraphQL: ${res.status}`);
 
 const result = await res.json();
-console.log('📊 GraphQL Response:', JSON.stringify(result, null, 2));
 
 // Verificar si hay errores en la respuesta
 if (result.errors) {
@@ -45,8 +43,6 @@ if (!result.data) {
 // 3) Usar la página "inicio" o datos por defecto
 const home = result.data.page;
 
-console.log('✅ Página "inicio" encontrada:', home ? { id: home.databaseId, title: home.title } : 'No encontrada');
-
 // Si existe la página "inicio", usarla; si no, datos por defecto
 const pageData = home || {
   title: "Blixel AI - Automatización Inteligente para tu Empresa",
@@ -55,22 +51,10 @@ const pageData = home || {
     <p>Descubre cómo nuestras soluciones pueden optimizar tus procesos empresariales y aumentar tu productividad.</p>
   `
 };
-
-console.log('🎯 Datos finales a mostrar:', { title: pageData.title });
 ---
 
 <!-- 4) Renderizar el contenido -->
 <Layout>
   <h1>{pageData.title}</h1>
   <div innerHTML={pageData.content} />
-  
-  <!-- Debug info (solo visible en desarrollo) -->
-  {import.meta.env.DEV && (
-    <div style="background: #f0f0f0; padding: 20px; margin-top: 20px; border-radius: 8px;">
-      <h3>🔍 Debug Info:</h3>
-      <p><strong>GraphQL URL:</strong> {graphqlUrl}</p>
-      <p><strong>Página encontrada:</strong> {home ? `✅ "${home.title}" (ID: ${home.databaseId})` : '❌ No encontrada'}</p>
-      <p><strong>Título mostrado:</strong> {pageData.title}</p>
-    </div>
-  )}
 </Layout>
