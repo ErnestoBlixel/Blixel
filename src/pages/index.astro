@@ -1,20 +1,30 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import ProblemSection from '../components/ProblemSection.astro';
+import ServicesSection from '../components/ServicesSection.astro';
+import MethodologySection from '../components/MethodologySection.astro';
 
-// Query mejorado para obtener el icono del sitio
+// Query para obtener tanto la página de inicio como el icono del sitio
 const GQL = `
   query GetHomePageAndSiteIcon {
     page(id: "inicio", idType: URI) {
       title
       content
       databaseId
+      seo {
+        title
+        metaDesc
+        opengraphTitle
+        opengraphDescription
+      }
     }
     generalSettings {
       title
       description
       url
     }
-    # Intentar obtener el icono del sitio por varios métodos
+    # Buscar el logo de BLIXEL
     mediaItems(where: {search: "BLIXEL"}, first: 5) {
       nodes {
         id
@@ -30,7 +40,7 @@ const GQL = `
   }
 `;
 
-// 2) Haz el fetch usando la variable de entorno
+// Fetch usando la variable de entorno
 const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
 
 if (!graphqlUrl) {
@@ -46,7 +56,6 @@ const res = await fetch(graphqlUrl, {
 if (!res.ok) throw new Error(`Error GraphQL: ${res.status}`);
 
 const result = await res.json();
-console.log('📊 WordPress Response:', JSON.stringify(result, null, 2));
 
 // Verificar si hay errores en la respuesta
 if (result.errors) {
@@ -59,22 +68,19 @@ if (!result.data) {
   throw new Error('No data returned from GraphQL');
 }
 
-// 3) Extraer datos
+// Extraer datos
 const home = result.data.page;
 const siteSettings = result.data.generalSettings;
 const mediaItems = result.data.mediaItems?.nodes || [];
 
-// Buscar el logo de BLIXEL entre los media items
-let siteIcon = null;
-
-// Buscar por diferentes criterios
-siteIcon = mediaItems.find(item => 
+// Buscar el logo de BLIXEL
+let siteIcon = mediaItems.find(item => 
   item.title?.toLowerCase().includes('logo') && 
   item.title?.toLowerCase().includes('blixel')
 ) || mediaItems.find(item => 
   item.sourceUrl?.includes('logo') || 
   item.altText?.toLowerCase().includes('logo')
-) || mediaItems[0]; // Como fallback, usar el primero encontrado
+) || mediaItems[0];
 
 // Si no encuentra nada, usar la URL que sabemos que existe
 if (!siteIcon) {
@@ -85,17 +91,6 @@ if (!siteIcon) {
   };
 }
 
-console.log('🎨 Logo seleccionado:', siteIcon);
-
-// Si existe la página "inicio", usarla; si no, datos por defecto
-const pageData = home || {
-  title: "Blixel AI - Automatización Inteligente para tu Empresa",
-  content: `
-    <p>Transformamos tu empresa con <strong>Inteligencia Artificial</strong> y automatización avanzada.</p>
-    <p>Descubre cómo nuestras soluciones pueden optimizar tus procesos empresariales y aumentar tu productividad.</p>
-  `
-};
-
 // Datos del logo para pasar al Layout
 const logoData = {
   url: siteIcon.sourceUrl,
@@ -103,23 +98,325 @@ const logoData = {
   width: siteIcon.mediaDetails?.width || 512,
   height: siteIcon.mediaDetails?.height || 512
 };
+
+// Extraer datos SEO para el metadata
+const pageTitle = home?.seo?.title || home?.seo?.opengraphTitle || home?.title || siteSettings?.title || 'Blixel AI';
+const pageDescription = home?.seo?.metaDesc || home?.seo?.opengraphDescription || siteSettings?.description || 'Automatización Inteligente para tu Empresa';
 ---
 
-<!-- 4) Renderizar el contenido con el logo -->
-<Layout logoUrl={logoData.url} logoAlt={logoData.alt}>
-  <h1>{pageData.title}</h1>
-  <div innerHTML={pageData.content} />
-  
-  <!-- Debug info para ver el logo (solo en desarrollo) -->
-  {import.meta.env.DEV && (
-    <div style="background: #f0f0f0; padding: 20px; margin-top: 20px; border-radius: 8px;">
-      <h3>🎨 Debug Info - Logo del sitio:</h3>
-      <p><strong>URL del logo:</strong> <a href={logoData.url} target="_blank">{logoData.url}</a></p>
-      <p><strong>Alt text:</strong> {logoData.alt}</p>
-      <p><strong>Dimensiones:</strong> {logoData.width} x {logoData.height}px</p>
-      <p><strong>Media items encontrados:</strong> {mediaItems.length}</p>
-      <p><strong>Preview del logo:</strong></p>
-      <img src={logoData.url} alt={logoData.alt} style="max-width: 100px; border: 1px solid #ccc;" />
+<Layout 
+  logoUrl={logoData.url} 
+  logoAlt={logoData.alt}
+  title={pageTitle}
+  description={pageDescription}
+>
+  <!-- Hero Section con datos de WordPress -->
+  <Hero pageSlug="inicio" />
+
+  <!-- Sección del Problema -->
+  <ProblemSection />
+
+  <!-- Sección de Servicios -->
+  <ServicesSection />
+
+  <!-- Sección de Metodología -->
+  <MethodologySection />
+
+  <!-- Sección CTA Final con efecto spotlight -->
+  <section class="cta-final-section">
+    <div class="container">
+      <div class="cta-content">
+        <div class="section-badge">
+          <span>¿Listo para comenzar?</span>
+        </div>
+        
+        <h2 class="cta-title">
+          Transforma tu empresa con IA
+        </h2>
+        
+        <p class="cta-description">
+          Únete a más de 100 empresas que ya han automatizado sus procesos con nuestras soluciones de IA.
+        </p>
+        
+        <div class="cta-actions">
+          <button class="cta-primary-final" id="cta-final">
+            <span>Solicitar Demo Gratuita</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          
+          <a href="tel:+34900000000" class="cta-secondary-final">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M2 3h3l1 9-3-1V9l5-1 1 5h7l1-9h-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Llamar ahora</span>
+          </a>
+        </div>
+        
+        <div class="cta-trust">
+          <div class="trust-avatars">
+            <div class="avatar">👨‍💼</div>
+            <div class="avatar">👩‍💼</div>
+            <div class="avatar">👨‍🔬</div>
+            <div class="avatar">👩‍💻</div>
+          </div>
+          <div class="trust-text">
+            <strong>+100 empresas</strong> confían en nosotros
+          </div>
+        </div>
+      </div>
     </div>
-  )}
+    
+    <!-- Efecto spotlight que sigue el cursor -->
+    <div class="spotlight-effect" id="spotlight"></div>
+  </section>
 </Layout>
+
+<style>
+  /* Estilos globales para dark theme */
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(body) {
+    background: #0d0d0d;
+    color: #e5e5e5;
+  }
+
+  /* CTA Final Section con efecto spotlight */
+  .cta-final-section {
+    padding: 8rem 0;
+    background: #171717;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .cta-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .section-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(96, 165, 250, 0.1);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    border-radius: 50px;
+    color: #60a5fa;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+
+  .cta-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #e5e5e5;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .cta-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #a3a3a3;
+    margin-bottom: 3rem;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+  }
+
+  .cta-primary-final {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2.5rem;
+    background: #60a5fa;
+    color: #0d0d0d;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: all 300ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-primary-final::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 600ms ease;
+  }
+
+  .cta-primary-final:hover::before {
+    transform: translateX(100%);
+  }
+
+  .cta-primary-final:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 10px 30px rgba(96, 165, 250, 0.3),
+      0 0 40px rgba(96, 165, 250, 0.2);
+  }
+
+  .cta-secondary-final {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    background: transparent;
+    color: #e5e5e5;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 1.125rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 300ms ease;
+    backdrop-filter: blur(8px);
+  }
+
+  .cta-secondary-final:hover {
+    border-color: rgba(96, 165, 250, 0.3);
+    background: rgba(96, 165, 250, 0.05);
+    color: #60a5fa;
+  }
+
+  .cta-trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    opacity: 0.8;
+  }
+
+  .trust-avatars {
+    display: flex;
+    margin-left: -0.5rem;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #171717;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    margin-left: -0.5rem;
+  }
+
+  .trust-text {
+    color: #a3a3a3;
+    font-size: 0.875rem;
+  }
+
+  .trust-text strong {
+    color: #60a5fa;
+  }
+
+  /* Efecto spotlight */
+  .spotlight-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 300ms ease;
+    background: radial-gradient(
+      600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(96, 165, 250, 0.06) 0%,
+      transparent 50%
+    );
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .cta-final-section {
+      padding: 4rem 0;
+    }
+
+    .container {
+      padding: 0 1rem;
+    }
+
+    .cta-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cta-primary-final,
+    .cta-secondary-final {
+      width: 100%;
+      max-width: 320px;
+      justify-content: center;
+    }
+
+    .cta-trust {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Efecto spotlight que sigue el cursor
+  const spotlightSection = document.querySelector('.cta-final-section');
+  const spotlight = document.getElementById('spotlight');
+  
+  if (spotlightSection && spotlight) {
+    spotlightSection.addEventListener('mousemove', (e) => {
+      const rect = spotlightSection.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      
+      spotlight.style.setProperty('--mouse-x', `${x}%`);
+      spotlight.style.setProperty('--mouse-y', `${y}%`);
+      spotlight.style.opacity = '1';
+    });
+    
+    spotlightSection.addEventListener('mouseleave', () => {
+      spotlight.style.opacity = '0';
+    });
+  }
+
+  // Smooth scroll para enlaces internos
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+});
+</script>

@@ -1,0 +1,288 @@
+---
+// Componente para la sección "Problema" con glassmorphism
+---
+
+<section class="problem-section">
+  <div class="container">
+    <div class="problem-grid">
+      <!-- Contenido de texto -->
+      <div class="problem-content">
+        <div class="section-badge">
+          <span>El Problema</span>
+        </div>
+        
+        <h2 class="section-title reveal-text">
+          Las empresas pierden tiempo en tareas repetitivas
+        </h2>
+        
+        <div class="problem-points">
+          <div class="problem-point reveal-text" data-delay="200">
+            <div class="point-icon">⏰</div>
+            <div class="point-content">
+              <h3>Tiempo Perdido</h3>
+              <p>Empleados dedicando horas a tareas manuales que podrían automatizarse.</p>
+            </div>
+          </div>
+          
+          <div class="problem-point reveal-text" data-delay="400">
+            <div class="point-icon">❌</div>
+            <div class="point-content">
+              <h3>Errores Humanos</h3>
+              <p>Procesos manuales propensos a errores que afectan la calidad del servicio.</p>
+            </div>
+          </div>
+          
+          <div class="problem-point reveal-text" data-delay="600">
+            <div class="point-icon">📈</div>
+            <div class="point-content">
+              <h3>Escalabilidad Limitada</h3>
+              <p>Dificultad para crecer sin aumentar proporcionalmente los costos operativos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Imagen con glassmorphism -->
+      <div class="problem-visual">
+        <div class="glass-card">
+          <div class="visual-stats">
+            <div class="stat-item">
+              <span class="stat-number">67%</span>
+              <span class="stat-label">Tiempo en tareas manuales</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">43%</span>
+              <span class="stat-label">Errores evitables</span>
+            </div>
+          </div>
+          
+          <div class="chart-visualization">
+            <div class="chart-bar" style="--height: 67%;" data-label="Manual"></div>
+            <div class="chart-bar" style="--height: 33%;" data-label="Automatizado"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .problem-section {
+    padding: 8rem 0;
+    background: #0d0d0d;
+    position: relative;
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .section-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(249, 115, 22, 0.1);
+    border: 1px solid rgba(249, 115, 22, 0.2);
+    border-radius: 50px;
+    color: #f97316;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: #e5e5e5;
+    margin-bottom: 3rem;
+    letter-spacing: -0.01em;
+  }
+
+  .problem-points {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .problem-point {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .point-icon {
+    font-size: 1.5rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  .point-content h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #e5e5e5;
+    margin-bottom: 0.5rem;
+  }
+
+  .point-content p {
+    color: #a3a3a3;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .problem-visual {
+    position: relative;
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  }
+
+  .visual-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #f97316;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: #737373;
+    margin-top: 0.5rem;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .chart-visualization {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    height: 120px;
+    margin-top: 1rem;
+  }
+
+  .chart-bar {
+    flex: 1;
+    background: linear-gradient(to top, #f97316, #fb923c);
+    border-radius: 4px 4px 0 0;
+    height: var(--height);
+    position: relative;
+    animation: chart-grow 1s ease 1s backwards;
+  }
+
+  .chart-bar::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: #737373;
+  }
+
+  .reveal-text {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: all 200ms ease;
+  }
+
+  .reveal-text.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes chart-grow {
+    from { height: 0; }
+    to { height: var(--height); }
+  }
+
+  @media (max-width: 1024px) {
+    .problem-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .problem-section {
+      padding: 4rem 0;
+    }
+    .container {
+      padding: 0 1rem;
+    }
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const revealElements = document.querySelectorAll('.reveal-text');
+  
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = parseInt(entry.target.dataset.delay) || 0;
+        setTimeout(() => {
+          entry.target.classList.add('revealed');
+        }, delay);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
+  
+  revealElements.forEach(el => revealObserver.observe(el));
+});
+</script>
