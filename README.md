@@ -1,192 +1,101 @@
-# WordPress Headless + Astro + Cloudflare
+# Blixel AI - Inteligencia Artificial para Empresas
 
-Este es un proyecto base para conectar Astro con WordPress Headless y desplegarlo en Cloudflare Pages.
+Sitio web corporativo optimizado para SEO con enfoque en "inteligencia artificial para empresas". Implementa metodología Quick-ROI con resultados garantizados en 90 días.
 
-## 🚀 Configuración del Proyecto
+## 🚀 Características
 
-### Prerrequisitos
+- **Home page optimizada** para "inteligencia artificial para empresas"
+- **8 secciones estratégicas**: Intro, Problema, Servicios, Metodología, Casos, FAQ, CTA
+- **SEO on-page optimizado** con keywords naturalmente integradas
+- **Internal linking** preparado para páginas de servicios
+- **Diseño dark theme** responsive con animaciones
+- **Integración WordPress** para contenido dinámico vía GraphQL
 
-1. **WordPress con GraphQL:** Instala el plugin WPGraphQL en tu WordPress
-2. **Node.js:** Versión 18 o superior
-3. **Cuenta de Cloudflare:** Para el despliegue
+## 🛠️ Tecnologías
 
-### Instalación
+- **Astro** 4.x
+- **WordPress** como CMS headless
+- **GraphQL** para datos dinámicos
+- **CSS3** con animaciones avanzadas
+- **JavaScript** vanilla para interactividad
 
-1. Clona o descarga este proyecto
-2. Instala las dependencias:
+## ⚙️ Configuración
+
+### 1. Clonar repositorio
+```bash
+git clone https://github.com/YOUR-USERNAME/blixel-ai-website.git
+cd blixel-ai-website
+```
+
+### 2. Instalar dependencias
 ```bash
 npm install
 ```
 
-3. Copia el archivo de variables de entorno:
-```bash
-cp .env.example .env
+### 3. Configurar variables de entorno
+Crear archivo `.env` en la raíz del proyecto:
+
+```env
+PUBLIC_WP_GRAPHQL_URL=https://cms.blixel.es/graphql
 ```
 
-4. Edita el archivo `.env` con la URL de tu WordPress:
-```
-WORDPRESS_GRAPHQL_ENDPOINT=https://tu-wordpress-site.com/graphql
-```
-
-### Desarrollo Local
-
-Para ejecutar el proyecto en modo desarrollo:
-
+### 4. Ejecutar en desarrollo
 ```bash
 npm run dev
 ```
 
-El sitio estará disponible en `http://localhost:4321`
+## 📁 Estructura del proyecto
 
-## 📝 Configuración de WordPress
-
-### Instalación del Plugin WPGraphQL
-
-1. Ve a tu panel de WordPress
-2. Navega a **Plugins > Añadir nuevo**
-3. Busca "WPGraphQL"
-4. Instala y activa el plugin
-5. Verifica que GraphQL esté disponible en: `https://tu-sitio.com/graphql`
-
-### Configuración CORS (si es necesario)
-
-Si tienes problemas de CORS, añade esto a tu `functions.php` de WordPress:
-
-```php
-// Permitir CORS para GraphQL
-add_action('graphql_init', function() {
-    header('Access-Control-Allow-Origin: *');
-    header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-    header('Access-Control-Allow-Headers: Content-Type, Authorization');
-});
+```
+src/
+├── components/
+│   ├── IntroSection.astro          # ¿Qué es IA Empresarial?
+│   ├── ProblemIASection.astro      # 42% tiempo perdido
+│   ├── ServicesIASection.astro     # Servicios de IA
+│   ├── MethodologyIASection.astro  # Quick-ROI metodología
+│   ├── CasesIASection.astro        # Casos de éxito
+│   ├── FAQSection.astro            # Preguntas frecuentes
+│   ├── CTAIASection.astro          # Formulario diagnóstico
+│   ├── Header.astro                # Navegación interna
+│   └── Hero.astro                  # Hero con datos WP
+├── pages/
+│   └── index.astro                 # Home page principal
+└── layouts/
+    └── Layout.astro                # Layout base
 ```
 
-## ☁️ Despliegue en Cloudflare Pages
+## 🎯 SEO Keywords objetivo
 
-### Método 1: A través del Dashboard de Cloudflare
+- **Principal**: "inteligencia artificial para empresas"
+- **Secundarias**: "IA para empresas", "IA empresarial", "automatización inteligente"
+- **Long-tail**: "soluciones de inteligencia artificial para empresas"
 
-1. Ve a [Cloudflare Pages](https://pages.cloudflare.com/)
-2. Conecta tu repositorio de GitHub/GitLab
-3. Configura los ajustes de build:
-   - **Build command:** `npm run build`
-   - **Build output directory:** `dist`
-   - **Node.js version:** 18 o superior
+## 🔗 Internal Linking preparado
 
-### Método 2: Usando Wrangler CLI
+- `/formacion-ia-empresas` - Formación especializada
+- `/agentes-ia-empresas` - Agentes y ChatGPT empresarial  
+- `/automatizacion-ia-empresas` - Automatización y micro-SaaS
 
-1. Instala Wrangler:
-```bash
-npm install -g wrangler
-```
+## 📊 Metodología Quick-ROI
 
-2. Autentica con Cloudflare:
-```bash
-wrangler login
-```
+1. **Auditoría** (Días 1-15): Análisis de procesos
+2. **Piloto** (Días 16-45): MVP funcional
+3. **Métricas** (Días 46-75): Medición ROI
+4. **Escalado** (Días 76-90): Expansión empresarial
 
-3. Despliega el proyecto:
+## 🚀 Deployment
+
 ```bash
 npm run build
-wrangler pages deploy dist
-```
-
-### Variables de Entorno en Cloudflare
-
-En el dashboard de Cloudflare Pages, ve a:
-**Settings > Environment variables** y añade:
-
-- `WORDPRESS_GRAPHQL_ENDPOINT`: `https://tu-wordpress-site.com/graphql`
-
-## 📁 Estructura del Proyecto
-
-```
-/
-├── src/
-│   ├── components/
-│   │   └── WordPressPosts.astro    # Componente para mostrar posts
-│   ├── pages/
-│   │   └── index.astro             # Página principal
-│   └── graphql/
-│       └── client.ts               # Cliente GraphQL (legacy)
-├── astro.config.mjs                # Configuración de Astro
-├── package.json                    # Dependencias del proyecto
-└── .env.example                    # Variables de entorno de ejemplo
-```
-
-## 🔧 Personalización
-
-### Modificar la Consulta GraphQL
-
-Edita `src/components/WordPressPosts.astro` para cambiar los datos que obtienes:
-
-```javascript
-const query = `
-  query GetPosts {
-    posts(first: 10) {
-      nodes {
-        id
-        title
-        excerpt
-        date
-        slug
-        featuredImage {
-          node {
-            sourceUrl
-          }
-        }
-      }
-    }
-  }
-`;
-```
-
-### Añadir Nuevas Páginas
-
-Crea archivos `.astro` en `src/pages/` para nuevas rutas:
-- `src/pages/about.astro` → `/about`
-- `src/pages/blog/[slug].astro` → `/blog/mi-post`
-
-### Estilos
-
-Los estilos están en `src/pages/index.astro`. Puedes:
-1. Crear archivos CSS separados en `src/styles/`
-2. Usar frameworks como Tailwind CSS
-3. Mantener estilos en componentes
-
-## 🛠️ Comandos Útiles
-
-```bash
-# Desarrollo
-npm run dev
-
-# Build para producción
-npm run build
-
-# Preview del build
 npm run preview
-
-# Instalar nuevas dependencias
-npm install nombre-paquete
 ```
 
-## 📚 Recursos Adicionales
+## 📧 Contacto
 
-- [Documentación de Astro](https://docs.astro.build/)
-- [WPGraphQL](https://www.wpgraphql.com/)
-- [Cloudflare Pages](https://pages.cloudflare.com/)
+- **Web**: [blixel.es](https://blixel.es)
+- **Email**: info@blixel.es
+- **CMS**: [cms.blixel.es](https://cms.blixel.es)
 
-## 🐛 Solución de Problemas
+---
 
-### Error: Cannot fetch posts
-- Verifica que la URL de GraphQL sea correcta
-- Comprueba que el plugin WPGraphQL esté activo
-- Revisa la configuración de CORS
-
-### Error de Build en Cloudflare
-- Asegúrate de usar Node.js 18+
-- Verifica las variables de entorno
-- Comprueba que todas las dependencias estén instaladas
-
-## 📄 Licencia
-
-Este proyecto es de código abierto. Úsalo libremente para tus proyectos.
+**Blixel** - Transformamos empresas con IA en 90 días
