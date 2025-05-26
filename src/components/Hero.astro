@@ -11,7 +11,7 @@ const {
   customDescription
 } = Astro.props;
 
-// Query para obtener datos de la página específica incluyendo SEO de Yoast
+// Query ampliado para obtener también la imagen destacada
 const GQL = `
   query GetPageSEOData($slug: ID!) {
     page(id: $slug, idType: URI) {
@@ -23,13 +23,25 @@ const GQL = `
         opengraphTitle
         opengraphDescription
       }
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+          mediaDetails {
+            width
+            height
+          }
+        }
+      }
     }
   }
 `;
 
 let pageTitle = customTitle || 'Blixel AI';
 let pageDescription = customDescription || 'Automatización Inteligente para tu Empresa';
-let debugInfo = { error: null, found: false, hasData: false };
+let featuredImageUrl = null;
+let featuredImageAlt = '';
+let debugInfo = { error: null, found: false, hasData: false, hasImage: false };
 
 try {
   const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
@@ -51,6 +63,13 @@ try {
       if (page) {
         debugInfo.found = true;
         debugInfo.hasData = !!(page.seo?.title || page.seo?.metaDesc);
+        
+        // Obtener imagen destacada
+        if (page.featuredImage?.node) {
+          featuredImageUrl = page.featuredImage.node.sourceUrl;
+          featuredImageAlt = page.featuredImage.node.altText || pageTitle;
+          debugInfo.hasImage = true;
+        }
         
         // Prioridad: SEO title > page title > custom title
         const newTitle = customTitle || 
@@ -144,26 +163,45 @@ try {
       </div>
     </div>
 
-    <!-- Visual minimalista -->
+    <!-- Visual con imagen destacada o fallback -->
     <div class="hero__visual">
-      <div class="visual-grid">
-        <div class="grid-item" data-delay="0">
-          <div class="item-icon">🤖</div>
-          <span>IA Avanzada</span>
+      {featuredImageUrl ? (
+        <!-- Imagen destacada con efecto neon -->
+        <div class="featured-image-container">
+          <div class="neon-border">
+            <div class="neon-runner"></div>
+          </div>
+          <div class="image-wrapper">
+            <img 
+              src={featuredImageUrl} 
+              alt={featuredImageAlt}
+              class="featured-image"
+              loading="eager"
+            />
+            <div class="image-overlay"></div>
+          </div>
         </div>
-        <div class="grid-item" data-delay="200">
-          <div class="item-icon">⚡</div>
-          <span>Automatización</span>
+      ) : (
+        <!-- Fallback: Grid visual minimalista -->
+        <div class="visual-grid">
+          <div class="grid-item" data-delay="0">
+            <div class="item-icon">🤖</div>
+            <span>IA Avanzada</span>
+          </div>
+          <div class="grid-item" data-delay="200">
+            <div class="item-icon">⚡</div>
+            <span>Automatización</span>
+          </div>
+          <div class="grid-item" data-delay="400">
+            <div class="item-icon">📊</div>
+            <span>Analytics</span>
+          </div>
+          <div class="grid-item" data-delay="600">
+            <div class="item-icon">🔒</div>
+            <span>Seguridad</span>
+          </div>
         </div>
-        <div class="grid-item" data-delay="400">
-          <div class="item-icon">📊</div>
-          <span>Analytics</span>
-        </div>
-        <div class="grid-item" data-delay="600">
-          <div class="item-icon">🔒</div>
-          <span>Seguridad</span>
-        </div>
-      </div>
+      )}
     </div>
   </div>
 
@@ -176,6 +214,9 @@ try {
           {debugInfo.found ? 'Connected' : 'Disconnected'}
         </span>
       </div>
+      {debugInfo.hasImage && (
+        <div class="debug-success">✅ Featured image loaded</div>
+      )}
       {debugInfo.error && (
         <div class="debug-error">Error: {debugInfo.error}</div>
       )}
@@ -232,6 +273,12 @@ try {
 
   .status-text {
     font-weight: 500;
+  }
+
+  .debug-success {
+    margin-top: 0.5rem;
+    color: #86efac;
+    font-size: 0.65rem;
   }
 
   .debug-error {
@@ -453,7 +500,7 @@ try {
     background: rgba(255, 255, 255, 0.08);
   }
 
-  /* Visual grid */
+  /* Visual con imagen destacada */
   .hero__visual {
     position: relative;
     display: flex;
@@ -461,6 +508,92 @@ try {
     align-items: center;
   }
 
+  /* Contenedor de imagen destacada con efecto neon */
+  .featured-image-container {
+    position: relative;
+    max-width: 400px;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+
+  /* Borde neon animado */
+  .neon-border {
+    position: absolute;
+    inset: -4px;
+    border-radius: 28px;
+    padding: 4px;
+    background: linear-gradient(45deg, 
+      #60a5fa 0%, 
+      #f97316 25%, 
+      #22c55e 50%, 
+      #a855f7 75%, 
+      #60a5fa 100%
+    );
+    background-size: 400% 400%;
+    animation: neon-gradient 4s ease-in-out infinite;
+    z-index: 1;
+  }
+
+  /* Runner que recorre el borde */
+  .neon-runner {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.8) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(15px);
+    animation: neon-runner 3s linear infinite;
+    z-index: 2;
+  }
+
+  /* Wrapper de la imagen */
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    z-index: 3;
+  }
+
+  /* Imagen destacada */
+  .featured-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 24px;
+    transition: transform 600ms ease;
+  }
+
+  .featured-image-container:hover .featured-image {
+    transform: scale(1.05);
+  }
+
+  /* Overlay sutil */
+  .image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg, 
+      rgba(96, 165, 250, 0.1) 0%, 
+      transparent 50%, 
+      rgba(249, 115, 22, 0.1) 100%
+    );
+    border-radius: 24px;
+    opacity: 0;
+    transition: opacity 600ms ease;
+  }
+
+  .featured-image-container:hover .image-overlay {
+    opacity: 1;
+  }
+
+  /* Grid visual fallback */
   .visual-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -564,6 +697,47 @@ try {
     50% { opacity: 1; }
   }
 
+  /* Animaciones del efecto neon */
+  @keyframes neon-gradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  @keyframes neon-runner {
+    0% {
+      top: -50px;
+      left: -50px;
+      transform: rotate(0deg);
+    }
+    25% {
+      top: -50px;
+      right: -50px;
+      left: auto;
+      transform: rotate(90deg);
+    }
+    50% {
+      bottom: -50px;
+      right: -50px;
+      top: auto;
+      left: auto;
+      transform: rotate(180deg);
+    }
+    75% {
+      bottom: -50px;
+      left: -50px;
+      right: auto;
+      top: auto;
+      transform: rotate(270deg);
+    }
+    100% {
+      top: -50px;
+      left: -50px;
+      bottom: auto;
+      right: auto;
+      transform: rotate(360deg);
+    }
+  }
+
   /* Responsive */
   @media (max-width: 1024px) {
     .hero__container {
@@ -572,8 +746,13 @@ try {
       text-align: center;
     }
 
+    .featured-image-container,
     .visual-grid {
       margin: 0 auto;
+    }
+
+    .featured-image-container {
+      max-width: 300px;
     }
   }
 
@@ -603,6 +782,10 @@ try {
       display: none;
     }
 
+    .featured-image-container {
+      max-width: 250px;
+    }
+
     .visual-grid {
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
@@ -629,6 +812,10 @@ try {
 
     .hero__description {
       font-size: 1rem;
+    }
+
+    .featured-image-container {
+      max-width: 200px;
     }
   }
 </style>
