@@ -1,0 +1,11 @@
+# .htaccess para public_html/cms/
+# Esta carpeta puede estar vacía o contener archivos de respaldo
+# Si WordPress está en la raíz, este archivo no es necesario
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /cms/
+    
+    # Redirigir todo a la raíz donde está WordPress
+    RewriteRule ^(.*)$ /$1 [R=301,L]
+</IfModule>

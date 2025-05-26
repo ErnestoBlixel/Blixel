@@ -89,8 +89,8 @@ export async function testGraphQLConnection() {
     // Verificar si es un problema de CORS, network o GraphQL
     if (error.message.includes('fetch')) {
       console.error('🌐 Problema de red o CORS. Verifica:');
-      console.error('   1. Que https://cms.blixel.es/cms/graphql esté activo');
-      console.error('   2. Que WPGraphQL esté instalado y activado');
+      console.error('   1. Que https://cms.blixel.es/graphql esté activo');
+      console.error('   2. Que WPGraphQL esté instalado y activado en cms.blixel.es');
       console.error('   3. Configuración de CORS en WordPress');
     } else if (error.message.includes('GraphQL')) {
       console.error('🔧 Problema con GraphQL. Verifica la sintaxis de la query');

@@ -5,9 +5,9 @@ export async function runDiagnostic() {
   console.log('🔍 === DIAGNÓSTICO COMPLETO BLIXEL.ES ===');
   
   const endpoints = [
-    'https://cms.blixel.es/cms/graphql',
-    'https://cms.blixel.es/cms/wp-json/graphql',
     'https://cms.blixel.es/graphql',
+    'https://cms.blixel.es/graphiql', 
+    'https://cms.blixel.es/wp-json/wp/v2',
     'https://cms.blixel.es/wp-json/graphql'
   ];
   

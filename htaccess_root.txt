@@ -1,0 +1,35 @@
+# .htaccess para cms.blixel.es (raíz)
+# WordPress está en la raíz, no en /cms/
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # WordPress standard rules
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.php [L]
+
+    # GraphQL endpoints (deberían funcionar automáticamente con WPGraphQL)
+    # No necesitas redirecciones especiales si WordPress está en la raíz
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    # CORS for GraphQL
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header always set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>
+
+# Prevent access to sensitive files
+<Files ".htaccess">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "wp-config.php">
+    Order Allow,Deny
+    Deny from all
+</Files>

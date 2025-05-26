@@ -1,61 +1,81 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// Query alternativo: obtener todas las páginas y usar la primera o buscar por título
-const GQL = `
-  query GetPages {
-    pages(first: 10) {
-      nodes {
-        title
-        content
-        slug
-        isFrontPage
-      }
-    }
-  }
-`;
-
-// 2) Haz el fetch usando la variable de entorno
-const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
-if (!graphqlUrl) {
-  throw new Error('PUBLIC_WP_GRAPHQL_URL no está configurada');
-}
-
-const res = await fetch(graphqlUrl, {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ query: GQL })
-});
-
-if (!res.ok) throw new Error(`Error GraphQL: ${res.status}`);
-
-const result = await res.json();
-console.log('GraphQL Response:', result);
-
-// Verificar si hay errores en la respuesta
-if (result.errors) {
-  console.error('GraphQL Errors:', result.errors);
-  throw new Error(`GraphQL Error: ${result.errors[0].message}`);
-}
-
-// Verificar si tenemos data
-if (!result.data || !result.data.pages) {
-  throw new Error('No pages found');
-}
-
-// 3) Buscar la página de inicio o usar la primera
-const pages = result.data.pages.nodes;
-const home = pages.find(page => page.isFrontPage) || pages[0];
-
-// Si no existe, usar datos por defecto
-const pageData = home || {
+// Datos por defecto en caso de error
+let pageData = {
   title: "Blixel AI - Automatización Inteligente",
-  content: "<p>Transformamos tu empresa con Inteligencia Artificial y automatización avanzada.</p>"
+  content: "<p>Transformamos tu empresa con Inteligencia Artificial y automatización avanzada.</p>",
+  status: "fallback"
 };
+
+// Solo intentar GraphQL si estamos en desarrollo o si la URL está configurada
+const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
+const isDev = import.meta.env.DEV;
+
+if (graphqlUrl && isDev) {
+  try {
+    console.log('🔍 Probando conexión GraphQL:', graphqlUrl);
+    
+    const GQL = `
+      query GetPages {
+        pages(first: 10) {
+          nodes {
+            title
+            content
+            slug
+            isFrontPage
+          }
+        }
+      }
+    `;
+
+    const res = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: GQL })
+    });
+
+    if (res.ok) {
+      const result = await res.json();
+      console.log('✅ GraphQL Response:', result);
+      
+      // Si no hay errores y tenemos data
+      if (!result.errors && result.data && result.data.pages) {
+        const pages = result.data.pages.nodes;
+        const home = pages.find(page => page.isFrontPage) || pages[0];
+        
+        if (home) {
+          pageData = {
+            ...home,
+            status: "success"
+          };
+        }
+      } else {
+        console.warn('⚠️ GraphQL response tiene errores o está vacía:', result.errors);
+      }
+    } else {
+      console.warn(`⚠️ Error HTTP: ${res.status} al acceder a ${graphqlUrl}`);
+    }
+    
+  } catch (error) {
+    console.warn('⚠️ Error de conexión GraphQL (usando fallback):', error.message);
+  }
+} else {
+  console.log('ℹ️ GraphQL deshabilitado para build de producción o URL no configurada');
+}
 ---
 
 <!-- 4) Ahora ya en el template puedes renderizar -->
 <Layout>
   <h1>{pageData.title}</h1>
   <div innerHTML={pageData.content} />
+  
+  <!-- Info de debug -->
+  <div style="margin-top: 2rem; padding: 1rem; background: #f5f5f5; border-radius: 8px; font-size: 0.9rem;">
+    <h3>🔧 Debug Info:</h3>
+    <p><strong>Status:</strong> {pageData.status}</p>
+    <p><strong>GraphQL URL:</strong> {graphqlUrl || 'No configurada'}</p>
+    <p><strong>Environment:</strong> {isDev ? 'Development' : 'Production'}</p>
+    <p><strong>Build Time:</strong> {new Date().toISOString()}</p>
+  </div>
 </Layout>
