@@ -29,9 +29,11 @@ const GQL = `
 
 let pageTitle = customTitle || 'Blixel AI';
 let pageDescription = customDescription || 'Automatización Inteligente para tu Empresa';
+let debugInfo = { error: null, found: false, seoData: null };
 
 try {
   const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
+  console.log('🌐 GraphQL URL:', graphqlUrl);
   
   if (graphqlUrl) {
     const res = await fetch(graphqlUrl, {
@@ -43,28 +45,55 @@ try {
       })
     });
 
+    console.log('📡 Response status:', res.status);
+
     if (res.ok) {
       const result = await res.json();
+      console.log('📊 Full GraphQL result:', JSON.stringify(result, null, 2));
+      
       const page = result.data?.page;
-
+      
       if (page) {
+        debugInfo.found = true;
+        debugInfo.seoData = page.seo;
+        
+        console.log('📄 Page found:', page.title);
+        console.log('🔍 SEO data:', page.seo);
+        
         // Prioridad: SEO title > page title > custom title
-        pageTitle = customTitle || 
-                   page.seo?.title || 
-                   page.seo?.opengraphTitle || 
-                   page.title || 
-                   'Blixel AI';
+        const newTitle = customTitle || 
+                        page.seo?.title || 
+                        page.seo?.opengraphTitle || 
+                        page.title || 
+                        'Blixel AI';
 
         // Prioridad: SEO meta description > custom description
-        pageDescription = customDescription || 
-                         page.seo?.metaDesc || 
-                         page.seo?.opengraphDescription || 
-                         'Automatización Inteligente para tu Empresa';
+        const newDescription = customDescription || 
+                              page.seo?.metaDesc || 
+                              page.seo?.opengraphDescription || 
+                              'Automatización Inteligente para tu Empresa';
+        
+        console.log('✅ Using title:', newTitle);
+        console.log('✅ Using description:', newDescription);
+        
+        pageTitle = newTitle;
+        pageDescription = newDescription;
+      } else {
+        console.log('❌ No page found for slug:', pageSlug);
+        debugInfo.error = `No page found for slug: ${pageSlug}`;
       }
+    } else {
+      const errorText = await res.text();
+      console.log('❌ GraphQL request failed:', errorText);
+      debugInfo.error = `GraphQL request failed: ${res.status}`;
     }
+  } else {
+    console.log('❌ No GraphQL URL configured');
+    debugInfo.error = 'No GraphQL URL configured';
   }
 } catch (error) {
-  console.log('Error obteniendo datos SEO:', error);
+  console.log('❌ Error obteniendo datos SEO:', error);
+  debugInfo.error = error.message;
 }
 ---
 
@@ -154,6 +183,24 @@ try {
     </div>
   </div>
 
+  <!-- Debug info (solo visible en desarrollo) -->
+  {import.meta.env.DEV && (
+    <div class="debug-info">
+      <h3>🔍 Debug Info:</h3>
+      <p><strong>Page Slug:</strong> {pageSlug}</p>
+      <p><strong>Page Found:</strong> {debugInfo.found ? '✅ Yes' : '❌ No'}</p>
+      <p><strong>Error:</strong> {debugInfo.error || 'None'}</p>
+      <p><strong>Final Title:</strong> {pageTitle}</p>
+      <p><strong>Final Description:</strong> {pageDescription}</p>
+      {debugInfo.seoData && (
+        <div>
+          <p><strong>SEO Title:</strong> {debugInfo.seoData.title || 'Not set'}</p>
+          <p><strong>SEO Meta Desc:</strong> {debugInfo.seoData.metaDesc || 'Not set'}</p>
+        </div>
+      )}
+    </div>
+  )}
+
   <!-- Scroll indicator -->
   <div class="scroll-indicator">
     <div class="scroll-line"></div>
@@ -169,6 +216,31 @@ try {
     align-items: center;
     background: #0d0d0d;
     overflow: hidden;
+  }
+
+  /* Debug info */
+  .debug-info {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    max-width: 300px;
+    z-index: 1000;
+    border: 1px solid #333;
+  }
+
+  .debug-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: #60a5fa;
+  }
+
+  .debug-info p {
+    margin: 0.25rem 0;
+    line-height: 1.4;
   }
 
   /* Canvas de partículas */
@@ -543,6 +615,14 @@ try {
     .grid-item {
       padding: 1rem;
     }
+
+    .debug-info {
+      position: relative;
+      top: auto;
+      right: auto;
+      margin-top: 2rem;
+      max-width: 100%;
+    }
   }
 
   @media (max-width: 480px) {
@@ -557,7 +637,7 @@ try {
 </style>
 
 <script>
-// Animación de partículas en canvas
+// Script JavaScript conservado igual...
 document.addEventListener('DOMContentLoaded', function() {
   const canvas = document.getElementById('particles-canvas');
   if (!canvas) return;
@@ -565,7 +645,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const ctx = canvas.getContext('2d');
   let particles = [];
   
-  // Configurar canvas
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -574,7 +653,6 @@ document.addEventListener('DOMContentLoaded', function() {
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
   
-  // Clase Partícula
   class Particle {
     constructor() {
       this.x = Math.random() * canvas.width;
@@ -589,11 +667,9 @@ document.addEventListener('DOMContentLoaded', function() {
       this.x += this.vx;
       this.y += this.vy;
       
-      // Rebote en bordes
       if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
       if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
       
-      // Mantener en pantalla
       this.x = Math.max(0, Math.min(canvas.width, this.x));
       this.y = Math.max(0, Math.min(canvas.height, this.y));
     }
@@ -609,12 +685,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  // Crear partículas
   for (let i = 0; i < 30; i++) {
     particles.push(new Particle());
   }
   
-  // Loop de animación
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
@@ -628,7 +702,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
   animate();
   
-  // Parallax en scroll
   let ticking = false;
   
   function updateParallax() {
@@ -652,7 +725,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
   window.addEventListener('scroll', requestTick);
   
-  // Animación escalonada de grid items
   const gridItems = document.querySelectorAll('.grid-item');
   gridItems.forEach((item, index) => {
     const delay = parseInt(item.dataset.delay) || 0;
