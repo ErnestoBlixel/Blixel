@@ -43,10 +43,11 @@ let featuredImageUrl = null;
 let featuredImageAlt = '';
 let debugInfo = { error: null, found: false, hasData: false, hasImage: false };
 
-try {
-  const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
-  
-  if (graphqlUrl) {
+// Solo ejecutar GraphQL si estamos en un entorno que lo permita
+if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.env.PUBLIC_WP_GRAPHQL_URL) {
+  try {
+    const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
+    
     const res = await fetch(graphqlUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -92,11 +93,12 @@ try {
     } else {
       debugInfo.error = `Request failed: ${res.status}`;
     }
-  } else {
-    debugInfo.error = 'GraphQL URL not configured';
+  } catch (error) {
+    debugInfo.error = 'Connection error';
+    // En caso de error, usar valores por defecto sin romper el build
   }
-} catch (error) {
-  debugInfo.error = 'Connection error';
+} else {
+  debugInfo.error = 'GraphQL URL not configured';
 }
 ---
 

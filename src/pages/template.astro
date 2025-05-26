@@ -1,56 +1,114 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
 
-// Query corregido usando tipos estándar de WordPress
-const GQL = `
-  query GetHome {
-    page(id: "home", idType: URI) {
-      title
-      content
-    }
-  }
-`;
-
-// 2) Haz el fetch usando la variable de entorno
-const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
-if (!graphqlUrl) {
-  throw new Error('PUBLIC_WP_GRAPHQL_URL no está configurada');
-}
-
-const res = await fetch(graphqlUrl, {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ query: GQL })
-});
-
-if (!res.ok) throw new Error(`Error GraphQL: ${res.status}`);
-
-const result = await res.json();
-console.log('GraphQL Response:', result);
-
-// Verificar si hay errores en la respuesta
-if (result.errors) {
-  console.error('GraphQL Errors:', result.errors);
-  throw new Error(`GraphQL Error: ${result.errors[0].message}`);
-}
-
-// Verificar si tenemos data
-if (!result.data) {
-  throw new Error('No data returned from GraphQL');
-}
-
-// 3) Extrae de "data" lo que necesites
-const home = result.data.page;
-
-// Si no existe la página "home", usar datos por defecto
-const pageData = home || {
-  title: "Bienvenido a Blixel AI",
-  content: "Tu página de inicio está lista para ser configurada."
-};
+// Esta es una página de template/ejemplo
+// Puedes cambiar el pageSlug por el que necesites
+const pageSlug = 'template';
 ---
 
-<!-- 4) Ahora ya en el template puedes renderizar -->
-<Layout>
-  <h1>{pageData.title}</h1>
-  <div innerHTML={pageData.content} />
+<Layout title="Template Page - Blixel AI">
+  <!-- Hero con configuración de template -->
+  <Hero 
+    pageSlug={pageSlug}
+    customTitle="Página de Plantilla"
+    customDescription="Esta es una página de ejemplo que puedes usar como plantilla para crear nuevas páginas."
+  />
+  
+  <!-- Contenido adicional de ejemplo -->
+  <section class="template-content">
+    <div class="container">
+      <h2>Contenido de Ejemplo</h2>
+      <p>Esta es una página de plantilla que puedes usar como base para crear nuevas páginas.</p>
+      
+      <div class="features-grid">
+        <div class="feature">
+          <h3>Característica 1</h3>
+          <p>Descripción de la primera característica.</p>
+        </div>
+        
+        <div class="feature">
+          <h3>Característica 2</h3>
+          <p>Descripción de la segunda característica.</p>
+        </div>
+        
+        <div class="feature">
+          <h3>Característica 3</h3>
+          <p>Descripción de la tercera característica.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .template-content {
+    padding: 4rem 0;
+    background: #171717;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .template-content h2 {
+    font-size: 2.5rem;
+    color: #e5e5e5;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .template-content p {
+    color: #a3a3a3;
+    text-align: center;
+    font-size: 1.25rem;
+    margin-bottom: 4rem;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .feature {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .feature h3 {
+    color: #60a5fa;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .feature p {
+    color: #a3a3a3;
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .template-content {
+      padding: 2rem 0;
+    }
+
+    .container {
+      padding: 0 1rem;
+    }
+
+    .template-content h2 {
+      font-size: 2rem;
+    }
+
+    .features-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>
