@@ -29,11 +29,10 @@ const GQL = `
 
 let pageTitle = customTitle || 'Blixel AI';
 let pageDescription = customDescription || 'Automatización Inteligente para tu Empresa';
-let debugInfo = { error: null, found: false, seoData: null };
+let debugInfo = { error: null, found: false, hasData: false };
 
 try {
   const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
-  console.log('🌐 GraphQL URL:', graphqlUrl);
   
   if (graphqlUrl) {
     const res = await fetch(graphqlUrl, {
@@ -45,20 +44,13 @@ try {
       })
     });
 
-    console.log('📡 Response status:', res.status);
-
     if (res.ok) {
       const result = await res.json();
-      console.log('📊 Full GraphQL result:', JSON.stringify(result, null, 2));
-      
       const page = result.data?.page;
       
       if (page) {
         debugInfo.found = true;
-        debugInfo.seoData = page.seo;
-        
-        console.log('📄 Page found:', page.title);
-        console.log('🔍 SEO data:', page.seo);
+        debugInfo.hasData = !!(page.seo?.title || page.seo?.metaDesc);
         
         // Prioridad: SEO title > page title > custom title
         const newTitle = customTitle || 
@@ -73,27 +65,19 @@ try {
                               page.seo?.opengraphDescription || 
                               'Automatización Inteligente para tu Empresa';
         
-        console.log('✅ Using title:', newTitle);
-        console.log('✅ Using description:', newDescription);
-        
         pageTitle = newTitle;
         pageDescription = newDescription;
       } else {
-        console.log('❌ No page found for slug:', pageSlug);
-        debugInfo.error = `No page found for slug: ${pageSlug}`;
+        debugInfo.error = 'Page not found';
       }
     } else {
-      const errorText = await res.text();
-      console.log('❌ GraphQL request failed:', errorText);
-      debugInfo.error = `GraphQL request failed: ${res.status}`;
+      debugInfo.error = `Request failed: ${res.status}`;
     }
   } else {
-    console.log('❌ No GraphQL URL configured');
-    debugInfo.error = 'No GraphQL URL configured';
+    debugInfo.error = 'GraphQL URL not configured';
   }
 } catch (error) {
-  console.log('❌ Error obteniendo datos SEO:', error);
-  debugInfo.error = error.message;
+  debugInfo.error = 'Connection error';
 }
 ---
 
@@ -183,20 +167,17 @@ try {
     </div>
   </div>
 
-  <!-- Debug info (solo visible en desarrollo) -->
+  <!-- Debug minimalista (solo visible en desarrollo) -->
   {import.meta.env.DEV && (
     <div class="debug-info">
-      <h3>🔍 Debug Info:</h3>
-      <p><strong>Page Slug:</strong> {pageSlug}</p>
-      <p><strong>Page Found:</strong> {debugInfo.found ? '✅ Yes' : '❌ No'}</p>
-      <p><strong>Error:</strong> {debugInfo.error || 'None'}</p>
-      <p><strong>Final Title:</strong> {pageTitle}</p>
-      <p><strong>Final Description:</strong> {pageDescription}</p>
-      {debugInfo.seoData && (
-        <div>
-          <p><strong>SEO Title:</strong> {debugInfo.seoData.title || 'Not set'}</p>
-          <p><strong>SEO Meta Desc:</strong> {debugInfo.seoData.metaDesc || 'Not set'}</p>
-        </div>
+      <div class="debug-status">
+        <span class={`status-dot ${debugInfo.found ? 'success' : 'error'}`}></span>
+        <span class="status-text">
+          {debugInfo.found ? 'Connected' : 'Disconnected'}
+        </span>
+      </div>
+      {debugInfo.error && (
+        <div class="debug-error">Error: {debugInfo.error}</div>
       )}
     </div>
   )}
@@ -218,29 +199,45 @@ try {
     overflow: hidden;
   }
 
-  /* Debug info */
+  /* Debug info minimalista y seguro */
   .debug-info {
     position: fixed;
     top: 100px;
     right: 20px;
     background: rgba(0, 0, 0, 0.9);
     color: white;
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     border-radius: 8px;
     font-size: 0.75rem;
-    max-width: 300px;
     z-index: 1000;
     border: 1px solid #333;
   }
 
-  .debug-info h3 {
-    margin: 0 0 0.5rem 0;
-    color: #60a5fa;
+  .debug-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
-  .debug-info p {
-    margin: 0.25rem 0;
-    line-height: 1.4;
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ef4444;
+  }
+
+  .status-dot.success {
+    background: #22c55e;
+  }
+
+  .status-text {
+    font-weight: 500;
+  }
+
+  .debug-error {
+    margin-top: 0.5rem;
+    color: #fca5a5;
+    font-size: 0.65rem;
   }
 
   /* Canvas de partículas */
@@ -637,7 +634,6 @@ try {
 </style>
 
 <script>
-// Script JavaScript conservado igual...
 document.addEventListener('DOMContentLoaded', function() {
   const canvas = document.getElementById('particles-canvas');
   if (!canvas) return;
