@@ -7,7 +7,7 @@ import * as Apollo from '@apollo/client';
 const { ApolloClient, InMemoryCache, gql } = Apollo;
 
 // Endpoint GraphQL de blixel.es
-const WORDPRESS_GRAPHQL_ENDPOINT = 'https://blixel.es/graphql';
+const WORDPRESS_GRAPHQL_ENDPOINT = 'https://cms.blixel.es/cms/graphql';
 
 // Configuración del cliente Apollo con opciones adicionales
 export const graphQLClient = new ApolloClient({

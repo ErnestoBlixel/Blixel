@@ -5,10 +5,10 @@ export async function runDiagnostic() {
   console.log('🔍 === DIAGNÓSTICO COMPLETO BLIXEL.ES ===');
   
   const endpoints = [
-    'https://blixel.es/graphql',
-    'https://blixel.es/wp-json/graphql',
-    'https://www.blixel.es/graphql',
-    'https://www.blixel.es/wp-json/graphql'
+    'https://cms.blixel.es/cms/graphql',
+    'https://cms.blixel.es/cms/wp-json/graphql',
+    'https://cms.blixel.es/graphql',
+    'https://cms.blixel.es/wp-json/graphql'
   ];
   
   for (const endpoint of endpoints) {
@@ -47,7 +47,7 @@ export async function runDiagnostic() {
   // Test adicional: verificar si el sitio principal existe
   console.log('\n🌐 Verificando sitio principal...');
   try {
-    const siteResponse = await fetch('https://blixel.es', {
+    const siteResponse = await fetch('https://cms.blixel.es', {
       method: 'HEAD'
     });
     console.log(`   Sitio principal: ${siteResponse.status} ${siteResponse.statusText}`);
