@@ -44,38 +44,53 @@ const GQL = `
   }
 `;
 
-// Fetch usando la variable de entorno
+// Datos por defecto en caso de error
+let home = null;
+let siteSettings = {
+  title: 'Inteligencia Artificial para Empresas | Blixel',
+  description: 'Implementamos soluciones de IA para empresas con ROI garantizado en 90 días.',
+  url: 'https://blixel.es'
+};
+let mediaItems = [];
+let buildStatus = 'fallback';
+
+// Solo intentar GraphQL si estamos en desarrollo o si la URL está configurada
 const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
+const isDev = import.meta.env.DEV;
 
-if (!graphqlUrl) {
-  throw new Error('PUBLIC_WP_GRAPHQL_URL no está configurada');
+if (graphqlUrl && isDev) {
+  try {
+    console.log('🔍 [INDEX] Probando conexión GraphQL:', graphqlUrl);
+    
+    const res = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: GQL })
+    });
+
+    if (res.ok) {
+      const result = await res.json();
+      console.log('✅ [INDEX] GraphQL Response:', result);
+      
+      // Si no hay errores y tenemos data
+      if (!result.errors && result.data) {
+        home = result.data.page;
+        siteSettings = result.data.generalSettings || siteSettings;
+        mediaItems = result.data.mediaItems?.nodes || [];
+        buildStatus = 'success';
+      } else {
+        console.warn('⚠️ [INDEX] GraphQL response tiene errores:', result.errors);
+      }
+    } else {
+      console.warn(`⚠️ [INDEX] Error HTTP: ${res.status} al acceder a ${graphqlUrl}`);
+    }
+    
+  } catch (error) {
+    console.warn('⚠️ [INDEX] Error de conexión GraphQL (usando fallback):', error.message);
+  }
+} else {
+  console.log('ℹ️ [INDEX] GraphQL deshabilitado para build de producción o URL no configurada');
 }
-
-const res = await fetch(graphqlUrl, {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ query: GQL })
-});
-
-if (!res.ok) throw new Error(`Error GraphQL: ${res.status}`);
-
-const result = await res.json();
-
-// Verificar si hay errores en la respuesta
-if (result.errors) {
-  console.error('❌ GraphQL Errors:', result.errors);
-  throw new Error(`GraphQL Error: ${result.errors[0].message}`);
-}
-
-// Verificar si tenemos data
-if (!result.data) {
-  throw new Error('No data returned from GraphQL');
-}
-
-// Extraer datos
-const home = result.data.page;
-const siteSettings = result.data.generalSettings;
-const mediaItems = result.data.mediaItems?.nodes || [];
 
 // Buscar el logo de BLIXEL
 let siteIcon = mediaItems.find(item => 
@@ -137,6 +152,16 @@ const pageDescription = home?.seo?.metaDesc || home?.seo?.opengraphDescription |
 
   <!-- Sección CTA Final -->
   <CTAIASection />
+  
+  <!-- Info de debug -->
+  <div style="margin-top: 2rem; padding: 1rem; background: #1a1a1a; border-radius: 8px; font-size: 0.8rem; color: #888;">
+    <h4 style="color: #ccc; margin: 0 0 0.5rem 0;">🔧 Build Debug:</h4>
+    <p style="margin: 0.2rem 0;"><strong>Status:</strong> {buildStatus}</p>
+    <p style="margin: 0.2rem 0;"><strong>GraphQL URL:</strong> {graphqlUrl || 'No configurada'}</p>
+    <p style="margin: 0.2rem 0;"><strong>Environment:</strong> {isDev ? 'Development' : 'Production'}</p>
+    <p style="margin: 0.2rem 0;"><strong>WordPress Data:</strong> {home ? 'Loaded' : 'Fallback'}</p>
+    <p style="margin: 0.2rem 0;"><strong>Build Time:</strong> {new Date().toISOString()}</p>
+  </div>
 </Layout>
 
 <style>
