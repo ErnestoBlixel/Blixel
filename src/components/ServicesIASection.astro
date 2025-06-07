@@ -1,180 +1,89 @@
 ---
-// Sección: Soluciones de IA para Empresas que ofrecemos
+// Sección: Servicios de IA para empresas
 ---
 
 <section id="servicios" class="services-ia-section">
+  <!-- Canvas de partículas flotantes -->
+  <canvas id="services-particles-canvas" class="particles-canvas"></canvas>
+  
+  <!-- Fondo radial gradient -->
+  <div class="services__background">
+    <div class="gradient-orb gradient-orb--1"></div>
+    <div class="gradient-orb gradient-orb--2"></div>
+  </div>
+
   <div class="container">
     <div class="services-header">
-      <div class="section-badge">
-        <span>Nuestras Soluciones</span>
-      </div>
-      
       <h2 class="services-title">
-        Soluciones de <span class="gradient-text">IA para Empresas</span> que ofrecemos
+        Soluciones de <span class="gradient-text">Inteligencia Artificial</span>
       </h2>
       
       <p class="services-description">
-        Implementamos tecnología de inteligencia artificial adaptada a las necesidades específicas de tu sector empresarial.
+        Te ayudamos a aplicar la Inteligencia Artificial donde marca la diferencia en tu empresa: procesos, decisiones y clientes
       </p>
     </div>
 
     <div class="services-grid">
-      <!-- Formación IA Empresas -->
-      <div class="service-card" data-service="formacion">
-        <div class="card-header">
-          <div class="service-icon">
-            <div class="icon-background">🎓</div>
-          </div>
-          <h3>Formación IA Empresas</h3>
+      <!-- Formación aplicada -->
+      <div class="service-card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7V12C2 16.5 4.23 20.68 7.62 21.81C9.17 22.21 10.59 22 12 21.58C13.41 22 14.83 22.21 16.38 21.81C19.77 20.68 22 16.5 22 12V7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 7V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 16H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
-        
-        <div class="card-content">
-          <p>Capacitamos a tus equipos en el uso estratégico de herramientas de IA para maximizar la productividad empresarial.</p>
-          
-          <ul class="service-features">
-            <li>
-              <div class="feature-icon">✓</div>
-              <span>Workshops personalizados por departamento</span>
-            </li>
-            <li>
-              <div class="feature-icon">✓</div>
-              <span>ChatGPT y herramientas IA aplicadas</span>
-            </li>
-            <li>
-              <div class="feature-icon">✓</div>
-              <span>Casos de uso específicos de tu sector</span>
-            </li>
-            <li>
-              <div class="feature-icon">✓</div>
-              <span>Certificación en IA Empresarial</span>
-            </li>
-          </ul>
-        </div>
-        
-        <div class="card-footer">
-          <a href="/formacion-ia-empresas" class="service-cta">
-            <span>Ver Detalle</span>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </div>
+        <h3>Formación aplicada IA</h3>
+        <p>Convertimos a tu equipo en usuarios avanzados de IA. Formación práctica adaptada a tu sector con casos reales y herramientas específicas.</p>
       </div>
 
-      <!-- Agentes IA y ChatGPT Empresas -->
-      <div class="service-card featured" data-service="agentes">
-        <div class="card-header">
-          <div class="service-icon">
-            <div class="icon-background">🤖</div>
-          </div>
-          <h3>Agentes IA y ChatGPT Empresas</h3>
-          <div class="featured-badge">Más Popular</div>
+      <!-- Automatización de procesos -->
+      <div class="service-card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 7.5V6C21 5.45 20.55 5 20 5H4C3.45 5 3 5.45 3 6V7.5C3 8.05 3.45 8.5 4 8.5H20C20.55 8.5 21 8.05 21 7.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 11.5V10C21 9.45 20.55 9 20 9H4C3.45 9 3 9.45 3 10V11.5C3 12.05 3.45 12.5 4 12.5H20C20.55 12.5 21 12.05 21 11.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 15.5V14C21 13.45 20.55 13 20 13H4C3.45 13 3 13.45 3 14V15.5C3 16.05 3.45 16.5 4 16.5H20C20.55 16.5 21 16.05 21 15.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 19.5V18C21 17.45 20.55 17 20 17H4C3.45 17 3 17.45 3 18V19.5C3 20.05 3.45 20.5 4 20.5H20C20.55 20.5 21 20.05 21 19.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
-        
-        <div class="card-content">
-          <p>Desarrollamos agentes de inteligencia artificial personalizados que automatizan procesos específicos de tu empresa.</p>
-          
-          <ul class="service-features">
-            <li>
-              <div class="feature-icon">✓</div>
-              <span>Chatbots empresariales inteligentes</span>
-            </li>
-            <li>
-              <div class="feature-icon">✓</div>
-              <span>Automatización de atención al cliente</span>
-            </li>
-            <li>
-              <div class="feature-icon">✓</div>
-              <span>Asistentes virtuales para RRHH</span>
-            </li>
-            <li>
-              <div class="feature-icon">✓</div>
-              <span>Integración con sistemas existentes</span>
-            </li>
-          </ul>
-        </div>
-        
-        <div class="card-footer">
-          <a href="/agentes-ia-empresas" class="service-cta">
-            <span>Ver Detalle</span>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </div>
+        <h3>Automatización procesos</h3>
+        <p>Eliminamos tareas repetitivas de tu día a día. Conectamos sistemas, digitalizamos flujos y liberamos tiempo para lo importante.</p>
       </div>
 
-      <!-- Automatización Inteligente & micro-SaaS -->
-      <div class="service-card" data-service="automatizacion">
-        <div class="card-header">
-          <div class="service-icon">
-            <div class="icon-background">⚙️</div>
-          </div>
-          <h3>Automatización Inteligente & micro-SaaS</h3>
+      <!-- Agentes de inteligencia artificial -->
+      <div class="service-card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="14" y="3" width="7" height="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="14" y="14" width="7" height="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="3" y="14" width="7" height="7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6.5 10V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 17.5H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17.5 14V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 6.5H10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
-        
-        <div class="card-content">
-          <p>Creamos soluciones SaaS a medida que automatizan procesos repetitivos y optimizan flujos de trabajo empresariales.</p>
-          
-          <ul class="service-features">
-            <li>
-              <div class="feature-icon">✓</div>
-              <span>Automatización de procesos (RPA)</span>
-            </li>
-            <li>
-              <div class="feature-icon">✓</div>
-              <span>Micro-SaaS personalizados</span>
-            </li>
-            <li>
-              <div class="feature-icon">✓</div>
-              <span>Integración con APIs empresariales</span>
-            </li>
-            <li>
-              <div class="feature-icon">✓</div>
-              <span>Dashboards inteligentes en tiempo real</span>
-            </li>
-          </ul>
-        </div>
-        
-        <div class="card-footer">
-          <a href="/automatizacion-ia-empresas" class="service-cta">
-            <span>Ver Detalle</span>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </div>
+        <h3>Agentes inteligentes IA</h3>
+        <p>Creamos asistentes que trabajan 24/7. Atención al cliente automatizada, análisis de datos y generación de informes sin intervención humana.</p>
       </div>
-    </div>
 
-    <!-- Departamentos que atendemos -->
-    <div class="departments-section">
-      <h3 class="departments-title">IA para cada departamento de tu empresa</h3>
-      <div class="departments-grid">
-        <div class="department-item">
-          <div class="dept-icon">💼</div>
-          <span>IA para Marketing</span>
+      <!-- Desarrollo de microSaaS -->
+      <div class="service-card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 3H21V21H3V3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 3V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="7.5" cy="7.5" r="1.5" fill="currentColor"/>
+            <circle cx="16.5" cy="7.5" r="1.5" fill="currentColor"/>
+            <circle cx="7.5" cy="16.5" r="1.5" fill="currentColor"/>
+            <circle cx="16.5" cy="16.5" r="1.5" fill="currentColor"/>
+          </svg>
         </div>
-        <div class="department-item">
-          <div class="dept-icon">💰</div>
-          <span>IA para Finanzas</span>
-        </div>
-        <div class="department-item">
-          <div class="dept-icon">👥</div>
-          <span>IA para RRHH</span>
-        </div>
-        <div class="department-item">
-          <div class="dept-icon">📊</div>
-          <span>IA para Operaciones</span>
-        </div>
-        <div class="department-item">
-          <div class="dept-icon">🛒</div>
-          <span>IA para Ventas</span>
-        </div>
-        <div class="department-item">
-          <div class="dept-icon">🎯</div>
-          <span>IA para Estrategia</span>
-        </div>
+        <h3>Desarrollo microSaaS</h3>
+        <p>Construimos soluciones concretas que resuelven problemas reales. Apps a medida con IA integrada para optimizar áreas clave de tu negocio.</p>
       </div>
     </div>
   </div>
@@ -182,12 +91,66 @@
 
 <style>
   .services-ia-section {
-    padding: 6rem 0;
-    background: #171717;
     position: relative;
+    background: #000000;
+    padding: 0 0 6rem;
+    margin-top: -4rem;
+    overflow: hidden;
+  }
+
+  /* Canvas de partículas */
+  .particles-canvas {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 100px);
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  /* Fondo con gradiente radial */
+  .services__background {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.3;
+    will-change: transform;
+  }
+
+  .gradient-orb--1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #a855f7 0%, transparent 70%);
+    top: 10%;
+    left: 20%;
+    animation: float-slow 8s ease-in-out infinite;
+  }
+
+  .gradient-orb--2 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #60a5fa 0%, transparent 70%);
+    bottom: 10%;
+    right: 20%;
+    animation: float-slow 10s ease-in-out infinite reverse;
+  }
+
+  @keyframes float-slow {
+    0%, 100% { transform: translate(0, 0); }
+    33% { transform: translate(20px, -20px); }
+    66% { transform: translate(-20px, 20px); }
   }
 
   .container {
+    position: relative;
+    z-index: 15;
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 2rem;
@@ -196,27 +159,17 @@
   .services-header {
     text-align: center;
     margin-bottom: 4rem;
-  }
-
-  .section-badge {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background: rgba(96, 165, 250, 0.1);
-    border: 1px solid rgba(96, 165, 250, 0.2);
-    border-radius: 50px;
-    color: #60a5fa;
-    font-size: 0.875rem;
-    font-weight: 500;
-    margin-bottom: 1.5rem;
+    padding-top: 4rem;
   }
 
   .services-title {
-    font-family: 'Inter Tight', sans-serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 700;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 800;
     line-height: 1.2;
-    color: #e5e5e5;
+    color: #ffffff;
     margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
   }
 
   .gradient-text {
@@ -227,30 +180,38 @@
   }
 
   .services-description {
-    font-size: 1.125rem;
-    color: #a3a3a3;
-    max-width: 600px;
+    font-size: 1.25rem;
+    color: #9ca3af;
+    max-width: 800px;
     margin: 0 auto;
     line-height: 1.6;
+    font-weight: 400;
   }
 
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
-    margin-bottom: 5rem;
   }
 
   .service-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
     padding: 2rem;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
     transition: all 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
     position: relative;
     overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: card-reveal 600ms ease forwards;
   }
+
+  .service-card:nth-child(1) { animation-delay: 100ms; }
+  .service-card:nth-child(2) { animation-delay: 200ms; }
+  .service-card:nth-child(3) { animation-delay: 300ms; }
+  .service-card:nth-child(4) { animation-delay: 400ms; }
 
   .service-card::before {
     content: '';
@@ -264,6 +225,15 @@
     transition: opacity 300ms ease;
   }
 
+  .service-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+
   .service-card:hover {
     transform: translateY(-8px);
     border-color: rgba(96, 165, 250, 0.2);
@@ -274,194 +244,46 @@
     opacity: 1;
   }
 
-  .service-card.featured {
-    border-color: rgba(96, 165, 250, 0.3);
-    background: rgba(96, 165, 250, 0.05);
+  .service-card:hover::after {
+    opacity: 0.5;
   }
 
-  .card-header {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    position: relative;
-  }
-
-  .service-icon {
-    width: fit-content;
-  }
-
-  .icon-background {
+  .card-icon {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
-    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
-    box-shadow: 0 8px 25px rgba(96, 165, 250, 0.25);
+    margin-bottom: 1.5rem;
+    color: #60a5fa;
+    transition: all 300ms ease;
   }
 
-  .card-header h3 {
+  .card-icon svg {
+    width: 36px;
+    height: 36px;
+    stroke-width: 1.5;
+  }
+
+  .service-card:hover .card-icon {
+    transform: scale(1.1) rotate(5deg);
+    color: #93c5fd;
+  }
+
+  .service-card h3 {
     font-family: 'Inter Tight', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: #e5e5e5;
+    margin-bottom: 0.75rem;
     line-height: 1.3;
   }
 
-  .featured-badge {
-    position: absolute;
-    top: -1rem;
-    right: -1rem;
-    background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 0 24px 0 16px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+  .service-card p {
+    color: #9ca3af;
+    line-height: 1.5;
+    font-size: 0.9rem;
   }
-
-  .card-content {
-    margin-bottom: 2rem;
-  }
-
-  .card-content p {
-    color: #d4d4d4;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-  }
-
-  .service-features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .service-features li {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: #d4d4d4;
-    font-size: 0.95rem;
-  }
-
-  .feature-icon {
-    width: 20px;
-    height: 20px;
-    background: rgba(34, 197, 94, 0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #22c55e;
-    font-size: 0.75rem;
-    font-weight: bold;
-    flex-shrink: 0;
-  }
-
-  .card-footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 1.5rem;
-  }
-
-  .service-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #60a5fa;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 200ms ease;
-  }
-
-  .service-cta:hover {
-    color: #93c5fd;
-    transform: translateX(4px);
-  }
-
-  .service-cta svg {
-    transition: transform 200ms ease;
-  }
-
-  .service-cta:hover svg {
-    transform: translateX(2px);
-  }
-
-  /* Sección de departamentos */
-  .departments-section {
-    text-align: center;
-    padding-top: 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .departments-title {
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #e5e5e5;
-    margin-bottom: 2rem;
-  }
-
-  .departments-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .department-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1.5rem 1rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    transition: all 300ms ease;
-    backdrop-filter: blur(8px);
-  }
-
-  .department-item:hover {
-    transform: translateY(-4px);
-    border-color: rgba(96, 165, 250, 0.2);
-    background: rgba(96, 165, 250, 0.05);
-  }
-
-  .dept-icon {
-    width: 50px;
-    height: 50px;
-    background: rgba(96, 165, 250, 0.1);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-  }
-
-  .department-item span {
-    color: #d4d4d4;
-    font-weight: 500;
-    font-size: 0.95rem;
-    text-align: center;
-  }
-
-  /* Animaciones de entrada */
-  .service-card {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: card-reveal 600ms ease forwards;
-  }
-
-  .service-card:nth-child(1) { animation-delay: 0ms; }
-  .service-card:nth-child(2) { animation-delay: 200ms; }
-  .service-card:nth-child(3) { animation-delay: 400ms; }
 
   @keyframes card-reveal {
     to {
@@ -471,13 +293,33 @@
   }
 
   /* Responsive */
+  @media (max-width: 1200px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   @media (max-width: 768px) {
     .services-ia-section {
-      padding: 4rem 0;
+      padding: 0 0 4rem;
+      margin-top: -2rem;
     }
 
     .container {
       padding: 0 1rem;
+    }
+
+    .services-header {
+      margin-bottom: 3rem;
+      padding-top: 2.5rem;
+    }
+
+    .services-title {
+      font-size: 2rem;
+    }
+
+    .services-description {
+      font-size: 1.125rem;
     }
 
     .services-grid {
@@ -489,71 +331,143 @@
       padding: 1.5rem;
     }
 
-    .departments-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
+    .card-icon {
+      width: 50px;
+      height: 50px;
     }
 
-    .department-item {
-      padding: 1rem;
+    .card-icon svg {
+      width: 30px;
+      height: 30px;
     }
 
-    .dept-icon {
-      width: 40px;
-      height: 40px;
-      font-size: 1.25rem;
+    .service-card h3 {
+      font-size: 1.125rem;
+    }
+
+    .gradient-orb--1,
+    .gradient-orb--2 {
+      width: 200px;
+      height: 200px;
     }
   }
 
   @media (max-width: 480px) {
-    .departments-grid {
-      grid-template-columns: 1fr;
+    .services-header {
+      padding-top: 2rem;
+    }
+    
+    .services-title {
+      font-size: 1.75rem;
+    }
+
+    .services-description {
+      font-size: 1rem;
+      padding: 0 0.5rem;
+    }
+
+    .services-grid {
+      gap: 1rem;
+    }
+    
+    .service-card {
+      padding: 1.25rem;
+    }
+    
+    .service-card h3 {
+      font-size: 1.05rem;
+    }
+    
+    .service-card p {
+      font-size: 0.85rem;
     }
   }
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Intersection Observer para animaciones on scroll
-    const observerOptions = {
-      threshold: 0.2,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-in');
-        }
+document.addEventListener('DOMContentLoaded', function() {
+  // Partículas de fondo (igual que en Hero)
+  const canvas = document.getElementById('services-particles-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    
+    function resizeCanvas() {
+      const section = canvas.closest('.services-ia-section');
+      canvas.width = section.offsetWidth;
+      canvas.height = section.offsetHeight;
+    }
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = (Math.random() - 0.5) * 0.3;
+        this.size = Math.random() * 2 + 1;
+        this.opacity = Math.random() * 0.4 + 0.1;
+      }
+      
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        
+        this.x = Math.max(0, Math.min(canvas.width, this.x));
+        this.y = Math.max(0, Math.min(canvas.height, this.y));
+      }
+      
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = '#a855f7';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+    
+    // Crear partículas
+    for (let i = 0; i < 25; i++) {
+      particles.push(new Particle());
+    }
+    
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
       });
-    }, observerOptions);
+      
+      requestAnimationFrame(animate);
+    }
+    
+    animate();
+  }
 
-    // Observar cards de servicios
-    const serviceCards = document.querySelectorAll('.service-card');
-    serviceCards.forEach(card => observer.observe(card));
+  // Intersection Observer para animaciones on scroll
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
 
-    // Observar departamentos
-    const departmentItems = document.querySelectorAll('.department-item');
-    departmentItems.forEach((item, index) => {
-      item.style.animationDelay = `${index * 100}ms`;
-      observer.observe(item);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-in');
+      }
     });
+  }, observerOptions);
 
-    // Efecto hover con Lottie-like animation
-    serviceCards.forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        const icon = card.querySelector('.icon-background');
-        if (icon) {
-          icon.style.transform = 'scale(1.1) rotate(5deg)';
-        }
-      });
-
-      card.addEventListener('mouseleave', () => {
-        const icon = card.querySelector('.icon-background');
-        if (icon) {
-          icon.style.transform = 'scale(1) rotate(0deg)';
-        }
-      });
-    });
-  });
+  // Observar cards de servicios
+  const serviceCards = document.querySelectorAll('.services-ia-section .service-card');
+  serviceCards.forEach(card => observer.observe(card));
+});
 </script>

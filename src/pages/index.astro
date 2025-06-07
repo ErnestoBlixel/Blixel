@@ -12,10 +12,20 @@ import CTAIASection from '../components/CTAIASection.astro';
 // Query para obtener tanto la página de inicio como el icono del sitio
 const GQL = `
   query GetHomePageAndSiteIcon {
-    page(id: "inicio", idType: URI) {
+    page(id: "/", idType: URI) {
       title
       content
       databaseId
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+          mediaDetails {
+            width
+            height
+          }
+        }
+      }
       seo {
         title
         metaDesc
@@ -121,6 +131,28 @@ const logoData = {
 // Extraer datos SEO para el metadata
 const pageTitle = home?.seo?.title || home?.seo?.opengraphTitle || home?.title || siteSettings?.title || 'Inteligencia Artificial para Empresas | Blixel';
 const pageDescription = home?.seo?.metaDesc || home?.seo?.opengraphDescription || siteSettings?.description || 'Implementamos soluciones de IA para empresas con ROI garantizado en 90 días. Automatización, agentes inteligentes y formación especializada.';
+
+// Extraer imagen destacada para Open Graph
+const featuredImage = home?.featuredImage?.node?.sourceUrl || null;
+const featuredImageAlt = home?.featuredImage?.node?.altText || pageTitle;
+
+// El título H1 será el título de la página de WordPress (no el SEO title)
+const h1Title = home?.title || 'Inteligencia Artificial para Empresas';
+
+// Dividir el título en dos líneas de forma más inteligente
+// Buscar si hay un signo de interrogación para dividir ahí
+let titleLine1, titleLine2;
+if (h1Title.includes('?')) {
+  const parts = h1Title.split('?');
+  titleLine1 = parts[0] + '?';
+  titleLine2 = parts[1].trim();
+} else {
+  // Si no hay signo de interrogación, dividir por la mitad
+  const words = h1Title.split(' ');
+  const midPoint = Math.ceil(words.length / 2);
+  titleLine1 = words.slice(0, midPoint).join(' ');
+  titleLine2 = words.slice(midPoint).join(' ');
+}
 ---
 
 <Layout 
@@ -128,18 +160,29 @@ const pageDescription = home?.seo?.metaDesc || home?.seo?.opengraphDescription |
   logoAlt={logoData.alt}
   title={pageTitle}
   description={pageDescription}
+  ogImage={featuredImage}
+  ogImageAlt={featuredImageAlt}
 >
   <!-- Hero Section con datos de WordPress -->
-  <Hero pageSlug="inicio" />
+  <!-- Buscando la página principal (home) -->
+  <Hero 
+    pageSlug="/" 
+    customTitle={h1Title}
+    customDescription={pageDescription}
+    titleLine1={titleLine1}
+    titleLine2={titleLine2}
+    logoUrl={logoData.url}
+    logoAlt={logoData.alt}
+  />
+
+  <!-- Sección: Cómo aplicamos IA en tu empresa -->
+  <ServicesIASection />
 
   <!-- Sección: Qué es la IA Empresarial -->
   <IntroSection />
 
   <!-- Sección del Problema -->
   <ProblemIASection />
-
-  <!-- Sección de Servicios de IA -->
-  <ServicesIASection />
 
   <!-- Sección de Metodología Quick-ROI -->
   <MethodologyIASection />
@@ -153,15 +196,27 @@ const pageDescription = home?.seo?.metaDesc || home?.seo?.opengraphDescription |
   <!-- Sección CTA Final -->
   <CTAIASection />
   
-  <!-- Info de debug -->
-  <div style="margin-top: 2rem; padding: 1rem; background: #1a1a1a; border-radius: 8px; font-size: 0.8rem; color: #888;">
-    <h4 style="color: #ccc; margin: 0 0 0.5rem 0;">🔧 Build Debug:</h4>
-    <p style="margin: 0.2rem 0;"><strong>Status:</strong> {buildStatus}</p>
-    <p style="margin: 0.2rem 0;"><strong>GraphQL URL:</strong> {graphqlUrl || 'No configurada'}</p>
-    <p style="margin: 0.2rem 0;"><strong>Environment:</strong> {isDev ? 'Development' : 'Production'}</p>
-    <p style="margin: 0.2rem 0;"><strong>WordPress Data:</strong> {home ? 'Loaded' : 'Fallback'}</p>
-    <p style="margin: 0.2rem 0;"><strong>Build Time:</strong> {new Date().toISOString()}</p>
-  </div>
+  <!-- Info de debug mejorada -->
+  {isDev && (
+    <div style="margin-top: 2rem; padding: 1rem; background: #1a1a1a; border-radius: 8px; font-size: 0.8rem; color: #888; max-width: 600px; margin-left: auto; margin-right: auto;">
+      <h4 style="color: #ccc; margin: 0 0 0.5rem 0;">🔧 Debug Info:</h4>
+      <p style="margin: 0.2rem 0;"><strong>Status:</strong> {buildStatus === 'success' ? '✅ Conectado' : '❌ Usando fallback'}</p>
+      <p style="margin: 0.2rem 0;"><strong>GraphQL:</strong> {graphqlUrl || 'No configurada'}</p>
+      {home && (
+        <>
+          <p style="margin: 0.5rem 0 0.2rem 0; color: #22c55e;"><strong>📄 Página encontrada:</strong></p>
+          <p style="margin: 0.2rem 0 0.2rem 1rem;">H1: "{h1Title}"</p>
+          <p style="margin: 0.2rem 0 0.2rem 1rem;">SEO Title: "{pageTitle}"</p>
+          {featuredImage && <p style="margin: 0.2rem 0 0.2rem 1rem;">✅ Imagen destacada configurada</p>}
+          {!featuredImage && <p style="margin: 0.2rem 0 0.2rem 1rem; color: #ef4444;">❌ Sin imagen destacada</p>}
+        </>
+      )}
+      {!home && (
+        <p style="margin: 0.5rem 0; color: #f59e0b;">⚠️ No se encontró la página principal en WordPress</p>
+      )}
+      <p style="margin: 0.5rem 0 0; font-size: 0.7rem;">Ejecuta: <code style="background: #333; padding: 2px 4px; border-radius: 3px;">check-visual.bat</code> para más detalles</p>
+    </div>
+  )}
 </Layout>
 
 <style>

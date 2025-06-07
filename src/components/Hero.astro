@@ -3,15 +3,23 @@ export interface Props {
   pageSlug?: string;
   customTitle?: string;
   customDescription?: string;
+  titleLine1?: string;
+  titleLine2?: string;
+  logoUrl?: string;
+  logoAlt?: string;
 }
 
 const {
   pageSlug = 'inicio',
   customTitle,
-  customDescription
+  customDescription,
+  titleLine1,
+  titleLine2,
+  logoUrl = 'https://cms.blixel.es/wp-content/uploads/2025/05/cropped-Copia-de-BLIXEL-STUDIO_logo-500500.png',
+  logoAlt = 'BLIXEL logo'
 } = Astro.props;
 
-// Query ampliado para obtener también la imagen destacada
+// Query ampliado para obtener también la imagen destacada y datos de Yoast
 const GQL = `
   query GetPageSEOData($slug: ID!) {
     page(id: $slug, idType: URI) {
@@ -37,11 +45,34 @@ const GQL = `
   }
 `;
 
-let pageTitle = customTitle || 'Blixel AI';
+let pageTitle = customTitle || 'Inteligencia Artificial para Empresas';
 let pageDescription = customDescription || 'Automatización Inteligente para tu Empresa';
 let featuredImageUrl = null;
 let featuredImageAlt = '';
 let debugInfo = { error: null, found: false, hasData: false, hasImage: false };
+
+// Asegurar que siempre tengamos valores para las líneas del título
+let actualTitleLine1 = titleLine1;
+let actualTitleLine2 = titleLine2;
+
+// Si no se proporcionaron líneas personalizadas, dividir inteligentemente
+if (!titleLine1 || !titleLine2) {
+  const defaultTitle = pageTitle || 'Inteligencia Artificial para Empresas';
+  if (defaultTitle.includes('?')) {
+    const parts = defaultTitle.split('?');
+    actualTitleLine1 = parts[0] + '?';
+    actualTitleLine2 = parts[1]?.trim() || '';
+  } else if (defaultTitle.includes('en tu empresa')) {
+    // Dividir específicamente para "Aplica Inteligencia artificial en tu empresa"
+    actualTitleLine1 = defaultTitle.substring(0, defaultTitle.indexOf('en tu empresa')).trim();
+    actualTitleLine2 = 'en tu empresa';
+  } else {
+    const words = defaultTitle.split(' ');
+    const midPoint = Math.ceil(words.length / 2);
+    actualTitleLine1 = words.slice(0, midPoint).join(' ');
+    actualTitleLine2 = words.slice(midPoint).join(' ');
+  }
+}
 
 // Solo ejecutar GraphQL si estamos en un entorno que lo permita
 if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.env.PUBLIC_WP_GRAPHQL_URL) {
@@ -72,21 +103,21 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
           debugInfo.hasImage = true;
         }
         
-        // Prioridad: SEO title > page title > custom title
-        const newTitle = customTitle || 
-                        page.seo?.title || 
-                        page.seo?.opengraphTitle || 
-                        page.title || 
-                        'Blixel AI';
+        // Si ya tenemos customTitle y customDescription, no sobrescribir
+        if (!customTitle && !customDescription) {
+          // Usar el título de la página (H1) directamente, no el SEO
+          const newTitle = page.title || 
+                          page.seo?.title || 
+                          'Blixel AI';
 
-        // Prioridad: SEO meta description > custom description
-        const newDescription = customDescription || 
-                              page.seo?.metaDesc || 
-                              page.seo?.opengraphDescription || 
-                              'Automatización Inteligente para tu Empresa';
-        
-        pageTitle = newTitle;
-        pageDescription = newDescription;
+          // Prioridad para la descripción: SEO meta description (Yoast) > custom description
+          const newDescription = page.seo?.metaDesc || 
+                                page.seo?.opengraphDescription || 
+                                'Automatización Inteligente para tu Empresa';
+          
+          pageTitle = newTitle;
+          pageDescription = newDescription;
+        }
       } else {
         debugInfo.error = 'Page not found';
       }
@@ -115,15 +146,21 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
   <!-- Contenido principal -->
   <div class="hero__container">
     <div class="hero__content">
-      <!-- Badge -->
-      <div class="hero__badge">
-        <div class="badge-led"></div>
-        <span>Inteligencia Artificial Empresarial</span>
+      <!-- Logo Badge -->
+      <div class="hero__logo-badge">
+        <img src={logoUrl} alt={logoAlt} />
       </div>
 
       <!-- Título principal -->
       <h1 class="hero__title">
-        {pageTitle}
+        {actualTitleLine1 && actualTitleLine2 ? (
+          <>
+            <span class="title-line title-line-1">{actualTitleLine1}</span>
+            <span class="title-line title-line-2">{actualTitleLine2}</span>
+          </>
+        ) : (
+          <span class="title-line">{pageTitle}</span>
+        )}
       </h1>
 
       <!-- Descripción -->
@@ -133,21 +170,27 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
 
       <!-- CTAs -->
       <div class="hero__actions">
-        <button class="cta-primary" id="cta-primary">
-          <span>Automatiza tu Empresa</span>
+        <a href="#contacto" class="cta-primary" id="cta-contactar">
+          <span>Contactar</span>
           <div class="cta-glow"></div>
           <svg class="cta-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
             <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </button>
+        </a>
         
-        <button class="cta-secondary">
-          <span>Ver Demo</span>
-        </button>
+        <a href="https://calendly.com/blixel" target="_blank" rel="noopener noreferrer" class="cta-secondary">
+          <span>Agendar Llamada</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+        </a>
       </div>
 
-      <!-- Trust indicators minimalistas -->
-      <div class="hero__trust">
+      <!-- Trust indicators (opcional) -->
+      <!-- <div class="hero__trust">
         <div class="trust-metric">
           <span class="metric-number">+100</span>
           <span class="metric-label">Empresas</span>
@@ -162,48 +205,12 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
           <span class="metric-number">24/7</span>
           <span class="metric-label">Soporte</span>
         </div>
-      </div>
+      </div> -->
     </div>
 
-    <!-- Visual con imagen destacada o fallback -->
+    <!-- Visual placeholder (imagen vendrá después) -->
     <div class="hero__visual">
-      {featuredImageUrl ? (
-        <!-- Imagen destacada con efecto neon -->
-        <div class="featured-image-container">
-          <div class="neon-border">
-            <div class="neon-runner"></div>
-          </div>
-          <div class="image-wrapper">
-            <img 
-              src="/images/hero-image.png" 
-              alt="Blixel AI Automation"
-              class="featured-image"
-              loading="eager"
-            />
-            <div class="image-overlay"></div>
-          </div>
-        </div>
-      ) : (
-        <!-- Fallback: Grid visual minimalista -->
-        <div class="visual-grid">
-          <div class="grid-item" data-delay="0">
-            <div class="item-icon">🤖</div>
-            <span>IA Avanzada</span>
-          </div>
-          <div class="grid-item" data-delay="200">
-            <div class="item-icon">⚡</div>
-            <span>Automatización</span>
-          </div>
-          <div class="grid-item" data-delay="400">
-            <div class="item-icon">📊</div>
-            <span>Analytics</span>
-          </div>
-          <div class="grid-item" data-delay="600">
-            <div class="item-icon">🔒</div>
-            <span>Seguridad</span>
-          </div>
-        </div>
-      )}
+      <!-- Placeholder minimalista -->
     </div>
   </div>
 
@@ -225,21 +232,28 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     </div>
   )}
 
-  <!-- Scroll indicator -->
-  <div class="scroll-indicator">
-    <div class="scroll-line"></div>
-    <span class="scroll-text">Descubre más</span>
-  </div>
+
 </section>
 
 <style>
   .hero {
     position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    background: #0d0d0d;
+    min-height: calc(100vh - 4rem);
+    background: #000000;
     overflow: hidden;
+    padding-bottom: 0;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%);
+    pointer-events: none;
+    z-index: 5;
   }
 
   /* Debug info minimalista y seguro */
@@ -339,85 +353,155 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     z-index: 10;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 2rem;
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 6rem;
+    padding: 6rem 2rem 8rem;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: calc(100vh - 12rem);
   }
 
   /* Contenido */
   .hero__content {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
   }
 
-  .hero__badge {
+  .hero__logo-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1.5rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 50px;
-    color: #e5e5e5;
-    font-size: 0.875rem;
-    font-weight: 500;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
     backdrop-filter: blur(8px);
-    width: fit-content;
-    animation: pulse-glow 3s ease-in-out infinite;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    animation: logoFloat 3s ease-in-out infinite;
   }
 
-  .badge-led {
-    width: 8px;
-    height: 8px;
-    background: #22c55e;
-    border-radius: 50%;
-    animation: led-pulse 2s ease-in-out infinite;
-    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+  .hero__logo-badge img {
+    width: 75px;
+    height: 75px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+
+  @keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
   }
 
   .hero__title {
-    font-family: 'Inter Tight', -apple-system, sans-serif;
+    font-family: 'Inter', -apple-system, sans-serif;
     font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 700;
-    line-height: 1.1;
-    color: #e5e5e5;
+    font-weight: 800;
+    line-height: 1;
+    color: #ffffff;
+    margin: 0 auto 1rem;
+    letter-spacing: -0.04em;
+    max-width: 100%;
+    padding: 0;
+    text-align: center;
+    display: block;
+  }
+
+  .title-line {
+    display: block;
+    width: 100%;
+    color: #ffffff;
+    font-weight: 800;
     margin: 0;
-    letter-spacing: -0.02em;
+    padding: 0;
+  }
+
+  .title-line-1 {
+    font-size: 1em;
+    margin-bottom: -0.1em;
+  }
+
+  .title-line-2 {
+    font-size: 1em;
+    opacity: 1;
+  }
+
+  /* Animación de fade-in para el título */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero__title {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .title-line {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .title-line-1 {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .title-line-2 {
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  }
+
+  /* Título principal simplificado */
+  .title-line {
+    display: block;
+    width: 100%;
+    color: #ffffff;
+    font-weight: 800;
   }
 
   .hero__description {
     font-family: 'Inter', -apple-system, sans-serif;
-    font-size: 1.25rem;
-    line-height: 1.65;
-    color: #a3a3a3;
-    margin: 0;
-    max-width: 600px;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: #9ca3af;
+    margin: 0 auto;
+    max-width: 900px;
     font-weight: 400;
+    padding: 0 1rem;
+    animation: fadeInUp 0.8s ease-out 0.4s backwards;
   }
 
   .hero__actions {
     display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 1.5rem;
+    margin-top: 3rem;
   }
 
-  /* CTA Primary con glow animado */
+  /* CTA Primary */
   .cta-primary {
     position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 1rem 2rem;
-    background: #60a5fa;
-    color: #0d0d0d;
+    padding: 1.25rem 2.5rem;
+    background: #ffffff;
+    color: #000000;
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.125rem;
     cursor: pointer;
+    text-decoration: none;
     transition: all 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
     overflow: hidden;
   }
@@ -434,8 +518,8 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
   }
 
   .cta-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 25px rgba(96, 165, 250, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
   }
 
   .cta-primary:hover .cta-arrow {
@@ -450,20 +534,20 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 1rem 2rem;
+    padding: 1.25rem 2.5rem;
     background: transparent;
-    color: #e5e5e5;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 1.125rem;
     cursor: pointer;
+    text-decoration: none;
     transition: all 200ms ease;
-    backdrop-filter: blur(8px);
   }
 
   .cta-secondary:hover {
-    border-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
     background: rgba(255, 255, 255, 0.05);
   }
 
@@ -502,167 +586,9 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     background: rgba(255, 255, 255, 0.08);
   }
 
-  /* Visual con imagen destacada */
+  /* Visual placeholder */
   .hero__visual {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  /* Contenedor de imagen destacada con efecto neon */
-  .featured-image-container {
-    position: relative;
-    max-width: 400px;
-    width: 100%;
-    aspect-ratio: 1;
-    border-radius: 24px;
-    overflow: hidden;
-  }
-
-  /* Borde neon animado */
-  .neon-border {
-    position: absolute;
-    inset: -4px;
-    border-radius: 28px;
-    padding: 4px;
-    background: linear-gradient(45deg, 
-      #60a5fa 0%, 
-      #f97316 25%, 
-      #22c55e 50%, 
-      #a855f7 75%, 
-      #60a5fa 100%
-    );
-    background-size: 400% 400%;
-    animation: neon-gradient 4s ease-in-out infinite;
-    z-index: 1;
-  }
-
-  /* Runner que recorre el borde */
-  .neon-runner {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, rgba(96, 165, 250, 0.8) 0%, transparent 70%);
-    border-radius: 50%;
-    filter: blur(15px);
-    animation: neon-runner 3s linear infinite;
-    z-index: 2;
-  }
-
-  /* Wrapper de la imagen */
-  .image-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 24px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(8px);
-    z-index: 3;
-  }
-
-  /* Imagen destacada */
-  .featured-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 24px;
-    transition: transform 600ms ease;
-  }
-
-  .featured-image-container:hover .featured-image {
-    transform: scale(1.05);
-  }
-
-  /* Overlay sutil */
-  .image-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      135deg, 
-      rgba(96, 165, 250, 0.1) 0%, 
-      transparent 50%, 
-      rgba(249, 115, 22, 0.1) 100%
-    );
-    border-radius: 24px;
-    opacity: 0;
-    transition: opacity 600ms ease;
-  }
-
-  .featured-image-container:hover .image-overlay {
-    opacity: 1;
-  }
-
-  /* Grid visual fallback */
-  .visual-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    max-width: 300px;
-  }
-
-  .grid-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 24px;
-    backdrop-filter: blur(8px);
-    transition: all 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
-    opacity: 0;
-    transform: translateY(20px);
-    animation: reveal-up 600ms ease forwards;
-  }
-
-  .grid-item:hover {
-    transform: translateY(-4px) scale(1.02);
-    border-color: rgba(96, 165, 250, 0.2);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  }
-
-  .item-icon {
-    font-size: 1.5rem;
-    opacity: 0.9;
-  }
-
-  .grid-item span {
-    font-size: 0.875rem;
-    color: #d4d4d4;
-    font-weight: 500;
-    text-align: center;
-  }
-
-  /* Scroll indicator */
-  .scroll-indicator {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    opacity: 0.6;
-  }
-
-  .scroll-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, #60a5fa, transparent);
-    animation: scroll-pulse 2s ease-in-out infinite;
-  }
-
-  .scroll-text {
-    font-size: 0.75rem;
-    color: #737373;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    writing-mode: vertical-lr;
+    display: none; /* Por ahora oculto hasta que agreguen la imagen */
   }
 
   /* Animaciones */
@@ -677,10 +603,7 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     50% { box-shadow: 0 0 20px rgba(96, 165, 250, 0.2); }
   }
 
-  @keyframes led-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
+
 
   @keyframes cta-glow-pulse {
     0%, 100% { opacity: 0; }
@@ -692,11 +615,6 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
       opacity: 1;
       transform: translateY(0);
     }
-  }
-
-  @keyframes scroll-pulse {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
   }
 
   /* Animaciones del efecto neon */
@@ -740,32 +658,58 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     }
   }
 
+  @media (min-width: 1440px) {
+    .hero__title {
+      font-size: 4.5rem;
+    }
+    
+    .hero__description {
+      font-size: 1.625rem;
+    }
+  }
+
   /* Responsive */
   @media (max-width: 1024px) {
     .hero__container {
-      grid-template-columns: 1fr;
-      gap: 3rem;
-      text-align: center;
-    }
-
-    .featured-image-container,
-    .visual-grid {
-      margin: 0 auto;
-    }
-
-    .featured-image-container {
-      max-width: 300px;
+      padding: 0 1.5rem;
     }
   }
 
   @media (max-width: 768px) {
     .hero__container {
-      padding: 0 1rem;
+      padding: 4rem 1rem 6rem;
+    }
+
+    .hero__logo-badge {
+      width: 70px;
+      height: 70px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero__logo-badge img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .hero__title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      padding: 0;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .title-line-2 {
+      font-size: 0.95em;
+    }
+
+    .hero__description {
+      font-size: 1.125rem;
     }
 
     .hero__actions {
       flex-direction: column;
       align-items: center;
+      width: 100%;
     }
 
     .cta-primary,
@@ -784,20 +728,6 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
       display: none;
     }
 
-    .featured-image-container {
-      max-width: 250px;
-    }
-
-    .visual-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      max-width: 250px;
-    }
-
-    .grid-item {
-      padding: 1rem;
-    }
-
     .debug-info {
       position: relative;
       top: auto;
@@ -808,6 +738,14 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
   }
 
   @media (max-width: 480px) {
+    .hero {
+      min-height: calc(100vh - 2rem);
+    }
+    
+    .hero::after {
+      height: 100px;
+    }
+    
     .hero__title {
       font-size: 2rem;
     }
@@ -816,77 +754,102 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
       font-size: 1rem;
     }
 
-    .featured-image-container {
-      max-width: 200px;
+    .hero__logo-badge {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 1rem;
+    }
+
+    .hero__logo-badge img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .hero__title {
+      font-size: 1.75rem;
+      line-height: 0.95;
+      padding: 0;
+      max-width: 100%;
+    }
+
+    .title-line {
+      font-size: 1.5rem;
+      display: block;
+    }
+
+    .title-line-2 {
+      font-size: 1.5rem;
     }
   }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Partículas de fondo
   const canvas = document.getElementById('particles-canvas');
-  if (!canvas) return;
-  
-  const ctx = canvas.getContext('2d');
-  let particles = [];
-  
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-  
-  class Particle {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.vx = (Math.random() - 0.5) * 0.5;
-      this.vy = (Math.random() - 0.5) * 0.5;
-      this.size = Math.random() * 2 + 1;
-      this.opacity = Math.random() * 0.5 + 0.2;
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
     
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.size = Math.random() * 2 + 1;
+        this.opacity = Math.random() * 0.5 + 0.2;
+      }
       
-      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        
+        this.x = Math.max(0, Math.min(canvas.width, this.x));
+        this.y = Math.max(0, Math.min(canvas.height, this.y));
+      }
       
-      this.x = Math.max(0, Math.min(canvas.width, this.x));
-      this.y = Math.max(0, Math.min(canvas.height, this.y));
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = '#60a5fa';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
     }
     
-    draw() {
-      ctx.save();
-      ctx.globalAlpha = this.opacity;
-      ctx.fillStyle = '#60a5fa';
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
+    for (let i = 0; i < 30; i++) {
+      particles.push(new Particle());
     }
-  }
-  
-  for (let i = 0; i < 30; i++) {
-    particles.push(new Particle());
-  }
-  
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    particles.forEach(particle => {
-      particle.update();
-      particle.draw();
-    });
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+      
+      requestAnimationFrame(animate);
+    }
     
-    requestAnimationFrame(animate);
+    animate();
   }
   
-  animate();
-  
+  // Parallax effect
   let ticking = false;
   
   function updateParallax() {
@@ -909,11 +872,5 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   window.addEventListener('scroll', requestTick);
-  
-  const gridItems = document.querySelectorAll('.grid-item');
-  gridItems.forEach((item, index) => {
-    const delay = parseInt(item.dataset.delay) || 0;
-    item.style.animationDelay = `${delay}ms`;
-  });
 });
 </script>

@@ -14,6 +14,16 @@ export default defineConfig({
     },
     ssr: {
       noExternal: ['@apollo/client']
+    },
+    // Proxy para evitar CORS en desarrollo
+    server: {
+      proxy: {
+        '/wp-graphql': {
+          target: 'https://cms.blixel.es',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/wp-graphql/, '/graphql')
+        }
+      }
     }
   }
 });

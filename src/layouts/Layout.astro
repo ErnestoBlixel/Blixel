@@ -7,6 +7,8 @@ export interface Props {
   className?: string;
   logoUrl?: string;
   logoAlt?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
 }
 
 // Obtener información del sitio para meta tags
@@ -33,7 +35,9 @@ const {
   description = siteDescription,
   className = '',
   logoUrl,
-  logoAlt
+  logoAlt,
+  ogImage,
+  ogImageAlt = title
 } = Astro.props;
 
 // Construir título completo
@@ -60,11 +64,17 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
   <meta property="og:title" content={fullTitle}>
   <meta property="og:description" content={description}>
   <meta property="og:url" content="https://blixel.es">
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  {ogImage && <meta property="og:image:alt" content={ogImageAlt} />}
+  <meta property="og:site_name" content={siteTitle}>
+  <meta property="og:locale" content="es_ES">
   
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content={fullTitle}>
   <meta name="twitter:description" content={description}>
+  {ogImage && <meta name="twitter:image" content={ogImage} />}
+  {ogImage && <meta name="twitter:image:alt" content={ogImageAlt} />}
   
   <!-- Preload fonts for better performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
