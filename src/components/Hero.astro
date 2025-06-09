@@ -241,19 +241,7 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     min-height: calc(100vh - 4rem);
     background: #000000;
     overflow: hidden;
-    padding-bottom: 0;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 150px;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%);
-    pointer-events: none;
-    z-index: 5;
+    padding-bottom: 150px;
   }
 
   /* Debug info minimalista y seguro */
@@ -353,7 +341,7 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     z-index: 10;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 6rem 2rem 8rem;
+    padding: 6rem 2rem 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -676,8 +664,12 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
   }
 
   @media (max-width: 768px) {
+    .hero {
+      padding-bottom: 100px;
+    }
+
     .hero__container {
-      padding: 4rem 1rem 6rem;
+      padding: 4rem 1rem 2rem;
     }
 
     .hero__logo-badge {
@@ -740,10 +732,7 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
   @media (max-width: 480px) {
     .hero {
       min-height: calc(100vh - 2rem);
-    }
-    
-    .hero::after {
-      height: 100px;
+      padding-bottom: 80px;
     }
     
     .hero__title {

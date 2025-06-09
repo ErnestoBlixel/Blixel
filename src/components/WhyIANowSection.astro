@@ -3,110 +3,62 @@
 ---
 
 <section id="why-ai-now" class="why-ia-section">
+  <!-- Canvas de partículas flotantes -->
+  <canvas id="why-particles-canvas" class="particles-canvas"></canvas>
+  
   <!-- Fondo con gradiente -->
   <div class="why__background">
     <div class="gradient-orb gradient-orb--1"></div>
     <div class="gradient-orb gradient-orb--2"></div>
-    <div class="gradient-orb gradient-orb--3"></div>
   </div>
 
   <div class="container">
-    <div class="why-header">
-      <h2 class="why-title">
-        El momento es <span class="gradient-text">AHORA</span>
-      </h2>
-      
-      <p class="why-subtitle">
-        La Inteligencia Artificial no es el futuro. Es el presente que está transformando empresas cada día.
-      </p>
-    </div>
-
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-number">73%</div>
-        <div class="stat-description">
-          de empresas con IA reportan un aumento del 25% en productividad
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-number">50%</div>
-        <div class="stat-description">
-          de trabajos administrativos desaparecerán en los próximos 2 años
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-number">3x</div>
-        <div class="stat-description">
-          más rápido avanzan las empresas con IA vs su competencia
-        </div>
-      </div>
-    </div>
-
-    <div class="impact-section">
-      <h3 class="impact-title">Lo que la IA hace por tu empresa <span class="highlight">HOY</span></h3>
-      
-      <div class="benefits-grid">
-        <div class="benefit-item">
-          <h4>Automatización Inteligente</h4>
-          <p>Libera hasta 4 horas diarias por empleado. Reduce errores humanos en un 85%. Tu equipo se enfoca en tareas estratégicas de alto valor.</p>
-        </div>
-
-        <div class="benefit-item">
-          <h4>Eficiencia Multiplicada</h4>
-          <p>Procesamiento de datos 100x más rápido. Respuestas instantáneas a clientes 24/7. Análisis predictivos para decisiones más inteligentes.</p>
-        </div>
-
-        <div class="benefit-item">
-          <h4>Ventaja Competitiva</h4>
-          <p>Mientras dudas, tu competencia ya está implementando. Los early adopters capturan el 70% del mercado. El coste de entrada aumenta cada mes.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="warning-section">
-      <h3 class="warning-title">La realidad que no puedes ignorar</h3>
-      
-      <div class="warning-content">
-        <div class="warning-block">
-          <h4>Para los trabajadores:</h4>
-          <p>Los que dominen IA multiplicarán su valor x10. Los que la ignoren serán reemplazados en meses, no años. La adaptación HOY garantiza empleabilidad MAÑANA.</p>
-        </div>
-
-        <div class="warning-block">
-          <h4>Para las empresas:</h4>
-          <p>Sin IA = Sin futuro. La brecha competitiva se vuelve insalvable en 6-12 meses. Las empresas que se resistan al cambio no sobrevivirán al 2026.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="urgency-section">
-      <h3 class="urgency-title">Cada día sin IA es:</h3>
-      
-      <div class="loss-grid">
-        <div class="loss-item">
-          <span class="loss-icon">💸</span>
-          <p>Dinero perdido en tareas automatizables</p>
-        </div>
+    <div class="why-content-wrapper">
+      <!-- Lado izquierdo: Título y descripción -->
+      <div class="why-text-content">
+        <h2 class="why-title">
+          El momento es <span class="gradient-text">AHORA</span>
+        </h2>
         
-        <div class="loss-item">
-          <span class="loss-icon">⏰</span>
-          <p>Talento desperdiciado en procesos obsoletos</p>
-        </div>
+        <p class="why-description">
+          La Inteligencia Artificial no es el futuro. Es el presente que está transformando empresas cada día. Mientras lees esto, tu competencia ya está automatizando procesos, mejorando su eficiencia y capturando más mercado.
+        </p>
         
-        <div class="loss-item">
-          <span class="loss-icon">🏃</span>
-          <p>Terreno cedido a competidores más ágiles</p>
+        <p class="why-subdescription">
+          Cada día sin IA es dinero perdido en tareas automatizables, talento desperdiciado en procesos obsoletos y terreno cedido a competidores más ágiles. La pregunta no es si implementar IA, sino cuándo. Y la respuesta es clara: el momento es ahora.
+        </p>
+      </div>
+
+      <!-- Lado derecho: Grid 2x2 de estadísticas -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">73%</div>
+          <div class="stat-description">
+            de empresas con IA reportan +25% en productividad
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">50%</div>
+          <div class="stat-description">
+            de trabajos administrativos desaparecerán en 2 años
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">3x</div>
+          <div class="stat-description">
+            más rápido avanzan las empresas con IA
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">2026</div>
+          <div class="stat-description">
+            empresas sin IA no sobrevivirán más allá
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="cta-section">
-      <p class="cta-text">
-        <strong>No se trata de si tu empresa puede permitirse implementar IA.</strong><br>
-        <span class="cta-highlight">Se trata de si puede permitirse NO hacerlo.</span>
-      </p>
     </div>
   </div>
 </section>
@@ -115,8 +67,21 @@
   .why-ia-section {
     position: relative;
     background: #000000;
-    padding: 6rem 0;
+    padding: 0 0 6rem;
+    margin-top: -150px;
+    padding-top: 150px;
     overflow: hidden;
+  }
+
+  /* Canvas de partículas */
+  .particles-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.4;
   }
 
   /* Fondo con gradientes */
@@ -130,290 +95,157 @@
     position: absolute;
     border-radius: 50%;
     filter: blur(120px);
-    opacity: 0.2;
+    opacity: 0.25;
     will-change: transform;
   }
 
   .gradient-orb--1 {
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, #ef4444 0%, transparent 70%);
+    background: radial-gradient(circle, #60a5fa 0%, transparent 70%);
     top: -200px;
     right: -200px;
-    animation: pulse-slow 8s ease-in-out infinite;
+    animation: float-slow 10s ease-in-out infinite;
   }
 
   .gradient-orb--2 {
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, #f59e0b 0%, transparent 70%);
+    background: radial-gradient(circle, #a855f7 0%, transparent 70%);
     bottom: -150px;
     left: -150px;
-    animation: pulse-slow 10s ease-in-out infinite reverse;
+    animation: float-slow 12s ease-in-out infinite reverse;
   }
 
-  .gradient-orb--3 {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, #60a5fa 0%, transparent 70%);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: pulse-slow 12s ease-in-out infinite;
-  }
-
-  @keyframes pulse-slow {
-    0%, 100% { transform: scale(1); opacity: 0.2; }
-    50% { transform: scale(1.1); opacity: 0.3; }
+  @keyframes float-slow {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -30px) scale(1.05); }
+    66% { transform: translate(-30px, 30px) scale(0.95); }
   }
 
   .container {
     position: relative;
     z-index: 10;
-    max-width: 1000px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 2rem;
   }
 
-  /* Header */
-  .why-header {
-    text-align: center;
-    margin-bottom: 4rem;
+  .why-content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    min-height: 500px;
+  }
+
+  /* Contenido de texto (lado izquierdo) */
+  .why-text-content {
+    max-width: 600px;
   }
 
   .why-title {
-    font-family: 'Inter Tight', -apple-system, sans-serif;
-    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(3rem, 5vw, 4rem);
     font-weight: 800;
     line-height: 1.1;
     color: #ffffff;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, #ef4444 0%, #f59e0b 50%, #60a5fa 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .why-subtitle {
-    font-size: 1.5rem;
-    color: #9ca3af;
-    line-height: 1.5;
-    font-weight: 400;
-  }
-
-  /* Stats Grid */
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-bottom: 5rem;
-  }
-
-  .stat-card {
-    text-align: center;
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    transition: all 300ms ease;
-  }
-
-  .stat-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(239, 68, 68, 0.3);
-    background: rgba(255, 255, 255, 0.04);
-  }
-
-  .stat-number {
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 3.5rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #ef4444 0%, #f59e0b 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 0.5rem;
-  }
-
-  .stat-description {
-    color: #e5e5e5;
-    font-size: 1rem;
-    line-height: 1.4;
-  }
-
-  /* Impact Section */
-  .impact-section {
-    margin-bottom: 4rem;
-  }
-
-  .impact-title {
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #ffffff;
-    text-align: center;
-    margin-bottom: 3rem;
-    line-height: 1.2;
-  }
-
-  .highlight {
-    color: #60a5fa;
-  }
-
-  .benefits-grid {
-    display: grid;
-    gap: 3rem;
-  }
-
-  .benefit-item {
-    text-align: center;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fade-in-up 600ms ease forwards;
-  }
-
-  .benefit-item:nth-child(1) { animation-delay: 100ms; }
-  .benefit-item:nth-child(2) { animation-delay: 200ms; }
-  .benefit-item:nth-child(3) { animation-delay: 300ms; }
-
-  .benefit-item h4 {
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 1.75rem;
-    font-weight: 600;
-    color: #60a5fa;
-    margin-bottom: 1rem;
-  }
-
-  .benefit-item p {
-    color: #d1d5db;
-    font-size: 1.125rem;
-    line-height: 1.6;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  /* Warning Section */
-  .warning-section {
-    background: rgba(239, 68, 68, 0.05);
-    border: 1px solid rgba(239, 68, 68, 0.2);
-    border-radius: 24px;
-    padding: 3rem;
-    margin-bottom: 4rem;
-    backdrop-filter: blur(10px);
-  }
-
-  .warning-title {
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #ef4444;
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
-
-  .warning-content {
-    display: grid;
-    gap: 2rem;
-  }
-
-  .warning-block {
-    text-align: center;
-  }
-
-  .warning-block h4 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #f59e0b;
-    margin-bottom: 0.75rem;
-  }
-
-  .warning-block p {
-    color: #e5e5e5;
-    font-size: 1.1rem;
-    line-height: 1.6;
-  }
-
-  /* Urgency Section */
-  .urgency-section {
-    margin-bottom: 4rem;
-  }
-
-  .urgency-title {
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #ffffff;
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
-
-  .loss-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-
-  .loss-item {
-    text-align: center;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 16px;
-    transition: all 300ms ease;
-  }
-
-  .loss-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-    transform: translateY(-3px);
-  }
-
-  .loss-icon {
-    font-size: 2.5rem;
-    display: block;
-    margin-bottom: 1rem;
-  }
-
-  .loss-item p {
-    color: #d1d5db;
-    font-size: 1rem;
-    line-height: 1.4;
-  }
-
-  /* CTA Section */
-  .cta-section {
-    text-align: center;
-    padding: 3rem;
-    background: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .cta-text {
-    font-size: 1.5rem;
-    line-height: 1.6;
-    color: #e5e5e5;
-  }
-
-  .cta-text strong {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-  }
-
-  .cta-highlight {
-    font-size: 1.75rem;
-    font-weight: 700;
     background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  @keyframes fade-in-up {
+  .why-description {
+    font-size: 1.25rem;
+    color: #e5e5e5;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+  }
+
+  .why-subdescription {
+    font-size: 1.125rem;
+    color: #9ca3af;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  /* Stats Grid (lado derecho) */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 2rem;
+    height: 100%;
+  }
+
+  .stat-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    backdrop-filter: blur(10px);
+    transition: all 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: card-reveal 600ms ease forwards;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .stat-card:nth-child(1) { animation-delay: 100ms; }
+  .stat-card:nth-child(2) { animation-delay: 200ms; }
+  .stat-card:nth-child(3) { animation-delay: 300ms; }
+  .stat-card:nth-child(4) { animation-delay: 400ms; }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(96, 165, 250, 0.05) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(96, 165, 250, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .stat-card:hover::before {
+    opacity: 1;
+  }
+
+  .stat-number {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.75rem;
+    line-height: 1;
+  }
+
+  .stat-description {
+    color: #e5e5e5;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  @keyframes card-reveal {
     to {
       opacity: 1;
       transform: translateY(0);
@@ -421,76 +253,99 @@
   }
 
   /* Responsive */
+  @media (max-width: 1024px) {
+    .why-content-wrapper {
+      gap: 4rem;
+    }
+
+    .stats-grid {
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      padding: 2rem 1.5rem;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+    }
+  }
+
   @media (max-width: 768px) {
     .why-ia-section {
-      padding: 4rem 0;
+      padding: 0 0 4rem;
+      margin-top: -100px;
+      padding-top: 100px;
     }
 
     .container {
       padding: 0 1rem;
     }
 
+    .why-content-wrapper {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .why-text-content {
+      text-align: center;
+      max-width: 100%;
+    }
+
     .why-title {
       font-size: 2.5rem;
     }
 
-    .why-subtitle {
-      font-size: 1.25rem;
+    .why-description {
+      font-size: 1.125rem;
+    }
+
+    .why-subdescription {
+      font-size: 1rem;
     }
 
     .stats-grid {
       grid-template-columns: 1fr;
       gap: 1.5rem;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .stat-card {
+      padding: 2rem;
     }
 
     .stat-number {
       font-size: 2.5rem;
     }
 
-    .impact-title {
-      font-size: 1.75rem;
-    }
-
-    .benefit-item h4 {
-      font-size: 1.5rem;
-    }
-
-    .benefit-item p {
-      font-size: 1rem;
-    }
-
-    .warning-section {
-      padding: 2rem;
-    }
-
-    .loss-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .cta-text {
-      font-size: 1.25rem;
-    }
-
-    .cta-highlight {
-      font-size: 1.5rem;
-    }
-
     .gradient-orb--1,
-    .gradient-orb--2,
-    .gradient-orb--3 {
+    .gradient-orb--2 {
       width: 300px;
       height: 300px;
     }
   }
 
   @media (max-width: 480px) {
+    .why-ia-section {
+      margin-top: -80px;
+      padding-top: 80px;
+    }
+
     .why-title {
       font-size: 2rem;
     }
 
-    .why-subtitle {
-      font-size: 1.125rem;
+    .why-description {
+      font-size: 1rem;
+    }
+
+    .why-subdescription {
+      font-size: 0.9rem;
+    }
+
+    .stat-card {
+      padding: 1.5rem;
     }
 
     .stat-number {
@@ -498,45 +353,80 @@
     }
 
     .stat-description {
-      font-size: 0.9rem;
-    }
-
-    .impact-title {
-      font-size: 1.5rem;
-    }
-
-    .benefit-item h4 {
-      font-size: 1.25rem;
-    }
-
-    .warning-title {
-      font-size: 1.5rem;
-    }
-
-    .warning-block h4 {
-      font-size: 1.125rem;
-    }
-
-    .warning-block p {
-      font-size: 1rem;
-    }
-
-    .urgency-title {
-      font-size: 1.5rem;
-    }
-
-    .cta-text {
-      font-size: 1.125rem;
-    }
-
-    .cta-highlight {
-      font-size: 1.25rem;
+      font-size: 0.85rem;
     }
   }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Partículas de fondo (similar a Hero)
+  const canvas = document.getElementById('why-particles-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    
+    function resizeCanvas() {
+      const section = canvas.closest('.why-ia-section');
+      canvas.width = section.offsetWidth;
+      canvas.height = section.offsetHeight;
+    }
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = (Math.random() - 0.5) * 0.3;
+        this.size = Math.random() * 2 + 1;
+        this.opacity = Math.random() * 0.3 + 0.1;
+        this.color = Math.random() > 0.5 ? '#60a5fa' : '#a855f7';
+      }
+      
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        
+        this.x = Math.max(0, Math.min(canvas.width, this.x));
+        this.y = Math.max(0, Math.min(canvas.height, this.y));
+      }
+      
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+    
+    // Crear menos partículas para no saturar
+    for (let i = 0; i < 20; i++) {
+      particles.push(new Particle());
+    }
+    
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+      
+      requestAnimationFrame(animate);
+    }
+    
+    animate();
+  }
+
   // Intersection Observer para animaciones
   const observerOptions = {
     threshold: 0.1,
@@ -546,8 +436,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        
         // Animar números si es una stat-card
         if (entry.target.classList.contains('stat-card')) {
           const numberElement = entry.target.querySelector('.stat-number');
@@ -559,15 +447,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }, observerOptions);
 
-  // Observar elementos
-  const elements = document.querySelectorAll('.stat-card, .benefit-item, .warning-section, .loss-item');
-  elements.forEach(el => observer.observe(el));
+  // Observar las tarjetas
+  const statCards = document.querySelectorAll('.stat-card');
+  statCards.forEach(card => observer.observe(card));
 
   // Función para animar números
   function animateNumber(element) {
     const finalText = element.textContent;
     const hasPercentage = finalText.includes('%');
     const hasX = finalText.includes('x');
+    const isYear = finalText.match(/^\d{4}$/);
+    
+    if (isYear) {
+      // No animar años, mostrar directamente
+      return;
+    }
     
     let finalNumber;
     if (hasPercentage) {
@@ -607,21 +501,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function updateOrbPositions() {
     orbs.forEach((orb, index) => {
-      const speed = (index + 1) * 0.05;
-      const x = mouseX * speed * 100;
-      const y = mouseY * speed * 100;
+      const speed = (index + 1) * 0.02;
+      const x = mouseX * speed * 50;
+      const y = mouseY * speed * 50;
       orb.style.transform = `translate(${x}px, ${y}px)`;
     });
     requestAnimationFrame(updateOrbPositions);
   }
 
-  updateOrbPositions();
+  if (window.innerWidth > 768) {
+    updateOrbPositions();
+  }
 });
 </script>
-</thinking>
-
-Perfecto, he creado el nuevo componente. Ahora necesito actualizar el archivo `index.astro` para incluir esta nueva sección justo después de `ServicesIASection`:
-
-<function_calls>
-<invoke name="edit_file">
-<parameter name="path">C:\Users\nestu\Desktop\🏢 Blixel\BLIXEL AI\.Astro\src\pages\index.astro
