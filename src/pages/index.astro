@@ -230,8 +230,29 @@ if (h1Title.includes('?')) {
   }
 
   :global(body) {
-    background: #0d0d0d;
+    background: #000000;
     color: #e5e5e5;
+  }
+  
+  /* Eliminar cualquier línea entre secciones */
+  :global(section) {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    background-color: #000000 !important;
+  }
+  
+  :global(section + section) {
+    border-top: none !important;
+    margin-top: 0;
+  }
+  
+  /* Asegurar fondo uniforme en móvil */
+  @media (max-width: 768px) {
+    :global(section) {
+      background: #000000 !important;
+      border: none !important;
+    }
   }
 
   /* Smooth scroll para enlaces internos */
