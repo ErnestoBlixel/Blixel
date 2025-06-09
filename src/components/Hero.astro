@@ -10,7 +10,7 @@ export interface Props {
 }
 
 const {
-  pageSlug = 'inicio',
+  pageSlug = '/',
   customTitle,
   customDescription,
   titleLine1,
@@ -19,9 +19,9 @@ const {
   logoAlt = 'BLIXEL logo'
 } = Astro.props;
 
-// Query ampliado para obtener también la imagen destacada y datos de Yoast
+// Query para obtener datos de la página
 const GQL = `
-  query GetPageSEOData($slug: ID!) {
+  query GetPageData($slug: ID!) {
     page(id: $slug, idType: URI) {
       title
       content
@@ -35,10 +35,6 @@ const GQL = `
         node {
           sourceUrl
           altText
-          mediaDetails {
-            width
-            height
-          }
         }
       }
     }
@@ -47,39 +43,11 @@ const GQL = `
 
 let pageTitle = customTitle || 'Inteligencia Artificial para Empresas';
 let pageDescription = customDescription || 'Automatización Inteligente para tu Empresa';
-let featuredImageUrl = null;
-let featuredImageAlt = '';
-let debugInfo = { error: null, found: false, hasData: false, hasImage: false };
 
-// Asegurar que siempre tengamos valores para las líneas del título
-let actualTitleLine1 = titleLine1;
-let actualTitleLine2 = titleLine2;
-
-// Si no se proporcionaron líneas personalizadas, dividir inteligentemente
-if (!titleLine1 || !titleLine2) {
-  const defaultTitle = pageTitle || 'Inteligencia Artificial para Empresas';
-  if (defaultTitle.includes('?')) {
-    const parts = defaultTitle.split('?');
-    actualTitleLine1 = parts[0] + '?';
-    actualTitleLine2 = parts[1]?.trim() || '';
-  } else if (defaultTitle.includes('en tu empresa')) {
-    // Dividir específicamente para "Aplica Inteligencia artificial en tu empresa"
-    actualTitleLine1 = defaultTitle.substring(0, defaultTitle.indexOf('en tu empresa')).trim();
-    actualTitleLine2 = 'en tu empresa';
-  } else {
-    const words = defaultTitle.split(' ');
-    const midPoint = Math.ceil(words.length / 2);
-    actualTitleLine1 = words.slice(0, midPoint).join(' ');
-    actualTitleLine2 = words.slice(midPoint).join(' ');
-  }
-}
-
-// Solo ejecutar GraphQL si estamos en un entorno que lo permita
-if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.env.PUBLIC_WP_GRAPHQL_URL) {
+// Solo ejecutar GraphQL en desarrollo
+if (import.meta.env.DEV && import.meta.env.PUBLIC_WP_GRAPHQL_URL) {
   try {
-    const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
-    
-    const res = await fetch(graphqlUrl, {
+    const res = await fetch(import.meta.env.PUBLIC_WP_GRAPHQL_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
@@ -92,775 +60,240 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
       const result = await res.json();
       const page = result.data?.page;
       
-      if (page) {
-        debugInfo.found = true;
-        debugInfo.hasData = !!(page.seo?.title || page.seo?.metaDesc);
-        
-        // Obtener imagen destacada
-        if (page.featuredImage?.node) {
-          featuredImageUrl = page.featuredImage.node.sourceUrl;
-          featuredImageAlt = page.featuredImage.node.altText || pageTitle;
-          debugInfo.hasImage = true;
-        }
-        
-        // Si ya tenemos customTitle y customDescription, no sobrescribir
-        if (!customTitle && !customDescription) {
-          // Usar el título de la página (H1) directamente, no el SEO
-          const newTitle = page.title || 
-                          page.seo?.title || 
-                          'Blixel AI';
-
-          // Prioridad para la descripción: SEO meta description (Yoast) > custom description
-          const newDescription = page.seo?.metaDesc || 
-                                page.seo?.opengraphDescription || 
-                                'Automatización Inteligente para tu Empresa';
-          
-          pageTitle = newTitle;
-          pageDescription = newDescription;
-        }
-      } else {
-        debugInfo.error = 'Page not found';
+      if (page && !customTitle && !customDescription) {
+        pageTitle = page.title || pageTitle;
+        pageDescription = page.seo?.metaDesc || pageDescription;
       }
-    } else {
-      debugInfo.error = `Request failed: ${res.status}`;
     }
   } catch (error) {
-    debugInfo.error = 'Connection error';
-    // En caso de error, usar valores por defecto sin romper el build
+    // Usar valores por defecto
   }
-} else {
-  debugInfo.error = 'GraphQL URL not configured';
+}
+
+// Dividir título en líneas
+let actualTitleLine1 = titleLine1;
+let actualTitleLine2 = titleLine2;
+
+if (!titleLine1 || !titleLine2) {
+  if (pageTitle.includes('?')) {
+    const parts = pageTitle.split('?');
+    actualTitleLine1 = parts[0] + '?';
+    actualTitleLine2 = parts[1]?.trim() || '';
+  } else {
+    const words = pageTitle.split(' ');
+    const midPoint = Math.ceil(words.length / 2);
+    actualTitleLine1 = words.slice(0, midPoint).join(' ');
+    actualTitleLine2 = words.slice(midPoint).join(' ');
+  }
 }
 ---
 
 <section class="hero">
-  <!-- Canvas de partículas flotantes -->
-  <canvas id="particles-canvas" class="particles-canvas"></canvas>
-  
-  <!-- Fondo radial gradient -->
-  <div class="hero__background">
-    <div class="gradient-orb gradient-orb--1"></div>
-    <div class="gradient-orb gradient-orb--2"></div>
-  </div>
-
-  <!-- Contenido principal -->
-  <div class="hero__container">
-    <div class="hero__content">
-      <!-- Logo Badge -->
-      <div class="hero__logo-badge">
-        <img src={logoUrl} alt={logoAlt} />
-      </div>
-
-      <!-- Título principal -->
-      <h1 class="hero__title">
-        {actualTitleLine1 && actualTitleLine2 ? (
-          <>
-            <span class="title-line title-line-1">{actualTitleLine1}</span>
-            <span class="title-line title-line-2">{actualTitleLine2}</span>
-          </>
-        ) : (
-          <span class="title-line">{pageTitle}</span>
-        )}
-      </h1>
-
-      <!-- Descripción -->
-      <p class="hero__description">
-        {pageDescription}
-      </p>
-
-      <!-- CTAs -->
-      <div class="hero__actions">
-        <a href="#contacto" class="cta-primary" id="cta-contactar">
-          <span>Contactar</span>
-          <div class="cta-glow"></div>
-          <svg class="cta-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        
-        <a href="https://calendly.com/blixel" target="_blank" rel="noopener noreferrer" class="cta-secondary">
-          <span>Agendar Llamada</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="16" y1="2" x2="16" y2="6"></line>
-            <line x1="8" y1="2" x2="8" y2="6"></line>
-            <line x1="3" y1="10" x2="21" y2="10"></line>
-          </svg>
-        </a>
-      </div>
-
-      <!-- Trust indicators (opcional) -->
-      <!-- <div class="hero__trust">
-        <div class="trust-metric">
-          <span class="metric-number">+100</span>
-          <span class="metric-label">Empresas</span>
-        </div>
-        <div class="trust-divider"></div>
-        <div class="trust-metric">
-          <span class="metric-number">99%</span>
-          <span class="metric-label">Satisfacción</span>
-        </div>
-        <div class="trust-divider"></div>
-        <div class="trust-metric">
-          <span class="metric-number">24/7</span>
-          <span class="metric-label">Soporte</span>
-        </div>
-      </div> -->
+  <div class="container">
+    <!-- Logo -->
+    <div class="logo-wrapper">
+      <img src={logoUrl} alt={logoAlt} />
     </div>
 
-    <!-- Visual placeholder (imagen vendrá después) -->
-    <div class="hero__visual">
-      <!-- Placeholder minimalista -->
+    <!-- Título -->
+    <h1 class="hero-title">
+      <span class="line-1">{actualTitleLine1}</span>
+      <span class="line-2">{actualTitleLine2}</span>
+    </h1>
+
+    <!-- Descripción -->
+    <p class="hero-description">
+      {pageDescription}
+    </p>
+
+    <!-- CTAs -->
+    <div class="hero-actions">
+      <a href="#contacto" class="btn-primary">
+        Contactar
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      
+      <a href="https://calendly.com/blixel" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+        Agendar Llamada
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+      </a>
     </div>
   </div>
-
-  <!-- Debug minimalista (solo visible en desarrollo) -->
-  {import.meta.env.DEV && (
-    <div class="debug-info">
-      <div class="debug-status">
-        <span class={`status-dot ${debugInfo.found ? 'success' : 'error'}`}></span>
-        <span class="status-text">
-          {debugInfo.found ? 'Connected' : 'Disconnected'}
-        </span>
-      </div>
-      {debugInfo.hasImage && (
-        <div class="debug-success">✅ Featured image loaded</div>
-      )}
-      {debugInfo.error && (
-        <div class="debug-error">Error: {debugInfo.error}</div>
-      )}
-    </div>
-  )}
-
-
 </section>
 
 <style>
+  /* Hero compacto */
   .hero {
-    position: relative;
-    min-height: calc(100vh - 4rem);
     background: #000000;
-    overflow: hidden;
-    padding-bottom: 150px;
-    border: none;
-  }
-
-  /* Debug info minimalista y seguro */
-  .debug-info {
-    position: fixed;
-    top: 100px;
-    right: 20px;
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    z-index: 1000;
-    border: 1px solid #333;
-  }
-
-  .debug-status {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #ef4444;
-  }
-
-  .status-dot.success {
-    background: #22c55e;
-  }
-
-  .status-text {
-    font-weight: 500;
-  }
-
-  .debug-success {
-    margin-top: 0.5rem;
-    color: #86efac;
-    font-size: 0.65rem;
-  }
-
-  .debug-error {
-    margin-top: 0.5rem;
-    color: #fca5a5;
-    font-size: 0.65rem;
-  }
-
-  /* Canvas de partículas */
-  .particles-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    opacity: 0.6;
-  }
-
-  /* Fondo con gradiente radial */
-  .hero__background {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .gradient-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.3;
-    will-change: transform;
-  }
-
-  .gradient-orb--1 {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, #60a5fa 0%, transparent 70%);
-    top: 20%;
-    right: 10%;
-    animation: float-slow 8s ease-in-out infinite;
-  }
-
-  .gradient-orb--2 {
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, #f97316 0%, transparent 70%);
-    bottom: 20%;
-    left: 10%;
-    animation: float-slow 10s ease-in-out infinite reverse;
-  }
-
-  /* Container */
-  .hero__container {
-    position: relative;
-    z-index: 10;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 6rem 2rem 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    padding: 2rem 0 3rem; /* Mucho menos padding */
+    min-height: auto; /* Sin altura mínima forzada */
     text-align: center;
-    min-height: calc(100vh - 12rem);
+    margin-top: -80px; /* Compensar el header */
+    padding-top: calc(80px + 2rem); /* Espacio después del header */
   }
 
-  /* Contenido */
-  .hero__content {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: center;
+  .container {
     max-width: 1200px;
-    width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
   }
 
-  .hero__logo-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 100px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    backdrop-filter: blur(8px);
+  /* Logo */
+  .logo-wrapper {
     margin-bottom: 1.5rem;
-    overflow: hidden;
-    animation: logoFloat 3s ease-in-out infinite;
   }
 
-  .hero__logo-badge img {
-    width: 75px;
-    height: 75px;
+  .logo-wrapper img {
+    width: 70px;
+    height: 70px;
     object-fit: contain;
     filter: brightness(0) invert(1);
     opacity: 0.9;
   }
 
-  @keyframes logoFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-  }
-
-  .hero__title {
+  /* Título */
+  .hero-title {
     font-family: 'Inter', -apple-system, sans-serif;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 800;
     line-height: 1;
     color: #ffffff;
-    margin: 0 auto 1rem;
-    letter-spacing: -0.04em;
-    max-width: 100%;
-    padding: 0;
-    text-align: center;
+    margin: 0 0 1.5rem;
+    letter-spacing: -0.03em;
+  }
+
+  .line-1, .line-2 {
     display: block;
   }
 
-  .title-line {
-    display: block;
-    width: 100%;
-    color: #ffffff;
-    font-weight: 800;
-    margin: 0;
-    padding: 0;
+  .line-2 {
+    margin-top: 0.2em;
   }
 
-  .title-line-1 {
-    font-size: 1em;
-    margin-bottom: -0.1em;
-  }
-
-  .title-line-2 {
-    font-size: 1em;
-    opacity: 1;
-  }
-
-  /* Animación de fade-in para el título */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .hero__title {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-
-  .title-line {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-
-  .title-line-1 {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-
-  .title-line-2 {
-    animation: fadeInUp 0.8s ease-out 0.2s backwards;
-  }
-
-  /* Título principal simplificado */
-  .title-line {
-    display: block;
-    width: 100%;
-    color: #ffffff;
-    font-weight: 800;
-  }
-
-  .hero__description {
-    font-family: 'Inter', -apple-system, sans-serif;
-    font-size: 1.5rem;
-    line-height: 1.6;
+  /* Descripción */
+  .hero-description {
+    font-size: 1.25rem;
     color: #9ca3af;
-    margin: 0 auto;
-    max-width: 900px;
-    font-weight: 400;
-    padding: 0 1rem;
-    animation: fadeInUp 0.8s ease-out 0.4s backwards;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    line-height: 1.5;
   }
 
-  .hero__actions {
+  /* Botones */
+  .hero-actions {
     display: flex;
-    gap: 1.5rem;
-    margin-top: 3rem;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
-  /* CTA Primary */
-  .cta-primary {
-    position: relative;
+  .btn-primary,
+  .btn-secondary {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 1.25rem 2.5rem;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-primary {
     background: #ffffff;
     color: #000000;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1.125rem;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
-    overflow: hidden;
   }
 
-  .cta-glow {
-    position: absolute;
-    inset: 0;
-    border-radius: 12px;
-    background: #60a5fa;
-    opacity: 0;
-    filter: blur(20px);
-    animation: cta-glow-pulse 6s ease-in-out infinite;
-    z-index: -1;
-  }
-
-  .cta-primary:hover {
+  .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
   }
 
-  .cta-primary:hover .cta-arrow {
-    transform: translateX(4px);
-  }
-
-  .cta-arrow {
-    transition: transform 200ms ease;
-  }
-
-  .cta-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1.25rem 2.5rem;
+  .btn-secondary {
     background: transparent;
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 1.125rem;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 200ms ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
-  .cta-secondary:hover {
-    border-color: rgba(255, 255, 255, 0.4);
+  .btn-secondary:hover {
     background: rgba(255, 255, 255, 0.05);
-  }
-
-  /* Trust indicators */
-  .hero__trust {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    margin-top: 2rem;
-    opacity: 0.8;
-  }
-
-  .trust-metric {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .metric-number {
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #60a5fa;
-    line-height: 1;
-  }
-
-  .metric-label {
-    font-size: 0.875rem;
-    color: #737373;
-    font-weight: 400;
-  }
-
-  .trust-divider {
-    width: 1px;
-    height: 32px;
-    background: rgba(255, 255, 255, 0.08);
-  }
-
-  /* Visual placeholder */
-  .hero__visual {
-    display: none; /* Por ahora oculto hasta que agreguen la imagen */
-  }
-
-  /* Animaciones */
-  @keyframes float-slow {
-    0%, 100% { transform: translate(0, 0); }
-    33% { transform: translate(20px, -20px); }
-    66% { transform: translate(-20px, 20px); }
-  }
-
-  @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 5px rgba(96, 165, 250, 0.1); }
-    50% { box-shadow: 0 0 20px rgba(96, 165, 250, 0.2); }
-  }
-
-
-
-  @keyframes cta-glow-pulse {
-    0%, 100% { opacity: 0; }
-    50% { opacity: 0.2; }
-  }
-
-  @keyframes reveal-up {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Animaciones del efecto neon */
-  @keyframes neon-gradient {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-
-  @keyframes neon-runner {
-    0% {
-      top: -50px;
-      left: -50px;
-      transform: rotate(0deg);
-    }
-    25% {
-      top: -50px;
-      right: -50px;
-      left: auto;
-      transform: rotate(90deg);
-    }
-    50% {
-      bottom: -50px;
-      right: -50px;
-      top: auto;
-      left: auto;
-      transform: rotate(180deg);
-    }
-    75% {
-      bottom: -50px;
-      left: -50px;
-      right: auto;
-      top: auto;
-      transform: rotate(270deg);
-    }
-    100% {
-      top: -50px;
-      left: -50px;
-      bottom: auto;
-      right: auto;
-      transform: rotate(360deg);
-    }
-  }
-
-  @media (min-width: 1440px) {
-    .hero__title {
-      font-size: 4.5rem;
-    }
-    
-    .hero__description {
-      font-size: 1.625rem;
-    }
+    border-color: rgba(255, 255, 255, 0.5);
   }
 
   /* Responsive */
-  @media (max-width: 1024px) {
-    .hero__container {
-      padding: 0 1.5rem;
-    }
-  }
-
   @media (max-width: 768px) {
     .hero {
-      padding-bottom: 100px;
+      padding: 1.5rem 0 2.5rem;
+      margin-top: -80px;
+      padding-top: calc(80px + 1.5rem);
     }
 
-    .hero__container {
-      padding: 4rem 1rem 2rem;
+    .container {
+      padding: 0 1rem;
     }
 
-    .hero__logo-badge {
-      width: 70px;
-      height: 70px;
-      margin-bottom: 1.5rem;
+    .logo-wrapper img {
+      width: 60px;
+      height: 60px;
     }
 
-    .hero__logo-badge img {
-      width: 50px;
-      height: 50px;
-    }
-
-    .hero__title {
-      font-size: clamp(2rem, 5vw, 3rem);
-      padding: 0;
-      line-height: 1;
+    .hero-title {
+      font-size: 2rem;
       margin-bottom: 1rem;
     }
 
-    .title-line-2 {
-      font-size: 0.95em;
-    }
-
-    .hero__description {
+    .hero-description {
       font-size: 1.125rem;
+      margin-bottom: 1.5rem;
     }
 
-    .hero__actions {
+    .hero-actions {
       flex-direction: column;
       align-items: center;
-      width: 100%;
     }
 
-    .cta-primary,
-    .cta-secondary {
+    .btn-primary,
+    .btn-secondary {
       width: 100%;
       max-width: 280px;
       justify-content: center;
-    }
-
-    .hero__trust {
-      justify-content: center;
-      gap: 1rem;
-    }
-
-    .trust-divider {
-      display: none;
-    }
-
-    .debug-info {
-      position: relative;
-      top: auto;
-      right: auto;
-      margin-top: 2rem;
-      max-width: 100%;
     }
   }
 
   @media (max-width: 480px) {
     .hero {
-      min-height: calc(100vh - 2rem);
-      padding-bottom: 80px;
-    }
-    
-    .hero__title {
-      font-size: 2rem;
+      padding: 1rem 0 2rem;
     }
 
-    .hero__description {
-      font-size: 1rem;
-    }
-
-    .hero__logo-badge {
-      width: 60px;
-      height: 60px;
+    .logo-wrapper {
       margin-bottom: 1rem;
     }
 
-    .hero__logo-badge img {
-      width: 40px;
-      height: 40px;
+    .logo-wrapper img {
+      width: 50px;
+      height: 50px;
     }
 
-    .hero__title {
+    .hero-title {
       font-size: 1.75rem;
-      line-height: 0.95;
-      padding: 0;
-      max-width: 100%;
     }
 
-    .title-line {
-      font-size: 1.5rem;
-      display: block;
+    .hero-description {
+      font-size: 1rem;
     }
 
-    .title-line-2 {
-      font-size: 1.5rem;
+    .btn-primary,
+    .btn-secondary {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.95rem;
     }
   }
 </style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Partículas de fondo
-  const canvas = document.getElementById('particles-canvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.size = Math.random() * 2 + 1;
-        this.opacity = Math.random() * 0.5 + 0.2;
-      }
-      
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-        
-        this.x = Math.max(0, Math.min(canvas.width, this.x));
-        this.y = Math.max(0, Math.min(canvas.height, this.y));
-      }
-      
-      draw() {
-        ctx.save();
-        ctx.globalAlpha = this.opacity;
-        ctx.fillStyle = '#60a5fa';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
-    }
-    
-    for (let i = 0; i < 30; i++) {
-      particles.push(new Particle());
-    }
-    
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(particle => {
-        particle.update();
-        particle.draw();
-      });
-      
-      requestAnimationFrame(animate);
-    }
-    
-    animate();
-  }
-  
-  // Parallax effect
-  let ticking = false;
-  
-  function updateParallax() {
-    const scrolled = window.pageYOffset;
-    const parallax = scrolled * 0.5;
-    
-    const background = document.querySelector('.hero__background');
-    if (background) {
-      background.style.transform = `translateY(${parallax}px)`;
-    }
-    
-    ticking = false;
-  }
-  
-  function requestTick() {
-    if (!ticking) {
-      requestAnimationFrame(updateParallax);
-      ticking = true;
-    }
-  }
-  
-  window.addEventListener('scroll', requestTick);
-});
-</script>
