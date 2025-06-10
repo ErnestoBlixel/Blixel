@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { Bell, X, Check, AlertTriangle, Info, Star, Zap, Heart, Gift } from 'lucide-react';
 import { BorderBeam } from './BorderBeam';
 import { Particles } from './Particles';
