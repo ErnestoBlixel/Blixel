@@ -257,16 +257,15 @@
     transform: translateX(4px);
   }
 
-  /* Lista animada */
+  /* Lista animada - SIN FONDO */
   .examples-list-container {
     position: relative;
     height: 520px;
     overflow: hidden;
-    background: rgba(0, 0, 0, 0.3);  /* Fondo oscuro para contrastar con tarjetas blancas */
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;  /* Sin fondo */
+    border: none;
     border-radius: 20px;
     padding: 0;
-    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
   }
 
   .animated-list-wrapper {
@@ -277,45 +276,44 @@
   .animated-list {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 12px;  /* Espacio entre tarjetas */
     height: 100%;
     overflow: hidden;
     position: relative;
-    padding: 1rem;
+    padding: 0;  /* Sin padding */
   }
 
-  /* Gradiente para fade out */
+  /* Gradiente para fade out en la parte inferior */
   .examples-list-container::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 60px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+    height: 80px;
+    background: linear-gradient(to top, #000000 0%, transparent 100%);
     pointer-events: none;
-    z-index: 5;
-    border-radius: 0 0 20px 20px;
+    z-index: 20;
   }
 
-  /* Tarjeta de notificación - Fondo blanco forzado */
+  /* Tarjeta de notificación - TARJETAS INDIVIDUALES */
   .notification-card {
-    /* Fondo blanco sólido - múltiples capas para garantizar */
-    background-color: #ffffff !important;
+    /* Fondo blanco sólido */
     background: #ffffff !important;
-    background-image: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
     
-    /* Borde y sombra */
-    border: 1px solid #e5e7eb !important;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
+    /* Borde y sombra para separación visual */
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     
-    /* Espaciado y layout */
-    padding: 1rem 1.25rem;
-    margin-bottom: 0.75rem;
-    display: block;
+    /* Espaciado interno */
+    padding: 16px 20px;
+    margin: 0 8px;  /* Margen lateral para separación */
+    
+    /* Layout */
+    display: flex;
+    align-items: center;
+    gap: 16px;
     position: relative;
     z-index: 10;
     
@@ -328,15 +326,8 @@
   }
 
   .notification-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23) !important;
-    background-color: #ffffff !important;
-    background: #ffffff !important;
-  }
-  
-  /* Asegurar que el contenido también tenga fondo blanco */
-  .notification-card * {
-    background: transparent !important;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
 
   @keyframes notification-in {
@@ -348,27 +339,21 @@
 
   .notification-header {
     display: flex;
-    align-items: flex-start;
-    gap: 1rem;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
   }
 
   .notification-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
     flex-shrink: 0;
-    background: #f3f4f6;  /* Fondo gris claro sólido */
-    border: 1px solid #e5e7eb;
-    position: relative;
-  }
-  
-  .notification-icon span {
-    filter: none;
-    opacity: 0.9;
+    background: #f9fafb;  /* Fondo gris muy claro */
+    border: 1px solid #f3f4f6;
   }
 
   .notification-content {
@@ -399,7 +384,12 @@
     margin: 0.25rem 0 0 0;
   }
 
-  /* Las tarjetas siempre tienen fondo blanco - sin modo oscuro */
+  /* Estilo específico para cada tarjeta */
+  .notification-card:nth-child(1) { animation-delay: 0ms; }
+  .notification-card:nth-child(2) { animation-delay: 100ms; }
+  .notification-card:nth-child(3) { animation-delay: 200ms; }
+  .notification-card:nth-child(4) { animation-delay: 300ms; }
+  .notification-card:nth-child(5) { animation-delay: 400ms; }
 
   /* Responsive */
   @media (max-width: 1024px) {
@@ -678,7 +668,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Array para mantener las notificaciones actuales
   let currentNotifications = [];
   let notificationIndex = 0;
-  const maxVisibleNotifications = 7;
+  const maxVisibleNotifications = 5;  // Máximo 5 tarjetas visibles
 
   // Función para añadir una nueva notificación
   function addNotification() {
@@ -690,10 +680,10 @@ document.addEventListener('DOMContentLoaded', function() {
     listContainer.insertBefore(card, listContainer.firstChild);
 
     // Limitar el número de notificaciones visibles
-    if (currentNotifications.length > maxVisibleNotifications) {
+    if (currentNotifications.length > 5) {  // Reducido a 5 para que se vean bien separadas
       const oldCard = currentNotifications.pop();
       oldCard.style.opacity = '0';
-      oldCard.style.transform = 'scale(0.8) translateY(20px)';
+      oldCard.style.transform = 'translateY(20px)';
       setTimeout(() => oldCard.remove(), 300);
     }
 
@@ -715,12 +705,12 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Iniciar con algunas notificaciones
-  for (let i = 0; i < 5; i++) {
-    setTimeout(() => addNotification(), i * 250);
+  for (let i = 0; i < 4; i++) {  // Solo 4 para empezar
+    setTimeout(() => addNotification(), i * 300);  // Más espacio entre animaciones
   }
 
   // Añadir nuevas notificaciones periódicamente
-  setInterval(addNotification, 2000);
+  setInterval(addNotification, 3000);  // Cada 3 segundos en lugar de 2
 
   // Partículas de fondo
   const canvas = document.getElementById('examples-particles-canvas');
