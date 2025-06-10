@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NotificationManager, useNotifications, type Notification } from '../magic-ui';
+import { NotificationManager, useNotifications, type Notification } from './magic-ui';
 
 const MagicNotificationsDemo: React.FC = () => {
   const { notifications, addNotification, removeNotification, clearAllNotifications } = useNotifications();
