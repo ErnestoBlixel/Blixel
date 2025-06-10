@@ -138,15 +138,15 @@
 
   .examples-content-wrapper {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 5rem;
+    grid-template-columns: 1fr 1.5fr;  /* Invertido para que el texto ocupe más */
+    gap: 4rem;
     align-items: center;
   }
 
   /* Contenido de texto */
   .examples-text-content {
-    max-width: 600px;
-    padding-left: 2rem;
+    max-width: 700px;
+    padding-right: 2rem;  /* Cambio a padding-right porque ahora está a la derecha */
   }
 
   .examples-title {
@@ -261,10 +261,10 @@
     position: relative;
     height: 520px;
     overflow: hidden;
-    background: rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: transparent;  /* Sin fondo para ver las tarjetas mejor */
+    border: none;
     border-radius: 20px;
-    padding: 1.5rem;
+    padding: 0;
   }
 
   .animated-list-wrapper {
@@ -279,6 +279,7 @@
     height: 100%;
     overflow: hidden;
     position: relative;
+    padding: 1rem;
   }
 
   /* Gradiente para fade out */
@@ -288,8 +289,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 100px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, transparent 100%);
+    height: 60px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
     pointer-events: none;
     z-index: 5;
     border-radius: 0 0 20px 20px;
@@ -297,22 +298,26 @@
 
   /* Tarjeta de notificación - Estilo Magic UI con fondo blanco */
   .notification-card {
-    background: #ffffff;  /* Fondo blanco sólido */
-    border: 1px solid #e5e7eb;  /* Borde gris claro más visible */
+    background: #ffffff !important;  /* Fondo blanco sólido forzado */
+    border: 1px solid #e5e7eb !important;  /* Borde gris claro más visible */
     border-radius: 12px;
-    padding: 1rem;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
     opacity: 0;
     transform: scale(0) translateY(20px);
     animation: notification-in 500ms ease forwards;
     transition: all 200ms ease;
     cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);  /* Sombra simplificada */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);  /* Sombra más sutil */
+    position: relative;
+    z-index: 1;
   }
 
   .notification-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: scale(1.02) translateX(4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
     border-color: #d1d5db;  /* Borde ligeramente más oscuro en hover */
+    background: #ffffff !important;  /* Mantener fondo blanco en hover */
   }
 
   @keyframes notification-in {
@@ -324,21 +329,25 @@
 
   .notification-header {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    align-items: flex-start;
+    gap: 1rem;
   }
 
   .notification-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1rem;
     flex-shrink: 0;
-    background: var(--icon-color, #3b82f6);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);  /* Sombra sutil para el icono */
+    background: rgba(0, 0, 0, 0.04);  /* Fondo gris muy claro */
+    position: relative;
+  }
+  
+  .notification-icon span {
+    filter: brightness(0.8);
   }
 
   .notification-content {
@@ -347,22 +356,26 @@
 
   .notification-title {
     font-size: 0.875rem;
-    font-weight: 500;
-    color: #111827;
+    font-weight: 600;
+    color: #111827 !important;  /* Color oscuro forzado */
     margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .notification-time {
     font-size: 0.75rem;
-    color: #6b7280;
+    color: #9ca3af !important;  /* Color más claro para tiempo */
     font-weight: 400;
+    margin-left: auto;  /* Empujar al final */
   }
 
   .notification-description {
-    font-size: 0.875rem;
-    color: #111827;
+    font-size: 0.75rem;
+    color: #6b7280 !important;  /* Color gris para descripción */
     line-height: 1.4;
-    margin: 0;
+    margin: 0.25rem 0 0 0;
   }
 
   /* Modo oscuro para las tarjetas */
@@ -508,112 +521,127 @@ document.addEventListener('DOMContentLoaded', function() {
     // Automatizaciones
     {
       title: 'Factura procesada',
-      description: 'Magic UI',
-      time: '2m ago',
+      description: 'Sistema automático de procesamiento OCR',
+      time: 'hace 2s',
       color: '#3B82F6',
-      type: 'automation'
+      type: 'automation',
+      icon: '🧾'  // Emoji de recibo
     },
     {
       title: 'Email categorizado',
-      description: 'Magic UI',
-      time: '5m ago',
+      description: 'IA clasifica correos automáticamente',
+      time: 'hace 5s',
       color: '#F59E0B',
-      type: 'automation'
+      type: 'automation',
+      icon: '📧'  // Emoji de email
     },
     {
       title: 'Informe generado',
-      description: 'Magic UI',
-      time: '8m ago',
+      description: 'Dashboard KPI actualizado en tiempo real',
+      time: 'hace 8s',
       color: '#10B981',
-      type: 'automation'
+      type: 'automation',
+      icon: '📊'  // Emoji de gráfico
     },
     {
       title: 'Contrato revisado',
-      description: 'Magic UI',
-      time: '10m ago',
+      description: 'Análisis legal automático completado',
+      time: 'hace 10s',
       color: '#EF4444',
-      type: 'automation'
+      type: 'automation',
+      icon: '📝'  // Emoji de documento
     },
     {
-      title: 'Proceso automatizado',
-      description: 'Magic UI',
-      time: '12m ago',
+      title: 'Datos sincronizados',
+      description: 'CRM actualizado con nuevos leads',
+      time: 'hace 12s',
       color: '#3B82F6',
-      type: 'automation'
+      type: 'automation',
+      icon: '🔄'  // Emoji de sincronización
     },
     
     // Agentes IA
     {
       title: 'Cliente atendido',
-      description: 'Magic UI',
-      time: '15m ago',
+      description: 'Chatbot resolvió consulta técnica',
+      time: 'hace 15s',
       color: '#F59E0B',
-      type: 'agent'
+      type: 'agent',
+      icon: '💬'  // Emoji de chat
     },
     {
       title: 'Lead cualificado',
-      description: 'Magic UI',
-      time: '18m ago',
+      description: 'IA identificó oportunidad caliente',
+      time: 'hace 18s',
       color: '#EF4444',
-      type: 'agent'
+      type: 'agent',
+      icon: '🎯'  // Emoji de diana
     },
     {
       title: 'Cita agendada',
-      description: 'Magic UI',
-      time: '20m ago',
+      description: 'Asistente virtual coordinó reunión',
+      time: 'hace 20s',
       color: '#3B82F6',
-      type: 'agent'
+      type: 'agent',
+      icon: '📅'  // Emoji de calendario
     },
     {
       title: 'Venta completada',
-      description: 'Magic UI',
-      time: '22m ago',
+      description: 'Bot cerró transacción B2B',
+      time: 'hace 22s',
       color: '#8B5CF6',
-      type: 'agent'
+      type: 'agent',
+      icon: '💰'  // Emoji de dinero
     },
     {
       title: 'Llamada analizada',
-      description: 'Magic UI',
-      time: '25m ago',
+      description: 'IA transcribió y resumió reunión',
+      time: 'hace 25s',
       color: '#EC4899',
-      type: 'agent'
+      type: 'agent',
+      icon: '📞'  // Emoji de teléfono
     },
     
     // MicroSaaS
     {
-      title: 'Nuevo pedido',
-      description: 'Magic UI',
-      time: '28m ago',
+      title: 'Pedido procesado',
+      description: 'E-commerce automatizado 24/7',
+      time: 'hace 28s',
       color: '#10B981',
-      type: 'microsaas'
-    },
-    {
-      title: 'Dashboard actualizado',
-      description: 'Magic UI',
-      time: '30m ago',
-      color: '#EC4899',
-      type: 'microsaas'
-    },
-    {
-      title: 'Inventario bajo',
-      description: 'Magic UI',
-      time: '32m ago',
-      color: '#F59E0B',
-      type: 'microsaas'
+      type: 'microsaas',
+      icon: '🛒'  // Emoji de carrito
     },
     {
       title: 'SEO optimizado',
-      description: 'Magic UI',
-      time: '35m ago',
+      description: 'IA mejoró ranking en Google',
+      time: 'hace 30s',
+      color: '#EC4899',
+      type: 'microsaas',
+      icon: '🔍'  // Emoji de lupa
+    },
+    {
+      title: 'Stock actualizado',
+      description: 'Inventario sincronizado en la nube',
+      time: 'hace 32s',
+      color: '#F59E0B',
+      type: 'microsaas',
+      icon: '📦'  // Emoji de paquete
+    },
+    {
+      title: 'Métrica analizada',
+      description: 'KPIs procesados automáticamente',
+      time: 'hace 35s',
       color: '#10B981',
-      type: 'microsaas'
+      type: 'microsaas',
+      icon: '📈'  // Emoji de gráfico creciente
     },
     {
       title: 'Pago procesado',
-      description: 'Magic UI',
-      time: '38m ago',
+      description: 'Transacción segura completada',
+      time: 'hace 38s',
       color: '#3B82F6',
-      type: 'microsaas'
+      type: 'microsaas',
+      icon: '💳'  // Emoji de tarjeta
     }
   ];
 
@@ -625,10 +653,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     card.innerHTML = `
       <div class="notification-header">
-        <div class="notification-icon" style="--icon-color: ${example.color};"></div>
+        <div class="notification-icon">
+          <span style="font-size: 1.5rem;">${example.icon || '✓'}</span>
+        </div>
         <div class="notification-content">
           <div class="notification-title">
-            ${example.title} • <span class="notification-time">${example.time}</span>
+            ${example.title}
+            <span class="notification-time">${example.time}</span>
           </div>
           <div class="notification-description">${example.description}</div>
         </div>
@@ -669,8 +700,11 @@ document.addEventListener('DOMContentLoaded', function() {
       if (index > 0) {
         const timeElement = notification.querySelector('.notification-time');
         if (timeElement) {
-          const currentTime = parseInt(timeElement.textContent.match(/\d+/)[0]);
-          timeElement.textContent = `hace ${currentTime + 2}s`;
+          const match = timeElement.textContent.match(/(\d+)/);
+          if (match) {
+            const currentTime = parseInt(match[1]);
+            timeElement.textContent = `hace ${currentTime + 2}s`;
+          }
         }
       }
     });
