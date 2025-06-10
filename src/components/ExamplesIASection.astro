@@ -307,13 +307,14 @@
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     
     /* Espaciado interno */
-    padding: 16px 20px;
+    padding: 0;  /* Sin padding general */
     margin: 0 8px;  /* Margen lateral para separación */
+    overflow: hidden;
     
     /* Layout */
     display: flex;
-    align-items: center;
-    gap: 16px;
+    align-items: stretch;  /* Estirar elementos hijos */
+    gap: 0;
     position: relative;
     z-index: 10;
     
@@ -339,35 +340,47 @@
 
   .notification-header {
     display: flex;
-    align-items: center;
-    gap: 12px;
+    align-items: stretch;  /* Estirar para que el icono ocupe toda la altura */
+    gap: 0;
     width: 100%;
+    min-height: 56px;  /* Altura mínima para 2 líneas de texto */
   }
 
   .notification-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
+    width: 56px;
+    height: 100%;  /* Ocupar toda la altura */
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    background: #f9fafb;  /* Fondo gris muy claro */
-    border: 1px solid #f3f4f6;
+    background: #10b981;  /* Verde para el check */
+    color: #ffffff;
+    border-radius: 16px 0 0 16px;  /* Solo redondeado a la izquierda */
+  }
+  
+  .notification-icon svg {
+    width: 28px;
+    height: 28px;
+    stroke-width: 2.5;
   }
 
   .notification-content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    padding: 12px 16px 12px 12px;  /* Padding solo en el contenido */
   }
 
   .notification-title {
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: #000000 !important;  /* Negro para máximo contraste */
     margin: 0;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: space-between;
   }
 
   .notification-time {
@@ -516,40 +529,35 @@ document.addEventListener('DOMContentLoaded', function() {
       description: 'Sistema automático de procesamiento OCR',
       time: 'hace 2s',
       color: '#3B82F6',
-      type: 'automation',
-      icon: '🧾'  // Emoji de recibo
+      type: 'automation'
     },
     {
       title: 'Email categorizado',
       description: 'IA clasifica correos automáticamente',
       time: 'hace 5s',
       color: '#F59E0B',
-      type: 'automation',
-      icon: '📧'  // Emoji de email
+      type: 'automation'
     },
     {
       title: 'Informe generado',
       description: 'Dashboard KPI actualizado en tiempo real',
       time: 'hace 8s',
       color: '#10B981',
-      type: 'automation',
-      icon: '📊'  // Emoji de gráfico
+      type: 'automation'
     },
     {
       title: 'Contrato revisado',
       description: 'Análisis legal automático completado',
       time: 'hace 10s',
       color: '#EF4444',
-      type: 'automation',
-      icon: '📝'  // Emoji de documento
+      type: 'automation'
     },
     {
       title: 'Datos sincronizados',
       description: 'CRM actualizado con nuevos leads',
       time: 'hace 12s',
       color: '#3B82F6',
-      type: 'automation',
-      icon: '🔄'  // Emoji de sincronización
+      type: 'automation'
     },
     
     // Agentes IA
@@ -558,40 +566,35 @@ document.addEventListener('DOMContentLoaded', function() {
       description: 'Chatbot resolvió consulta técnica',
       time: 'hace 15s',
       color: '#F59E0B',
-      type: 'agent',
-      icon: '💬'  // Emoji de chat
+      type: 'agent'
     },
     {
       title: 'Lead cualificado',
       description: 'IA identificó oportunidad caliente',
       time: 'hace 18s',
       color: '#EF4444',
-      type: 'agent',
-      icon: '🎯'  // Emoji de diana
+      type: 'agent'
     },
     {
       title: 'Cita agendada',
       description: 'Asistente virtual coordinó reunión',
       time: 'hace 20s',
       color: '#3B82F6',
-      type: 'agent',
-      icon: '📅'  // Emoji de calendario
+      type: 'agent'
     },
     {
       title: 'Venta completada',
       description: 'Bot cerró transacción B2B',
       time: 'hace 22s',
       color: '#8B5CF6',
-      type: 'agent',
-      icon: '💰'  // Emoji de dinero
+      type: 'agent'
     },
     {
       title: 'Llamada analizada',
       description: 'IA transcribió y resumió reunión',
       time: 'hace 25s',
       color: '#EC4899',
-      type: 'agent',
-      icon: '📞'  // Emoji de teléfono
+      type: 'agent'
     },
     
     // MicroSaaS
@@ -600,40 +603,35 @@ document.addEventListener('DOMContentLoaded', function() {
       description: 'E-commerce automatizado 24/7',
       time: 'hace 28s',
       color: '#10B981',
-      type: 'microsaas',
-      icon: '🛒'  // Emoji de carrito
+      type: 'microsaas'
     },
     {
       title: 'SEO optimizado',
       description: 'IA mejoró ranking en Google',
       time: 'hace 30s',
       color: '#EC4899',
-      type: 'microsaas',
-      icon: '🔍'  // Emoji de lupa
+      type: 'microsaas'
     },
     {
       title: 'Stock actualizado',
       description: 'Inventario sincronizado en la nube',
       time: 'hace 32s',
       color: '#F59E0B',
-      type: 'microsaas',
-      icon: '📦'  // Emoji de paquete
+      type: 'microsaas'
     },
     {
       title: 'Métrica analizada',
       description: 'KPIs procesados automáticamente',
       time: 'hace 35s',
       color: '#10B981',
-      type: 'microsaas',
-      icon: '📈'  // Emoji de gráfico creciente
+      type: 'microsaas'
     },
     {
       title: 'Pago procesado',
       description: 'Transacción segura completada',
       time: 'hace 38s',
       color: '#3B82F6',
-      type: 'microsaas',
-      icon: '💳'  // Emoji de tarjeta
+      type: 'microsaas'
     }
   ];
 
@@ -646,7 +644,9 @@ document.addEventListener('DOMContentLoaded', function() {
     card.innerHTML = `
       <div class="notification-header">
         <div class="notification-icon">
-          <span style="font-size: 1.5rem;">${example.icon || '✓'}</span>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
         <div class="notification-content">
           <div class="notification-title">
