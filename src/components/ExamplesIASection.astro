@@ -301,12 +301,12 @@
     z-index: 20;
   }
 
-  /* Tarjeta de notificación - FONDO BLANCO + ANIMACIONES MAGIC UI */
+  /* Tarjeta de notificación - FONDO BLANCO CON ANIMACIONES */
   .notification-card {
     /* Fondo blanco y borde */
     background: #ffffff;
     border: 2px solid #ffffff;
-    outline: 1px solid rgba(229, 231, 235, 0.5);
+    outline: 1px solid #e5e7eb;
     border-radius: 12px;
     
     /* Espaciado */
@@ -318,83 +318,42 @@
     align-items: center;
     gap: 12px;
     
-    /* Sombra suave */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    /* Sombra */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     
-    /* Estado inicial para animación */
-    opacity: 0;
-    transform: translateY(40px) scale(0.9);
-    
-    /* Transiciones suaves */
-    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    /* Transiciones */
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    
+    /* Estado inicial sin animación */
+    opacity: 1;
+    transform: translateX(0);
   }
 
-  /* Animación de entrada estilo Magic UI */
-  .notification-card.animate-in {
-    animation: magicSlideIn 600ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  }
-
-  /* Animación de salida */
-  .notification-card.animate-out {
-    animation: magicSlideOut 400ms cubic-bezier(0.4, 0, 1, 1) forwards;
-  }
-
-  @keyframes magicSlideIn {
-    0% {
+  /* Animación simple de entrada desde la izquierda */
+  @keyframes slideIn {
+    from {
       opacity: 0;
-      transform: translateY(40px) scale(0.9);
+      transform: translateX(-50px);
     }
-    60% {
+    to {
       opacity: 1;
-      transform: translateY(-5px) scale(1.02);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateX(0);
     }
   }
 
-  @keyframes magicSlideOut {
-    0% {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-20px) scale(0.9);
-    }
+  /* Las tarjetas iniciales aparecen sin animación */
+  /* Solo las nuevas tendrán animación */
+
+  /* Hover simple */
+  .notification-card {
+    transition: all 300ms ease;
   }
 
-  /* Efecto hover mejorado */
   .notification-card:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.24);
-    border-color: #ffffff;
-    outline-color: rgba(16, 185, 129, 0.2);
-  }
-
-  /* Efecto de brillo al hover */
-  .notification-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.4),
-      transparent
-    );
-    transition: left 0.5s;
-  }
-
-  .notification-card:hover::before {
-    left: 100%;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   }
 
   .notification-header {
@@ -454,20 +413,20 @@
     margin: 0.25rem 0 0 0;
   }
 
-  /* Quitar delays estáticos - se añadirán dinámicamente */
-
-  /* Efecto de pulso en el icono */
-  @keyframes iconPulse {
-    0%, 100% {
-      transform: scale(1);
+  /* Animación para nuevas tarjetas que entran */
+  @keyframes fadeInSlide {
+    0% {
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
     }
-    50% {
-      transform: scale(1.1);
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
   }
 
-  .notification-card:hover .notification-icon {
-    animation: iconPulse 600ms ease-in-out;
+  .notification-card.new {
+    animation: fadeInSlide 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   /* Responsive */
@@ -702,7 +661,7 @@ document.addEventListener('DOMContentLoaded', function() {
   ];
 
   // Función para crear una tarjeta de notificación
-  function createNotificationCard(example, index) {
+  function createNotificationCard(example) {
     const card = document.createElement('div');
     card.className = 'notification-card';
     
@@ -723,11 +682,6 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     `;
 
-    // Añadir clase de animación después de un pequeño delay
-    setTimeout(() => {
-      card.classList.add('animate-in');
-    }, index * 80);
-
     return card;
   }
 
@@ -735,86 +689,64 @@ document.addEventListener('DOMContentLoaded', function() {
   const listContainer = document.getElementById('ia-examples-list');
   if (!listContainer) return;
 
-  // Array para mantener las notificaciones actuales
-  let currentNotifications = [];
-  let notificationIndex = 0;
-  const maxVisibleNotifications = 5;  // Máximo 5 tarjetas visibles
+  // Lista de tarjetas actuales
+  let currentCards = [];
+  let index = 0;
 
-  // Función para añadir una nueva notificación con animación Magic UI
-  function addNotification() {
-    const example = iaExamples[notificationIndex % iaExamples.length];
-    const card = createNotificationCard(example, 0);
-    
-    // Añadir al principio con animación
-    currentNotifications.unshift(card);
-    listContainer.insertBefore(card, listContainer.firstChild);
-    
-    // Activar animación de entrada inmediatamente
-    requestAnimationFrame(() => {
-      card.classList.add('animate-in');
-    });
-
-    // Limitar el número de notificaciones visibles
-    if (currentNotifications.length > maxVisibleNotifications) {
-      const oldCard = currentNotifications.pop();
+  // Crear las primeras 5 tarjetas con animación inicial
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      const card = createNotificationCard(iaExamples[i]);
+      card.style.animation = `slideIn ${400 + i * 100}ms ease-out forwards`;
+      card.style.opacity = '0';
+      listContainer.appendChild(card);
+      currentCards.push(card);
       
-      // Animación de salida
-      oldCard.classList.remove('animate-in');
-      oldCard.classList.add('animate-out');
-      
+      // Hacer visible después de la animación
       setTimeout(() => {
-        oldCard.remove();
-      }, 400);
-    }
-
-    // Actualizar el tiempo de las notificaciones existentes
-    currentNotifications.forEach((notification, index) => {
-      if (index > 0) {
-        const timeElement = notification.querySelector('.notification-time');
-        if (timeElement) {
-          const match = timeElement.textContent.match(/(\d+)/);
-          if (match) {
-            const currentTime = parseInt(match[1]);
-            timeElement.textContent = `hace ${currentTime + 3}s`;
-          }
-        }
+        card.style.opacity = '1';
+      }, 400 + i * 100);
+    }, i * 100);
+  }
+  
+  // Función para rotar las tarjetas
+  function rotateCards() {
+    // Remover la primera tarjeta
+    const oldCard = currentCards.shift();
+    oldCard.style.opacity = '0';
+    oldCard.style.transform = 'translateY(-20px)';
+    
+    setTimeout(() => {
+      oldCard.remove();
+    }, 300);
+    
+    // Añadir nueva tarjeta al final
+    index = (index + 5) % iaExamples.length;
+    const newCard = createNotificationCard(iaExamples[index]);
+    newCard.classList.add('new');
+    
+    // Insertar al principio
+    listContainer.insertBefore(newCard, listContainer.firstChild);
+    currentCards.unshift(newCard);
+    
+    // Remover clase 'new' después de la animación
+    setTimeout(() => {
+      newCard.classList.remove('new');
+    }, 600);
+    
+    // Actualizar tiempos
+    currentCards.forEach((card, i) => {
+      const timeEl = card.querySelector('.notification-time');
+      if (timeEl) {
+        timeEl.textContent = `hace ${(i + 1) * 3}s`;
       }
     });
-
-    notificationIndex++;
   }
 
-  // Iniciar con tarjetas animadas estilo Magic UI
-  function initializeNotifications() {
-    // Crear las primeras tarjetas con delays escalonados
-    for (let i = 0; i < 4; i++) {
-      setTimeout(() => {
-        const example = iaExamples[i];
-        const card = createNotificationCard(example, i);
-        currentNotifications.push(card);
-        listContainer.appendChild(card);
-      }, i * 150);
-    }
-  }
-
-  // Inicializar cuando la sección sea visible
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && currentNotifications.length === 0) {
-        initializeNotifications();
-        
-        // Comenzar a añadir nuevas notificaciones después de 2 segundos
-        setTimeout(() => {
-          setInterval(addNotification, 3500); // Cada 3.5 segundos
-        }, 2000);
-      }
-    });
-  }, { threshold: 0.2 });
-
-  const section = document.querySelector('.examples-ia-section');
-  if (section) {
-    observer.observe(section);
-  }
+  // Comenzar a rotar después de que se carguen todas las tarjetas iniciales
+  setTimeout(() => {
+    setInterval(rotateCards, 3000);
+  }, 1500);
 
   // Partículas de fondo
   const canvas = document.getElementById('examples-particles-canvas');
