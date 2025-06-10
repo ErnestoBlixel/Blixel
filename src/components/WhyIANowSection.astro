@@ -102,7 +102,7 @@
   .gradient-orb--1 {
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, #60a5fa 0%, transparent 70%);
+    background: radial-gradient(circle, #02aa6d 0%, transparent 70%);
     top: -200px;
     right: -200px;
     animation: float-slow 10s ease-in-out infinite;
@@ -111,7 +111,7 @@
   .gradient-orb--2 {
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, #a855f7 0%, transparent 70%);
+    background: radial-gradient(circle, #251863 0%, transparent 70%);
     bottom: -150px;
     left: -150px;
     animation: float-slow 12s ease-in-out infinite reverse;
@@ -156,7 +156,7 @@
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
+    background: linear-gradient(135deg, #251863 0%, #02aa6d 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -213,14 +213,14 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at center, rgba(96, 165, 250, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle at center, rgba(2, 170, 109, 0.05) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 400ms ease;
   }
 
   .stat-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(96, 165, 250, 0.2);
+    border-color: rgba(2, 170, 109, 0.2);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   }
 
@@ -232,7 +232,7 @@
     font-family: 'Inter Tight', sans-serif;
     font-size: 3rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
+    background: linear-gradient(135deg, #251863 0%, #02aa6d 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
         this.vy = (Math.random() - 0.5) * 0.3;
         this.size = Math.random() * 2 + 1;
         this.opacity = Math.random() * 0.3 + 0.1;
-        this.color = Math.random() > 0.5 ? '#60a5fa' : '#a855f7';
+        this.color = Math.random() > 0.5 ? '#02aa6d' : '#251863';
       }
       
       update() {

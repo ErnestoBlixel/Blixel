@@ -128,7 +128,7 @@
   .gradient-orb--1 {
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, #a855f7 0%, transparent 70%);
+    background: radial-gradient(circle, #251863 0%, transparent 70%);
     top: 10%;
     left: 20%;
     animation: float-slow 8s ease-in-out infinite;
@@ -137,7 +137,7 @@
   .gradient-orb--2 {
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, #60a5fa 0%, transparent 70%);
+    background: radial-gradient(circle, #02aa6d 0%, transparent 70%);
     bottom: 10%;
     right: 20%;
     animation: float-slow 10s ease-in-out infinite reverse;
@@ -174,7 +174,7 @@
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
+    background: linear-gradient(135deg, #251863 0%, #02aa6d 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -220,7 +220,7 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(2, 170, 109, 0.3), transparent);
     opacity: 0;
     transition: opacity 300ms ease;
   }
@@ -229,14 +229,14 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at center, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle at center, rgba(37, 24, 99, 0.1) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 400ms ease;
   }
 
   .service-card:hover {
     transform: translateY(-8px);
-    border-color: rgba(96, 165, 250, 0.2);
+    border-color: rgba(2, 170, 109, 0.2);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   }
 
@@ -255,7 +255,7 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 1.5rem;
-    color: #60a5fa;
+    color: #02aa6d;
     transition: all 300ms ease;
   }
 
@@ -267,7 +267,8 @@
 
   .service-card:hover .card-icon {
     transform: scale(1.1) rotate(5deg);
-    color: #93c5fd;
+    color: #02aa6d;
+    filter: brightness(1.2);
   }
 
   .service-card h3 {
@@ -424,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function() {
       draw() {
         ctx.save();
         ctx.globalAlpha = this.opacity;
-        ctx.fillStyle = '#a855f7';
+        ctx.fillStyle = '#251863';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
