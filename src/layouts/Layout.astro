@@ -1,5 +1,6 @@
 ---
 import Header from '../components/Header.astro';
+import MagicNotifications from '../components/MagicNotifications.astro';
 
 export interface Props {
   title?: string;
@@ -88,6 +89,9 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
   <main id="main-content">
     <slot />
   </main>
+  
+  <!-- Magic UI Notifications System -->
+  <MagicNotifications />
   
   <!-- Footer (opcional) -->
   <footer class="main-footer">
