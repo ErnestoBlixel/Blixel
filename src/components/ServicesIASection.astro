@@ -93,10 +93,14 @@
   .services-ia-section {
     position: relative;
     background: #000000;
-    padding: 4rem 0;
+    padding: 6rem 0; /* Más padding arriba y abajo */
     overflow: hidden;
     border: none;
     box-shadow: none;
+    min-height: 100vh; /* Altura completa de la pantalla */
+    display: flex;
+    align-items: center;
+    scroll-snap-align: start; /* Para snap scrolling */
   }
 
   /* Canvas de partículas */

@@ -46,8 +46,8 @@ const GQL = `
 let pageTitle = customTitle || 'Inteligencia Artificial para Empresas';
 let pageDescription = customDescription || 'Automatización Inteligente para tu Empresa';
 
-// Solo ejecutar GraphQL en desarrollo
-if (import.meta.env.DEV && import.meta.env.PUBLIC_WP_GRAPHQL_URL) {
+// Ejecutar GraphQL siempre que tengamos la URL configurada
+if (import.meta.env.PUBLIC_WP_GRAPHQL_URL) {
   try {
     const res = await fetch(import.meta.env.PUBLIC_WP_GRAPHQL_URL, {
       method: 'POST',

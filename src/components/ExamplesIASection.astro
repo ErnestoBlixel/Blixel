@@ -1,0 +1,756 @@
+---
+// Sección: Ejemplos de soluciones IA en acción
+---
+
+<section id="ejemplos-ia" class="examples-ia-section">
+  <!-- Canvas de partículas flotantes -->
+  <canvas id="examples-particles-canvas" class="particles-canvas"></canvas>
+  
+  <!-- Fondo con gradiente -->
+  <div class="examples__background">
+    <div class="gradient-orb gradient-orb--1"></div>
+    <div class="gradient-orb gradient-orb--2"></div>
+  </div>
+
+  <div class="container">
+    <div class="examples-content-wrapper">
+      <!-- Lado izquierdo: Lista animada de ejemplos -->
+      <div class="examples-list-container">
+        <div class="animated-list-wrapper">
+          <!-- Aquí se renderizará la lista animada -->
+          <div id="ia-examples-list" class="animated-list">
+            <!-- Los elementos se añadirán dinámicamente -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Lado derecho: Título y descripción -->
+      <div class="examples-text-content">
+        <h2 class="examples-title">
+          La IA ya está <span class="gradient-text">transformando empresas</span>
+        </h2>
+        
+        <p class="examples-description">
+          Mientras lees esto, miles de empresas están ahorrando tiempo y dinero con IA. 
+          Sus sistemas trabajan 24/7 procesando facturas, atendiendo clientes, generando 
+          informes y tomando decisiones inteligentes. No es ciencia ficción, es lo que 
+          está pasando ahora mismo en empresas como la tuya.
+        </p>
+
+        <p class="examples-subdescription">
+          Cada notificación que ves representa una tarea real que la IA puede hacer por ti: 
+          desde automatizar procesos repetitivos hasta crear experiencias personalizadas 
+          para tus clientes. La pregunta no es si tu competencia ya lo está usando, 
+          sino cuánto tiempo más vas a esperar para empezar.
+        </p>
+
+        <div class="examples-stats">
+          <div class="stat-mini">
+            <span class="stat-value">24/7</span>
+            <span class="stat-label">Sin descansos</span>
+          </div>
+          <div class="stat-mini">
+            <span class="stat-value">-80%</span>
+            <span class="stat-label">Menos errores</span>
+          </div>
+          <div class="stat-mini">
+            <span class="stat-value">10x</span>
+            <span class="stat-label">Más rápido</span>
+          </div>
+        </div>
+
+        <a href="#contacto" class="examples-cta">
+          <span>Empieza a automatizar hoy</span>
+          <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .examples-ia-section {
+    position: relative;
+    background: #000000;
+    padding: 6rem 0;
+    overflow: hidden;
+    border: none;
+    box-shadow: none;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    scroll-snap-align: start;
+  }
+
+  /* Canvas de partículas */
+  .particles-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  /* Fondo con gradientes */
+  .examples__background {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.2;
+    will-change: transform;
+  }
+
+  .gradient-orb--1 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #251863 0%, transparent 70%);
+    top: 20%;
+    left: -100px;
+    animation: float-slow 15s ease-in-out infinite;
+  }
+
+  .gradient-orb--2 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #02aa6d 0%, transparent 70%);
+    bottom: 20%;
+    right: -100px;
+    animation: float-slow 20s ease-in-out infinite reverse;
+  }
+
+  .container {
+    position: relative;
+    z-index: 10;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .examples-content-wrapper {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  /* Contenido de texto */
+  .examples-text-content {
+    max-width: 600px;
+    padding-left: 2rem;
+  }
+
+  .examples-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #02aa6d 0%, #00ff94 50%, #251863 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: brightness(1.2);
+  }
+
+  .examples-description {
+    font-size: 1.125rem;
+    color: #e5e5e5;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .examples-subdescription {
+    font-size: 1rem;
+    color: #9ca3af;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  /* Mini estadísticas */
+  .examples-stats {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-mini {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #02aa6d;
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+
+  /* Botón CTA */
+  .examples-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.75rem;
+    background: linear-gradient(135deg, #02aa6d 0%, #251863 100%);
+    color: #ffffff;
+    font-weight: 500;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 300ms ease;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .examples-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #251863 0%, #02aa6d 100%);
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+
+  .examples-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -10px rgba(2, 170, 109, 0.5);
+  }
+
+  .examples-cta:hover::before {
+    opacity: 1;
+  }
+
+  .examples-cta span,
+  .examples-cta svg {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-arrow {
+    width: 20px;
+    height: 20px;
+    transition: transform 300ms ease;
+  }
+
+  .examples-cta:hover .cta-arrow {
+    transform: translateX(4px);
+  }
+
+  /* Lista animada */
+  .examples-list-container {
+    position: relative;
+    height: 520px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
+    padding: 1.5rem;
+  }
+
+  .animated-list-wrapper {
+    position: relative;
+    height: 100%;
+  }
+
+  .animated-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Gradiente para fade out */
+  .examples-list-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 5;
+    border-radius: 0 0 20px 20px;
+  }
+
+  /* Tarjeta de notificación - Estilo Magic UI con fondo blanco */
+  .notification-card {
+    background: #ffffff;  /* Fondo blanco sólido */
+    border: 1px solid #e5e7eb;  /* Borde gris claro más visible */
+    border-radius: 12px;
+    padding: 1rem;
+    opacity: 0;
+    transform: scale(0) translateY(20px);
+    animation: notification-in 500ms ease forwards;
+    transition: all 200ms ease;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);  /* Sombra simplificada */
+  }
+
+  .notification-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-color: #d1d5db;  /* Borde ligeramente más oscuro en hover */
+  }
+
+  @keyframes notification-in {
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .notification-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .notification-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    background: var(--icon-color, #3b82f6);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);  /* Sombra sutil para el icono */
+  }
+
+  .notification-content {
+    flex: 1;
+  }
+
+  .notification-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #111827;
+    margin: 0;
+  }
+
+  .notification-time {
+    font-size: 0.75rem;
+    color: #6b7280;
+    font-weight: 400;
+  }
+
+  .notification-description {
+    font-size: 0.875rem;
+    color: #111827;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* Modo oscuro para las tarjetas */
+  @media (prefers-color-scheme: dark) {
+    .notification-card {
+      background: #1f2937;
+      border-color: #374151;
+    }
+
+    .notification-card:hover {
+      border-color: #4b5563;
+    }
+
+    .notification-title,
+    .notification-description {
+      color: #f3f4f6;
+    }
+
+    .notification-time {
+      color: #9ca3af;
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .examples-content-wrapper {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .examples-text-content {
+      padding-left: 0;
+      order: 1;
+    }
+
+    .examples-list-container {
+      max-width: 600px;
+      margin: 0 auto;
+      order: 2;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .examples-ia-section {
+      padding: 3rem 0;
+    }
+
+    .container {
+      padding: 0 1rem;
+    }
+
+    .examples-title {
+      font-size: 2rem;
+    }
+
+    .examples-description {
+      font-size: 1rem;
+    }
+
+    .examples-stats {
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .examples-cta {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .examples-list-container {
+      height: 420px;
+      padding: 1.25rem;
+    }
+
+    .notification-card {
+      padding: 1rem 1.25rem;
+    }
+
+    .gradient-orb--1,
+    .gradient-orb--2 {
+      width: 300px;
+      height: 300px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .examples-ia-section {
+      padding: 2rem 0;
+    }
+
+    .examples-title {
+      font-size: 1.75rem;
+    }
+
+    .examples-text-content {
+      text-align: center;
+    }
+
+    .examples-stats {
+      justify-content: center;
+    }
+
+    .examples-cta {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      white-space: normal;
+      text-align: center;
+    }
+
+    .examples-subdescription {
+      font-size: 0.9rem;
+    }
+
+    .stat-value {
+      font-size: 1.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+    }
+
+    .notification-icon {
+      width: 36px;
+      height: 36px;
+      font-size: 1.125rem;
+    }
+
+    .notification-title {
+      font-size: 0.825rem;
+    }
+
+    .notification-description {
+      font-size: 0.75rem;
+    }
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Datos de ejemplo para las notificaciones
+  const iaExamples = [
+    // Automatizaciones
+    {
+      title: 'Factura procesada',
+      description: 'Magic UI',
+      time: '2m ago',
+      color: '#3B82F6',
+      type: 'automation'
+    },
+    {
+      title: 'Email categorizado',
+      description: 'Magic UI',
+      time: '5m ago',
+      color: '#F59E0B',
+      type: 'automation'
+    },
+    {
+      title: 'Informe generado',
+      description: 'Magic UI',
+      time: '8m ago',
+      color: '#10B981',
+      type: 'automation'
+    },
+    {
+      title: 'Contrato revisado',
+      description: 'Magic UI',
+      time: '10m ago',
+      color: '#EF4444',
+      type: 'automation'
+    },
+    {
+      title: 'Proceso automatizado',
+      description: 'Magic UI',
+      time: '12m ago',
+      color: '#3B82F6',
+      type: 'automation'
+    },
+    
+    // Agentes IA
+    {
+      title: 'Cliente atendido',
+      description: 'Magic UI',
+      time: '15m ago',
+      color: '#F59E0B',
+      type: 'agent'
+    },
+    {
+      title: 'Lead cualificado',
+      description: 'Magic UI',
+      time: '18m ago',
+      color: '#EF4444',
+      type: 'agent'
+    },
+    {
+      title: 'Cita agendada',
+      description: 'Magic UI',
+      time: '20m ago',
+      color: '#3B82F6',
+      type: 'agent'
+    },
+    {
+      title: 'Venta completada',
+      description: 'Magic UI',
+      time: '22m ago',
+      color: '#8B5CF6',
+      type: 'agent'
+    },
+    {
+      title: 'Llamada analizada',
+      description: 'Magic UI',
+      time: '25m ago',
+      color: '#EC4899',
+      type: 'agent'
+    },
+    
+    // MicroSaaS
+    {
+      title: 'Nuevo pedido',
+      description: 'Magic UI',
+      time: '28m ago',
+      color: '#10B981',
+      type: 'microsaas'
+    },
+    {
+      title: 'Dashboard actualizado',
+      description: 'Magic UI',
+      time: '30m ago',
+      color: '#EC4899',
+      type: 'microsaas'
+    },
+    {
+      title: 'Inventario bajo',
+      description: 'Magic UI',
+      time: '32m ago',
+      color: '#F59E0B',
+      type: 'microsaas'
+    },
+    {
+      title: 'SEO optimizado',
+      description: 'Magic UI',
+      time: '35m ago',
+      color: '#10B981',
+      type: 'microsaas'
+    },
+    {
+      title: 'Pago procesado',
+      description: 'Magic UI',
+      time: '38m ago',
+      color: '#3B82F6',
+      type: 'microsaas'
+    }
+  ];
+
+  // Función para crear una tarjeta de notificación
+  function createNotificationCard(example, index) {
+    const card = document.createElement('div');
+    card.className = 'notification-card';
+    card.style.animationDelay = `${index * 100}ms`;
+    
+    card.innerHTML = `
+      <div class="notification-header">
+        <div class="notification-icon" style="--icon-color: ${example.color};"></div>
+        <div class="notification-content">
+          <div class="notification-title">
+            ${example.title} • <span class="notification-time">${example.time}</span>
+          </div>
+          <div class="notification-description">${example.description}</div>
+        </div>
+      </div>
+    `;
+
+    return card;
+  }
+
+  // Contenedor de la lista
+  const listContainer = document.getElementById('ia-examples-list');
+  if (!listContainer) return;
+
+  // Array para mantener las notificaciones actuales
+  let currentNotifications = [];
+  let notificationIndex = 0;
+  const maxVisibleNotifications = 7;
+
+  // Función para añadir una nueva notificación
+  function addNotification() {
+    const example = iaExamples[notificationIndex % iaExamples.length];
+    const card = createNotificationCard(example, 0);
+    
+    // Añadir al principio del array
+    currentNotifications.unshift(card);
+    listContainer.insertBefore(card, listContainer.firstChild);
+
+    // Limitar el número de notificaciones visibles
+    if (currentNotifications.length > maxVisibleNotifications) {
+      const oldCard = currentNotifications.pop();
+      oldCard.style.opacity = '0';
+      oldCard.style.transform = 'scale(0.8) translateY(20px)';
+      setTimeout(() => oldCard.remove(), 300);
+    }
+
+    // Actualizar el tiempo de las notificaciones existentes
+    currentNotifications.forEach((notification, index) => {
+      if (index > 0) {
+        const timeElement = notification.querySelector('.notification-time');
+        if (timeElement) {
+          const currentTime = parseInt(timeElement.textContent.match(/\d+/)[0]);
+          timeElement.textContent = `hace ${currentTime + 2}s`;
+        }
+      }
+    });
+
+    notificationIndex++;
+  }
+
+  // Iniciar con algunas notificaciones
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => addNotification(), i * 250);
+  }
+
+  // Añadir nuevas notificaciones periódicamente
+  setInterval(addNotification, 2000);
+
+  // Partículas de fondo
+  const canvas = document.getElementById('examples-particles-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    
+    function resizeCanvas() {
+      const section = canvas.closest('.examples-ia-section');
+      canvas.width = section.offsetWidth;
+      canvas.height = section.offsetHeight;
+    }
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.2;
+        this.vy = (Math.random() - 0.5) * 0.2;
+        this.size = Math.random() * 1.5 + 0.5;
+        this.opacity = Math.random() * 0.3 + 0.1;
+        this.color = Math.random() > 0.5 ? '#02aa6d' : '#251863';
+      }
+      
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        
+        this.x = Math.max(0, Math.min(canvas.width, this.x));
+        this.y = Math.max(0, Math.min(canvas.height, this.y));
+      }
+      
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+    
+    // Crear partículas
+    for (let i = 0; i < 30; i++) {
+      particles.push(new Particle());
+    }
+    
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+      
+      requestAnimationFrame(animate);
+    }
+    
+    animate();
+  }
+});
+</script>

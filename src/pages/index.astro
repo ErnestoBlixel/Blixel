@@ -4,7 +4,9 @@ import Hero from '../components/Hero.astro';
 import IntroSection from '../components/IntroSection.astro';
 import ProblemIASection from '../components/ProblemIASection.astro';
 import ServicesIASection from '../components/ServicesIASection.astro';
+import QuoteSection from '../components/QuoteSection.astro';
 import WhyIANowSection from '../components/WhyIANowSection.astro';
+import ExamplesIASection from '../components/ExamplesIASection.astro';
 import MethodologyIASection from '../components/MethodologyIASection.astro';
 import CasesIASection from '../components/CasesIASection.astro';
 import FAQSection from '../components/FAQSection.astro';
@@ -65,11 +67,11 @@ let siteSettings = {
 let mediaItems = [];
 let buildStatus = 'fallback';
 
-// Solo intentar GraphQL si estamos en desarrollo o si la URL está configurada
+// Intentar GraphQL si la URL está configurada
 const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
 const isDev = import.meta.env.DEV;
 
-if (graphqlUrl && isDev) {
+if (graphqlUrl) {
   try {
     console.log('🔍 [INDEX] Probando conexión GraphQL:', graphqlUrl);
     
@@ -100,7 +102,7 @@ if (graphqlUrl && isDev) {
     console.warn('⚠️ [INDEX] Error de conexión GraphQL (usando fallback):', error.message);
   }
 } else {
-  console.log('ℹ️ [INDEX] GraphQL deshabilitado para build de producción o URL no configurada');
+  console.log('ℹ️ [INDEX] GraphQL URL no configurada');
 }
 
 // Buscar el logo de BLIXEL
@@ -179,8 +181,14 @@ if (h1Title.includes('?')) {
   <!-- Sección: Cómo aplicamos IA en tu empresa -->
   <ServicesIASection />
 
+  <!-- Sección: Cita inspiradora -->
+  <QuoteSection />
+
   <!-- Sección: Por qué implementar IA ahora -->
   <WhyIANowSection />
+
+  <!-- Sección: Ejemplos de IA en acción -->
+  <ExamplesIASection />
 
   <!-- Sección: Qué es la IA Empresarial -->
   <IntroSection />
