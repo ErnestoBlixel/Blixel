@@ -257,16 +257,20 @@
     transform: translateX(4px);
   }
 
-  /* Lista animada con fondo oscuro para contraste */
+  /* Contenedor con efecto de glass morphism sutil */
   .examples-list-container {
     position: relative;
     height: 520px;
     overflow: hidden;
-    background: rgba(0, 0, 0, 0.5);  /* Fondo oscuro para ver las tarjetas blancas */
+    background: rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 16px;
-    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
+      0 20px 40px -20px rgba(0, 0, 0, 0.8);
   }
 
   .animated-list-wrapper {
@@ -297,45 +301,100 @@
     z-index: 20;
   }
 
-  /* Tarjeta de notificación - SIMPLE Y CON FONDO BLANCO */
+  /* Tarjeta de notificación - FONDO BLANCO + ANIMACIONES MAGIC UI */
   .notification-card {
-    /* Fondo blanco y borde blanco grueso */
+    /* Fondo blanco y borde */
     background: #ffffff;
-    border: 3px solid #ffffff;
-    outline: 1px solid #e5e7eb;
+    border: 2px solid #ffffff;
+    outline: 1px solid rgba(229, 231, 235, 0.5);
     border-radius: 12px;
     
     /* Espaciado */
     padding: 12px 16px;
     margin-bottom: 12px;
     
-    /* Layout simple */
+    /* Layout */
     display: flex;
     align-items: center;
     gap: 12px;
     
-    /* Sombra para que se vea la tarjeta */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     
-    /* Animación */
+    /* Estado inicial para animación */
     opacity: 0;
-    transform: translateY(20px);
-    animation: notification-in 600ms ease forwards;
-    transition: all 200ms ease;
+    transform: translateY(40px) scale(0.9);
+    
+    /* Transiciones suaves */
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
   }
 
-  .notification-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    border-color: #ffffff;
+  /* Animación de entrada estilo Magic UI */
+  .notification-card.animate-in {
+    animation: magicSlideIn 600ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
 
-  @keyframes notification-in {
-    to {
-      opacity: 1;
-      transform: translateY(0);
+  /* Animación de salida */
+  .notification-card.animate-out {
+    animation: magicSlideOut 400ms cubic-bezier(0.4, 0, 1, 1) forwards;
+  }
+
+  @keyframes magicSlideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(40px) scale(0.9);
     }
+    60% {
+      opacity: 1;
+      transform: translateY(-5px) scale(1.02);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes magicSlideOut {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.9);
+    }
+  }
+
+  /* Efecto hover mejorado */
+  .notification-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.24);
+    border-color: #ffffff;
+    outline-color: rgba(16, 185, 129, 0.2);
+  }
+
+  /* Efecto de brillo al hover */
+  .notification-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    transition: left 0.5s;
+  }
+
+  .notification-card:hover::before {
+    left: 100%;
   }
 
   .notification-header {
@@ -395,12 +454,21 @@
     margin: 0.25rem 0 0 0;
   }
 
-  /* Estilo específico para cada tarjeta */
-  .notification-card:nth-child(1) { animation-delay: 0ms; }
-  .notification-card:nth-child(2) { animation-delay: 100ms; }
-  .notification-card:nth-child(3) { animation-delay: 200ms; }
-  .notification-card:nth-child(4) { animation-delay: 300ms; }
-  .notification-card:nth-child(5) { animation-delay: 400ms; }
+  /* Quitar delays estáticos - se añadirán dinámicamente */
+
+  /* Efecto de pulso en el icono */
+  @keyframes iconPulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+
+  .notification-card:hover .notification-icon {
+    animation: iconPulse 600ms ease-in-out;
+  }
 
   /* Responsive */
   @media (max-width: 1024px) {
@@ -637,7 +705,6 @@ document.addEventListener('DOMContentLoaded', function() {
   function createNotificationCard(example, index) {
     const card = document.createElement('div');
     card.className = 'notification-card';
-    card.style.animationDelay = `${index * 100}ms`;
     
     card.innerHTML = `
       <div class="notification-header">
@@ -656,6 +723,11 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     `;
 
+    // Añadir clase de animación después de un pequeño delay
+    setTimeout(() => {
+      card.classList.add('animate-in');
+    }, index * 80);
+
     return card;
   }
 
@@ -668,21 +740,31 @@ document.addEventListener('DOMContentLoaded', function() {
   let notificationIndex = 0;
   const maxVisibleNotifications = 5;  // Máximo 5 tarjetas visibles
 
-  // Función para añadir una nueva notificación
+  // Función para añadir una nueva notificación con animación Magic UI
   function addNotification() {
     const example = iaExamples[notificationIndex % iaExamples.length];
     const card = createNotificationCard(example, 0);
     
-    // Añadir al principio del array
+    // Añadir al principio con animación
     currentNotifications.unshift(card);
     listContainer.insertBefore(card, listContainer.firstChild);
+    
+    // Activar animación de entrada inmediatamente
+    requestAnimationFrame(() => {
+      card.classList.add('animate-in');
+    });
 
     // Limitar el número de notificaciones visibles
-    if (currentNotifications.length > 5) {  // Reducido a 5 para que se vean bien separadas
+    if (currentNotifications.length > maxVisibleNotifications) {
       const oldCard = currentNotifications.pop();
-      oldCard.style.opacity = '0';
-      oldCard.style.transform = 'translateY(20px)';
-      setTimeout(() => oldCard.remove(), 300);
+      
+      // Animación de salida
+      oldCard.classList.remove('animate-in');
+      oldCard.classList.add('animate-out');
+      
+      setTimeout(() => {
+        oldCard.remove();
+      }, 400);
     }
 
     // Actualizar el tiempo de las notificaciones existentes
@@ -693,7 +775,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const match = timeElement.textContent.match(/(\d+)/);
           if (match) {
             const currentTime = parseInt(match[1]);
-            timeElement.textContent = `hace ${currentTime + 2}s`;
+            timeElement.textContent = `hace ${currentTime + 3}s`;
           }
         }
       }
@@ -702,13 +784,37 @@ document.addEventListener('DOMContentLoaded', function() {
     notificationIndex++;
   }
 
-  // Iniciar con algunas notificaciones
-  for (let i = 0; i < 4; i++) {  // Solo 4 para empezar
-    setTimeout(() => addNotification(), i * 300);  // Más espacio entre animaciones
+  // Iniciar con tarjetas animadas estilo Magic UI
+  function initializeNotifications() {
+    // Crear las primeras tarjetas con delays escalonados
+    for (let i = 0; i < 4; i++) {
+      setTimeout(() => {
+        const example = iaExamples[i];
+        const card = createNotificationCard(example, i);
+        currentNotifications.push(card);
+        listContainer.appendChild(card);
+      }, i * 150);
+    }
   }
 
-  // Añadir nuevas notificaciones periódicamente
-  setInterval(addNotification, 3000);  // Cada 3 segundos en lugar de 2
+  // Inicializar cuando la sección sea visible
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && currentNotifications.length === 0) {
+        initializeNotifications();
+        
+        // Comenzar a añadir nuevas notificaciones después de 2 segundos
+        setTimeout(() => {
+          setInterval(addNotification, 3500); // Cada 3.5 segundos
+        }, 2000);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  const section = document.querySelector('.examples-ia-section');
+  if (section) {
+    observer.observe(section);
+  }
 
   // Partículas de fondo
   const canvas = document.getElementById('examples-particles-canvas');
