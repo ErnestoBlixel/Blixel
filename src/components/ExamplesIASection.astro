@@ -326,34 +326,32 @@
     position: relative;
     overflow: hidden;
     
-    /* Estado inicial sin animación */
-    opacity: 1;
-    transform: translateX(0);
+    /* Animación de entrada por defecto */
+    animation: slideIn 0.6s ease-out forwards;
+    transform-origin: left center;
   }
 
   /* Animación simple de entrada desde la izquierda */
   @keyframes slideIn {
     from {
       opacity: 0;
-      transform: translateX(-50px);
+      transform: translateX(-100px) scale(0.8);
     }
     to {
       opacity: 1;
-      transform: translateX(0);
+      transform: translateX(0) scale(1);
     }
   }
 
-  /* Las tarjetas iniciales aparecen sin animación */
-  /* Solo las nuevas tendrán animación */
-
-  /* Hover simple */
+  /* Hover mejorado */
   .notification-card {
-    transition: all 300ms ease;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .notification-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    border-color: #e5e7eb;
   }
 
   .notification-header {
@@ -425,8 +423,24 @@
     }
   }
 
+  /* Animación de salida */
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  }
+
   .notification-card.new {
     animation: fadeInSlide 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .notification-card.removing {
+    animation: fadeOut 300ms ease-out forwards;
   }
 
   /* Responsive */
@@ -693,39 +707,33 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentCards = [];
   let index = 0;
 
-  // Crear las primeras 5 tarjetas con animación inicial
+  // Crear las primeras 5 tarjetas con retraso escalonado
   for (let i = 0; i < 5; i++) {
     setTimeout(() => {
       const card = createNotificationCard(iaExamples[i]);
-      card.style.animation = `slideIn ${400 + i * 100}ms ease-out forwards`;
-      card.style.opacity = '0';
+      // La animación slideIn ya está en CSS, solo necesitamos el retraso
+      card.style.animationDelay = `${i * 150}ms`;
       listContainer.appendChild(card);
       currentCards.push(card);
-      
-      // Hacer visible después de la animación
-      setTimeout(() => {
-        card.style.opacity = '1';
-      }, 400 + i * 100);
     }, i * 100);
   }
   
   // Función para rotar las tarjetas
   function rotateCards() {
-    // Remover la primera tarjeta
-    const oldCard = currentCards.shift();
-    oldCard.style.opacity = '0';
-    oldCard.style.transform = 'translateY(-20px)';
+    // Remover la última tarjeta (la más antigua)
+    const oldCard = currentCards.pop();
+    oldCard.classList.add('removing');
     
     setTimeout(() => {
       oldCard.remove();
     }, 300);
     
-    // Añadir nueva tarjeta al final
-    index = (index + 5) % iaExamples.length;
+    // Añadir nueva tarjeta al principio
+    index = (index + 1) % iaExamples.length;
     const newCard = createNotificationCard(iaExamples[index]);
     newCard.classList.add('new');
     
-    // Insertar al principio
+    // Insertar al principio con animación
     listContainer.insertBefore(newCard, listContainer.firstChild);
     currentCards.unshift(newCard);
     
@@ -734,7 +742,7 @@ document.addEventListener('DOMContentLoaded', function() {
       newCard.classList.remove('new');
     }, 600);
     
-    // Actualizar tiempos
+    // Actualizar tiempos de todas las tarjetas
     currentCards.forEach((card, i) => {
       const timeEl = card.querySelector('.notification-time');
       if (timeEl) {
