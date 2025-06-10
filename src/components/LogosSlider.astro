@@ -32,17 +32,28 @@ const logos = [
 ];
 ---
 
-<div class="logos-slider">
-  <div class="slider-track">
+<div class="logos-slider-container">
+  <div class="logos-slider">
+    <div class="slider-track">
     {logos.map((logo) => (
       <div class="logo-item">
         <img src={logo.src} alt={logo.alt} />
       </div>
     ))}
+    </div>
   </div>
 </div>
 
 <style>
+  /* Container principal con max-width */
+  .logos-slider-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    padding: 0 2rem;
+  }
+
   .logos-slider {
     position: relative;
     overflow: hidden;
@@ -52,26 +63,26 @@ const logos = [
     padding: 2rem 0;
   }
 
-  /* Gradientes para fade en los bordes */
+  /* Gradientes para fade en los bordes - más fuertes */
   .logos-slider::before,
   .logos-slider::after {
     content: '';
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 200px;
+    width: 150px;
     z-index: 2;
     pointer-events: none;
   }
 
   .logos-slider::before {
     left: 0;
-    background: linear-gradient(to right, #000000 10%, transparent 40%);
+    background: linear-gradient(to right, #000000 0%, transparent 100%);
   }
 
   .logos-slider::after {
     right: 0;
-    background: linear-gradient(to left, #000000 10%, transparent 40%);
+    background: linear-gradient(to left, #000000 0%, transparent 100%);
   }
 
   .slider-track {
@@ -120,6 +131,10 @@ const logos = [
 
   /* Responsive */
   @media (max-width: 768px) {
+    .logos-slider-container {
+      padding: 0 1rem;
+    }
+
     .logos-slider {
       padding: 1.5rem 0;
     }
