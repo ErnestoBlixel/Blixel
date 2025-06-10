@@ -1,0 +1,158 @@
+---
+// Componente de slider de logos
+// Por ahora usa logos de ejemplo, reemplázalos con los tuyos
+const logos = [
+  { src: '/logos/1.png', alt: 'Cliente 1' },
+  { src: '/logos/2.png', alt: 'Cliente 2' },
+  { src: '/logos/3.png', alt: 'Cliente 3' },
+  { src: '/logos/4.png', alt: 'Cliente 4' },
+  { src: '/logos/5.png', alt: 'Cliente 5' },
+  { src: '/logos/6.png', alt: 'Cliente 6' },
+  { src: '/logos/7.png', alt: 'Cliente 7' },
+  { src: '/logos/8.png', alt: 'Cliente 8' },
+  { src: '/logos/9.png', alt: 'Cliente 9' },
+  { src: '/logos/10.png', alt: 'Cliente 10' },
+  { src: '/logos/11.png', alt: 'Cliente 11' },
+  { src: '/logos/12.png', alt: 'Cliente 12' },
+  { src: '/logos/13.png', alt: 'Cliente 13' },
+  // Duplicamos para el efecto infinito
+  { src: '/logos/1.png', alt: 'Cliente 1' },
+  { src: '/logos/2.png', alt: 'Cliente 2' },
+  { src: '/logos/3.png', alt: 'Cliente 3' },
+  { src: '/logos/4.png', alt: 'Cliente 4' },
+  { src: '/logos/5.png', alt: 'Cliente 5' },
+  { src: '/logos/6.png', alt: 'Cliente 6' },
+  { src: '/logos/7.png', alt: 'Cliente 7' },
+  { src: '/logos/8.png', alt: 'Cliente 8' },
+  { src: '/logos/9.png', alt: 'Cliente 9' },
+  { src: '/logos/10.png', alt: 'Cliente 10' },
+  { src: '/logos/11.png', alt: 'Cliente 11' },
+  { src: '/logos/12.png', alt: 'Cliente 12' },
+  { src: '/logos/13.png', alt: 'Cliente 13' },
+];
+---
+
+<div class="logos-slider">
+  <div class="slider-track">
+    {logos.map((logo) => (
+      <div class="logo-item">
+        <img src={logo.src} alt={logo.alt} />
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .logos-slider {
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2rem 0;
+  }
+
+  /* Gradientes para fade en los bordes */
+  .logos-slider::before,
+  .logos-slider::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 200px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .logos-slider::before {
+    left: 0;
+    background: linear-gradient(to right, #000000, transparent);
+  }
+
+  .logos-slider::after {
+    right: 0;
+    background: linear-gradient(to left, #000000, transparent);
+  }
+
+  .slider-track {
+    display: flex;
+    animation: scroll 40s linear infinite;
+    width: fit-content;
+  }
+
+  .logo-item {
+    flex: 0 0 auto;
+    margin: 0 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-item img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(100%) brightness(0) invert(1);
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+
+  .logo-item:hover img {
+    filter: grayscale(0%) brightness(1) invert(0);
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Pausar al hover */
+  .logos-slider:hover .slider-track {
+    animation-play-state: paused;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .logos-slider {
+      padding: 1.5rem 0;
+    }
+
+    .logos-slider::before,
+    .logos-slider::after {
+      width: 100px;
+    }
+
+    .logo-item {
+      margin: 0 2rem;
+    }
+
+    .logo-item img {
+      height: 40px;
+    }
+
+    .slider-track {
+      animation-duration: 30s;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .logo-item {
+      margin: 0 1.5rem;
+    }
+
+    .logo-item img {
+      height: 35px;
+    }
+
+    .logos-slider::before,
+    .logos-slider::after {
+      width: 50px;
+    }
+  }
+</style>
