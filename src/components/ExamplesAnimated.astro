@@ -1,0 +1,290 @@
+---
+// Versión con animaciones simples garantizadas
+---
+
+<section class="examples-section">
+  <style>
+    @keyframes slideInFromLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInFromTop {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animated-card {
+      animation: slideInFromLeft 0.6s ease-out forwards;
+      opacity: 0;
+    }
+
+    .animated-card:nth-child(1) { animation-delay: 0s; }
+    .animated-card:nth-child(2) { animation-delay: 0.1s; }
+    .animated-card:nth-child(3) { animation-delay: 0.2s; }
+    .animated-card:nth-child(4) { animation-delay: 0.3s; }
+    .animated-card:nth-child(5) { animation-delay: 0.4s; }
+
+    .new-animated-card {
+      animation: slideInFromTop 0.5s ease-out;
+    }
+  </style>
+
+  <div class="container">
+    <div class="grid">
+      <!-- Columna de tarjetas -->
+      <div class="cards-container">
+        <div id="cards-list">
+          <!-- Las tarjetas se añadirán aquí -->
+        </div>
+      </div>
+
+      <!-- Columna de texto -->
+      <div class="text-content">
+        <h2>
+          Pon a trabajar la IA<br>
+          <span style="color: #02aa6d;">en tu empresa</span>
+        </h2>
+        
+        <p>
+          Mientras lees esto, miles de empresas están ahorrando tiempo y dinero con IA.
+        </p>
+
+        <div class="stats">
+          <div>
+            <strong>24/7</strong><br>
+            <small>Sin descansos</small>
+          </div>
+          <div>
+            <strong>-80%</strong><br>
+            <small>Menos errores</small>
+          </div>
+          <div>
+            <strong>10x</strong><br>
+            <small>Más rápido</small>
+          </div>
+        </div>
+
+        <a href="#contacto" class="btn">
+          Empieza a automatizar hoy →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .examples-section {
+    background: #000;
+    padding: 80px 20px;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 450px 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .cards-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 20px;
+    height: 450px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card {
+    background: white !important;
+    border: 2px solid white;
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    background: #10b981;
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .card-content {
+    flex: 1;
+  }
+
+  .card-content h4 {
+    margin: 0;
+    font-size: 14px;
+    color: #000;
+    font-weight: 600;
+  }
+
+  .card-content p {
+    margin: 2px 0 0 0;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .card-time {
+    font-size: 11px;
+    color: #999;
+  }
+
+  /* Texto */
+  .text-content h2 {
+    font-size: 48px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .text-content p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #e5e5e5;
+    margin-bottom: 30px;
+  }
+
+  .stats {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+
+  .stats strong {
+    font-size: 24px;
+    color: #02aa6d;
+  }
+
+  .stats small {
+    color: #999;
+    font-size: 14px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #02aa6d, #251863);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(2, 170, 109, 0.3);
+  }
+
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .cards-container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+</style>
+
+<script>
+  const cards = [
+    { title: 'Factura procesada', desc: 'Sistema automático OCR', time: 'hace 2s' },
+    { title: 'Email categorizado', desc: 'IA clasifica correos', time: 'hace 5s' },
+    { title: 'Cliente atendido', desc: 'Chatbot resolvió consulta', time: 'hace 8s' },
+    { title: 'Pedido procesado', desc: 'E-commerce 24/7', time: 'hace 12s' },
+    { title: 'Cita agendada', desc: 'Reunión coordinada', time: 'hace 15s' }
+  ];
+
+  const cardsList = document.getElementById('cards-list');
+  let currentCards = [];
+  let index = 0;
+
+  // Crear tarjeta HTML
+  function createCard(data, isAnimated = false) {
+    const div = document.createElement('div');
+    div.className = isAnimated ? 'card animated-card' : 'card';
+    div.innerHTML = `
+      <div class="card-icon">✓</div>
+      <div class="card-content">
+        <h4>${data.title}</h4>
+        <p>${data.desc}</p>
+      </div>
+      <span class="card-time">${data.time}</span>
+    `;
+    return div;
+  }
+
+  // Cargar tarjetas iniciales con animación
+  cards.forEach((card, i) => {
+    const cardEl = createCard(card, true);
+    cardsList.appendChild(cardEl);
+    currentCards.push(cardEl);
+  });
+
+  // Rotar tarjetas cada 3 segundos
+  setInterval(() => {
+    // Remover primera tarjeta
+    const firstCard = currentCards.shift();
+    firstCard.style.opacity = '0';
+    firstCard.style.transform = 'translateY(-20px)';
+    
+    setTimeout(() => {
+      firstCard.remove();
+    }, 300);
+
+    // Añadir nueva tarjeta
+    index = (index + 1) % cards.length;
+    const newCard = createCard(cards[index]);
+    newCard.classList.add('new-animated-card');
+    cardsList.insertBefore(newCard, cardsList.firstChild);
+    currentCards.unshift(newCard);
+  }, 3000);
+</script>
