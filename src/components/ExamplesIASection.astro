@@ -257,15 +257,16 @@
     transform: translateX(4px);
   }
 
-  /* Lista animada - SIN FONDO */
+  /* Lista animada con fondo oscuro para contraste */
   .examples-list-container {
     position: relative;
     height: 520px;
     overflow: hidden;
-    background: transparent;  /* Sin fondo */
-    border: none;
-    border-radius: 20px;
-    padding: 0;
+    background: rgba(0, 0, 0, 0.5);  /* Fondo oscuro para ver las tarjetas blancas */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 16px;
+    backdrop-filter: blur(10px);
   }
 
   .animated-list-wrapper {
@@ -280,7 +281,7 @@
     height: 100%;
     overflow: hidden;
     position: relative;
-    padding: 0;  /* Sin padding */
+    padding: 0;
   }
 
   /* Gradiente para fade out en la parte inferior */
@@ -296,27 +297,25 @@
     z-index: 20;
   }
 
-  /* Tarjeta de notificación - TARJETAS INDIVIDUALES */
+  /* Tarjeta de notificación - SIMPLE Y CON FONDO BLANCO */
   .notification-card {
-    /* Fondo blanco sólido */
-    background: #ffffff !important;
+    /* Fondo blanco y borde blanco grueso */
+    background: #ffffff;
+    border: 3px solid #ffffff;
+    outline: 1px solid #e5e7eb;
+    border-radius: 12px;
     
-    /* Borde y sombra para separación visual */
-    border: 1px solid #e5e7eb;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    /* Espaciado */
+    padding: 12px 16px;
+    margin-bottom: 12px;
     
-    /* Espaciado interno */
-    padding: 0;  /* Sin padding general */
-    margin: 0 8px;  /* Margen lateral para separación */
-    overflow: hidden;
-    
-    /* Layout */
+    /* Layout simple */
     display: flex;
-    align-items: stretch;  /* Estirar elementos hijos */
-    gap: 0;
-    position: relative;
-    z-index: 10;
+    align-items: center;
+    gap: 12px;
+    
+    /* Sombra para que se vea la tarjeta */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     
     /* Animación */
     opacity: 0;
@@ -327,8 +326,9 @@
   }
 
   .notification-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: #ffffff;
   }
 
   @keyframes notification-in {
@@ -340,28 +340,27 @@
 
   .notification-header {
     display: flex;
-    align-items: stretch;  /* Estirar para que el icono ocupe toda la altura */
-    gap: 0;
+    align-items: center;
+    gap: 12px;
     width: 100%;
-    min-height: 56px;  /* Altura mínima para 2 líneas de texto */
   }
 
   .notification-icon {
-    width: 56px;
-    height: 100%;  /* Ocupar toda la altura */
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    background: #10b981;  /* Verde para el check */
+    background: #10b981;
     color: #ffffff;
-    border-radius: 16px 0 0 16px;  /* Solo redondeado a la izquierda */
+    border-radius: 8px;
   }
   
   .notification-icon svg {
-    width: 28px;
-    height: 28px;
-    stroke-width: 2.5;
+    width: 18px;
+    height: 18px;
+    stroke-width: 3;
   }
 
   .notification-content {
@@ -370,7 +369,6 @@
     flex-direction: column;
     justify-content: center;
     gap: 2px;
-    padding: 12px 16px 12px 12px;  /* Padding solo en el contenido */
   }
 
   .notification-title {
