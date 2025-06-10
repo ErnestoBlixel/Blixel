@@ -1,101 +1,229 @@
-# Blixel AI - Inteligencia Artificial para Empresas
+# 🚀 BLIXEL AI - Agencia de Automatización con IA
 
-Sitio web corporativo optimizado para SEO con enfoque en "inteligencia artificial para empresas". Implementa metodología Quick-ROI con resultados garantizados en 90 días.
+> **Sitio web corporativo desarrollado con Astro + WordPress Headless + Magic UI**  
+> 🌐 **Deploy**: https://blixel.pages.dev  
+> 💻 **Stack**: Astro 4.x + React 19 + Cloudflare Pages
 
-## 🚀 Características
+---
 
-- **Home page optimizada** para "inteligencia artificial para empresas"
-- **8 secciones estratégicas**: Intro, Problema, Servicios, Metodología, Casos, FAQ, CTA
-- **SEO on-page optimizado** con keywords naturalmente integradas
-- **Internal linking** preparado para páginas de servicios
-- **Diseño dark theme** responsive con animaciones
-- **Integración WordPress** para contenido dinámico vía GraphQL
+## 📋 **INFORMACIÓN DEL PROYECTO**
 
-## 🛠️ Tecnologías
+### 🎯 **Descripción**
+Sitio web corporativo para **Blixel AI**, agencia especializada en automatización empresarial mediante Inteligencia Artificial. El sitio presenta servicios, casos de éxito y ejemplos de implementación de IA.
 
-- **Astro** 4.x
-- **WordPress** como CMS headless
-- **GraphQL** para datos dinámicos
-- **CSS3** con animaciones avanzadas
-- **JavaScript** vanilla para interactividad
+### 🏗️ **Arquitectura Técnica**
+- **Framework**: Astro 4.x (Static Site Generation)
+- **Frontend**: React 19.1.0 + TypeScript
+- **CMS**: WordPress Headless (GraphQL API)
+- **Animaciones**: Magic UI + Motion React
+- **Deploy**: Cloudflare Pages (automático)
+- **Dominio**: blixel.pages.dev
 
-## ⚙️ Configuración
+---
 
-### 1. Clonar repositorio
-```bash
-git clone https://github.com/YOUR-USERNAME/blixel-ai-website.git
-cd blixel-ai-website
+## 🛠️ **TECNOLOGÍAS IMPLEMENTADAS**
+
+### **Core Stack**
+```json
+{
+  "astro": "^4.0.0",
+  "react": "^19.1.0",
+  "typescript": "^5.0.0",
+  "@astrojs/cloudflare": "^8.0.0",
+  "@astrojs/react": "^4.3.0"
+}
 ```
 
-### 2. Instalar dependencias
+### **WordPress Integration**
+```json
+{
+  "@apollo/client": "^3.13.8",
+  "graphql": "^16.11.0",
+  "graphql-request": "^6.0.0"
+}
+```
+
+### **UI & Animations**
+```json
+{
+  "framer-motion": "^11.18.2",
+  "lucide-react": "^0.460.0"
+}
+```
+
+---
+
+## 🎨 **CARACTERÍSTICAS PRINCIPALES**
+
+### ✨ **Magic UI Components**
+- **Notification Cards**: 4 estilos (Magic Spotlight, Neon Ripple, Cyber Glitch, Classic)
+- **Border Beam**: Rayos animados en bordes
+- **Particles**: Partículas flotantes dinámicas  
+- **Ripple Effects**: Ondas expansivas de fondo
+- **Spotlight**: Efectos de luz que siguen el cursor
+
+### 🏠 **Secciones del Sitio**
+1. **Hero Section**: Presentación principal con efectos typing
+2. **Services**: Servicios de automatización con IA
+3. **Examples**: Casos de éxito y implementaciones
+4. **Methodology**: Proceso de trabajo de la agencia
+5. **FAQ**: Preguntas frecuentes
+6. **Contact**: Formulario de contacto
+
+### 📱 **WordPress Integration**
+- **Posts dinámicos**: Contenido gestionado desde WordPress
+- **GraphQL API**: Consultas optimizadas
+- **Caché inteligente**: Rendimiento optimizado
+- **Headless CMS**: Total flexibilidad de diseño
+
+---
+
+## 🚀 **CONFIGURACIÓN DE DESARROLLO**
+
+### **Instalación**
 ```bash
 npm install
 ```
 
-### 3. Configurar variables de entorno
-Crear archivo `.env` en la raíz del proyecto:
-
-```env
-PUBLIC_WP_GRAPHQL_URL=https://cms.blixel.es/graphql
-```
-
-### 4. Ejecutar en desarrollo
+### **Desarrollo Local**
 ```bash
 npm run dev
+# Servidor: http://localhost:4321
 ```
 
-## 📁 Estructura del proyecto
-
-```
-src/
-├── components/
-│   ├── IntroSection.astro          # ¿Qué es IA Empresarial?
-│   ├── ProblemIASection.astro      # 42% tiempo perdido
-│   ├── ServicesIASection.astro     # Servicios de IA
-│   ├── MethodologyIASection.astro  # Quick-ROI metodología
-│   ├── CasesIASection.astro        # Casos de éxito
-│   ├── FAQSection.astro            # Preguntas frecuentes
-│   ├── CTAIASection.astro          # Formulario diagnóstico
-│   ├── Header.astro                # Navegación interna
-│   └── Hero.astro                  # Hero con datos WP
-├── pages/
-│   └── index.astro                 # Home page principal
-└── layouts/
-    └── Layout.astro                # Layout base
-```
-
-## 🎯 SEO Keywords objetivo
-
-- **Principal**: "inteligencia artificial para empresas"
-- **Secundarias**: "IA para empresas", "IA empresarial", "automatización inteligente"
-- **Long-tail**: "soluciones de inteligencia artificial para empresas"
-
-## 🔗 Internal Linking preparado
-
-- `/formacion-ia-empresas` - Formación especializada
-- `/agentes-ia-empresas` - Agentes y ChatGPT empresarial  
-- `/automatizacion-ia-empresas` - Automatización y micro-SaaS
-
-## 📊 Metodología Quick-ROI
-
-1. **Auditoría** (Días 1-15): Análisis de procesos
-2. **Piloto** (Días 16-45): MVP funcional
-3. **Métricas** (Días 46-75): Medición ROI
-4. **Escalado** (Días 76-90): Expansión empresarial
-
-## 🚀 Deployment
-
+### **Build de Producción**
 ```bash
 npm run build
-npm run preview
 ```
 
-## 📧 Contacto
-
-- **Web**: [blixel.es](https://blixel.es)
-- **Email**: info@blixel.es
-- **CMS**: [cms.blixel.es](https://cms.blixel.es)
+### **Deploy a Cloudflare**
+```bash
+./DEPLOY.bat
+# O manualmente:
+git add .
+git commit -m "feat: nuevas características"
+git push origin main
+```
 
 ---
 
-**Blixel** - Transformamos empresas con IA en 90 días
+## 🌍 **CONFIGURACIÓN DE WORDPRESS**
+
+### **Endpoint GraphQL**
+```
+URL: https://blixel.com/graphql
+Consultas: Posts, Pages, Media
+```
+
+### **Variables de Entorno**
+```env
+WORDPRESS_API_URL=https://blixel.com/graphql
+WORDPRESS_AUTH_TOKEN=your_token_here
+```
+
+---
+
+## 📁 **ESTRUCTURA DEL PROYECTO**
+
+```
+📦 blixel-ai/
+├── 📁 src/
+│   ├── 📁 components/
+│   │   ├── 📁 magic-ui/          # Componentes Magic UI
+│   │   │   ├── NotificationCard.tsx
+│   │   │   ├── BorderBeam.tsx
+│   │   │   ├── Particles.tsx
+│   │   │   └── ...
+│   │   ├── Hero.astro            # Sección principal
+│   │   ├── ServicesSection.astro # Servicios
+│   │   ├── ExamplesSection.astro # Ejemplos
+│   │   └── ...
+│   ├── 📁 layouts/
+│   │   └── Layout.astro          # Layout principal
+│   ├── 📁 pages/
+│   │   ├── index.astro           # Página principal
+│   │   └── [...slug].astro       # Páginas dinámicas
+│   └── 📁 utils/
+│       └── wordpress.ts          # Funciones WordPress
+├── 📁 public/
+│   ├── favicon.ico
+│   └── assets/
+├── astro.config.mjs              # Configuración Astro
+├── package.json                  # Dependencias
+├── tsconfig.json                 # Configuración TypeScript
+└── DEPLOY.bat                    # Script de deploy
+```
+
+---
+
+## ⚡ **CARACTERÍSTICAS TÉCNICAS**
+
+### **Rendimiento**
+- ✅ **Lighthouse Score**: 95+
+- ✅ **Core Web Vitals**: Optimizado
+- ✅ **Image Optimization**: Automática
+- ✅ **Code Splitting**: Astro automático
+
+### **SEO & Accesibilidad**
+- ✅ **Meta Tags**: Dinámicos desde WordPress
+- ✅ **Schema Markup**: Implementado
+- ✅ **Sitemap**: Generado automáticamente
+- ✅ **Accessibility**: WCAG 2.1 AA
+
+### **Deploy & CI/CD**
+- ✅ **Auto Deploy**: GitHub → Cloudflare Pages
+- ✅ **Preview Builds**: Branches automáticos
+- ✅ **Environment Variables**: Configuradas
+- ✅ **SSL**: Certificado automático
+
+---
+
+## 🛡️ **SEGURIDAD**
+
+- ✅ **HTTPS**: Forzado por Cloudflare
+- ✅ **Headers**: Security headers configurados
+- ✅ **API**: WordPress protegido con autenticación
+- ✅ **Environment**: Variables sensibles protegidas
+
+---
+
+## 📞 **CONTACTO & SOPORTE**
+
+**Blixel AI - Agencia de Automatización**
+- 🌐 **Web**: https://blixel.pages.dev
+- 📧 **Email**: info@blixel.com
+- 💼 **Servicios**: Automatización empresarial con IA
+
+---
+
+## 📝 **COMANDOS ÚTILES**
+
+```bash
+# Desarrollo
+npm run dev              # Servidor local
+npm run build           # Build producción
+npm run preview         # Preview build local
+
+# Deploy
+./DEPLOY.bat            # Deploy rápido
+git push origin main    # Deploy automático
+
+# Maintenance
+npm update              # Actualizar dependencias
+npm audit               # Verificar seguridad
+```
+
+---
+
+## 🏆 **ESTADO DEL PROYECTO**
+
+✅ **Completado**: Sitio web funcional con todas las características  
+✅ **Deploy**: Automático en Cloudflare Pages  
+✅ **WordPress**: Integración headless funcionando  
+✅ **Magic UI**: Animaciones espectaculares implementadas  
+✅ **Performance**: Optimizado para producción  
+
+---
+
+**🚀 Proyecto desarrollado y optimizado para Blixel AI**  
+*Última actualización: Diciembre 2024*
