@@ -1,5 +1,6 @@
 ---
 import LogosSlider from './LogosSlider.astro';
+import GravityForm from './GravityForm.astro';
 
 export interface Props {
   pageSlug?: string;
@@ -107,6 +108,14 @@ if (!titleLine1 || !titleLine2) {
     <p class="hero-description">
       {pageDescription}
     </p>
+
+    <!-- Formulario de Diagnóstico -->
+    <div class="hero-form">
+      <GravityForm 
+        formId={1}
+        className="hero-gravity-form"
+      />
+    </div>
 
     <!-- CTAs -->
     <div class="hero-actions">
@@ -227,6 +236,42 @@ if (!titleLine1 || !titleLine2) {
     animation-delay: 3s;
   }
 
+  /* Formulario en el hero */
+  .hero-form {
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 3.4s;
+  }
+
+  .hero-form :global(.gravity-form-section) {
+    background: transparent;
+    padding: 0;
+  }
+
+  .hero-form :global(.container) {
+    padding: 0;
+  }
+
+  .hero-form :global(.form-header) {
+    display: none; /* Ocultamos el header ya que estamos en el hero */
+  }
+
+  .hero-form :global(.form-container) {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.5rem;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-form :global(.gravity-form-iframe) {
+    height: 500px;
+    border-radius: 8px;
+  }
+
   /* Botones */
   .hero-actions {
     display: flex;
@@ -236,7 +281,7 @@ if (!titleLine1 || !titleLine2) {
     margin-bottom: 3rem; /* Espacio para el slider */
     opacity: 0;
     animation: fadeInUp 0.8s ease forwards;
-    animation-delay: 3.2s;
+    animation-delay: 3.6s; /* Retrasar para que aparezca después del formulario */
   }
 
   @keyframes fadeInUp {
@@ -312,6 +357,19 @@ if (!titleLine1 || !titleLine2) {
       margin-bottom: 2rem;
     }
 
+    .hero-form {
+      max-width: 100%;
+      margin-bottom: 2rem;
+    }
+
+    .hero-form :global(.form-container) {
+      padding: 1rem;
+    }
+
+    .hero-form :global(.gravity-form-iframe) {
+      height: 450px;
+    }
+
     .hero-actions {
       flex-direction: column;
       align-items: center;
@@ -347,6 +405,15 @@ if (!titleLine1 || !titleLine2) {
 
     .hero-description {
       font-size: 1rem;
+    }
+
+    .hero-form :global(.form-container) {
+      padding: 0.75rem;
+      border-radius: 8px;
+    }
+
+    .hero-form :global(.gravity-form-iframe) {
+      height: 400px;
     }
 
     .btn-primary,
