@@ -3,9 +3,6 @@
 ---
 
 <section id="why-ai-now" class="why-ia-section">
-  <!-- Canvas de partículas flotantes -->
-  <canvas id="why-particles-canvas" class="particles-canvas"></canvas>
-  
   <!-- Fondo con gradiente -->
   <div class="why__background">
     <div class="gradient-orb gradient-orb--1"></div>
@@ -66,27 +63,18 @@
 <style>
   .why-ia-section {
     position: relative;
-    background: #000000;
-    padding: 6rem 0; /* Más padding */
+    background: transparent; /* Transparente para ver partículas globales */
+    padding: 6rem 0;
     overflow: hidden;
     border: none;
     box-shadow: none;
-    min-height: 100vh; /* Altura completa */
+    min-height: 100vh;
     display: flex;
     align-items: center;
-    scroll-snap-align: start; /* Snap scrolling */
+    scroll-snap-align: start;
   }
 
-  /* Canvas de partículas */
-  .particles-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    opacity: 0.4;
-  }
+
 
   /* Fondo con gradientes */
   .why__background {
@@ -362,73 +350,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Partículas de fondo (similar a Hero)
-  const canvas = document.getElementById('why-particles-canvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    
-    function resizeCanvas() {
-      const section = canvas.closest('.why-ia-section');
-      canvas.width = section.offsetWidth;
-      canvas.height = section.offsetHeight;
-    }
-    
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.3;
-        this.vy = (Math.random() - 0.5) * 0.3;
-        this.size = Math.random() * 2 + 1;
-        this.opacity = Math.random() * 0.3 + 0.1;
-        this.color = Math.random() > 0.5 ? '#02aa6d' : '#251863';
-      }
-      
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-        
-        this.x = Math.max(0, Math.min(canvas.width, this.x));
-        this.y = Math.max(0, Math.min(canvas.height, this.y));
-      }
-      
-      draw() {
-        ctx.save();
-        ctx.globalAlpha = this.opacity;
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
-    }
-    
-    // Crear menos partículas para no saturar
-    for (let i = 0; i < 20; i++) {
-      particles.push(new Particle());
-    }
-    
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(particle => {
-        particle.update();
-        particle.draw();
-      });
-      
-      requestAnimationFrame(animate);
-    }
-    
-    animate();
-  }
-
   // Intersection Observer para animaciones
   const observerOptions = {
     threshold: 0.1,
