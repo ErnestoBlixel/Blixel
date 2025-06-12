@@ -5,7 +5,7 @@ import IntroSection from '../components/IntroSection.astro';
 import ProblemIASection from '../components/ProblemIASection.astro';
 import ServicesIASection from '../components/ServicesIASection.astro';
 import QuoteSection from '../components/QuoteSection.astro';
-import WhyIANowSection from '../components/WhyIANowSection.astro';
+// import WhyIANowSection from '../components/WhyIANowSection.astro';
 import ExamplesIASection from '../components/ExamplesUltraSimple.astro';
 import MethodologyIASection from '../components/MethodologyIASection.astro';
 import CasesIASection from '../components/CasesIASection.astro';
@@ -185,8 +185,7 @@ if (h1Title.includes('?')) {
   <!-- Sección: Cita inspiradora -->
   <QuoteSection />
 
-  <!-- Sección: Por qué implementar IA ahora -->
-  <WhyIANowSection />
+
 
   <!-- Sección: Ejemplos de IA en acción -->
   <ExamplesIASection />
@@ -221,7 +220,7 @@ if (h1Title.includes('?')) {
   }
 
   :global(body) {
-    background: #000000;
+    background: transparent; /* Transparente para ver particles */
     color: #e5e5e5;
   }
   
@@ -230,7 +229,11 @@ if (h1Title.includes('?')) {
     border: none !important;
     box-shadow: none !important;
     outline: none !important;
-    background-color: transparent !important; /* Transparente para particles */
+  }
+  
+  /* Fondo transparente para todas las secciones excepto problem-ia-section */
+  :global(section:not(.problem-ia-section)) {
+    background-color: transparent !important;
   }
   
   :global(section + section) {
@@ -240,8 +243,10 @@ if (h1Title.includes('?')) {
   
   /* Asegurar fondo uniforme en móvil */
   @media (max-width: 768px) {
+    :global(section:not(.problem-ia-section)) {
+      background: transparent !important;
+    }
     :global(section) {
-      background: transparent !important; /* Transparente en móvil también */
       border: none !important;
     }
   }
