@@ -97,10 +97,10 @@ if (!titleLine1 || !titleLine2) {
       <img src={logoUrl} alt={logoAlt} />
     </div>
 
-    <!-- Título con efecto typing -->
+    <!-- Título con efecto mejorado -->
     <h1 class="hero-title">
-      <span class="line-1 typing-line" data-text={actualTitleLine1}>{actualTitleLine1}</span>
-      <span class="line-2 typing-line" data-text={actualTitleLine2}>{actualTitleLine2}</span>
+      <span class="line-1 typing-line">{actualTitleLine1}</span>
+      <span class="line-2 typing-line">{actualTitleLine2}</span>
     </h1>
 
     <!-- Descripción -->
@@ -143,75 +143,175 @@ if (!titleLine1 || !titleLine2) {
     margin-top: -80px;
     padding-top: calc(80px + 3rem); /* Más espacio después del header */
     position: relative;
+    overflow: visible; /* Asegurar que no se corte nada */
   }
 
   .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    overflow: visible; /* Evitar cortes */
   }
 
-  /* Logo */
+  /* Logo con animaciones y círculo */
   .logo-wrapper {
-    margin-bottom: 2rem; /* Un poco más de margen */
+    margin-bottom: 2.5rem;
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Círculo decorativo detrás del logo con borde animado */
+  .logo-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.3) 0%, rgba(168, 85, 247, 0.2) 50%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(20px);
+    animation: pulse 3s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  /* Borde animado adicional */
+  .logo-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #60a5fa, #a855f7, #60a5fa) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    animation: rotate 3s linear infinite;
+    z-index: 0;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 0.4;
+    }
   }
 
   .logo-wrapper img {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     object-fit: contain;
-    filter: brightness(0) invert(1);
-    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+    animation: floatRotate 6s ease-in-out infinite;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.6)) brightness(1.1);
   }
 
-  /* Título más grande con efecto typing */
+  @keyframes floatRotate {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    25% {
+      transform: translateY(-10px) rotate(5deg);
+    }
+    50% {
+      transform: translateY(0) rotate(0deg);
+    }
+    75% {
+      transform: translateY(-5px) rotate(-5deg);
+    }
+  }
+
+  .logo-wrapper:hover img {
+    transform: scale(1.1) rotate(360deg);
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  /* Título mejorado con mejor line-height */
   .hero-title {
     font-family: 'Inter', -apple-system, sans-serif;
-    font-size: clamp(3rem, 6vw, 5.5rem); /* Más grande */
+    font-size: clamp(3.5rem, 7vw, 6rem); /* Más grande */
     font-weight: 800;
-    line-height: 0.9; /* Líneas más juntas */
-    color: #ffffff;
-    margin: 0 0 2.5rem; /* Más margen abajo */
-    letter-spacing: -0.04em;
+    line-height: 1.1; /* Mejor line-height para evitar cortes */
+    margin: 0 0 2.5rem;
+    letter-spacing: -0.03em;
+    color: #ffffff; /* Fallback para navegadores que no soporten gradients */
+    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 50%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Hover effect para el título */
+  .hero-title:hover {
+    animation-duration: 1.5s;
   }
 
   .typing-line {
     display: block;
     position: relative;
-    overflow: hidden;
-    white-space: nowrap; /* Evitar saltos de línea */
+    overflow: visible; /* Cambiado de hidden para evitar cortes */
+    white-space: normal; /* Permitir wrap en móvil */
+    padding: 0.1em 0; /* Pequeño padding para evitar cortes */
   }
 
   .line-1 {
-    margin-bottom: 0.1em; /* Menos espacio entre líneas */
+    margin-bottom: 0.3em; /* Un poco más de espacio */
   }
 
-  /* Efecto typing mejorado */
-  .typing-line::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: #000000;
-    animation: typing 2s steps(40) forwards;
+  /* Efecto typing simplificado */
+  @keyframes fadeInText {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
-  .line-1::after {
+  .typing-line {
+    opacity: 0;
+    animation: fadeInText 0.8s ease forwards;
+  }
+
+  .line-1 {
     animation-delay: 0.5s;
   }
 
-  .line-2::after {
-    animation-delay: 2s;
-  }
-
-  /* Cursor eliminado para un look más limpio */
-
-  @keyframes typing {
-    to {
-      left: 100%;
-    }
+  .line-2 {
+    animation-delay: 0.8s;
   }
 
 
@@ -224,7 +324,7 @@ if (!titleLine1 || !titleLine2) {
     line-height: 1.5;
     opacity: 0;
     animation: fadeInUp 0.8s ease forwards;
-    animation-delay: 3s;
+    animation-delay: 1.5s;
   }
 
   /* Botones */
@@ -236,7 +336,7 @@ if (!titleLine1 || !titleLine2) {
     margin-bottom: 3rem; /* Espacio para el slider */
     opacity: 0;
     animation: fadeInUp 0.8s ease forwards;
-    animation-delay: 3.2s; /* Vuelve al timing original */
+    animation-delay: 1.8s;
   }
 
   @keyframes fadeInUp {
@@ -296,15 +396,34 @@ if (!titleLine1 || !titleLine2) {
       padding: 0 1rem;
     }
 
+    .logo-wrapper {
+      margin-bottom: 2rem;
+    }
+
+    .logo-wrapper::before {
+      width: 100px;
+      height: 100px;
+    }
+
+    .logo-wrapper::after {
+      width: 85px;
+      height: 85px;
+    }
+
     .logo-wrapper img {
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
     }
 
     .hero-title {
-      font-size: clamp(2.5rem, 8vw, 3.5rem); /* Ajustado para móvil */
-      margin-bottom: 1.5rem;
-      line-height: 0.95; /* Mejor espaciado en móvil */
+      font-size: clamp(2.75rem, 9vw, 4rem); /* Mejorado para móvil */
+      margin-bottom: 2rem;
+      line-height: 1.15; /* Mejor espaciado en móvil */
+      padding: 0 0.5rem; /* Padding lateral para evitar cortes */
+    }
+
+    .typing-line {
+      white-space: normal; /* Permitir wrap si es necesario */
     }
 
     .hero-description {
@@ -335,14 +454,27 @@ if (!titleLine1 || !titleLine2) {
       margin-bottom: 1.5rem;
     }
 
+    .logo-wrapper::before {
+      width: 90px;
+      height: 90px;
+      filter: blur(15px);
+    }
+
+    .logo-wrapper::after {
+      width: 75px;
+      height: 75px;
+    }
+
     .logo-wrapper img {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
     }
 
     .hero-title {
-      font-size: 2.25rem;
-      line-height: 1; /* Mejor para texto pequeño */
+      font-size: clamp(2rem, 10vw, 2.75rem);
+      line-height: 1.2; /* Mejor para texto pequeño */
+      margin-bottom: 1.5rem;
+      padding: 0 0.25rem; /* Menos padding en pantallas muy pequeñas */
     }
 
     .hero-description {
@@ -355,21 +487,28 @@ if (!titleLine1 || !titleLine2) {
       font-size: 0.95rem;
     }
   }
-</style>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Reiniciar animación de typing al hacer hover
-  const typingLines = document.querySelectorAll('.typing-line');
+  /* Reducir animaciones en móvil para mejor rendimiento */
+  @media (max-width: 768px) {
+    .logo-wrapper img {
+      animation: floatRotate 8s ease-in-out infinite; /* Más lenta */
+    }
+    
+    .hero-title {
+      animation: none; /* Sin shimmer en móvil */
+      background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+    }
+    
+    .logo-wrapper::after {
+      animation: rotate 5s linear infinite; /* Más lenta */
+    }
+  }
   
-  typingLines.forEach(line => {
-    line.addEventListener('mouseenter', function() {
-      // Reiniciar la animación
-      this.style.animation = 'none';
-      setTimeout(() => {
-        this.style.animation = '';
-      }, 10);
-    });
-  });
-});
-</script>
+  /* Soporte para navegadores sin gradient text */
+  @supports not (background-clip: text) and not (-webkit-background-clip: text) {
+    .hero-title {
+      background: none;
+      color: #ffffff;
+    }
+  }
+</style>
