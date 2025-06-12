@@ -8,11 +8,8 @@ interface Props {
 
 const { formId, title, description, className = '' } = Astro.props;
 
-// URL base de WordPress desde las variables de entorno
-const wpBaseUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL?.replace('/graphql', '') || 'https://cms.blixel.es';
-
-// Construir la URL del formulario
-const formUrl = `${wpBaseUrl}/gravity-forms/form/${formId}`;
+// URL directa del formulario (la más probable que funcione)
+const formUrl = `https://cms.blixel.es/?gf_page=embed&id=${formId}`;
 ---
 
 <section class={`gravity-form-section ${className}`} id="diagnostico-form">

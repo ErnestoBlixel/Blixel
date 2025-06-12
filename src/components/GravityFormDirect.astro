@@ -1,0 +1,104 @@
+---
+interface Props {
+  formId: number;
+  className?: string;
+}
+
+const { formId, className = '' } = Astro.props;
+---
+
+<div class={`gravity-form-direct ${className}`}>
+  <!-- Método 1: URL embed directa -->
+  <iframe 
+    src={`https://cms.blixel.es/?gf_page=embed&id=${formId}`}
+    width="100%" 
+    height="600"
+    frameborder="0"
+    scrolling="no"
+    class="gravity-iframe"
+    title="Formulario de Diagnóstico IA"
+  ></iframe>
+  
+  <!-- Método 2: Fallback con enlace directo -->
+  <div class="fallback-link" style="display: none;">
+    <a href={`https://cms.blixel.es/?gf_page=embed&id=${formId}`} target="_blank" 
+       class="form-link">
+      📝 Abrir Formulario de Diagnóstico
+    </a>
+  </div>
+</div>
+
+<style>
+  .gravity-form-direct {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .gravity-iframe {
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 500px;
+  }
+
+  .form-link {
+    display: inline-block;
+    background: linear-gradient(135deg, #02aa6d 0%, #0ea5e9 100%);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: transform 0.2s ease;
+  }
+
+  .form-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(2, 170, 109, 0.3);
+  }
+
+  .fallback-link {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    .gravity-iframe {
+      height: 550px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const iframe = document.querySelector('.gravity-iframe');
+    const fallback = document.querySelector('.fallback-link');
+    
+    if (iframe && fallback) {
+      // Mostrar fallback si el iframe no carga en 5 segundos
+      const timeout = setTimeout(() => {
+        iframe.style.display = 'none';
+        fallback.style.display = 'block';
+        console.log('⚠️ Mostrando enlace alternativo');
+      }, 5000);
+      
+      iframe.addEventListener('load', function() {
+        clearTimeout(timeout);
+        console.log('✅ Formulario cargado correctamente');
+      });
+      
+      iframe.addEventListener('error', function() {
+        clearTimeout(timeout);
+        iframe.style.display = 'none';
+        fallback.style.display = 'block';
+        console.log('❌ Error cargando formulario, mostrando alternativa');
+      });
+    }
+  });
+</script>

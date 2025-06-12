@@ -1,6 +1,6 @@
 ---
 import LogosSlider from './LogosSlider.astro';
-import GravityForm from './GravityForm.astro';
+import GravityFormDirect from './GravityFormDirect.astro';
 
 export interface Props {
   pageSlug?: string;
@@ -111,7 +111,7 @@ if (!titleLine1 || !titleLine2) {
 
     <!-- Formulario de Diagnóstico -->
     <div class="hero-form">
-      <GravityForm 
+      <GravityFormDirect 
         formId={1}
         className="hero-gravity-form"
       />
@@ -245,20 +245,7 @@ if (!titleLine1 || !titleLine2) {
     animation-delay: 3.4s;
   }
 
-  .hero-form :global(.gravity-form-section) {
-    background: transparent;
-    padding: 0;
-  }
-
-  .hero-form :global(.container) {
-    padding: 0;
-  }
-
-  .hero-form :global(.form-header) {
-    display: none; /* Ocultamos el header ya que estamos en el hero */
-  }
-
-  .hero-form :global(.form-container) {
+  .hero-form :global(.gravity-form-direct) {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
@@ -267,7 +254,7 @@ if (!titleLine1 || !titleLine2) {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 
-  .hero-form :global(.gravity-form-iframe) {
+  .hero-form :global(.gravity-iframe) {
     height: 500px;
     border-radius: 8px;
   }
@@ -362,11 +349,11 @@ if (!titleLine1 || !titleLine2) {
       margin-bottom: 2rem;
     }
 
-    .hero-form :global(.form-container) {
+    .hero-form :global(.gravity-form-direct) {
       padding: 1rem;
     }
 
-    .hero-form :global(.gravity-form-iframe) {
+    .hero-form :global(.gravity-iframe) {
       height: 450px;
     }
 
@@ -407,12 +394,12 @@ if (!titleLine1 || !titleLine2) {
       font-size: 1rem;
     }
 
-    .hero-form :global(.form-container) {
+    .hero-form :global(.gravity-form-direct) {
       padding: 0.75rem;
       border-radius: 8px;
     }
 
-    .hero-form :global(.gravity-form-iframe) {
+    .hero-form :global(.gravity-iframe) {
       height: 400px;
     }
 
