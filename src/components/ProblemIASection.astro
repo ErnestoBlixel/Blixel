@@ -5,91 +5,19 @@
 <section class="problem-ia-section">
   <div class="container">
     <div class="problem-content">
-      <div class="problem-visual">
-        <div class="chart-container">
-          <div class="chart-title">Tiempo operativo empresarial</div>
-          <div class="donut-chart">
-            <div class="chart-segment automated" data-percentage="42">
-              <span class="segment-label">42%</span>
-              <span class="segment-text">Automatizable con IA</span>
-            </div>
-            <div class="chart-segment strategic" data-percentage="35">
-              <span class="segment-label">35%</span>
-              <span class="segment-text">Trabajo estratégico</span>
-            </div>
-            <div class="chart-segment other" data-percentage="23">
-              <span class="segment-label">23%</span>
-              <span class="segment-text">Otras actividades</span>
-            </div>
-          </div>
-          <div class="chart-center">
-            <div class="center-icon">⏰</div>
-            <div class="center-text">Tiempo perdido</div>
-          </div>
-        </div>
-      </div>
-
       <div class="problem-text">
-        <div class="problem-stat">
-          <span class="stat-highlight">42%</span> del tiempo operativo se pierde en tareas que la IA puede automatizar
-        </div>
-        
         <h2 class="problem-title">
-          ¿Tu empresa está perdiendo <span class="gradient-text">millones en productividad</span>?
+          La inteligencia artificial no es el futuro de tu empresa.
+          <span class="gradient-text">Es su presente.</span>
         </h2>
         
         <p class="problem-description">
-          Mientras tus competidores automatizan procesos con <strong>inteligencia artificial para empresas</strong>, 
-          tu equipo sigue perdiendo tiempo valioso en tareas repetitivas que deberían estar automatizadas.
+          Cada día que pasa sin implementarla, tu competencia automatiza procesos, mejora decisiones y transforma la experiencia de sus clientes.
         </p>
 
-        <div class="problems-list">
-          <div class="problem-item" data-reveal="1">
-            <div class="problem-icon">📊</div>
-            <div class="problem-content-item">
-              <h3>Análisis manual de datos</h3>
-              <p>Horas perdidas en reportes que la IA puede generar automáticamente</p>
-            </div>
-          </div>
-
-          <div class="problem-item" data-reveal="2">
-            <div class="problem-icon">📞</div>
-            <div class="problem-content-item">
-              <h3>Atención al cliente repetitiva</h3>
-              <p>Consultas básicas que un chatbot inteligente resolvería al instante</p>
-            </div>
-          </div>
-
-          <div class="problem-item" data-reveal="3">
-            <div class="problem-icon">📝</div>
-            <div class="problem-content-item">
-              <h3>Procesos administrativos</h3>
-              <p>Gestión de documentos y flujos de trabajo sin automatizar</p>
-            </div>
-          </div>
-
-          <div class="problem-item" data-reveal="4">
-            <div class="problem-icon">🎯</div>
-            <div class="problem-content-item">
-              <h3>Decisiones sin datos</h3>
-              <p>Falta de insights predictivos para optimizar la estrategia empresarial</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="cost-calculation">
-          <div class="cost-header">
-            <h3>Cálculo de impacto:</h3>
-          </div>
-          <div class="cost-formula">
-            <span class="formula-part">100 empleados</span>
-            <span class="formula-operator">×</span>
-            <span class="formula-part">42% tiempo perdido</span>
-            <span class="formula-operator">×</span>
-            <span class="formula-part">€45k salario promedio</span>
-            <span class="formula-equals">=</span>
-            <span class="formula-result">€1.89M perdidos/año</span>
-          </div>
+        <div class="cta-message">
+          <p class="cta-text">El momento de actuar es ahora</p>
+          <p class="cta-subtitle">TRANSFORMACIÓN DIGITAL CON IA</p>
         </div>
       </div>
     </div>
@@ -98,20 +26,14 @@
 
 <style>
   .problem-ia-section {
-    padding: 6rem 0;
-    background: #0d0d0d;
+    padding: 3rem 0; /* Reducido de 6rem */
+    background: transparent; /* Transparente para ver particles */
     position: relative;
     overflow: hidden;
   }
 
   .problem-ia-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.3), transparent);
+    display: none; /* Eliminar línea decorativa */
   }
 
   .container {
@@ -121,387 +43,111 @@
   }
 
   .problem-content {
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: 6rem;
-    align-items: center;
-  }
-
-  /* Visual del problema */
-  .problem-visual {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .chart-container {
-    position: relative;
-    width: 350px;
-    height: 350px;
-  }
-
-  .chart-title {
     text-align: center;
-    color: #e5e5e5;
-    font-weight: 600;
-    margin-bottom: 2rem;
-    font-size: 1.125rem;
-  }
-
-  .donut-chart {
-    position: relative;
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-    background: conic-gradient(
-      #ef4444 0deg 151deg,
-      #f97316 151deg 277deg,
-      #64748b 277deg 360deg
-    );
+    max-width: 900px;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: chart-spin 3s ease-out;
-  }
-
-  .chart-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 140px;
-    height: 140px;
-    background: #0d0d0d;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .center-icon {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .center-text {
-    color: #ef4444;
-    font-weight: 600;
-    font-size: 0.875rem;
-    text-align: center;
-  }
-
-  .chart-segment {
-    position: absolute;
-    opacity: 0;
-    animation: segment-appear 600ms ease forwards;
-  }
-
-  .chart-segment:nth-child(1) { animation-delay: 1s; }
-  .chart-segment:nth-child(2) { animation-delay: 1.3s; }
-  .chart-segment:nth-child(3) { animation-delay: 1.6s; }
-
-  .chart-segment.automated {
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .chart-segment.strategic {
-    bottom: 20px;
-    right: -30px;
-  }
-
-  .chart-segment.other {
-    bottom: 20px;
-    left: -30px;
-  }
-
-  .segment-label {
-    display: block;
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #ef4444;
-    text-align: center;
-    margin-bottom: 0.25rem;
-  }
-
-  .segment-text {
-    display: block;
-    font-size: 0.75rem;
-    color: #a3a3a3;
-    text-align: center;
-    max-width: 80px;
-    line-height: 1.3;
   }
 
   /* Contenido del texto */
   .problem-text {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-  }
-
-  .problem-stat {
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 1.125rem;
-    color: #a3a3a3;
-    line-height: 1.6;
-  }
-
-  .stat-highlight {
-    color: #ef4444;
-    font-weight: 700;
-    font-size: 1.5rem;
+    gap: 1.5rem; /* Reducido de 2rem */
+    align-items: center;
   }
 
   .problem-title {
-    font-family: 'Inter Tight', sans-serif;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem); /* Reducido significativamente */
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.3;
     color: #e5e5e5;
+    margin-bottom: 1rem;
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+    background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    display: block; /* Para que quede en línea separada */
   }
 
   .problem-description {
-    font-size: 1.125rem;
-    color: #d4d4d4;
+    font-size: 1rem; /* Reducido de 1.125rem */
+    color: #a3a3a3;
     line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto;
   }
 
-  .problem-description strong {
-    color: #60a5fa;
+  .cta-message {
+    margin-top: 2rem;
   }
 
-  .problems-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .problem-item {
-    display: flex;
-    gap: 1rem;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-left: 3px solid #ef4444;
-    border-radius: 12px;
-    backdrop-filter: blur(8px);
-    transition: all 300ms ease;
-    opacity: 0;
-    transform: translateX(-30px);
-    animation: problem-reveal 600ms ease forwards;
-  }
-
-  .problem-item:nth-child(1) { animation-delay: 0ms; }
-  .problem-item:nth-child(2) { animation-delay: 200ms; }
-  .problem-item:nth-child(3) { animation-delay: 400ms; }
-  .problem-item:nth-child(4) { animation-delay: 600ms; }
-
-  .problem-item:hover {
-    transform: translateX(0) translateY(-2px);
-    border-left-color: #60a5fa;
-    background: rgba(239, 68, 68, 0.05);
-  }
-
-  .problem-icon {
-    width: 50px;
-    height: 50px;
-    background: rgba(239, 68, 68, 0.1);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    flex-shrink: 0;
-  }
-
-  .problem-content-item {
-    flex: 1;
-  }
-
-  .problem-content-item h3 {
-    font-family: 'Inter Tight', sans-serif;
+  .cta-text {
     font-size: 1.125rem;
+    color: #02aa6d;
     font-weight: 600;
-    color: #e5e5e5;
     margin-bottom: 0.5rem;
   }
 
-  .problem-content-item p {
-    color: #a3a3a3;
-    line-height: 1.5;
-    font-size: 0.95rem;
+  .cta-subtitle {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
 
-  /* Cálculo de costos */
-  .cost-calculation {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(249, 115, 22, 0.1));
-    border: 1px solid rgba(239, 68, 68, 0.2);
-    border-radius: 16px;
-    padding: 2rem;
-    backdrop-filter: blur(8px);
-  }
-
-  .cost-header h3 {
-    font-family: 'Inter Tight', sans-serif;
-    color: #e5e5e5;
-    margin-bottom: 1rem;
-    font-size: 1.125rem;
-  }
-
-  .cost-formula {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem;
-    font-family: 'Inter Tight', sans-serif;
-  }
-
-  .formula-part {
-    background: rgba(255, 255, 255, 0.05);
-    color: #d4d4d4;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.95rem;
-  }
-
-  .formula-operator {
-    color: #ef4444;
-    font-size: 1.25rem;
-    font-weight: 700;
-  }
-
-  .formula-equals {
-    color: #f97316;
-    font-size: 1.25rem;
-    font-weight: 700;
-  }
-
-  .formula-result {
-    background: linear-gradient(135deg, #ef4444, #f97316);
-    color: white;
-    padding: 1rem 1.5rem;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 1.125rem;
-    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.25);
-  }
-
-  /* Animaciones */
-  @keyframes chart-spin {
+  /* Animaciones simplificadas */
+  @keyframes fade-in {
     from {
-      transform: rotate(-90deg);
+      opacity: 0;
+      transform: translateY(20px);
     }
-    to {
-      transform: rotate(0deg);
-    }
-  }
-
-  @keyframes segment-appear {
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes problem-reveal {
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes text-reveal {
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
 
-  /* Responsive */
-  @media (max-width: 1024px) {
-    .problem-content {
-      grid-template-columns: 1fr;
-      gap: 4rem;
-      text-align: center;
-    }
-
-    .chart-container {
-      width: 300px;
-      height: 300px;
-    }
-
-    .donut-chart {
-      width: 240px;
-      height: 240px;
-    }
-
-    .chart-center {
-      width: 120px;
-      height: 120px;
-    }
+  .problem-title,
+  .problem-description,
+  .cta-message {
+    animation: fade-in 0.8s ease-out;
   }
 
+  /* Responsive */
   @media (max-width: 768px) {
     .problem-ia-section {
-      padding: 4rem 0;
+      padding: 2rem 0; /* Aún menos padding en móvil */
     }
 
     .container {
       padding: 0 1rem;
     }
 
-    .chart-container {
-      width: 250px;
-      height: 250px;
-    }
-
-    .donut-chart {
-      width: 200px;
-      height: 200px;
-    }
-
-    .chart-center {
-      width: 100px;
-      height: 100px;
-    }
-
-    .center-icon {
+    .problem-title {
       font-size: 1.5rem;
     }
 
-    .problem-item {
-      padding: 1rem;
+    .problem-description {
+      font-size: 0.9rem;
     }
 
-    .cost-formula {
-      flex-direction: column;
-      align-items: stretch;
-      text-align: center;
+    .cta-text {
+      font-size: 1rem;
     }
 
-    .formula-part,
-    .formula-result {
-      text-align: center;
+    .cta-subtitle {
+      font-size: 0.75rem;
     }
   }
 </style>
 
 <script>
+  // Script simplificado - solo animación de entrada
   document.addEventListener('DOMContentLoaded', function() {
-    // Intersection Observer para animaciones
     const observerOptions = {
       threshold: 0.3,
       rootMargin: '0px 0px -50px 0px'
@@ -510,65 +156,14 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('animate-in');
+          entry.target.classList.add('visible');
         }
       });
     }, observerOptions);
 
-    // Observar elementos para animación
-    const animatedElements = document.querySelectorAll('.problem-item, .cost-calculation, .chart-container');
-    animatedElements.forEach(el => observer.observe(el));
-
-    // Efecto de texto reveal on scroll
-    const textElements = document.querySelectorAll('.problem-title, .problem-description');
-    
-    const textObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '0';
-          entry.target.style.transform = 'translateY(20px)';
-          entry.target.style.animation = 'text-reveal 800ms ease forwards';
-        }
-      });
-    }, { threshold: 0.5 });
-
-    textElements.forEach(el => textObserver.observe(el));
-
-    // Animación de números en el cálculo de costos
-    const formulaResult = document.querySelector('.formula-result');
-    
-    if (formulaResult) {
-      const resultObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            // Efecto de conteo animado
-            const finalText = '€1.89M perdidos/año';
-            const duration = 2000;
-            const steps = 50;
-            const stepDuration = duration / steps;
-            
-            let currentStep = 0;
-            formulaResult.textContent = '€0M perdidos/año';
-            
-            const timer = setInterval(() => {
-              currentStep++;
-              const progress = currentStep / steps;
-              const currentValue = Math.floor(1.89 * progress * 100) / 100;
-              
-              if (currentStep >= steps) {
-                formulaResult.textContent = finalText;
-                clearInterval(timer);
-              } else {
-                formulaResult.textContent = `€${currentValue}M perdidos/año`;
-              }
-            }, stepDuration);
-            
-            resultObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.8 });
-      
-      resultObserver.observe(formulaResult);
+    const section = document.querySelector('.problem-ia-section');
+    if (section) {
+      observer.observe(section);
     }
   });
 </script>
