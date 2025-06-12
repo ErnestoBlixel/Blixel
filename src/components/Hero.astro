@@ -105,7 +105,7 @@ if (!titleLine1 || !titleLine2) {
 
     <!-- Descripción -->
     <p class="hero-description">
-      {pageDescription}
+      Inteligencia artificial en tu empresa HOY o quiebras mañana. ROI en 90 días. Mientras dudas, tu competencia factura.
     </p>
 
     <!-- CTAs -->
@@ -155,6 +155,7 @@ if (!titleLine1 || !titleLine2) {
 
   /* Logo con animaciones y círculo */
   .logo-wrapper {
+    margin-top: 3.5rem; /* Bajado más el logo */
     margin-bottom: 2.5rem;
     position: relative;
     display: inline-block;
@@ -292,7 +293,7 @@ if (!titleLine1 || !titleLine2) {
   /* Efecto typing simplificado */
   @keyframes fadeInText {
     from {
-      opacity: 0;
+      opacity: 0.7; /* Parcialmente visible desde el inicio */
       transform: translateY(10px);
     }
     to {
@@ -301,17 +302,16 @@ if (!titleLine1 || !titleLine2) {
     }
   }
 
-  .typing-line {
-    opacity: 0;
-    animation: fadeInText 0.8s ease forwards;
-  }
-
   .line-1 {
-    animation-delay: 0.5s;
+    opacity: 1; /* Visible inmediatamente */
+    animation: fadeInText 0.8s ease forwards;
+    animation-delay: 0.1s; /* Delay reducido */
   }
 
   .line-2 {
-    animation-delay: 0.8s;
+    opacity: 1; /* Visible inmediatamente */
+    animation: fadeInText 0.8s ease forwards;
+    animation-delay: 0.3s; /* Delay reducido */
   }
 
 
@@ -397,6 +397,7 @@ if (!titleLine1 || !titleLine2) {
     }
 
     .logo-wrapper {
+      margin-top: 2.5rem; /* Ajustado para móvil */
       margin-bottom: 2rem;
     }
 
