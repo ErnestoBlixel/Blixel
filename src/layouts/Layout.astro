@@ -16,20 +16,21 @@ export interface Props {
 let siteTitle = "Blixel";
 let siteDescription = "Automatiza tu empresa con IA";
 
-try {
-  const baseResponse = await fetch('https://blixel.es/wp-json/');
-  if (baseResponse.ok) {
-    const baseData = await baseResponse.json();
-    if (baseData.name) {
-      siteTitle = baseData.name;
-    }
-    if (baseData.description) {
-      siteDescription = baseData.description;
-    }
-  }
-} catch (error) {
-  // Usar valores por defecto si hay error
-}
+// COMENTADO: Este fetch puede causar problemas de recursión
+// try {
+//   const baseResponse = await fetch('https://blixel.es/wp-json/');
+//   if (baseResponse.ok) {
+//     const baseData = await baseResponse.json();
+//     if (baseData.name) {
+//       siteTitle = baseData.name;
+//     }
+//     if (baseData.description) {
+//       siteDescription = baseData.description;
+//     }
+//   }
+// } catch (error) {
+//   // Usar valores por defecto si hay error
+// }
 
 const { 
   title = siteTitle, 

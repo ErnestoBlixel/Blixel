@@ -10,7 +10,8 @@ import ExamplesIASection from '../components/ExamplesUltraSimple.astro';
 import MethodologyIASection from '../components/MethodologyIASection.astro';
 import CasesIASection from '../components/CasesIASection.astro';
 import FAQSection from '../components/FAQSection.astro';
-import CTAIASection from '../components/CTAIASection.astro';
+import GravityFormSection from '../components/GravityFormSection.astro';
+
 
 // Query para obtener tanto la página de inicio como el icono del sitio
 const GQL = `
@@ -205,30 +206,12 @@ if (h1Title.includes('?')) {
   <!-- Sección FAQ -->
   <FAQSection />
 
-  <!-- Sección CTA Final -->
-  <CTAIASection />
-  
-  <!-- Info de debug mejorada -->
-  {isDev && (
-    <div style="margin-top: 2rem; padding: 1rem; background: #1a1a1a; border-radius: 8px; font-size: 0.8rem; color: #888; max-width: 600px; margin-left: auto; margin-right: auto;">
-      <h4 style="color: #ccc; margin: 0 0 0.5rem 0;">🔧 Debug Info:</h4>
-      <p style="margin: 0.2rem 0;"><strong>Status:</strong> {buildStatus === 'success' ? '✅ Conectado' : '❌ Usando fallback'}</p>
-      <p style="margin: 0.2rem 0;"><strong>GraphQL:</strong> {graphqlUrl || 'No configurada'}</p>
-      {home && (
-        <>
-          <p style="margin: 0.5rem 0 0.2rem 0; color: #22c55e;"><strong>📄 Página encontrada:</strong></p>
-          <p style="margin: 0.2rem 0 0.2rem 1rem;">H1: "{h1Title}"</p>
-          <p style="margin: 0.2rem 0 0.2rem 1rem;">SEO Title: "{pageTitle}"</p>
-          {featuredImage && <p style="margin: 0.2rem 0 0.2rem 1rem;">✅ Imagen destacada configurada</p>}
-          {!featuredImage && <p style="margin: 0.2rem 0 0.2rem 1rem; color: #ef4444;">❌ Sin imagen destacada</p>}
-        </>
-      )}
-      {!home && (
-        <p style="margin: 0.5rem 0; color: #f59e0b;">⚠️ No se encontró la página principal en WordPress</p>
-      )}
-      <p style="margin: 0.5rem 0 0; font-size: 0.7rem;">Ejecuta: <code style="background: #333; padding: 2px 4px; border-radius: 3px;">check-visual.bat</code> para más detalles</p>
-    </div>
-  )}
+  <!-- Formulario de Contacto - Gravity Forms -->
+  <GravityFormSection 
+    title="Solicita tu Diagnóstico de IA para Empresas"
+    description="Obtén un análisis personalizado de cómo la inteligencia artificial puede transformar tu empresa. Sin compromiso, con resultados medibles en 90 días."
+    showTrustBadges={true}
+  />
 </Layout>
 
 <style>
