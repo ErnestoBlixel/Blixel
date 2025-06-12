@@ -1,187 +1,363 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import IntroSection from '../components/IntroSection.astro';
+import ProblemIASection from '../components/ProblemIASection.astro';
+import ServicesIASection from '../components/ServicesIASection.astro';
+import QuoteSection from '../components/QuoteSection.astro';
+// import WhyIANowSection from '../components/WhyIANowSection.astro';
+import ExamplesIASection from '../components/ExamplesUltraSimple.astro';
+import MethodologyIASection from '../components/MethodologyIASection.astro';
+import CasesIASection from '../components/CasesIASection.astro';
+import FAQSection from '../components/FAQSection.astro';
+import GravityFormSection from '../components/GravityFormSection.astro';
+
+
+// Query para obtener tanto la página de inicio como el icono del sitio
+const GQL = `
+  query GetHomePageAndSiteIcon {
+    page(id: "/", idType: URI) {
+      title
+      content
+      databaseId
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+          mediaDetails {
+            width
+            height
+          }
+        }
+      }
+      seo {
+        title
+        metaDesc
+        opengraphTitle
+        opengraphDescription
+      }
+    }
+    generalSettings {
+      title
+      description
+      url
+    }
+    # Buscar el logo de BLIXEL
+    mediaItems(where: {search: "BLIXEL"}, first: 5) {
+      nodes {
+        id
+        title
+        sourceUrl
+        altText
+        mediaDetails {
+          width
+          height
+        }
+      }
+    }
+  }
+`;
+
+// Datos por defecto en caso de error
+let home = null;
+let siteSettings = {
+  title: 'Inteligencia Artificial para Empresas | Blixel',
+  description: 'Implementamos soluciones de IA para empresas con ROI garantizado en 90 días.',
+  url: 'https://blixel.es'
+};
+let mediaItems = [];
+let buildStatus = 'fallback';
+
+// Intentar GraphQL si la URL está configurada
+const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
+const isDev = import.meta.env.DEV;
+
+if (graphqlUrl) {
+  try {
+    console.log('🔍 [INDEX] Probando conexión GraphQL:', graphqlUrl);
+    
+    const res = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: GQL })
+    });
+
+    if (res.ok) {
+      const result = await res.json();
+      console.log('✅ [INDEX] GraphQL Response:', result);
+      
+      // Si no hay errores y tenemos data
+      if (!result.errors && result.data) {
+        home = result.data.page;
+        siteSettings = result.data.generalSettings || siteSettings;
+        mediaItems = result.data.mediaItems?.nodes || [];
+        buildStatus = 'success';
+      } else {
+        console.warn('⚠️ [INDEX] GraphQL response tiene errores:', result.errors);
+      }
+    } else {
+      console.warn(`⚠️ [INDEX] Error HTTP: ${res.status} al acceder a ${graphqlUrl}`);
+    }
+    
+  } catch (error) {
+    console.warn('⚠️ [INDEX] Error de conexión GraphQL (usando fallback):', error.message);
+  }
+} else {
+  console.log('ℹ️ [INDEX] GraphQL URL no configurada');
+}
+
+// Buscar el logo de BLIXEL
+let siteIcon = mediaItems.find(item => 
+  item.title?.toLowerCase().includes('logo') && 
+  item.title?.toLowerCase().includes('blixel')
+) || mediaItems.find(item => 
+  item.sourceUrl?.includes('logo') || 
+  item.altText?.toLowerCase().includes('logo')
+) || mediaItems[0];
+
+// Si no encuentra nada, usar la URL que sabemos que existe
+if (!siteIcon) {
+  siteIcon = {
+    sourceUrl: 'https://cms.blixel.es/wp-content/uploads/2025/05/cropped-Copia-de-BLIXEL-STUDIO_logo-500500.png',
+    altText: 'BLIXEL logo',
+    mediaDetails: { width: 512, height: 512 }
+  };
+}
+
+// Datos del logo para pasar al Layout
+const logoData = {
+  url: siteIcon.sourceUrl,
+  alt: siteIcon.altText || 'BLIXEL logo',
+  width: siteIcon.mediaDetails?.width || 512,
+  height: siteIcon.mediaDetails?.height || 512
+};
+
+// Extraer datos SEO para el metadata
+const pageTitle = home?.seo?.title || home?.seo?.opengraphTitle || home?.title || siteSettings?.title || 'Inteligencia Artificial para Empresas | Blixel';
+const pageDescription = home?.seo?.metaDesc || home?.seo?.opengraphDescription || siteSettings?.description || 'Implementamos soluciones de IA para empresas con ROI garantizado en 90 días. Automatización, agentes inteligentes y formación especializada.';
+
+// Extraer imagen destacada para Open Graph
+const featuredImage = home?.featuredImage?.node?.sourceUrl || null;
+const featuredImageAlt = home?.featuredImage?.node?.altText || pageTitle;
+
+// El título H1 será el título de la página de WordPress (no el SEO title)
+const h1Title = home?.title || 'Inteligencia Artificial para Empresas';
+
+// Dividir el título en dos líneas de forma más inteligente
+// Buscar si hay un signo de interrogación para dividir ahí
+let titleLine1, titleLine2;
+if (h1Title.includes('?')) {
+  const parts = h1Title.split('?');
+  titleLine1 = parts[0] + '?';
+  titleLine2 = parts[1].trim();
+} else {
+  // Si no hay signo de interrogación, dividir por la mitad
+  const words = h1Title.split(' ');
+  const midPoint = Math.ceil(words.length / 2);
+  titleLine1 = words.slice(0, midPoint).join(' ');
+  titleLine2 = words.slice(midPoint).join(' ');
+}
 ---
 
-<Layout title="BLIXEL AI - Transformación Digital con Inteligencia Artificial">
-  <!-- Sección: Cita inspiradora sobre transformación digital con IA -->
-  <section class="quote-section">
-    <div class="quote__background">
-      <div class="gradient-pulse"></div>
-    </div>
+<Layout 
+  logoUrl={logoData.url} 
+  logoAlt={logoData.alt}
+  title={pageTitle}
+  description={pageDescription}
+  ogImage={featuredImage}
+  ogImageAlt={featuredImageAlt}
+>
+  <!-- Hero Section con datos de WordPress -->
+  <!-- Buscando la página principal (home) -->
+  <Hero 
+    pageSlug="/" 
+    customTitle={h1Title}
+    customDescription={pageDescription}
+    titleLine1={titleLine1}
+    titleLine2={titleLine2}
+    logoUrl={logoData.url}
+    logoAlt={logoData.alt}
+  />
 
-    <div class="container">
-      <div class="quote-wrapper">
-        <div class="quote-icon">
-          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M14 28C14 28 10 24 10 16C10 8 14 4 14 4L18 8C18 8 16 10 16 16C16 18 16 20 16 20H20C21.1046 20 22 20.8954 22 22V36C22 37.1046 21.1046 38 20 38H10C8.89543 38 8 37.1046 8 36V28C8 26.8954 8.89543 26 10 26H14V28Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M36 28C36 28 32 24 32 16C32 8 36 4 36 4L40 8C40 8 38 10 38 16C38 18 38 20 38 20H42C43.1046 20 44 20.8954 44 22V36C44 37.1046 43.1046 38 42 38H32C30.8954 38 30 37.1046 30 36V28C30 26.8954 30.8954 26 32 26H36V28Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
+  <!-- Sección: Cómo aplicamos IA en tu empresa -->
+  <ServicesIASection />
 
-        <blockquote class="quote-content">
-          <p class="quote-text">
-            La inteligencia artificial no es el futuro de tu empresa, <span class="highlight">es el presente</span>. 
-            Cada día que pasa sin implementarla, tu competencia automatiza procesos, mejora decisiones y 
-            transforma la experiencia de sus clientes.
-          </p>
-          <footer class="quote-footer">
-            <cite class="quote-author">El momento de actuar es ahora</cite>
-            <span class="quote-context">Transformación digital con IA</span>
-          </footer>
-        </blockquote>
-      </div>
-    </div>
-  </section>
+  <!-- Sección: Cita inspiradora -->
+  <QuoteSection />
+
+
+
+  <!-- Sección: Ejemplos de IA en acción -->
+  <ExamplesIASection />
+
+  <!-- Sección: Qué es la IA Empresarial -->
+  <IntroSection />
+
+  <!-- Sección del Problema -->
+  <ProblemIASection />
+
+  <!-- Sección de Metodología Quick-ROI -->
+  <MethodologyIASection />
+
+  <!-- Sección de Casos de Éxito -->
+  <CasesIASection />
+
+  <!-- Sección FAQ -->
+  <FAQSection />
+
+  <!-- Formulario de Contacto - Gravity Forms -->
+  <GravityFormSection 
+    title="Solicita tu Diagnóstico de IA para Empresas"
+    description="Obtén un análisis personalizado de cómo la inteligencia artificial puede transformar tu empresa. Sin compromiso, con resultados medibles en 90 días."
+    showTrustBadges={true}
+  />
 </Layout>
 
 <style>
-  .quote-section {
-    position: relative;
-    background: #000000;
-    padding: 0;
-    overflow: hidden;
-    border: none;
-    box-shadow: none;
+  /* Estilos globales para dark theme */
+  :global(html) {
+    scroll-behavior: smooth;
   }
 
-  .quote__background {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .gradient-pulse {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 800px;
-    height: 400px;
-    background: radial-gradient(ellipse at center, rgba(37, 24, 99, 0.2) 0%, transparent 70%);
-    filter: blur(60px);
-    animation: pulse-glow 4s ease-in-out infinite;
-  }
-
-  @keyframes pulse-glow {
-    0%, 100% { 
-      opacity: 0.3;
-      transform: translate(-50%, -50%) scale(1);
-    }
-    50% { 
-      opacity: 0.6;
-      transform: translate(-50%, -50%) scale(1.1);
-    }
-  }
-
-  .container {
-    position: relative;
-    z-index: 10;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-
-  .quote-wrapper {
-    position: relative;
-    text-align: center;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .quote-icon {
-    display: inline-flex;
-    margin-bottom: 2rem;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fade-in-up 800ms ease forwards;
-  }
-
-  @keyframes fade-in-up {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .quote-icon svg {
-    width: 60px;
-    height: 60px;
-    color: #251863;
-    opacity: 0.5;
-  }
-
-  .quote-content {
-    margin: 0;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fade-in-up 800ms ease forwards;
-    animation-delay: 200ms;
-  }
-
-  .quote-text {
-    font-family: 'Inter', -apple-system, sans-serif;
-    font-size: clamp(1rem, 2vw, 1.5rem);
-    font-weight: 300;
-    line-height: 1.6;
+  :global(body) {
+    background: transparent; /* Transparente para ver particles */
     color: #e5e5e5;
-    margin-bottom: 2rem;
-    letter-spacing: -0.01em;
+  }
+  
+  /* Eliminar cualquier línea entre secciones */
+  :global(section) {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  
+  /* Fondo transparente para todas las secciones excepto problem-ia-section */
+  :global(section:not(.problem-ia-section)) {
+    background-color: transparent !important;
+  }
+  
+  :global(section + section) {
+    border-top: none !important;
+    margin-top: 0;
+  }
+  
+  /* Asegurar fondo uniforme en móvil */
+  @media (max-width: 768px) {
+    :global(section:not(.problem-ia-section)) {
+      background: transparent !important;
+    }
+    :global(section) {
+      border: none !important;
+    }
   }
 
-  .highlight {
-    font-weight: 600;
-    background: linear-gradient(135deg, #251863 0%, #02aa6d 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  /* Smooth scroll para enlaces internos */
+  :global(a[href^="#"]) {
+    scroll-behavior: smooth;
   }
 
-  .quote-footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+  /* Estilos para mejorar la accesibilidad */
+  :global(*:focus) {
+    outline: 2px solid #02aa6d;
+    outline-offset: 2px;
   }
 
-  .quote-author {
-    font-size: 1.125rem;
-    font-weight: 500;
-    color: #02aa6d;
-    font-style: normal;
+  /* Optimización de fuentes */
+  :global(body) {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }
 
-  .quote-context {
-    font-size: 0.875rem;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .quote-section.in-view .quote-icon,
-  .quote-section.in-view .quote-content {
-    opacity: 1;
-    transform: translateY(0);
+  :global(h1, h2, h3, h4, h5, h6) {
+    font-family: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const observerOptions = {
-      threshold: 0.3,
-      rootMargin: '0px 0px -50px 0px'
-    };
+document.addEventListener('DOMContentLoaded', function() {
+  // Smooth scroll para enlaces internos
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
+  // Lazy loading para imágenes
+  if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.classList.remove('lazy');
+          imageObserver.unobserve(img);
         }
       });
-    }, observerOptions);
+    });
 
-    const quoteSection = document.querySelector('.quote-section');
-    if (quoteSection) {
-      observer.observe(quoteSection);
-    }
+    document.querySelectorAll('img[data-src]').forEach(img => {
+      imageObserver.observe(img);
+    });
+  }
+
+  // Preload de la siguiente sección
+  const sections = document.querySelectorAll('section');
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Precargar recursos de la siguiente sección
+        const currentIndex = Array.from(sections).indexOf(entry.target);
+        const nextSection = sections[currentIndex + 1];
+        if (nextSection) {
+          // Precargar imágenes de la siguiente sección
+          const nextImages = nextSection.querySelectorAll('img');
+          nextImages.forEach(img => {
+            if (img.dataset.src) {
+              const link = document.createElement('link');
+              link.rel = 'preload';
+              link.as = 'image';
+              link.href = img.dataset.src;
+              document.head.appendChild(link);
+            }
+          });
+        }
+      }
+    });
+  }, { threshold: 0.5 });
+
+  sections.forEach(section => {
+    sectionObserver.observe(section);
   });
+
+  // Analytics tracking para CTAs
+  document.querySelectorAll('[id*="cta"], [class*="cta"]').forEach(cta => {
+    cta.addEventListener('click', function() {
+      // Aquí puedes agregar tracking de analytics
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'cta_click', {
+          'event_category': 'engagement',
+          'event_label': this.textContent || 'CTA Click'
+        });
+      }
+    });
+  });
+
+  // Performance monitoring
+  if ('PerformanceObserver' in window) {
+    const observer = new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        if (entry.entryType === 'largest-contentful-paint') {
+          console.log('LCP:', entry.startTime);
+        }
+      }
+    });
+    observer.observe({ entryTypes: ['largest-contentful-paint'] });
+  }
+});
 </script>
