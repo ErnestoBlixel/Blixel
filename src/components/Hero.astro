@@ -136,14 +136,14 @@ if (!titleLine1 || !titleLine2) {
 <style>
   /* Hero con márgenes ajustados */
   .hero {
-    background: #000000;
-    padding: 3rem 0 2rem; /* Un poco más de padding arriba */
+    background: transparent; /* Transparente para ver particles */
+    padding: 3rem 0 2rem;
     min-height: auto;
     text-align: center;
     margin-top: -80px;
-    padding-top: calc(80px + 3rem); /* Más espacio después del header */
+    padding-top: calc(80px + 3rem);
     position: relative;
-    overflow: visible; /* Asegurar que no se corte nada */
+    overflow: visible;
   }
 
   .container {
@@ -247,23 +247,15 @@ if (!titleLine1 || !titleLine2) {
     transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
-  /* Título mejorado con mejor line-height */
+  /* Título más pequeño y simple */
   .hero-title {
     font-family: 'Inter', -apple-system, sans-serif;
-    font-size: clamp(3.5rem, 7vw, 6rem); /* Más grande */
+    font-size: clamp(2.5rem, 5vw, 4rem); /* Más pequeño */
     font-weight: 800;
-    line-height: 1.1; /* Mejor line-height para evitar cortes */
-    margin: 0 0 2.5rem;
-    letter-spacing: -0.03em;
-    color: #ffffff; /* Color blanco sólido */
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.5); /* Brillo sutil */
-  }
-
-  /* Hover effect para el título */
-  .hero-title:hover {
-    text-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
-    transform: scale(1.02);
-    transition: all 0.3s ease;
+    line-height: 1.2;
+    margin: 0 0 2rem;
+    letter-spacing: -0.02em;
+    color: #ffffff;
   }
 
   .typing-line {
@@ -405,10 +397,10 @@ if (!titleLine1 || !titleLine2) {
     }
 
     .hero-title {
-      font-size: clamp(2.75rem, 9vw, 4rem); /* Mejorado para móvil */
+      font-size: clamp(2rem, 7vw, 3rem); /* Aún más pequeño en móvil */
       margin-bottom: 2rem;
-      line-height: 1.15; /* Mejor espaciado en móvil */
-      padding: 0 0.5rem; /* Padding lateral para evitar cortes */
+      line-height: 1.15;
+      padding: 0 0.5rem;
     }
 
     .typing-line {

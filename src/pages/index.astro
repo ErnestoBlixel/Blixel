@@ -230,7 +230,7 @@ if (h1Title.includes('?')) {
     border: none !important;
     box-shadow: none !important;
     outline: none !important;
-    background-color: #000000 !important;
+    background-color: transparent !important; /* Transparente para particles */
   }
   
   :global(section + section) {
@@ -241,7 +241,7 @@ if (h1Title.includes('?')) {
   /* Asegurar fondo uniforme en móvil */
   @media (max-width: 768px) {
     :global(section) {
-      background: #000000 !important;
+      background: transparent !important; /* Transparente en móvil también */
       border: none !important;
     }
   }
