@@ -245,18 +245,21 @@ if (!titleLine1 || !titleLine2) {
     animation-delay: 3.4s;
   }
 
-  .hero-form :global(.gravity-form-direct) {
+  .hero-form :global(.gravity-form-simple) {
+    background: transparent;
+    border: none;
+    padding: 0;
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+
+  .hero-form :global(.form-wrapper) {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     padding: 1.5rem;
     backdrop-filter: blur(20px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  }
-
-  .hero-form :global(.gravity-iframe) {
-    height: 500px;
-    border-radius: 8px;
   }
 
   /* Botones */
@@ -349,12 +352,8 @@ if (!titleLine1 || !titleLine2) {
       margin-bottom: 2rem;
     }
 
-    .hero-form :global(.gravity-form-direct) {
+    .hero-form :global(.form-wrapper) {
       padding: 1rem;
-    }
-
-    .hero-form :global(.gravity-iframe) {
-      height: 450px;
     }
 
     .hero-actions {
@@ -394,13 +393,9 @@ if (!titleLine1 || !titleLine2) {
       font-size: 1rem;
     }
 
-    .hero-form :global(.gravity-form-direct) {
+    .hero-form :global(.form-wrapper) {
       padding: 0.75rem;
       border-radius: 8px;
-    }
-
-    .hero-form :global(.gravity-iframe) {
-      height: 400px;
     }
 
     .btn-primary,
