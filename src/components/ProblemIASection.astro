@@ -26,20 +26,14 @@
 
 <style>
   .problem-ia-section {
-    padding: 4rem 0;
-    background: #0d0d0d;
+    padding: 3rem 0; /* Reducido de 6rem */
+    background: transparent; /* Transparente para ver particles */
     position: relative;
     overflow: hidden;
   }
 
   .problem-ia-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(2, 170, 109, 0.3), transparent);
+    display: none; /* Eliminar línea decorativa */
   }
 
   .container {
