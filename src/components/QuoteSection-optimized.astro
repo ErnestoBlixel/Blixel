@@ -1,0 +1,154 @@
+---
+// Componente de cita minimalista - sin section wrapper
+---
+
+<div class="quote-component">
+  <blockquote class="quote-content">
+    <p class="quote-line-1">
+      La inteligencia artificial no es el futuro de tu empresa.
+    </p>
+    <p class="quote-line-2">
+      Es su presente.
+    </p>
+    <p class="quote-description">
+      Cada día que pasa sin implementarla, tu competencia automatiza procesos, mejora decisiones y 
+      transforma la experiencia de sus clientes.
+    </p>
+    <footer class="quote-footer">
+      <p class="quote-cta">El momento de actuar es ahora</p>
+      <p class="quote-context">TRANSFORMACIÓN DIGITAL CON IA</p>
+    </footer>
+  </blockquote>
+</div>
+
+<style>
+  .quote-component {
+    position: relative;
+    padding: 2rem 0;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .quote-content {
+    margin: 0;
+    position: relative;
+  }
+
+  .quote-line-1 {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: #e5e5e5;
+    margin: 0 0 0.5rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  .quote-line-2 {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 2rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 0.2s;
+  }
+
+  .quote-description {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 300;
+    line-height: 1.6;
+    color: #9ca3af;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 0.4s;
+  }
+
+  .quote-footer {
+    margin-top: 2rem;
+  }
+
+  .quote-cta {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #02aa6d;
+    margin: 0 0 0.5rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 0.6s;
+  }
+
+  .quote-context {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin: 0;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 0.8s;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .quote-component {
+      padding: 1.5rem 1rem;
+    }
+
+    .quote-line-1,
+    .quote-line-2 {
+      font-size: 1.75rem;
+    }
+
+    .quote-description {
+      font-size: 1.125rem;
+    }
+
+    .quote-cta {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .quote-component {
+      padding: 1rem;
+    }
+
+    .quote-line-1,
+    .quote-line-2 {
+      font-size: 1.5rem;
+      line-height: 1.3;
+    }
+
+    .quote-description {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .quote-context {
+      font-size: 0.65rem;
+    }
+  }
+</style>
