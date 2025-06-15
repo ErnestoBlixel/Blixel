@@ -1,6 +1,4 @@
 ---
-import LogosSlider from './LogosSlider.astro';
-
 export interface Props {
   pageSlug?: string;
   customTitle?: string;
@@ -99,8 +97,9 @@ if (!titleLine1 || !titleLine2) {
 
     <!-- Título con efecto mejorado -->
     <h1 class="hero-title">
-      <span class="line-1 typing-line">{actualTitleLine1}</span>
-      <span class="line-2 typing-line">{actualTitleLine2}</span>
+      <span class="line-1">Aplica Inteligencia</span>
+      <span class="line-2">Artificial</span>
+      <span class="line-3">en tu empresa</span>
     </h1>
 
     <!-- Descripción -->
@@ -127,73 +126,104 @@ if (!titleLine1 || !titleLine2) {
         </svg>
       </a>
     </div>
+    
+    <!-- SLIDER DE LOGOS/MARCAS CON IMÁGENES -->
+    <div class="logos-section">
+      <p class="logos-text">TECNOLOGÍAS DE IA QUE DOMINAMOS</p>
+      <div class="logos-slider">
+        <div class="logos-track">
+          <!-- Primera set de logos -->
+          <div class="logo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png" alt="Microsoft" />
+          </div>
+          <div class="logo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Google_Gemini_logo.svg/2560px-Google_Gemini_logo.svg.png" alt="Gemini" />
+          </div>
+          <div class="logo-item">
+            <img src="https://avatars.githubusercontent.com/u/45487711?s=200&v=4" alt="n8n" class="rounded" />
+          </div>
+          <div class="logo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" alt="Python" />
+          </div>
+          <div class="logo-item">
+            <img src="https://avatars.githubusercontent.com/u/139558948?s=200&v=4" alt="DeepSeek" class="rounded" />
+          </div>
+          <div class="logo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Anthropic_logo.svg/2560px-Anthropic_logo.svg.png" alt="Claude" />
+          </div>
+          <div class="logo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1024px-ChatGPT_logo.svg.png" alt="ChatGPT" />
+          </div>
+          <div class="logo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/TensorFlow_Logo_with_text.png/1594px-TensorFlow_Logo_with_text.png" alt="TensorFlow" />
+          </div>
+          <!-- Duplicar para loop infinito -->
+          <div class="logo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png" alt="Microsoft" />
+          </div>
+          <div class="logo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Google_Gemini_logo.svg/2560px-Google_Gemini_logo.svg.png" alt="Gemini" />
+          </div>
+          <div class="logo-item">
+            <img src="https://avatars.githubusercontent.com/u/45487711?s=200&v=4" alt="n8n" class="rounded" />
+          </div>
+          <div class="logo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" alt="Python" />
+          </div>
+          <div class="logo-item">
+            <img src="https://avatars.githubusercontent.com/u/139558948?s=200&v=4" alt="DeepSeek" class="rounded" />
+          </div>
+          <div class="logo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Anthropic_logo.svg/2560px-Anthropic_logo.svg.png" alt="Claude" />
+          </div>
+          <div class="logo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1024px-ChatGPT_logo.svg.png" alt="ChatGPT" />
+          </div>
+          <div class="logo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/TensorFlow_Logo_with_text.png/1594px-TensorFlow_Logo_with_text.png" alt="TensorFlow" />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <!-- Slider de logos -->
-  <LogosSlider />
 </section>
 
 <style>
   /* Hero con márgenes ajustados */
   .hero {
     background: transparent; /* Transparente para ver particles */
-    padding: 3rem 0 2rem;
-    min-height: auto;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    margin-top: -80px;
-    padding-top: calc(80px + 3rem);
     position: relative;
-    overflow: visible;
+    overflow: hidden;
+    padding: 0;
   }
 
   .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
-    overflow: visible; /* Evitar cortes */
+    padding: 2rem;
+    width: 100%;
+    position: relative;
   }
 
-  /* Logo con animaciones y círculo */
+  /* Logo con animaciones sin círculo */
   .logo-wrapper {
-    margin-top: 3.5rem; /* Bajado más el logo */
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     position: relative;
     display: inline-block;
-  }
-
-  /* Círculo decorativo detrás del logo con borde animado */
-  .logo-wrapper::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 120px;
-    height: 120px;
-    background: radial-gradient(circle, rgba(96, 165, 250, 0.3) 0%, rgba(168, 85, 247, 0.2) 50%, transparent 70%);
-    border-radius: 50%;
-    filter: blur(20px);
-    animation: pulse 3s ease-in-out infinite;
-    z-index: 0;
-  }
-
-  /* Borde animado adicional */
-  .logo-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 100px;
     height: 100px;
-    border: 2px solid transparent;
+    border: 2px solid rgba(96, 165, 250, 0.3);
     border-radius: 50%;
-    background: linear-gradient(45deg, #60a5fa, #a855f7, #60a5fa) border-box;
-    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out;
-    mask-composite: exclude;
-    animation: rotate 3s linear infinite;
-    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+    box-shadow: 0 0 40px rgba(96, 165, 250, 0.3), inset 0 0 20px rgba(96, 165, 250, 0.1);
   }
 
   @keyframes rotate {
@@ -217,14 +247,12 @@ if (!titleLine1 || !titleLine2) {
   }
 
   .logo-wrapper img {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
     position: relative;
     z-index: 1;
-    animation: floatRotate 6s ease-in-out infinite;
-    transition: transform 0.3s ease;
-    filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.6)) brightness(1.1);
+    filter: brightness(1.2);
   }
 
   @keyframes floatRotate {
@@ -247,51 +275,31 @@ if (!titleLine1 || !titleLine2) {
     transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
-  /* Título más pequeño y simple */
+  /* Título con 3 líneas */
   .hero-title {
     font-family: 'Inter', -apple-system, sans-serif;
-    font-size: clamp(2.5rem, 5vw, 4rem); /* Más pequeño */
-    font-weight: 800;
-    line-height: 1.2;
-    margin: 0 0 2rem;
+    font-size: clamp(3.5rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1;
+    margin: 0 0 1.5rem;
     letter-spacing: -0.02em;
     color: #ffffff;
   }
 
-  .typing-line {
+  .hero-title span {
     display: block;
-    position: relative;
-    overflow: visible; /* Cambiado de hidden para evitar cortes */
-    white-space: normal; /* Permitir wrap en móvil */
-    padding: 0.1em 0; /* Pequeño padding para evitar cortes */
   }
 
-  .line-1 {
-    margin-bottom: 0.3em; /* Un poco más de espacio */
-  }
-
-  /* Efecto typing simplificado */
-  @keyframes fadeInText {
-    from {
-      opacity: 0.7; /* Parcialmente visible desde el inicio */
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .line-1 {
-    opacity: 1; /* Visible inmediatamente */
-    animation: fadeInText 0.8s ease forwards;
-    animation-delay: 0.1s; /* Delay reducido */
-  }
-
+  .line-1,
   .line-2 {
-    opacity: 1; /* Visible inmediatamente */
-    animation: fadeInText 0.8s ease forwards;
-    animation-delay: 0.3s; /* Delay reducido */
+    margin-bottom: 0.1em;
+  }
+
+  /* Animación simple de entrada */
+  .hero-title {
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.5s;
   }
 
 
@@ -300,7 +308,7 @@ if (!titleLine1 || !titleLine2) {
     font-size: 1.25rem;
     color: #9ca3af;
     max-width: 700px;
-    margin: 0 auto 2.5rem; /* Más margen */
+    margin: 0 auto 2rem;
     line-height: 1.5;
     opacity: 0;
     animation: fadeInUp 0.8s ease forwards;
@@ -313,7 +321,7 @@ if (!titleLine1 || !titleLine2) {
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
-    margin-bottom: 3rem; /* Espacio para el slider */
+    margin-bottom: 8rem; /* Espacio para el slider que está en position absolute */
     opacity: 0;
     animation: fadeInUp 0.8s ease forwards;
     animation-delay: 1.8s;
@@ -367,9 +375,8 @@ if (!titleLine1 || !titleLine2) {
   /* Responsive */
   @media (max-width: 768px) {
     .hero {
-      padding: 2rem 0 1.5rem;
-      margin-top: -80px;
-      padding-top: calc(80px + 2rem);
+      height: 100vh;
+      padding: 0;
     }
 
     .container {
@@ -415,7 +422,7 @@ if (!titleLine1 || !titleLine2) {
     .hero-actions {
       flex-direction: column;
       align-items: center;
-      margin-bottom: 2rem;
+      margin-bottom: 6rem; /* Menos espacio en móvil */
     }
 
     .btn-primary,
@@ -428,7 +435,8 @@ if (!titleLine1 || !titleLine2) {
 
   @media (max-width: 480px) {
     .hero {
-      padding: 1.5rem 0 1rem;
+      height: 100vh;
+      padding: 0;
     }
 
     .logo-wrapper {
@@ -462,6 +470,10 @@ if (!titleLine1 || !titleLine2) {
       font-size: 1rem;
     }
 
+    .hero-actions {
+      margin-bottom: 5rem;
+    }
+
     .btn-primary,
     .btn-secondary {
       padding: 0.75rem 1.5rem;
@@ -478,6 +490,147 @@ if (!titleLine1 || !titleLine2) {
     
     .logo-wrapper::after {
       animation: rotate 5s linear infinite; /* Más lenta */
+    }
+  }
+
+  /* ==================== LOGOS SLIDER ==================== */
+  .logos-section {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 2rem 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  }
+
+  .logos-text {
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .logos-slider {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  /* Gradientes para fade en los bordes */
+  .logos-slider::before,
+  .logos-slider::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .logos-slider::before {
+    left: 0;
+    background: linear-gradient(to right, #000000 0%, transparent 100%);
+  }
+
+  .logos-slider::after {
+    right: 0;
+    background: linear-gradient(to left, #000000 0%, transparent 100%);
+  }
+
+  .logos-track {
+    display: flex;
+    animation: slideLogos 30s linear infinite;
+    width: fit-content;
+  }
+
+  .logo-item {
+    flex: 0 0 auto;
+    padding: 0 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-item img {
+    height: 40px;
+    width: auto;
+    max-width: 120px;
+    object-fit: contain;
+    filter: grayscale(100%) invert(1) opacity(0.4);
+    transition: all 0.3s ease;
+  }
+
+  .logo-item img.rounded {
+    border-radius: 10px;
+  }
+
+  .logo-item:hover img {
+    filter: grayscale(0%) invert(0) opacity(0.8);
+    transform: scale(1.1);
+  }
+
+  /* Pausar al hover */
+  .logos-slider:hover .logos-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes slideLogos {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  /* Responsive para logos */
+  @media (max-width: 768px) {
+    .logos-section {
+      padding: 1rem 0;
+    }
+    
+    .logos-text {
+      font-size: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .logo-item {
+      padding: 0 2rem;
+    }
+
+    .logo-item img {
+      height: 30px;
+    }
+
+    .logos-slider::before,
+    .logos-slider::after {
+      width: 50px;
+    }
+    
+    .logos-slider {
+      mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .logo-item {
+      padding: 0 1.5rem;
+    }
+
+    .logo-item img {
+      height: 25px;
+    }
+
+    .logos-slider::before,
+    .logos-slider::after {
+      width: 30px;
     }
   }
 

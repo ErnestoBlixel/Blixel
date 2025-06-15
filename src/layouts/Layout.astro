@@ -1,5 +1,5 @@
 ---
-import Header from '../components/Header.astro';
+
 import MagicNotifications from '../components/MagicNotifications.astro';
 
 export interface Props {
@@ -86,8 +86,7 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
   <!-- Canvas de partículas avanzado -->
   <canvas id="particles-canvas"></canvas>
   
-  <!-- Header global -->
-  <Header logoUrl={logoUrl} logoAlt={logoAlt} />
+  <!-- Header removido para usar el de WordPress -->
   
   <!-- Contenido principal -->
   <main id="main-content">
@@ -96,46 +95,6 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
   
   <!-- Magic UI Notifications System -->
   <MagicNotifications />
-  
-  <!-- Footer (opcional) -->
-  <footer class="main-footer">
-    <div class="footer-container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>Blixel</h3>
-          <p>Automatiza tu empresa con tecnología de IA avanzada.</p>
-        </div>
-        
-        <div class="footer-section">
-          <h4>Servicios</h4>
-          <ul>
-            <li><a href="/servicios">Automatización</a></li>
-            <li><a href="/servicios">IA Empresarial</a></li>
-            <li><a href="/servicios">Desarrollo Web</a></li>
-          </ul>
-        </div>
-        
-        <div class="footer-section">
-          <h4>Empresa</h4>
-          <ul>
-            <li><a href="/sobre-nosotros">Sobre Nosotros</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/contacto">Contacto</a></li>
-          </ul>
-        </div>
-        
-        <div class="footer-section">
-          <h4>Contacto</h4>
-          <p>¿Listo para automatizar tu empresa?</p>
-          <a href="/contacto" class="footer-cta">Empezar Ahora</a>
-        </div>
-      </div>
-      
-      <div class="footer-bottom">
-        <p>&copy; 2025 Blixel. Todos los derechos reservados.</p>
-      </div>
-    </div>
-  </footer>
   
   <!-- Sistema de partículas personalizado -->
   <script>
@@ -379,7 +338,7 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
     color: #e5e5e5;
     background-color: #000000;
     overflow-x: hidden;
-    padding-top: 80px; /* Compensar el header fijo */
+    padding-top: 0; /* Sin header */
   }
 
   /* Layout principal */
@@ -387,87 +346,7 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
     min-height: calc(100vh - 200px);
   }
 
-  /* Footer */
-  .main-footer {
-    background: #000000;
-    color: white;
-    margin-top: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-  }
 
-  .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 3rem 2rem 1rem;
-  }
-
-  .footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .footer-section h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, #251863 0%, #02aa6d 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .footer-section h4 {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-    color: #ecf0f1;
-  }
-
-  .footer-section p {
-    color: #bdc3c7;
-    margin-bottom: 1rem;
-    line-height: 1.6;
-  }
-
-  .footer-section ul {
-    list-style: none;
-  }
-
-  .footer-section ul li {
-    margin-bottom: 0.5rem;
-  }
-
-  .footer-section ul li a {
-    color: #bdc3c7;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-
-  .footer-section ul li a:hover {
-    color: #02aa6d;
-  }
-
-  .footer-cta {
-    display: inline-block;
-    background: linear-gradient(135deg, #251863 0%, #02aa6d 100%);
-    color: white;
-    text-decoration: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
-    font-weight: 600;
-    transition: transform 0.3s ease;
-  }
-
-  .footer-cta:hover {
-    transform: translateY(-2px);
-  }
-
-  .footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 1.5rem;
-    text-align: center;
-    color: #9ca3af;
-  }
 
   /* Utilidades globales */
   .container {
@@ -502,9 +381,7 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
   }
 
   /* El contenido principal debe bloquear eventos del canvas */
-  #main-content,
-  header,
-  footer {
+  #main-content {
     pointer-events: auto;
     position: relative;
   }
@@ -524,29 +401,7 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
     z-index: 1;
   }
 
-  /* Footer con fondo sólido para contraste */
-  .main-footer {
-    position: relative;
-    background: rgba(0, 0, 0, 0.95) !important;
-    z-index: 10;
-    backdrop-filter: blur(10px);
-  }
 
-  /* Header con mejor backdrop */
-  header {
-    position: relative;
-    z-index: 1000;
-  }
 
-  /* Responsive */
-  @media (max-width: 768px) {
-    .footer-container {
-      padding: 2rem 1rem 1rem;
-    }
 
-    .footer-content {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-  }
 </style>

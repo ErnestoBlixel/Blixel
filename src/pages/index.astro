@@ -1,569 +1,75 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
 
-// Datos básicos
+// Datos básicos para el sitio
 const logoUrl = 'https://cms.blixel.es/wp-content/uploads/2025/05/cropped-Copia-de-BLIXEL-STUDIO_logo-500500.png';
 const pageTitle = 'Inteligencia Artificial para Empresas | Blixel';
 const pageDescription = 'Implementamos soluciones de IA para empresas con ROI garantizado en 90 días.';
 ---
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{pageTitle}</title>
-  <meta name="description" content={pageDescription}>
-  <link rel="icon" type="image/png" href={logoUrl}>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
-<body>
-  <!-- Partículas de fondo -->
-  <canvas id="particles-canvas"></canvas>
-
-  <!-- HEADER SIMPLE -->
-  <header>
-    <img src={logoUrl} alt="BLIXEL" width="120" height="120">
-  </header>
-
-  <!-- HERO -->
-  <div class="hero">
-    <div class="logo-wrapper">
-      <img src={logoUrl} alt="BLIXEL">
-    </div>
-
-    <h1>
-      <span class="line-1">Aplica Inteligencia Artificial</span>
-      <span class="line-2">en tu empresa</span>
-    </h1>
-
-    <p class="hero-description">
-      Inteligencia artificial en tu empresa HOY o quiebras mañana. ROI en 90 días. Mientras dudas, tu competencia factura.
-    </p>
-
-    <div class="hero-actions">
-      <a href="#contacto" class="btn-primary">Contactar</a>
-      <a href="https://calendly.com/blixel" target="_blank" class="btn-secondary">Agendar Llamada</a>
-    </div>
-  </div>
-
-  <!-- CONTENT (todo junto) -->
-  <div class="content">
-    <!-- Cita -->
-    <blockquote class="quote">
-      <p class="quote-main">La inteligencia artificial no es el futuro de tu empresa.</p>
-      <p class="quote-highlight">Es su presente.</p>
-      <p class="quote-sub">Cada día que pasa sin implementarla, tu competencia automatiza procesos, mejora decisiones y transforma la experiencia de sus clientes.</p>
-    </blockquote>
-
-    <!-- Servicios -->
-    <div class="services">
-      <h2>Cómo aplicamos IA en tu empresa</h2>
-      <div class="services-grid">
-        <div class="service-card">
-          <h3>🤖 Agentes de IA</h3>
-          <p>Automatización inteligente de tareas repetitivas. Libera a tu equipo para trabajo estratégico.</p>
-        </div>
-        <div class="service-card">
-          <h3>📊 Análisis Predictivo</h3>
-          <p>Decisiones basadas en datos. Anticipa tendencias y optimiza resultados.</p>
-        </div>
-        <div class="service-card">
-          <h3>💬 Chatbots Avanzados</h3>
-          <p>Atención 24/7 que entiende y resuelve. Mejora la experiencia del cliente.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Por qué ahora -->
-    <div class="why-now">
-      <h2>¿Por qué implementar IA ahora?</h2>
-      <ul>
-        <li>✅ La tecnología ya está madura y accesible</li>
-        <li>✅ Tu competencia ya la está implementando</li>
-        <li>✅ El ROI es medible en 90 días</li>
-        <li>✅ Los costos de implementación han bajado 80%</li>
-      </ul>
-    </div>
-
-    <!-- Metodología -->
-    <div class="methodology">
-      <h2>Nuestra metodología Quick-ROI™</h2>
-      <ol>
-        <li><strong>Diagnóstico:</strong> Analizamos tu empresa (1 semana)</li>
-        <li><strong>Piloto:</strong> Implementamos un caso de uso (2 semanas)</li>
-        <li><strong>Escala:</strong> Expandimos lo que funciona (en curso)</li>
-      </ol>
-    </div>
-
-    <!-- CTA Final -->
-    <div class="final-cta" id="contacto">
-      <h2>Solicita tu Diagnóstico de IA</h2>
-      <p>Sin compromiso. ROI garantizado en 90 días.</p>
-      <form class="simple-form">
-        <input type="text" placeholder="Nombre" required>
-        <input type="email" placeholder="Email" required>
-        <input type="tel" placeholder="Teléfono">
-        <textarea placeholder="¿Cómo podemos ayudarte?" rows="3"></textarea>
-        <button type="submit">Enviar solicitud</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer>
-    <p>&copy; 2025 BLIXEL. Transformación digital con IA.</p>
-    <p>hola@blixel.es | +34 XXX XXX XXX</p>
-  </footer>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      background: #000;
-      color: #e5e5e5;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    /* Partículas */
-    #particles-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      opacity: 0.6;
-    }
-
-    /* Header ultra simple */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 1rem;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(10px);
-      text-align: center;
-    }
-
-    header img {
-      width: 50px;
-      height: 50px;
-      filter: brightness(0) invert(1);
-    }
-
-    /* Hero */
-    .hero {
-      position: relative;
-      z-index: 10;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-      margin-top: -80px;
-    }
-
-    .logo-wrapper {
-      margin-bottom: 2rem;
-      position: relative;
-    }
-
-    .logo-wrapper::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 120px;
-      height: 120px;
-      background: radial-gradient(circle, rgba(96, 165, 250, 0.3) 0%, transparent 70%);
-      border-radius: 50%;
-      filter: blur(20px);
-      animation: pulse 3s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-      50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
-    }
-
-    .logo-wrapper img {
-      width: 80px;
-      height: 80px;
-      position: relative;
-      z-index: 1;
-      filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.6));
-    }
-
-    h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 2rem;
-    }
-
-    .line-1, .line-2 {
-      display: block;
-    }
-
-    .line-2 {
-      background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-description {
-      font-size: 1.25rem;
-      color: #9ca3af;
-      max-width: 700px;
-      margin-bottom: 2rem;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .btn-primary, .btn-secondary {
-      padding: 1rem 2rem;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-
-    .btn-primary {
-      background: #fff;
-      color: #000;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    /* Content */
-    .content {
-      position: relative;
-      z-index: 10;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-    }
-
-    /* Quote */
-    .quote {
-      text-align: center;
-      margin: 4rem 0;
-      padding: 2rem;
-    }
-
-    .quote-main {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .quote-highlight {
-      font-size: 2.5rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 1rem;
-    }
-
-    .quote-sub {
-      color: #9ca3af;
-      font-size: 1.125rem;
-    }
-
-    /* Services */
-    .services {
-      margin: 4rem 0;
-    }
-
-    h2 {
-      font-size: 2.5rem;
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .service-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 2rem;
-      transition: all 0.3s;
-    }
-
-    .service-card:hover {
-      background: rgba(255, 255, 255, 0.08);
-      transform: translateY(-5px);
-    }
-
-    .service-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    /* Why now */
-    .why-now {
-      margin: 4rem 0;
-      text-align: center;
-    }
-
-    .why-now ul {
-      list-style: none;
-      margin-top: 2rem;
-    }
-
-    .why-now li {
-      font-size: 1.125rem;
-      margin: 1rem 0;
-    }
-
-    /* Methodology */
-    .methodology {
-      margin: 4rem 0;
-      text-align: center;
-    }
-
-    .methodology ol {
-      text-align: left;
-      max-width: 600px;
-      margin: 2rem auto 0;
-      list-style-position: inside;
-    }
-
-    .methodology li {
-      margin: 1rem 0;
-      font-size: 1.125rem;
-    }
-
-    /* Final CTA */
-    .final-cta {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      padding: 3rem;
-      margin: 4rem 0;
-      text-align: center;
-    }
-
-    .simple-form {
-      max-width: 500px;
-      margin: 2rem auto 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .simple-form input,
-    .simple-form textarea {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      padding: 1rem;
-      color: #fff;
-      font-family: inherit;
-    }
-
-    .simple-form input::placeholder,
-    .simple-form textarea::placeholder {
-      color: #9ca3af;
-    }
-
-    .simple-form button {
-      background: #02aa6d;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 1rem 2rem;
-      font-size: 1.125rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .simple-form button:hover {
-      background: #028a55;
-      transform: translateY(-2px);
-    }
-
-    /* Footer */
-    footer {
-      position: relative;
-      z-index: 10;
-      text-align: center;
-      padding: 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: #9ca3af;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .hero {
-        min-height: 80vh;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      .hero-description {
-        font-size: 1rem;
-      }
-
-      .hero-actions {
-        flex-direction: column;
-        width: 100%;
-        max-width: 300px;
-      }
-
-      .btn-primary, .btn-secondary {
-        width: 100%;
-      }
-
-      h2 {
-        font-size: 1.75rem;
-      }
-
-      .quote-main {
-        font-size: 1.5rem;
-      }
-
-      .quote-highlight {
-        font-size: 1.75rem;
-      }
-
-      .services-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-
-  <script>
-    // Partículas simples
-    const canvas = document.getElementById('particles-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    class Particle {
-      constructor() {
-        this.reset();
-      }
-
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.size = Math.random() * 2 + 1;
-        this.color = Math.random() > 0.5 ? '#60a5fa' : '#a855f7';
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-      }
-
-      draw() {
-        ctx.fillStyle = this.color;
-        ctx.globalAlpha = 0.5;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    // Crear partículas
-    for (let i = 0; i < 50; i++) {
-      particles.push(new Particle());
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(particle => {
-        particle.update();
-        particle.draw();
-      });
-
-      // Conectar partículas cercanas
-      particles.forEach((p1, i) => {
-        particles.slice(i + 1).forEach(p2 => {
-          const dx = p1.x - p2.x;
-          const dy = p1.y - p2.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 150) {
-            ctx.strokeStyle = p1.color;
-            ctx.globalAlpha = 0.1 * (1 - distance / 150);
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-          }
-        });
-      });
-
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-
-    // Form handling simple
-    document.querySelector('.simple-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert('¡Gracias! Te contactaremos pronto.');
+<Layout 
+  logoUrl={logoUrl} 
+  logoAlt="BLIXEL logo"
+  title={pageTitle}
+  description={pageDescription}
+>
+  <!-- Script para Partículas Geométricas 3D -->
+  <script is:inline>
+    // Cargar el nuevo sistema de partículas
+    document.addEventListener('DOMContentLoaded', () => {
+      const script = document.createElement('script');
+      script.src = '/js/geometric-particles.js';
+      document.body.appendChild(script);
     });
   </script>
-</body>
-</html>
+
+  <!-- HERO SECTION -->
+  <Hero 
+    logoUrl={logoUrl}
+    logoAlt="BLIXEL logo"
+    customTitle="Aplica Inteligencia Artificial en tu empresa"
+    customDescription="Inteligencia artificial en tu empresa HOY o quiebras mañana. ROI en 90 días. Mientras dudas, tu competencia factura."
+    titleLine1="Aplica Inteligencia Artificial"
+    titleLine2="en tu empresa"
+  />
+
+  <!-- 
+    AQUÍ PUEDES AÑADIR MÁS SECCIONES DESPUÉS 
+    Por ejemplo:
+    - Servicios
+    - Por qué ahora
+    - Casos de éxito
+    - FAQ
+    - Formulario
+  -->
+
+</Layout>
+
+<style>
+  /* ==================== ESTILOS GLOBALES ==================== */
+  body {
+    background: #000000;
+    color: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Canvas de partículas geométricas */
+  #geometric-particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: auto;
+  }
+
+  /* ==================== RESPONSIVE ==================== */
+  @media (max-width: 768px) {
+    body {
+      font-size: 16px;
+    }
+  }
+</style>
