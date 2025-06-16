@@ -291,17 +291,16 @@
             body: JSON.stringify(data)
           });
           
-          const result = await response.json();
-          console.log('📨 Respuesta:', result);
-          
-          if (result.success) {
-            console.log('✅ Formulario enviado exitosamente');
+          // Make responde con texto "Accepted", no JSON
+          if (response.ok) {
+            console.log('✅ Make respondió: Accepted');
+            // Mostrar mensaje de éxito
             messageDiv.textContent = '¡Gracias! Hemos recibido tu mensaje y te contactaremos pronto.';
             messageDiv.className = 'form-message success';
             messageDiv.style.display = 'block';
             form.reset();
           } else {
-            throw new Error(result.error || 'Error desconocido');
+            throw new Error('Error al enviar el formulario');
           }
           
         } catch (error) {
