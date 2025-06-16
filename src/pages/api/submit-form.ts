@@ -3,7 +3,7 @@ export async function POST({ request }) {
     const formData = await request.json();
     console.log('📤 Enviando a WordPress:', formData);
     
-    const response = await fetch('https://cms.blixel.es/wp-json/blixel/v1/submit-form', {
+    const response = await fetch('https://cms.blixel.es/wp-json/blixel/v1/test-form', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
