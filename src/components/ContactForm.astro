@@ -1,37 +1,319 @@
 ---
-// Componente que embebe el formulario de Gravity Forms con estilos mínimos
+// Componente de formulario con estilo Astro que envía a Gravity Forms via API
 ---
 
-<div class="gravity-form-container">
-  <iframe 
-    id="gravity-form-iframe"
-    src="https://cms.blixel.es/formulario-embed/"
-    width="100%" 
-    height="700"
-    frameborder="0"
-    scrolling="no"
-    style="border: none; overflow: hidden; background: transparent;">
-  </iframe>
+<div class="form-wrapper">
+  <form id="contact-form" class="gravity-form">
+    <div class="form-fields">
+      <!-- Nombre -->
+      <div class="form-field">
+        <label for="nombre">Nombre completo <span class="required">*</span></label>
+        <input 
+          type="text" 
+          id="nombre"
+          name="nombre"
+          required
+          class="form-input"
+        />
+      </div>
+      
+      <!-- Empresa -->
+      <div class="form-field">
+        <label for="empresa">Empresa <span class="required">*</span></label>
+        <input 
+          type="text" 
+          id="empresa"
+          name="empresa"
+          required
+          class="form-input"
+        />
+      </div>
+      
+      <!-- Número de trabajadores -->
+      <div class="form-field">
+        <label for="trabajadores">Número de trabajadores <span class="required">*</span></label>
+        <input 
+          type="number" 
+          id="trabajadores"
+          name="trabajadores"
+          required
+          class="form-input"
+        />
+      </div>
+      
+      <!-- Teléfono -->
+      <div class="form-field">
+        <label for="telefono">Teléfono <span class="required">*</span></label>
+        <input 
+          type="tel" 
+          id="telefono"
+          name="telefono"
+          required
+          class="form-input"
+        />
+      </div>
+      
+      <!-- Email -->
+      <div class="form-field">
+        <label for="email">Correo electrónico <span class="required">*</span></label>
+        <input 
+          type="email" 
+          id="email"
+          name="email"
+          required
+          class="form-input"
+        />
+      </div>
+      
+      <!-- Comentarios -->
+      <div class="form-field">
+        <label for="comentarios">Comentarios <span class="required">*</span></label>
+        <textarea 
+          id="comentarios"
+          name="comentarios"
+          required
+          rows={4}
+          class="form-textarea"
+          placeholder="Por favor, haznos saber lo que tienes en mente. ¿Tienes alguna pregunta para nosotros? Dispara."
+        ></textarea>
+      </div>
+    </div>
+    
+    <div class="form-footer">
+      <button type="submit" class="submit-button">
+        Enviar
+      </button>
+    </div>
+    
+    <div class="form-message" style="display: none;"></div>
+  </form>
 </div>
 
+<style>
+  .form-wrapper {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+
+  html:not(.dark) .form-wrapper {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .gravity-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-fields {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-field label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #e5e7eb;
+    transition: color 0.3s ease;
+  }
+
+  html:not(.dark) .form-field label {
+    color: #374151;
+  }
+
+  .required {
+    color: #ef4444;
+  }
+
+  .form-input,
+  .form-textarea {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+  }
+
+  html:not(.dark) .form-input,
+  html:not(.dark) .form-textarea {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: #111827;
+  }
+
+  .form-input:focus,
+  .form-textarea:focus {
+    outline: none;
+    border-color: #60a5fa;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+  }
+
+  html:not(.dark) .form-input:focus,
+  html:not(.dark) .form-textarea:focus {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: #3b82f6;
+  }
+
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: #6b7280;
+    transition: color 0.3s ease;
+  }
+
+  html:not(.dark) .form-input::placeholder,
+  html:not(.dark) .form-textarea::placeholder {
+    color: #9ca3af;
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .form-footer {
+    margin-top: 1rem;
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: 1.25rem 2rem;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 1.125rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3);
+  }
+
+  .submit-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .form-message {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+
+  .form-message.success {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+  }
+
+  .form-message.error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+  }
+
+  @media (max-width: 768px) {
+    .form-wrapper {
+      padding: 1.5rem;
+    }
+
+    .form-input,
+    .form-textarea {
+      padding: 0.875rem;
+      font-size: 0.95rem;
+    }
+
+    .submit-button {
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+    }
+  }
+</style>
+
 <script>
-  // Auto-ajustar altura del iframe
-  window.addEventListener('message', function(e) {
-    const iframe = document.getElementById('gravity-form-iframe');
-    if (e.data && e.data.height && iframe) {
-      iframe.style.height = e.data.height + 'px';
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    
+    if (form) {
+      console.log('✅ Formulario inicializado');
+      
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitButton = form.querySelector('.submit-button') as HTMLButtonElement;
+        const messageDiv = form.querySelector('.form-message') as HTMLDivElement;
+        const originalText = submitButton.textContent;
+        
+        // Estado de carga
+        submitButton.disabled = true;
+        submitButton.textContent = 'Enviando...';
+        messageDiv.style.display = 'none';
+
+        // Recopilar datos del formulario
+        const formData = new FormData(form);
+        const data = {
+          nombre: formData.get('nombre'),
+          empresa: formData.get('empresa'),
+          trabajadores: formData.get('trabajadores'),
+          telefono: formData.get('telefono'),
+          email: formData.get('email'),
+          comentarios: formData.get('comentarios')
+        };
+        
+        console.log('📤 Datos del formulario:', data);
+
+        try {
+          const response = await fetch('/api/submit-form', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          
+          const result = await response.json();
+          console.log('📨 Respuesta:', result);
+          
+          if (result.success) {
+            console.log('✅ Formulario enviado exitosamente');
+            messageDiv.textContent = '¡Gracias! Hemos recibido tu mensaje y te contactaremos pronto.';
+            messageDiv.className = 'form-message success';
+            messageDiv.style.display = 'block';
+            form.reset();
+          } else {
+            throw new Error(result.error || 'Error desconocido');
+          }
+          
+        } catch (error) {
+          console.error('❌ Error:', error);
+          messageDiv.textContent = 'Error al enviar el formulario. Por favor, inténtalo de nuevo.';
+          messageDiv.className = 'form-message error';
+          messageDiv.style.display = 'block';
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = originalText;
+        }
+      });
     }
   });
 </script>
-
-<style>
-  .gravity-form-container {
-    width: 100%;
-    max-width: 100%;
-  }
-  
-  #gravity-form-iframe {
-    background: transparent;
-    width: 100%;
-  }
-</style>

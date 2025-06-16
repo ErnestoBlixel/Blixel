@@ -3,7 +3,7 @@ export async function POST({ request }) {
     const formData = await request.json();
     console.log('📤 Enviando formulario:', formData);
     
-    // Usar tu endpoint personalizado que ya funciona
+    // Usar tu endpoint personalizado que YA FUNCIONA
     const response = await fetch('https://cms.blixel.es/wp-json/blixel/v1/test-form', {
       method: 'POST',
       headers: {
@@ -13,12 +13,13 @@ export async function POST({ request }) {
     });
     
     const result = await response.json();
-    console.log('Respuesta:', result);
+    console.log('📨 Respuesta:', result);
     
     if (response.ok && result.success) {
       return new Response(JSON.stringify({ 
         success: true,
-        message: result.message || 'Formulario enviado correctamente'
+        message: result.message || 'Formulario enviado correctamente',
+        entry_id: result.entry_id
       }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' }
@@ -28,7 +29,7 @@ export async function POST({ request }) {
     }
     
   } catch (error) {
-    console.error('Error:', error);
+    console.error('❌ Error:', error);
     return new Response(JSON.stringify({ 
       success: false, 
       error: error.message 
