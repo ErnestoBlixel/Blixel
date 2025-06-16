@@ -210,7 +210,6 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
 
   <!-- SLIDER DE LOGOS -->
   <div class="logos-slider-wrapper">
-    <p class="logos-text">HERRAMIENTAS MÁS UTILIZADAS</p>
     <div class="logos-slider-container">
       <div class="logos-slider">
         <div class="slider-track">
@@ -254,6 +253,12 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
           <div class="logo-item">
             <img src="/logos/13.png" alt="Cliente 13" />
           </div>
+          <div class="logo-item">
+            <img src="/logos/14.png" alt="Cliente 14" />
+          </div>
+          <div class="logo-item">
+            <img src="/logos/15.png" alt="Cliente 15" />
+          </div>
           <!-- Duplicar para loop infinito -->
           <div class="logo-item">
             <img src="/logos/1.png" alt="Cliente 1" />
@@ -293,6 +298,12 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
           </div>
           <div class="logo-item">
             <img src="/logos/13.png" alt="Cliente 13" />
+          </div>
+          <div class="logo-item">
+            <img src="/logos/14.png" alt="Cliente 14" />
+          </div>
+          <div class="logo-item">
+            <img src="/logos/15.png" alt="Cliente 15" />
           </div>
         </div>
       </div>
@@ -701,7 +712,7 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     max-width: 1400px; /* Cambiado de 1200px a 1400px */
     margin: 4rem auto 0;
     padding: 2rem 0;
-    z-index: 20;
+    z-index: 1000;
   }
 
   .logos-text {
@@ -750,8 +761,9 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
 
   .slider-track {
     display: flex;
-    animation: scrollLogos 40s linear infinite;
+    animation: scrollLogos 40s linear infinite !important;
     width: fit-content;
+    will-change: transform;
   }
 
   .logo-item {
@@ -783,6 +795,14 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     100% {
       transform: translateX(-50%);
     }
+  }
+
+  /* Forzar animación en todos los navegadores */
+  .slider-track {
+    -webkit-animation: scrollLogos 40s linear infinite !important;
+    -moz-animation: scrollLogos 40s linear infinite !important;
+    -o-animation: scrollLogos 40s linear infinite !important;
+    animation: scrollLogos 40s linear infinite !important;
   }
 
   /* Pausar al hover */
