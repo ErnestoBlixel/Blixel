@@ -221,6 +221,13 @@ try {
     border-radius: 16px;
     padding: 2rem;
     backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+
+  /* Formulario en modo claro */
+  html:not(.dark) .form-wrapper {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.12);
   }
 
   .gravity-form {
@@ -244,6 +251,11 @@ try {
     font-size: 0.9rem;
     font-weight: 600;
     color: #e5e7eb;
+    transition: color 0.3s ease;
+  }
+
+  html:not(.dark) .form-field label {
+    color: #374151;
   }
 
   .required {
@@ -263,6 +275,13 @@ try {
     transition: all 0.3s ease;
   }
 
+  html:not(.dark) .form-input,
+  html:not(.dark) .form-textarea {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: #111827;
+  }
+
   .form-input:focus,
   .form-textarea:focus {
     outline: none;
@@ -271,9 +290,21 @@ try {
     box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
   }
 
+  html:not(.dark) .form-input:focus,
+  html:not(.dark) .form-textarea:focus {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: #3b82f6;
+  }
+
   .form-input::placeholder,
   .form-textarea::placeholder {
     color: #6b7280;
+    transition: color 0.3s ease;
+  }
+
+  html:not(.dark) .form-input::placeholder,
+  html:not(.dark) .form-textarea::placeholder {
+    color: #9ca3af;
   }
 
   .form-textarea {
@@ -386,6 +417,17 @@ try {
         const data = Object.fromEntries(formData);
         
         console.log('📤 Enviando datos del formulario:', data);
+        
+        // Validar campos requeridos en el frontend
+        if (!data['input_1.3'] || !data['input_4']) {
+          messageDiv.textContent = 'Por favor, completa el nombre y email.';
+          messageDiv.className = 'form-message error';
+          messageDiv.style.display = 'block';
+          
+          submitButton.disabled = false;
+          submitButton.textContent = originalText;
+          return;
+        }
 
         try {
           // Usar endpoint de Astro como proxy
@@ -406,7 +448,17 @@ try {
             })
           });
           
-          const result = await response.json();
+          console.log('📨 Respuesta del servidor - Status:', response.status);
+          
+          let result;
+          try {
+            result = await response.json();
+          } catch (jsonError) {
+            console.error('❌ Error parsing JSON:', jsonError);
+            throw new Error('Respuesta inválida del servidor');
+          }
+          
+          console.log('📋 Resultado:', result);
           
           if (result.success) {
             console.log('✅ Formulario enviado exitosamente a WordPress');
@@ -429,11 +481,21 @@ try {
             throw new Error(result.error || 'Error desconocido');
           }
           
-          console.log('✅ Formulario procesado correctamente');
-          
         } catch (error) {
           console.error('❌ Error enviando formulario:', error);
-          messageDiv.textContent = 'Error al enviar el formulario. Por favor, inténtalo de nuevo.';
+          
+          let errorMessage = 'Error al enviar el formulario. Por favor, inténtalo de nuevo.';
+          
+          // Personalizar mensaje según el tipo de error
+          if (error.message.includes('validación')) {
+            errorMessage = 'Por favor, verifica que todos los campos estén correctamente completados.';
+          } else if (error.message.includes('requeridos')) {
+            errorMessage = 'Por favor, completa todos los campos requeridos.';
+          } else if (error.message.includes('fetch')) {
+            errorMessage = 'Error de conexión. Verifica tu conexión a internet.';
+          }
+          
+          messageDiv.textContent = errorMessage;
           messageDiv.className = 'form-message error';
           messageDiv.style.display = 'block';
         } finally {
