@@ -16,8 +16,8 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
   title={pageTitle}
   description={pageDescription}
 >
-  <!-- Canvas de partículas globales -->
-  <canvas id="global-particles-canvas"></canvas>
+  <!-- Canvas de partículas modernas con tsParticles -->
+  <div id="tsparticles"></div>
 
   <!-- HEADER SIMPLE -->
   <header class="simple-header">
@@ -954,8 +954,8 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     padding-top: 72px; /* Compensar el header fijo */
   }
 
-  /* Canvas de partículas globales minimalistas */
-  #global-particles-canvas {
+  /* Canvas de partículas modernas tsParticles */
+  #tsparticles {
     position: fixed;
     top: 0;
     left: 0;
@@ -963,7 +963,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     height: 100vh;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.25; /* Más sutil que antes (era 0.4) */
+    opacity: 0.4;
   }
 
   /* ==================== SECCIÓN DE SERVICIOS ==================== */
@@ -1861,89 +1861,8 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
       });
     }
 
-    // Sistema de partículas globales minimalistas
-    const canvas = document.getElementById('global-particles-canvas');
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      let particles = [];
-      
-      function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
-      
-      resizeCanvas();
-      window.addEventListener('resize', resizeCanvas);
-      
-      class MinimalParticle {
-        constructor() {
-          this.x = Math.random() * canvas.width;
-          this.y = Math.random() * canvas.height;
-          this.vx = (Math.random() - 0.5) * 0.2; // Movimiento más lento
-          this.vy = (Math.random() - 0.5) * 0.2;
-          this.size = Math.random() * 1.5 + 0.5; // Tamaño más pequeño
-          this.opacity = Math.random() * 0.3 + 0.1; // Más sutil
-          this.pulseSpeed = Math.random() * 0.02 + 0.01;
-          this.pulseOffset = Math.random() * Math.PI * 2;
-        }
-        
-        update() {
-          this.x += this.vx;
-          this.y += this.vy;
-          
-          // Rebote suave en los bordes
-          if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-          if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-          
-          this.x = Math.max(0, Math.min(canvas.width, this.x));
-          this.y = Math.max(0, Math.min(canvas.height, this.y));
-          
-          // Efecto de pulsación sutil
-          this.pulseOffset += this.pulseSpeed;
-        }
-        
-        draw() {
-          ctx.save();
-          
-          // Opacidad con pulsación
-          const pulseOpacity = this.opacity + Math.sin(this.pulseOffset) * 0.1;
-          ctx.globalAlpha = Math.max(0.05, pulseOpacity);
-          
-          // Gradiente radial para efecto más suave
-          const gradient = ctx.createRadialGradient(
-            this.x, this.y, 0,
-            this.x, this.y, this.size * 2
-          );
-          gradient.addColorStop(0, '#60a5fa');
-          gradient.addColorStop(1, 'transparent');
-          
-          ctx.fillStyle = gradient;
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          ctx.fill();
-          
-          ctx.restore();
-        }
-      }
-      
-      // Crear menos partículas para look minimalista
-      for (let i = 0; i < 8; i++) {
-        particles.push(new MinimalParticle());
-      }
-      
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        particles.forEach(particle => {
-          particle.update();
-          particle.draw();
-        });
-        
-        requestAnimationFrame(animate);
-      }
-      
-      animate();
-    }
+    // Sistema de partículas modernas con tsParticles
+    loadTsParticles();
 
     // Sistema de FAQ interactivo
     const faqItems = document.querySelectorAll('.faq-item');
@@ -1966,6 +1885,107 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
 
     // Formulario nativo ya está cargado, no necesitamos JavaScript adicional
   });
+
+  // Función para cargar tsParticles modernos y minimalistas
+  async function loadTsParticles() {
+    // Cargar tsParticles desde CDN
+    if (!window.tsParticles) {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js';
+      script.onload = initTsParticles;
+      document.head.appendChild(script);
+    } else {
+      initTsParticles();
+    }
+  }
+
+  // Configuración minimalista y moderna de tsParticles
+  function initTsParticles() {
+    tsParticles.load('tsparticles', {
+      background: {
+        color: {
+          value: 'transparent',
+        },
+      },
+      fpsLimit: 120,
+      interactivity: {
+        events: {
+          onClick: {
+            enable: true,
+            mode: 'push',
+          },
+          onHover: {
+            enable: true,
+            mode: 'repulse',
+          },
+          resize: true,
+        },
+        modes: {
+          push: {
+            quantity: 2,
+          },
+          repulse: {
+            distance: 100,
+            duration: 0.4,
+          },
+        },
+      },
+      particles: {
+        color: {
+          value: ['#60a5fa', '#3b82f6', '#2563eb'],
+        },
+        links: {
+          color: '#60a5fa',
+          distance: 120,
+          enable: true,
+          opacity: 0.1,
+          width: 1,
+        },
+        collisions: {
+          enable: false,
+        },
+        move: {
+          direction: 'none',
+          enable: true,
+          outModes: {
+            default: 'bounce',
+          },
+          random: false,
+          speed: 0.5,
+          straight: false,
+        },
+        number: {
+          density: {
+            enable: true,
+            area: 1200,
+          },
+          value: 30,
+        },
+        opacity: {
+          value: 0.2,
+          animation: {
+            enable: true,
+            speed: 1,
+            minimumValue: 0.1,
+            sync: false,
+          },
+        },
+        shape: {
+          type: 'circle',
+        },
+        size: {
+          value: { min: 1, max: 3 },
+          animation: {
+            enable: true,
+            speed: 2,
+            minimumValue: 0.5,
+            sync: false,
+          },
+        },
+      },
+      detectRetina: true,
+    });
+  }
 
   // El formulario ahora es nativo y no requiere funciones de carga adicionales
 </script>
