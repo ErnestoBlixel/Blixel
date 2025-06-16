@@ -326,6 +326,12 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Hero en modo claro */
+  html:not(.dark) .hero {
+    background: #ffffff;
   }
 
 
@@ -404,6 +410,13 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     padding: 0;
     text-align: center;
     display: block;
+    transition: color 0.3s ease;
+  }
+
+  /* Título en modo claro */
+  html:not(.dark) .hero__title,
+  html:not(.dark) .title-line {
+    color: #111827;
   }
 
   .title-line {
@@ -471,6 +484,12 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     font-weight: 400;
     padding: 0 1rem;
     animation: fadeInUp 0.8s ease-out 0.4s backwards;
+    transition: color 0.3s ease;
+  }
+
+  /* Descripción en modo claro */
+  html:not(.dark) .hero__description {
+    color: #4b5563;
   }
 
   .hero__actions {
@@ -496,6 +515,18 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     text-decoration: none;
     transition: all 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
     overflow: hidden;
+  }
+
+  /* CTA Primary en modo claro - mantener mismo estilo */
+  html:not(.dark) .cta-primary {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+  }
+
+  html:not(.dark) .cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
   }
 
   .cta-glow {
@@ -536,6 +567,18 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     cursor: pointer;
     text-decoration: none;
     transition: all 200ms ease;
+  }
+
+  /* CTA Secondary en modo claro */
+  html:not(.dark) .cta-secondary {
+    background: transparent;
+    color: #111827;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  html:not(.dark) .cta-secondary:hover {
+    border-color: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.05);
   }
 
   .cta-secondary:hover {
@@ -661,6 +704,12 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     margin-bottom: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    transition: color 0.3s ease;
+  }
+
+  /* Texto de logos en modo claro */
+  html:not(.dark) .logos-text {
+    color: #4b5563;
   }
 
   .logos-slider-container {
@@ -676,7 +725,7 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     width: 100%;
   }
 
-  /* Gradientes para fade en los bordes */
+  /* Gradientes para fade en los bordes - SOLO EN MODO CLARO */
   .logos-slider::before,
   .logos-slider::after {
     content: '';
@@ -686,16 +735,25 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     width: 100px;
     z-index: 2;
     pointer-events: none;
+    transition: background 0.3s ease;
+    background: transparent; /* Transparente por defecto (modo oscuro) */
   }
 
   .logos-slider::before {
     left: 0;
-    background: linear-gradient(to right, #000000 0%, transparent 100%);
   }
 
   .logos-slider::after {
     right: 0;
-    background: linear-gradient(to left, #000000 0%, transparent 100%);
+  }
+
+  /* Gradientes SOLO en modo claro */
+  html:not(.dark) .logos-slider::before {
+    background: linear-gradient(to right, #ffffff 0%, transparent 100%);
+  }
+
+  html:not(.dark) .logos-slider::after {
+    background: linear-gradient(to left, #ffffff 0%, transparent 100%);
   }
 
   .slider-track {

@@ -1,0 +1,43 @@
+/* Override específico para FORZAR que NO haya texto blanco en modo claro */
+
+/* Regla global para prevenir texto blanco */
+html:not(.dark) {
+  color-scheme: light;
+}
+
+html:not(.dark) *:not(.title-highlight) {
+  color: inherit !important;
+}
+
+/* Forzar colores específicos para elementos problemáticos */
+html:not(.dark) .title-regular,
+html:not(.dark) .service-card .service-title,
+html:not(.dark) .faq-question,
+html:not(.dark) .faq-question span,
+html:not(.dark) .stat-primary,
+html:not(.dark) .urgency-title,
+html:not(.dark) .examples-title,
+html:not(.dark) .faq-title,
+html:not(.dark) .contact-form-title,
+html:not(.dark) .services-title {
+  color: #111827 !important;
+}
+
+/* Asegurar que los fondos sean apropiados */
+html:not(.dark) section {
+  background: #ffffff !important;
+}
+
+/* Iconos y elementos SVG también oscuros en modo claro */
+html:not(.dark) svg:not(.title-highlight *) {
+  color: #374151 !important;
+}
+
+/* Chevrons y elementos de UI */
+html:not(.dark) .faq-chevron {
+  color: #6b7280 !important;
+}
+
+html:not(.dark) .faq-item.active .faq-chevron {
+  color: #2563eb !important;
+}

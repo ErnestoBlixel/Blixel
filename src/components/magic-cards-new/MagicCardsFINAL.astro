@@ -57,16 +57,35 @@
     ));
   };
 
+  // Función para obtener colores según el tema
+  const getThemeColors = () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    return {
+      cardBg: isDark ? 'transparent' : 'rgba(255, 255, 255, 0.8)',
+      cardBorder: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+      cardHoverBg: isDark ? 'rgba(255, 255, 255, 0.02)' : 'rgba(255, 255, 255, 0.9)',
+      cardHoverBorder: isDark ? 'rgba(96, 165, 250, 0.3)' : 'rgba(59, 130, 246, 0.3)',
+      titleColor: isDark ? '#ffffff' : '#111827',
+      timeColor: isDark ? '#9ca3af' : '#6b7280',
+      descColor: isDark ? '#d1d5db' : '#4b5563',
+      iconBg: isDark ? 'rgba(34, 197, 94, 0.1)' : 'rgba(34, 197, 94, 0.15)',
+      iconBorder: isDark ? 'rgba(34, 197, 94, 0.2)' : 'rgba(34, 197, 94, 0.3)'
+    };
+  };
+
   // Tarjeta individual con estilo inline forzado
   const FinalCard = ({ name, description, icon, time, cardIndex }) => {
+    const colors = getThemeColors();
+    
     return React.createElement('div', {
       className: 'final-card-item',
       style: {
         // ESTILOS INLINE PARA FORZAR APLICACIÓN
-        backgroundColor: 'white',
+        backgroundColor: colors.cardBg,
         borderRadius: '12px',
         padding: '1.25rem',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        boxShadow: 'none',
+        border: `1px solid ${colors.cardBorder}`,
         transition: 'all 0.2s ease',
         cursor: 'pointer',
         marginBottom: '0', // Sin margin bottom porque usamos gap
@@ -74,12 +93,18 @@
         opacity: 1
       },
       onMouseEnter: (e) => {
+        const hoverColors = getThemeColors();
         e.target.style.transform = 'scale(1.02)';
-        e.target.style.boxShadow = '0 4px 16px rgba(0,0,0,0.15)';
+        e.target.style.boxShadow = 'none';
+        e.target.style.borderColor = hoverColors.cardHoverBorder;
+        e.target.style.backgroundColor = hoverColors.cardHoverBg;
       },
       onMouseLeave: (e) => {
+        const defaultColors = getThemeColors();
         e.target.style.transform = 'scale(1)';
-        e.target.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+        e.target.style.boxShadow = 'none';
+        e.target.style.borderColor = defaultColors.cardBorder;
+        e.target.style.backgroundColor = defaultColors.cardBg;
       }
     }, 
       React.createElement('div', {
@@ -95,8 +120,8 @@
           style: {
             width: '3rem',
             height: '3rem',
-            backgroundColor: 'rgba(34, 197, 94, 0.1)',
-            border: '1px solid rgba(34, 197, 94, 0.2)',
+            backgroundColor: colors.iconBg,
+            border: `1px solid ${colors.iconBorder}`,
             borderRadius: '8px',
             display: 'flex',
             alignItems: 'center',
@@ -164,7 +189,7 @@
               style: {
                 fontSize: '1rem',
                 fontWeight: '700',
-                color: '#1f2937',
+                color: colors.titleColor,
                 flex: 1
               }
             }, name),
@@ -172,7 +197,7 @@
               key: 'time',
               style: {
                 fontSize: '0.875rem',
-                color: '#6b7280',
+                color: colors.timeColor,
                 fontWeight: '500'
               }
             }, time)
@@ -182,7 +207,7 @@
             style: {
               margin: '0',
               fontSize: '0.875rem',
-              color: '#4b5563',
+              color: colors.descColor,
               lineHeight: '1.4'
             }
           }, description)
@@ -217,11 +242,31 @@
 
   // Componente principal
   const FinalApp = () => {
-    return React.createElement(FinalCardsList, {}, 
+    const [themeKey, setThemeKey] = React.useState(0);
+    
+    React.useEffect(() => {
+      // Observer para cambios de tema
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            setThemeKey(prev => prev + 1); // Forzar re-render
+          }
+        });
+      });
+      
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+      
+      return () => observer.disconnect();
+    }, []);
+    
+    return React.createElement(FinalCardsList, { key: themeKey }, 
       notifications.map((item, idx) => 
         React.createElement(FinalCard, {
           ...item,
-          key: `final-notification-${idx}`
+          key: `final-notification-${idx}-${themeKey}`
         })
       )
     );
@@ -251,6 +296,13 @@
     -webkit-backdrop-filter: blur(10px) !important;
     width: 100% !important;
     max-width: 520px !important;
+    transition: all 0.3s ease !important;
+  }
+
+  /* Wrapper en modo claro */
+  html:not(.dark) .cards-final-wrapper {
+    background: rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
   }
 
   #cards-final-container {

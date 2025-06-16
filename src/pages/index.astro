@@ -30,31 +30,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
         />
       </a>
       
-      <!-- Toggle modo noche a la derecha -->
-      <div class="dark-mode-toggle">
-        <button class="toggle-btn" id="darkModeToggle" aria-label="Toggle dark mode">
-          <div class="toggle-track">
-            <div class="toggle-thumb">
-              <!-- Icono sol -->
-              <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line>
-                <line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-              </svg>
-              <!-- Icono luna -->
-              <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-              </svg>
-            </div>
-          </div>
-        </button>
-      </div>
+
     </div>
   </header>
 
@@ -280,7 +256,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
             </div>
           </div>
 
-          <a href="#contacto" class="examples-cta">
+          <a href="#contacto" class="examples-cta" id="cta-automatizar">
             <span>Empieza a automatizar hoy</span>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -388,7 +364,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
   </section>
 
   <!-- SECCIÓN DE FORMULARIO DE CONTACTO -->
-  <section id="contact-form" class="contact-form-section">
+  <section id="contacto" class="contact-form-section">
     <div class="contact-form-container">
       <!-- Header de la sección -->
       <div class="contact-form-header">
@@ -437,7 +413,15 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 1rem 0;
+    padding: 1.25rem 0; /* Aumentado de 1rem a 1.25rem */
+    transition: all 0.3s ease;
+  }
+
+  /* Header en modo claro */
+  html:not(.dark) .simple-header {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
   /* ==================== SECCIÓN DE PREGUNTAS FRECUENTES ==================== */
@@ -477,6 +461,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
+    transition: color 0.3s ease;
   }
 
   /* Grid de preguntas */
@@ -572,6 +557,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     font-size: 1rem;
     line-height: 1.6;
     color: #e5e7eb;
+    transition: color 0.3s ease;
   }
 
   /* Efecto de borde animado para FAQ activo */
@@ -689,6 +675,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
+    transition: color 0.3s ease;
   }
 
   /* Estilos para el wrapper del formulario nativo */
@@ -823,12 +810,12 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
   }
 
   .header-container {
-    max-width: 1400px;
+    max-width: 1400px; /* Mismo ancho que el hero */
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 2rem; /* Mismo padding que el hero */
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Logo izquierda, toggle derecha */
+    justify-content: space-between; /* Logo izquierda, espacio derecho para el botón flotante */
   }
 
   .logo-link {
@@ -838,7 +825,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
   }
 
   .header-logo {
-    height: 40px;
+    height: 45px; /* Aumentado de 40px a 45px */
     width: auto;
     max-width: 150px;
     object-fit: contain;
@@ -954,7 +941,18 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     color: #ffffff;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     overflow-x: hidden;
-    padding-top: 72px; /* Compensar el header fijo */
+    padding-top: 78px; /* Aumentado de 72px a 78px para compensar header más grande */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* REGLA GLOBAL: NUNCA texto blanco en modo claro */
+  html:not(.dark) * {
+    color: inherit;
+  }
+
+  html:not(.dark) body {
+    background: #ffffff;
+    color: #111827;
   }
 
 
@@ -963,6 +961,16 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     padding: 6rem 0;
     background: #000000;
     overflow: hidden;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Secciones en modo claro */
+  html:not(.dark) .services-section,
+  html:not(.dark) .urgency-section,
+  html:not(.dark) .examples-section,
+  html:not(.dark) .faq-section,
+  html:not(.dark) .contact-form-section {
+    background: #ffffff;
   }
 
   .services-container {
@@ -987,6 +995,45 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     margin-bottom: 1.5rem;
     font-weight: 800;
     color: #ffffff;
+    transition: color 0.3s ease;
+  }
+
+  /* Títulos en modo claro - TODOS OSCUROS */
+  html:not(.dark) .services-title,
+  html:not(.dark) .urgency-title,
+  html:not(.dark) .examples-title,
+  html:not(.dark) .faq-title,
+  html:not(.dark) .contact-form-title,
+  html:not(.dark) .service-card .service-title,
+  html:not(.dark) .faq-question,
+  html:not(.dark) .faq-question span,
+  html:not(.dark) .stat-primary,
+  html:not(.dark) .urgency-title .title-regular,
+  html:not(.dark) h1,
+  html:not(.dark) h2,
+  html:not(.dark) h3,
+  html:not(.dark) h4,
+  html:not(.dark) h5,
+  html:not(.dark) h6 {
+    color: #111827 !important;
+  }
+
+  /* Textos secundarios en modo claro - TODOS OSCUROS */
+  html:not(.dark) .urgency-description,
+  html:not(.dark) .examples-description,
+  html:not(.dark) .faq-description,
+  html:not(.dark) .contact-form-description,
+  html:not(.dark) .services-header .services-description,
+  html:not(.dark) .service-card .service-description {
+    color: #374151 !important;
+  }
+
+  /* Textos terciarios en modo claro */
+  html:not(.dark) .urgency-description-secondary,
+  html:not(.dark) .stat-secondary,
+  html:not(.dark) .stat-label,
+  html:not(.dark) .faq-answer p {
+    color: #4b5563 !important;
   }
 
   /* Degradado azul para todas las palabras destacadas en encabezados */
@@ -1006,7 +1053,10 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     max-width: 100%;
     margin: 0;
     line-height: 1.6;
+    transition: color 0.3s ease;
   }
+
+
 
   /* Grid de servicios */
   .services-grid {
@@ -1026,6 +1076,23 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     transition: all 0.3s ease;
     overflow: hidden;
     cursor: pointer;
+  }
+
+  /* Tarjetas en modo claro */
+  html:not(.dark) .service-card,
+  html:not(.dark) .stat-card,
+  html:not(.dark) .faq-item {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  html:not(.dark) .service-card:hover,
+  html:not(.dark) .stat-card:hover,
+  html:not(.dark) .faq-item:hover {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
   .service-card::before {
@@ -1106,7 +1173,10 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     min-height: 3.5rem;
     display: flex;
     align-items: center;
+    transition: color 0.3s ease;
   }
+
+
 
   .service-card .service-title br {
     display: block;
@@ -1118,7 +1188,10 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     font-size: 0.9rem;
     color: #9ca3af;
     line-height: 1.6;
+    transition: color 0.3s ease;
   }
+
+
 
   /* Efecto beam animado */
   .service-beam {
@@ -1213,6 +1286,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     color: #e5e7eb;
     margin: 0;
     max-width: 500px;
+    transition: color 0.3s ease;
   }
 
   .stats-grid {
@@ -1241,6 +1315,18 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     -webkit-backdrop-filter: blur(10px);
     position: relative;
     overflow: hidden;
+  }
+
+  html:not(.dark) .stat-card-mini {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(37, 99, 235, 0.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  html:not(.dark) .stat-card-mini:hover {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
   .stat-card-mini::before {
@@ -1281,6 +1367,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     color: #9ca3af;
     font-size: 0.9rem;
     font-weight: 500;
+    transition: color 0.3s ease;
   }
 
   .examples-cta {
@@ -1445,11 +1532,11 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
   @media (max-width: 768px) {
     body {
       font-size: 16px;
-      padding-top: 60px; /* Header más pequeño en móvil */
+      padding-top: 66px; /* Header más pequeño en móvil - aumentado de 60px */
     }
 
     .simple-header {
-      padding: 0.75rem 0;
+      padding: 0.875rem 0; /* Aumentado de 0.75rem */
     }
 
     .header-container {
@@ -1457,7 +1544,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     }
 
     .header-logo {
-      height: 35px;
+      height: 38px; /* Aumentado de 35px */
     }
 
     /* Toggle responsive en tablets */
@@ -1514,11 +1601,11 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
 
   @media (max-width: 480px) {
     body {
-      padding-top: 56px;
+      padding-top: 60px; /* Aumentado de 56px */
     }
 
     .header-logo {
-      height: 30px;
+      height: 32px; /* Aumentado de 30px */
     }
 
     /* Toggle muy pequeño en móviles */
@@ -1617,6 +1704,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     color: #e5e7eb;
     margin: 0;
     font-weight: 400;
+    transition: color 0.3s ease;
   }
 
   .urgency-description-secondary {
@@ -1625,6 +1713,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     color: #9ca3af;
     margin: 0;
     font-weight: 400;
+    transition: color 0.3s ease;
   }
 
   /* Estadísticas (derecha) */
@@ -1700,6 +1789,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     color: #ffffff;
     font-weight: 600;
     line-height: 1.4;
+    transition: color 0.3s ease;
   }
 
   .stat-secondary {
@@ -1707,6 +1797,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     color: #9ca3af;
     font-weight: 500;
     line-height: 1.3;
+    transition: color 0.3s ease;
   }
 
   /* Animaciones escalonadas para las tarjetas */
@@ -1873,31 +1964,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
       }
     }
 
-    // Toggle de modo noche (sin funcionalidad por ahora)
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    if (darkModeToggle) {
-      darkModeToggle.addEventListener('click', () => {
-        // Solo animación visual por ahora
-        darkModeToggle.classList.toggle('dark');
-        
-        // Feedback visual
-        const thumb = darkModeToggle.querySelector('.toggle-thumb');
-        if (thumb) {
-          thumb.style.transform = darkModeToggle.classList.contains('dark') 
-            ? 'translateX(30px) scale(0.95)' 
-            : 'translateX(0) scale(0.95)';
-          
-          setTimeout(() => {
-            thumb.style.transform = darkModeToggle.classList.contains('dark') 
-              ? 'translateX(30px)' 
-              : 'translateX(0)';
-          }, 150);
-        }
-        
-        // Aquí irá la lógica del modo noche en el futuro
-        console.log('Dark mode toggle clicked:', darkModeToggle.classList.contains('dark'));
-      });
-    }
+
 
     // Sistema de FAQ interactivo
     const faqItems = document.querySelectorAll('.faq-item');
@@ -1917,6 +1984,33 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
         item.classList.toggle('active');
       });
     });
+
+    // Scroll suave al formulario de contacto
+    const ctaContactar = document.getElementById('cta-contactar');
+    const ctaAutomatizar = document.getElementById('cta-automatizar');
+    
+    function scrollToContacto(e) {
+      e.preventDefault();
+      const formulario = document.getElementById('contacto');
+      if (formulario) {
+        // Calcular posición teniendo en cuenta el header fijo
+        const headerHeight = document.querySelector('.simple-header')?.offsetHeight || 78;
+        const offsetTop = formulario.offsetTop - headerHeight - 20; // 20px extra de espacio
+        
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+      }
+    }
+    
+    if (ctaContactar) {
+      ctaContactar.addEventListener('click', scrollToContacto);
+    }
+    
+    if (ctaAutomatizar) {
+      ctaAutomatizar.addEventListener('click', scrollToContacto);
+    }
 
     // Formulario nativo ya está cargado, no necesitamos JavaScript adicional
   });

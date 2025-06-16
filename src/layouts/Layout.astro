@@ -1,6 +1,8 @@
 ---
+import ThemeToggle from '../components/ThemeToggle.astro';
+import '../styles/globals.css';
+import '../styles/light-mode-override.css';
 // import MagicNotifications from '../components/MagicNotifications.astro'; // Removed during cleanup
-// import '../styles/globals.css'; // Comentado temporalmente
 
 export interface Props {
   title?: string;
@@ -83,6 +85,9 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body class={className}>
+  <!-- Botón de cambio de tema -->
+  <ThemeToggle />
+  
   <!-- Canvas de partículas modernas con tsParticles -->
   <div id="tsparticles"></div>
   
@@ -144,13 +149,15 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
         },
         particles: {
           color: {
-            value: ['#60a5fa', '#3b82f6', '#2563eb'],
+            value: document.documentElement.classList.contains('dark') 
+              ? ['#60a5fa', '#3b82f6', '#2563eb']
+              : ['#3b82f6', '#1e40af', '#1d4ed8'],
           },
           links: {
-            color: '#60a5fa',
+            color: document.documentElement.classList.contains('dark') ? '#60a5fa' : '#3b82f6',
             distance: 100,
             enable: true,
-            opacity: 0.08,
+            opacity: document.documentElement.classList.contains('dark') ? 0.08 : 0.12,
             width: 1,
           },
           collisions: {
@@ -174,11 +181,11 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
             value: 25,
           },
           opacity: {
-            value: 0.15,
+            value: document.documentElement.classList.contains('dark') ? 0.15 : 0.25,
             animation: {
               enable: true,
               speed: 0.8,
-              minimumValue: 0.05,
+              minimumValue: document.documentElement.classList.contains('dark') ? 0.05 : 0.1,
               sync: false,
             },
           },
@@ -199,8 +206,48 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
       });
     }
 
+    // Función para actualizar partículas según el tema
+    function updateParticlesTheme() {
+      if (window.tsParticles && window.tsParticles.domItem(0)) {
+        const isDark = document.documentElement.classList.contains('dark');
+        const container = window.tsParticles.domItem(0);
+        
+        // Actualizar colores de partículas
+        container.options.particles.color.value = isDark 
+          ? ['#60a5fa', '#3b82f6', '#2563eb']
+          : ['#3b82f6', '#1e40af', '#1d4ed8'];
+        
+        // Actualizar enlaces
+        container.options.particles.links.color = isDark ? '#60a5fa' : '#3b82f6';
+        container.options.particles.links.opacity = isDark ? 0.08 : 0.12;
+        
+        // Actualizar opacidad
+        container.options.particles.opacity.value = isDark ? 0.15 : 0.25;
+        container.options.particles.opacity.animation.minimumValue = isDark ? 0.05 : 0.1;
+        
+        // Refrescar partículas
+        container.refresh();
+      }
+    }
+
+    // Observar cambios en el tema
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          updateParticlesTheme();
+        }
+      });
+    });
+
     // Cargar al inicio
-    document.addEventListener('DOMContentLoaded', loadTsParticles);
+    document.addEventListener('DOMContentLoaded', () => {
+      loadTsParticles();
+      // Observar cambios en la clase del HTML
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+    });
   </script>
 </body>
 </html>
@@ -216,6 +263,7 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
   html {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     scroll-behavior: smooth;
+    scroll-padding-top: 100px; /* Espacio extra para el header fijo */
   }
 
   body {
@@ -224,6 +272,13 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
     background-color: #000000;
     overflow-x: hidden;
     padding-top: 0; /* Sin header */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Modo claro */
+  html:not(.dark) body {
+    color: #1a1a1a;
+    background-color: #ffffff;
   }
 
   /* Layout principal */
@@ -259,6 +314,12 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
     z-index: -1;
     background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
     pointer-events: none;
+    transition: background 0.5s ease;
+  }
+
+  /* Fondo para modo claro */
+  html:not(.dark) #tsparticles {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
   }
 
   body {
