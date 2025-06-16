@@ -16,9 +16,6 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
   title={pageTitle}
   description={pageDescription}
 >
-  <!-- Canvas de partículas modernas con tsParticles -->
-  <div id="tsparticles"></div>
-
   <!-- HEADER SIMPLE -->
   <header class="simple-header">
     <div class="header-container">
@@ -954,19 +951,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     padding-top: 72px; /* Compensar el header fijo */
   }
 
-  /* Canvas de partículas modernas tsParticles */
-  #tsparticles {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1;
-    pointer-events: none;
-    opacity: 0.4;
-  }
 
-  /* ==================== SECCIÓN DE SERVICIOS ==================== */
   .services-section {
     position: relative;
     padding: 6rem 0;
@@ -1861,9 +1846,6 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
       });
     }
 
-    // Sistema de partículas modernas con tsParticles
-    loadTsParticles();
-
     // Sistema de FAQ interactivo
     const faqItems = document.querySelectorAll('.faq-item');
     
@@ -1885,107 +1867,6 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
 
     // Formulario nativo ya está cargado, no necesitamos JavaScript adicional
   });
-
-  // Función para cargar tsParticles modernos y minimalistas
-  async function loadTsParticles() {
-    // Cargar tsParticles desde CDN
-    if (!window.tsParticles) {
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js';
-      script.onload = initTsParticles;
-      document.head.appendChild(script);
-    } else {
-      initTsParticles();
-    }
-  }
-
-  // Configuración minimalista y moderna de tsParticles
-  function initTsParticles() {
-    tsParticles.load('tsparticles', {
-      background: {
-        color: {
-          value: 'transparent',
-        },
-      },
-      fpsLimit: 120,
-      interactivity: {
-        events: {
-          onClick: {
-            enable: true,
-            mode: 'push',
-          },
-          onHover: {
-            enable: true,
-            mode: 'repulse',
-          },
-          resize: true,
-        },
-        modes: {
-          push: {
-            quantity: 2,
-          },
-          repulse: {
-            distance: 100,
-            duration: 0.4,
-          },
-        },
-      },
-      particles: {
-        color: {
-          value: ['#60a5fa', '#3b82f6', '#2563eb'],
-        },
-        links: {
-          color: '#60a5fa',
-          distance: 120,
-          enable: true,
-          opacity: 0.1,
-          width: 1,
-        },
-        collisions: {
-          enable: false,
-        },
-        move: {
-          direction: 'none',
-          enable: true,
-          outModes: {
-            default: 'bounce',
-          },
-          random: false,
-          speed: 0.5,
-          straight: false,
-        },
-        number: {
-          density: {
-            enable: true,
-            area: 1200,
-          },
-          value: 30,
-        },
-        opacity: {
-          value: 0.2,
-          animation: {
-            enable: true,
-            speed: 1,
-            minimumValue: 0.1,
-            sync: false,
-          },
-        },
-        shape: {
-          type: 'circle',
-        },
-        size: {
-          value: { min: 1, max: 3 },
-          animation: {
-            enable: true,
-            speed: 2,
-            minimumValue: 0.5,
-            sync: false,
-          },
-        },
-      },
-      detectRetina: true,
-    });
-  }
 
   // El formulario ahora es nativo y no requiere funciones de carga adicionales
 </script>
