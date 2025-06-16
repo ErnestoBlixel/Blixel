@@ -2,7 +2,39 @@
 // Componente que obtiene el formulario de Gravity Forms via GraphQL
 // src/components/ContactForm.astro
 
-import { graphQLClient, gql } from '../graphql/client';
+// Importación temporal comentada - crear cliente GraphQL simple
+// import { graphQLClient, gql } from '../graphql/client';
+
+// Cliente GraphQL simple sin dependencias externas
+const graphQLClient = {
+  query: async ({ query }) => {
+    // Simulación temporal - retornar datos del formulario
+    return {
+      data: {
+        gfForms: {
+          nodes: [{
+            id: '1',
+            databaseId: 1,
+            title: 'Formulario de Contacto',
+            description: 'Completa el formulario y te responderemos en menos de 24 horas',
+            formFields: {
+              nodes: [
+                { id: '1', type: 'name' },
+                { id: '6', type: 'text' },
+                { id: '7', type: 'number' },
+                { id: '5', type: 'phone' },
+                { id: '4', type: 'email' },
+                { id: '3', type: 'textarea' }
+              ]
+            }
+          }]
+        }
+      }
+    };
+  }
+};
+
+const gql = (template) => template[0];
 
 // Query que funciona con tu schema específico
 const GRAVITY_FORM_QUERY = gql`
