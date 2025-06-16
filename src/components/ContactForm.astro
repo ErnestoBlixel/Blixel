@@ -22,22 +22,8 @@ const graphQLClient = {
     } catch (error) {
       console.error('Error GraphQL:', error);
       // Datos de respaldo si falla la conexión
-      return {
-        data: {
-          gfForm: {
-            formFields: {
-              nodes: [
-                { id: '1', type: 'NAME', label: 'Nombre completo', isRequired: true },
-                { id: '6', type: 'TEXT', label: 'Empresa', isRequired: true },
-                { id: '7', type: 'NUMBER', label: 'Número de trabajadores', isRequired: true },
-                { id: '5', type: 'PHONE', label: 'Teléfono', isRequired: true },
-                { id: '4', type: 'EMAIL', label: 'Correo electrónico', isRequired: true },
-                { id: '3', type: 'TEXTAREA', label: 'Comentarios', isRequired: true }
-              ]
-            }
-          }
-        }
-      };
+      // Usar datos de respaldo si falla
+      throw new Error('No se pudo conectar con WordPress');
     }
   }
 };
@@ -80,11 +66,24 @@ try {
     formData = result.data.gfForm;
     console.log('✅ Formulario obtenido:', formData.formFields.nodes.length, 'campos');
   } else {
-    error = 'No se pudo obtener el formulario';
+    throw new Error('No se pudo obtener el formulario');
   }
 } catch (err) {
   console.error('❌ Error obteniendo formulario:', err.message);
-  error = err.message;
+  // Usar formulario estático como respaldo
+  formData = {
+    formFields: {
+      nodes: [
+        { id: '1', type: 'NAME', label: 'Nombre completo', isRequired: true },
+        { id: '6', type: 'TEXT', label: 'Empresa', isRequired: true },
+        { id: '7', type: 'NUMBER', label: 'Número de trabajadores', isRequired: true },
+        { id: '5', type: 'PHONE', label: 'Teléfono', isRequired: true },
+        { id: '4', type: 'EMAIL', label: 'Correo electrónico', isRequired: true },
+        { id: '3', type: 'TEXTAREA', label: 'Comentarios', isRequired: true }
+      ]
+    }
+  };
+  console.log('⚠️ Usando formulario estático de respaldo');
 }
 ---
 

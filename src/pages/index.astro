@@ -378,6 +378,7 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
 
       <!-- Formulario de contacto -->
       <div class="form-embed-container">
+        <!-- Formulario de contacto -->
         <ContactForm />
       </div>
 
@@ -749,8 +750,9 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     position: relative;
-    overflow: hidden;
+    overflow: visible; /* Cambiado de hidden a visible */
     animation: fadeInUp 0.8s ease-out 0.2s backwards;
+    min-height: 400px; /* Altura mínima para asegurar visibilidad */
   }
 
   .form-embed-container::before {
@@ -762,6 +764,13 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     bottom: 0;
     background: radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.05) 0%, transparent 70%);
     pointer-events: none;
+  }
+
+  /* Estilos del contenedor en modo claro */
+  html:not(.dark) .form-embed-container {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
   /* Trust badges */
