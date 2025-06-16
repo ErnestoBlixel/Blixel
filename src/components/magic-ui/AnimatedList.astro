@@ -1,0 +1,100 @@
+---
+// Componente AnimatedList para Astro basado en Magic UI
+export interface Props {
+  delay?: number;
+  className?: string;
+}
+
+const { delay = 1000, className = "" } = Astro.props;
+---
+
+<div class:list={["animated-list-container", className]} data-delay={delay}>
+  <slot />
+</div>
+
+<script>
+  class AnimatedList extends HTMLElement {
+    private index = 0;
+    private items: HTMLElement[] = [];
+    private delay: number;
+    private interval: number | null = null;
+
+    constructor() {
+      super();
+      this.delay = parseInt(this.dataset.delay || '1000');
+    }
+
+    connectedCallback() {
+      this.items = Array.from(this.children) as HTMLElement[];
+      this.startAnimation();
+    }
+
+    disconnectedCallback() {
+      if (this.interval) {
+        clearInterval(this.interval);
+      }
+    }
+
+    startAnimation() {
+      // Mostrar primer elemento
+      this.updateDisplay();
+      
+      this.interval = setInterval(() => {
+        this.index = (this.index + 1) % this.items.length;
+        this.updateDisplay();
+      }, this.delay);
+    }
+
+    updateDisplay() {
+      // Ocultar todos los elementos
+      this.items.forEach(item => {
+        item.style.display = 'none';
+      });
+
+      // Mostrar los últimos 5 elementos incluyendo el actual
+      const itemsToShow = [];
+      for (let i = 0; i <= Math.min(4, this.index); i++) {
+        const itemIndex = (this.index - i + this.items.length) % this.items.length;
+        itemsToShow.unshift(this.items[itemIndex]);
+      }
+
+      itemsToShow.forEach((item, idx) => {
+        item.style.display = 'block';
+        item.style.animationDelay = `${idx * 50}ms`;
+        item.classList.add('animate-slide-in');
+        
+        // Remover la clase después de la animación
+        setTimeout(() => {
+          item.classList.remove('animate-slide-in');
+        }, 500);
+      });
+    }
+  }
+
+  customElements.define('animated-list', AnimatedList);
+</script>
+
+<style>
+  .animated-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  @keyframes slideInFromTop {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-in {
+    animation: slideInFromTop 0.5s ease-out;
+    animation-fill-mode: both;
+  }
+</style>

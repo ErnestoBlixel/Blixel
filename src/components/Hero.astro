@@ -10,7 +10,7 @@ export interface Props {
 }
 
 const {
-  pageSlug = '/',
+  pageSlug = 'inicio',
   customTitle,
   customDescription,
   titleLine1,
@@ -19,9 +19,9 @@ const {
   logoAlt = 'BLIXEL logo'
 } = Astro.props;
 
-// Query para obtener datos de la página
+// Query ampliado para obtener también la imagen destacada y datos de Yoast
 const GQL = `
-  query GetPageData($slug: ID!) {
+  query GetPageSEOData($slug: ID!) {
     page(id: $slug, idType: URI) {
       title
       content
@@ -35,6 +35,10 @@ const GQL = `
         node {
           sourceUrl
           altText
+          mediaDetails {
+            width
+            height
+          }
         }
       }
     }
@@ -43,11 +47,39 @@ const GQL = `
 
 let pageTitle = customTitle || 'Inteligencia Artificial para Empresas';
 let pageDescription = customDescription || 'Automatización Inteligente para tu Empresa';
+let featuredImageUrl = null;
+let featuredImageAlt = '';
+let debugInfo = { error: null, found: false, hasData: false, hasImage: false };
 
-// Ejecutar GraphQL siempre que tengamos la URL configurada
-if (import.meta.env.PUBLIC_WP_GRAPHQL_URL) {
+// Asegurar que siempre tengamos valores para las líneas del título
+let actualTitleLine1 = titleLine1;
+let actualTitleLine2 = titleLine2;
+
+// Si no se proporcionaron líneas personalizadas, dividir inteligentemente
+if (!titleLine1 || !titleLine2) {
+  const defaultTitle = pageTitle || 'Inteligencia Artificial para Empresas';
+  if (defaultTitle.includes('?')) {
+    const parts = defaultTitle.split('?');
+    actualTitleLine1 = parts[0] + '?';
+    actualTitleLine2 = parts[1]?.trim() || '';
+  } else if (defaultTitle.includes('en tu empresa')) {
+    // Dividir específicamente para "Aplica Inteligencia artificial en tu empresa"
+    actualTitleLine1 = defaultTitle.substring(0, defaultTitle.indexOf('en tu empresa')).trim();
+    actualTitleLine2 = 'en tu empresa';
+  } else {
+    const words = defaultTitle.split(' ');
+    const midPoint = Math.ceil(words.length / 2);
+    actualTitleLine1 = words.slice(0, midPoint).join(' ');
+    actualTitleLine2 = words.slice(midPoint).join(' ');
+  }
+}
+
+// Solo ejecutar GraphQL si estamos en un entorno que lo permita
+if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.env.PUBLIC_WP_GRAPHQL_URL) {
   try {
-    const res = await fetch(import.meta.env.PUBLIC_WP_GRAPHQL_URL, {
+    const graphqlUrl = import.meta.env.PUBLIC_WP_GRAPHQL_URL;
+    
+    const res = await fetch(graphqlUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
@@ -60,277 +92,394 @@ if (import.meta.env.PUBLIC_WP_GRAPHQL_URL) {
       const result = await res.json();
       const page = result.data?.page;
       
-      if (page && !customTitle && !customDescription) {
-        pageTitle = page.title || pageTitle;
-        pageDescription = page.seo?.metaDesc || pageDescription;
+      if (page) {
+        debugInfo.found = true;
+        debugInfo.hasData = !!(page.seo?.title || page.seo?.metaDesc);
+        
+        // Obtener imagen destacada
+        if (page.featuredImage?.node) {
+          featuredImageUrl = page.featuredImage.node.sourceUrl;
+          featuredImageAlt = page.featuredImage.node.altText || pageTitle;
+          debugInfo.hasImage = true;
+        }
+        
+        // Si ya tenemos customTitle y customDescription, no sobrescribir
+        if (!customTitle && !customDescription) {
+          // Usar el título de la página (H1) directamente, no el SEO
+          const newTitle = page.title || 
+                          page.seo?.title || 
+                          'Blixel AI';
+
+          // Prioridad para la descripción: SEO meta description (Yoast) > custom description
+          const newDescription = page.seo?.metaDesc || 
+                                page.seo?.opengraphDescription || 
+                                'Automatización Inteligente para tu Empresa';
+          
+          pageTitle = newTitle;
+          pageDescription = newDescription;
+        }
+      } else {
+        debugInfo.error = 'Page not found';
       }
+    } else {
+      debugInfo.error = `Request failed: ${res.status}`;
     }
   } catch (error) {
-    // Usar valores por defecto
+    debugInfo.error = 'Connection error';
+    // En caso de error, usar valores por defecto sin romper el build
   }
-}
-
-// Dividir título en líneas
-let actualTitleLine1 = titleLine1;
-let actualTitleLine2 = titleLine2;
-
-if (!titleLine1 || !titleLine2) {
-  if (pageTitle.includes('?')) {
-    const parts = pageTitle.split('?');
-    actualTitleLine1 = parts[0] + '?';
-    actualTitleLine2 = parts[1]?.trim() || '';
-  } else {
-    const words = pageTitle.split(' ');
-    const midPoint = Math.ceil(words.length / 2);
-    actualTitleLine1 = words.slice(0, midPoint).join(' ');
-    actualTitleLine2 = words.slice(midPoint).join(' ');
-  }
+} else {
+  debugInfo.error = 'GraphQL URL not configured';
 }
 ---
 
 <section class="hero">
-  <div class="container">
-    <!-- Logo -->
-    <div class="logo-wrapper">
-      <img src={logoUrl} alt={logoAlt} />
+  <!-- Fondo limpio sin gradientes -->
+  <div class="hero__background"></div>
+
+  <!-- Contenido principal -->
+  <div class="hero__container">
+    <div class="hero__content">
+      <!-- Logo más grande sin Knight Rider -->
+      <div class="logo-container">
+        <img src={logoUrl} alt={logoAlt} class="hero-logo" />
+      </div>
+
+      <!-- Título principal -->
+      <h1 class="hero__title">
+        {actualTitleLine1 && actualTitleLine2 ? (
+          <>
+            <span class="title-line title-line-1">{actualTitleLine1}</span>
+            <span class="title-line title-line-2">{actualTitleLine2}</span>
+          </>
+        ) : (
+          <span class="title-line">{pageTitle}</span>
+        )}
+      </h1>
+
+      <!-- Descripción -->
+      <p class="hero__description">
+        {pageDescription}
+      </p>
+
+      <!-- CTAs -->
+      <div class="hero__actions">
+        <a href="#contacto" class="cta-primary" id="cta-contactar">
+          <span>Contactar</span>
+          <div class="cta-glow"></div>
+          <svg class="cta-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        
+        <a href="https://calendly.com/blixel" target="_blank" rel="noopener noreferrer" class="cta-secondary">
+          <span>Agendar Llamada</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Trust indicators (opcional) -->
+      <!-- <div class="hero__trust">
+        <div class="trust-metric">
+          <span class="metric-number">+100</span>
+          <span class="metric-label">Empresas</span>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-metric">
+          <span class="metric-number">99%</span>
+          <span class="metric-label">Satisfacción</span>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-metric">
+          <span class="metric-number">24/7</span>
+          <span class="metric-label">Soporte</span>
+        </div>
+      </div> -->
     </div>
 
-    <!-- Título con efecto mejorado -->
-    <h1 class="hero-title">
-      <span class="line-1">Aplica Inteligencia</span>
-      <span class="line-2">Artificial</span>
-      <span class="line-3">en tu empresa</span>
-    </h1>
-
-    <!-- Descripción -->
-    <p class="hero-description">
-      Inteligencia artificial en tu empresa HOY o quiebras mañana. ROI en 90 días. Mientras dudas, tu competencia factura.
-    </p>
-
-    <!-- CTAs -->
-    <div class="hero-actions">
-      <a href="#contacto" class="btn-primary">
-        Contactar
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-      
-      <a href="https://calendly.com/blixel" target="_blank" rel="noopener noreferrer" class="btn-secondary">
-        Agendar Llamada
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-          <line x1="16" y1="2" x2="16" y2="6"></line>
-          <line x1="8" y1="2" x2="8" y2="6"></line>
-          <line x1="3" y1="10" x2="21" y2="10"></line>
-        </svg>
-      </a>
+    <!-- Visual placeholder (imagen vendrá después) -->
+    <div class="hero__visual">
+      <!-- Placeholder minimalista -->
     </div>
-    
-    <!-- SLIDER DE LOGOS/MARCAS CON IMÁGENES -->
-    <div class="logos-section">
-      <p class="logos-text">TECNOLOGÍAS DE IA QUE DOMINAMOS</p>
+  </div>
+
+  <!-- SLIDER DE LOGOS -->
+  <div class="logos-slider-wrapper">
+    <p class="logos-text">HERRAMIENTAS MÁS UTILIZADAS</p>
+    <div class="logos-slider-container">
       <div class="logos-slider">
-        <div class="logos-track">
+        <div class="slider-track">
           <!-- Primera set de logos -->
           <div class="logo-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png" alt="Microsoft" />
+            <img src="/logos/1.png" alt="Cliente 1" />
           </div>
           <div class="logo-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Google_Gemini_logo.svg/2560px-Google_Gemini_logo.svg.png" alt="Gemini" />
+            <img src="/logos/2.png" alt="Cliente 2" />
           </div>
           <div class="logo-item">
-            <img src="https://avatars.githubusercontent.com/u/45487711?s=200&v=4" alt="n8n" class="rounded" />
+            <img src="/logos/3.png" alt="Cliente 3" />
           </div>
           <div class="logo-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" alt="Python" />
+            <img src="/logos/4.png" alt="Cliente 4" />
           </div>
           <div class="logo-item">
-            <img src="https://avatars.githubusercontent.com/u/139558948?s=200&v=4" alt="DeepSeek" class="rounded" />
+            <img src="/logos/5.png" alt="Cliente 5" />
           </div>
           <div class="logo-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Anthropic_logo.svg/2560px-Anthropic_logo.svg.png" alt="Claude" />
+            <img src="/logos/6.png" alt="Cliente 6" />
           </div>
           <div class="logo-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1024px-ChatGPT_logo.svg.png" alt="ChatGPT" />
+            <img src="/logos/7.png" alt="Cliente 7" />
           </div>
           <div class="logo-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/TensorFlow_Logo_with_text.png/1594px-TensorFlow_Logo_with_text.png" alt="TensorFlow" />
+            <img src="/logos/8.png" alt="Cliente 8" />
+          </div>
+          <div class="logo-item">
+            <img src="/logos/9.png" alt="Cliente 9" />
+          </div>
+          <div class="logo-item">
+            <img src="/logos/10.png" alt="Cliente 10" />
+          </div>
+          <div class="logo-item">
+            <img src="/logos/11.png" alt="Cliente 11" />
+          </div>
+          <div class="logo-item">
+            <img src="/logos/12.png" alt="Cliente 12" />
+          </div>
+          <div class="logo-item">
+            <img src="/logos/13.png" alt="Cliente 13" />
           </div>
           <!-- Duplicar para loop infinito -->
           <div class="logo-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png" alt="Microsoft" />
+            <img src="/logos/1.png" alt="Cliente 1" />
           </div>
           <div class="logo-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Google_Gemini_logo.svg/2560px-Google_Gemini_logo.svg.png" alt="Gemini" />
+            <img src="/logos/2.png" alt="Cliente 2" />
           </div>
           <div class="logo-item">
-            <img src="https://avatars.githubusercontent.com/u/45487711?s=200&v=4" alt="n8n" class="rounded" />
+            <img src="/logos/3.png" alt="Cliente 3" />
           </div>
           <div class="logo-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" alt="Python" />
+            <img src="/logos/4.png" alt="Cliente 4" />
           </div>
           <div class="logo-item">
-            <img src="https://avatars.githubusercontent.com/u/139558948?s=200&v=4" alt="DeepSeek" class="rounded" />
+            <img src="/logos/5.png" alt="Cliente 5" />
           </div>
           <div class="logo-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Anthropic_logo.svg/2560px-Anthropic_logo.svg.png" alt="Claude" />
+            <img src="/logos/6.png" alt="Cliente 6" />
           </div>
           <div class="logo-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1024px-ChatGPT_logo.svg.png" alt="ChatGPT" />
+            <img src="/logos/7.png" alt="Cliente 7" />
           </div>
           <div class="logo-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/TensorFlow_Logo_with_text.png/1594px-TensorFlow_Logo_with_text.png" alt="TensorFlow" />
+            <img src="/logos/8.png" alt="Cliente 8" />
+          </div>
+          <div class="logo-item">
+            <img src="/logos/9.png" alt="Cliente 9" />
+          </div>
+          <div class="logo-item">
+            <img src="/logos/10.png" alt="Cliente 10" />
+          </div>
+          <div class="logo-item">
+            <img src="/logos/11.png" alt="Cliente 11" />
+          </div>
+          <div class="logo-item">
+            <img src="/logos/12.png" alt="Cliente 12" />
+          </div>
+          <div class="logo-item">
+            <img src="/logos/13.png" alt="Cliente 13" />
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Debug minimalista (solo visible en desarrollo) -->
+  {import.meta.env.DEV && (
+    <div class="debug-info">
+      <div class="debug-status">
+        <span class={`status-dot ${debugInfo.found ? 'success' : 'error'}`}></span>
+        <span class="status-text">
+          {debugInfo.found ? 'Connected' : 'Disconnected'}
+        </span>
+      </div>
+      {debugInfo.hasImage && (
+        <div class="debug-success">✅ Featured image loaded</div>
+      )}
+      {debugInfo.error && (
+        <div class="debug-error">Error: {debugInfo.error}</div>
+      )}
+    </div>
+  )}
+
+
 </section>
 
 <style>
-  /* Hero con márgenes ajustados */
   .hero {
-    background: transparent; /* Transparente para ver particles */
-    height: 100vh;
+    position: relative;
+    min-height: 100vh;
+    background: #000000;
+    overflow: hidden;
+    border: none;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Debug info minimalista y seguro */
+  .debug-info {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    z-index: 1000;
+    border: 1px solid #333;
+  }
+
+  .debug-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ef4444;
+  }
+
+  .status-dot.success {
+    background: #22c55e;
+  }
+
+  .status-text {
+    font-weight: 500;
+  }
+
+  .debug-success {
+    margin-top: 0.5rem;
+    color: #86efac;
+    font-size: 0.65rem;
+  }
+
+  .debug-error {
+    margin-top: 0.5rem;
+    color: #fca5a5;
+    font-size: 0.65rem;
+  }
+
+  /* Fondo limpio */
+  .hero__background {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: transparent; /* Transparente para que se vea el fondo del hero */
+    z-index: 0;
+  }
+
+  /* Container */
+  .hero__container {
+    position: relative;
+    z-index: 10;
+    max-width: 1400px; /* Cambiado de 1200px a 1400px */
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    position: relative;
-    overflow: hidden;
-    padding: 0;
   }
 
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+  /* Contenido */
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    max-width: 1400px; /* Cambiado de 1200px a 1400px */
     width: 100%;
-    position: relative;
   }
 
-  /* Logo con animaciones sin círculo */
-  .logo-wrapper {
-    margin-bottom: 2rem;
+  /* Contenedor del logo simplificado */
+  .logo-container {
     position: relative;
-    display: inline-block;
-    width: 100px;
-    height: 100px;
-    border: 2px solid rgba(96, 165, 250, 0.3);
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(circle at center, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
-    box-shadow: 0 0 40px rgba(96, 165, 250, 0.3), inset 0 0 20px rgba(96, 165, 250, 0.1);
+    margin-bottom: 2rem;
   }
 
-  @keyframes rotate {
+  /* Logo del hero - GRANDE Y LIMPIO */
+  .hero-logo {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 30px rgba(96, 165, 250, 0.4));
+    animation: logoGlow 3s ease-in-out infinite alternate;
+  }
+
+  /* Animación de glow del logo */
+  @keyframes logoGlow {
     0% {
-      transform: translate(-50%, -50%) rotate(0deg);
+      filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.3));
     }
     100% {
-      transform: translate(-50%, -50%) rotate(360deg);
+      filter: drop-shadow(0 0 30px rgba(96, 165, 250, 0.6));
     }
   }
 
-  @keyframes pulse {
-    0%, 100% {
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 0.8;
-    }
-    50% {
-      transform: translate(-50%, -50%) scale(1.2);
-      opacity: 0.4;
-    }
-  }
-
-  .logo-wrapper img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    position: relative;
-    z-index: 1;
-    filter: brightness(1.2);
-  }
-
-  @keyframes floatRotate {
-    0%, 100% {
-      transform: translateY(0) rotate(0deg);
-    }
-    25% {
-      transform: translateY(-10px) rotate(5deg);
-    }
-    50% {
-      transform: translateY(0) rotate(0deg);
-    }
-    75% {
-      transform: translateY(-5px) rotate(-5deg);
-    }
-  }
-
-  .logo-wrapper:hover img {
-    transform: scale(1.1) rotate(360deg);
-    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-
-  /* Título con 3 líneas */
-  .hero-title {
+  .hero__title {
     font-family: 'Inter', -apple-system, sans-serif;
-    font-size: clamp(3.5rem, 7vw, 5.5rem);
-    font-weight: 700;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
     line-height: 1;
-    margin: 0 0 1.5rem;
-    letter-spacing: -0.02em;
     color: #ffffff;
-  }
-
-  .hero-title span {
+    margin: 0 auto 1rem;
+    letter-spacing: -0.04em;
+    max-width: 100%;
+    padding: 0;
+    text-align: center;
     display: block;
   }
 
-  .line-1,
-  .line-2 {
-    margin-bottom: 0.1em;
+  .title-line {
+    display: block;
+    width: 100%;
+    color: #ffffff;
+    font-weight: 800;
+    margin: 0;
+    padding: 0;
   }
 
-  /* Animación simple de entrada */
-  .hero-title {
-    opacity: 0;
-    animation: fadeInUp 1s ease forwards;
-    animation-delay: 0.5s;
+  .title-line-1 {
+    font-size: 1em;
+    margin-bottom: -0.1em;
   }
 
-
-  /* Descripción */
-  .hero-description {
-    font-size: 1.25rem;
-    color: #9ca3af;
-    max-width: 700px;
-    margin: 0 auto 2rem;
-    line-height: 1.5;
-    opacity: 0;
-    animation: fadeInUp 0.8s ease forwards;
-    animation-delay: 1.5s;
+  .title-line-2 {
+    font-size: 1em;
+    opacity: 1;
   }
 
-  /* Botones */
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 8rem; /* Espacio para el slider que está en position absolute */
-    opacity: 0;
-    animation: fadeInUp 0.8s ease forwards;
-    animation-delay: 1.8s;
-  }
-
+  /* Animación de fade-in para el título */
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(30px);
     }
     to {
       opacity: 1;
@@ -338,170 +487,221 @@ if (!titleLine1 || !titleLine2) {
     }
   }
 
-  .btn-primary,
-  .btn-secondary {
+  .hero__title {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .title-line {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .title-line-1 {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .title-line-2 {
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  }
+
+  /* Título principal simplificado */
+  .title-line {
+    display: block;
+    width: 100%;
+    color: #ffffff;
+    font-weight: 800;
+  }
+
+  .hero__description {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: #9ca3af;
+    margin: 0 auto;
+    max-width: 900px;
+    font-weight: 400;
+    padding: 0 1rem;
+    animation: fadeInUp 0.8s ease-out 0.4s backwards;
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  /* CTA Primary */
+  .cta-primary {
+    position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.875rem 2rem;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .btn-primary {
+    gap: 0.75rem;
+    padding: 1.25rem 2.5rem;
     background: #ffffff;
     color: #000000;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 200ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    overflow: hidden;
   }
 
-  .btn-primary:hover {
+  .cta-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: #60a5fa;
+    opacity: 0;
+    filter: blur(20px);
+    animation: cta-glow-pulse 6s ease-in-out infinite;
+    z-index: -1;
+  }
+
+  .cta-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
   }
 
-  .btn-secondary {
+  .cta-primary:hover .cta-arrow {
+    transform: translateX(4px);
+  }
+
+  .cta-arrow {
+    transition: transform 200ms ease;
+  }
+
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2.5rem;
     background: transparent;
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 1.125rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 200ms ease;
   }
 
-  .btn-secondary:hover {
+  .cta-secondary:hover {
+    border-color: rgba(255, 255, 255, 0.4);
     background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.5);
   }
 
-  /* Responsive */
-  @media (max-width: 768px) {
-    .hero {
-      height: 100vh;
-      padding: 0;
-    }
-
-    .container {
-      padding: 0 1rem;
-    }
-
-    .logo-wrapper {
-      margin-top: 2.5rem; /* Ajustado para móvil */
-      margin-bottom: 2rem;
-    }
-
-    .logo-wrapper::before {
-      width: 100px;
-      height: 100px;
-    }
-
-    .logo-wrapper::after {
-      width: 85px;
-      height: 85px;
-    }
-
-    .logo-wrapper img {
-      width: 70px;
-      height: 70px;
-    }
-
-    .hero-title {
-      font-size: clamp(2rem, 7vw, 3rem); /* Aún más pequeño en móvil */
-      margin-bottom: 2rem;
-      line-height: 1.15;
-      padding: 0 0.5rem;
-    }
-
-    .typing-line {
-      white-space: normal; /* Permitir wrap si es necesario */
-    }
-
-    .hero-description {
-      font-size: 1.125rem;
-      margin-bottom: 2rem;
-    }
-
-    .hero-actions {
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 6rem; /* Menos espacio en móvil */
-    }
-
-    .btn-primary,
-    .btn-secondary {
-      width: 100%;
-      max-width: 280px;
-      justify-content: center;
-    }
+  /* Trust indicators */
+  .hero__trust {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    opacity: 0.8;
   }
 
-  @media (max-width: 480px) {
-    .hero {
-      height: 100vh;
-      padding: 0;
-    }
+  .trust-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
 
-    .logo-wrapper {
-      margin-bottom: 1.5rem;
-    }
+  .metric-number {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #60a5fa;
+    line-height: 1;
+  }
 
-    .logo-wrapper::before {
-      width: 90px;
-      height: 90px;
-      filter: blur(15px);
-    }
+  .metric-label {
+    font-size: 0.875rem;
+    color: #737373;
+    font-weight: 400;
+  }
 
-    .logo-wrapper::after {
-      width: 75px;
-      height: 75px;
-    }
+  .trust-divider {
+    width: 1px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.08);
+  }
 
-    .logo-wrapper img {
-      width: 60px;
-      height: 60px;
-    }
+  /* Visual placeholder */
+  .hero__visual {
+    display: none; /* Por ahora oculto hasta que agreguen la imagen */
+  }
 
-    .hero-title {
-      font-size: clamp(2rem, 10vw, 2.75rem);
-      line-height: 1.2; /* Mejor para texto pequeño */
-      margin-bottom: 1.5rem;
-      padding: 0 0.25rem; /* Menos padding en pantallas muy pequeñas */
-    }
+  /* Animaciones */
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 5px rgba(96, 165, 250, 0.1); }
+    50% { box-shadow: 0 0 20px rgba(96, 165, 250, 0.2); }
+  }
 
-    .hero-description {
-      font-size: 1rem;
-    }
 
-    .hero-actions {
-      margin-bottom: 5rem;
-    }
 
-    .btn-primary,
-    .btn-secondary {
-      padding: 0.75rem 1.5rem;
-      font-size: 0.95rem;
+  @keyframes cta-glow-pulse {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.2; }
+  }
+
+  @keyframes reveal-up {
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 
-  /* Reducir animaciones en móvil para mejor rendimiento */
-  @media (max-width: 768px) {
-    .logo-wrapper img {
-      animation: floatRotate 8s ease-in-out infinite; /* Más lenta */
-    }
+  /* Animaciones del efecto neon */
+  @keyframes neon-gradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
 
-    
-    .logo-wrapper::after {
-      animation: rotate 5s linear infinite; /* Más lenta */
+  @keyframes neon-runner {
+    0% {
+      top: -50px;
+      left: -50px;
+      transform: rotate(0deg);
+    }
+    25% {
+      top: -50px;
+      right: -50px;
+      left: auto;
+      transform: rotate(90deg);
+    }
+    50% {
+      bottom: -50px;
+      right: -50px;
+      top: auto;
+      left: auto;
+      transform: rotate(180deg);
+    }
+    75% {
+      bottom: -50px;
+      left: -50px;
+      right: auto;
+      top: auto;
+      transform: rotate(270deg);
+    }
+    100% {
+      top: -50px;
+      left: -50px;
+      bottom: auto;
+      right: auto;
+      transform: rotate(360deg);
     }
   }
 
-  /* ==================== LOGOS SLIDER ==================== */
-  .logos-section {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  /* ==================== SLIDER DE LOGOS ==================== */
+  .logos-slider-wrapper {
+    position: relative;
     width: 100%;
+    max-width: 1400px; /* Cambiado de 1200px a 1400px */
+    margin: 4rem auto 0;
     padding: 2rem 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    z-index: 20;
   }
 
   .logos-text {
@@ -513,12 +713,17 @@ if (!titleLine1 || !titleLine2) {
     letter-spacing: 0.1em;
   }
 
-  .logos-slider {
-    overflow: hidden;
+  .logos-slider-container {
+    max-width: 100vw;
+    margin: 0 auto;
     position: relative;
+    overflow: hidden;
+  }
+
+  .logos-slider {
+    position: relative;
+    overflow: hidden;
     width: 100%;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   }
 
   /* Gradientes para fade en los bordes */
@@ -543,9 +748,9 @@ if (!titleLine1 || !titleLine2) {
     background: linear-gradient(to left, #000000 0%, transparent 100%);
   }
 
-  .logos-track {
+  .slider-track {
     display: flex;
-    animation: slideLogos 30s linear infinite;
+    animation: scrollLogos 40s linear infinite;
     width: fit-content;
   }
 
@@ -558,29 +763,20 @@ if (!titleLine1 || !titleLine2) {
   }
 
   .logo-item img {
-    height: 40px;
+    height: 70px;
     width: auto;
-    max-width: 120px;
+    max-width: 180px;
     object-fit: contain;
-    filter: grayscale(100%) invert(1) opacity(0.4);
+    filter: grayscale(100%) opacity(0.6);
     transition: all 0.3s ease;
   }
 
-  .logo-item img.rounded {
-    border-radius: 10px;
-  }
-
   .logo-item:hover img {
-    filter: grayscale(0%) invert(0) opacity(0.8);
+    filter: grayscale(0%) opacity(1);
     transform: scale(1.1);
   }
 
-  /* Pausar al hover */
-  .logos-slider:hover .logos-track {
-    animation-play-state: paused;
-  }
-
-  @keyframes slideLogos {
+  @keyframes scrollLogos {
     0% {
       transform: translateX(0);
     }
@@ -588,16 +784,105 @@ if (!titleLine1 || !titleLine2) {
       transform: translateX(-50%);
     }
   }
-  
-  /* Responsive para logos */
-  @media (max-width: 768px) {
-    .logos-section {
-      padding: 1rem 0;
+
+  /* Pausar al hover */
+  .logos-slider:hover .slider-track {
+    animation-play-state: paused;
+  }
+
+  @media (min-width: 1440px) {
+    .hero__title {
+      font-size: 4.5rem;
     }
     
+    .hero__description {
+      font-size: 1.625rem;
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .hero__container {
+      padding: 0 1.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      min-height: 100vh;
+    }
+
+    .hero__container {
+      padding: 2rem 1rem;
+    }
+
+    .logo-container {
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-logo {
+      width: 120px;
+      height: 120px;
+    }
+
+    .hero__title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      padding: 0;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .title-line-2 {
+      font-size: 0.95em;
+    }
+
+    .hero__description {
+      font-size: 1.125rem;
+    }
+
+    .hero__actions {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .cta-primary,
+    .cta-secondary {
+      width: 100%;
+      max-width: 280px;
+      justify-content: center;
+    }
+
+    .hero__trust {
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .trust-divider {
+      display: none;
+    }
+
+    .debug-info {
+      position: relative;
+      top: auto;
+      right: auto;
+      margin-top: 2rem;
+      max-width: 100%;
+    }
+
+    /* Slider responsive */
+    .logos-slider-wrapper {
+      padding: 1.5rem 0;
+    }
+
     .logos-text {
       font-size: 0.75rem;
       margin-bottom: 1rem;
+    }
+
+    .logos-slider::before,
+    .logos-slider::after {
+      width: 50px;
     }
 
     .logo-item {
@@ -605,27 +890,55 @@ if (!titleLine1 || !titleLine2) {
     }
 
     .logo-item img {
-      height: 30px;
-    }
-
-    .logos-slider::before,
-    .logos-slider::after {
-      width: 50px;
-    }
-    
-    .logos-slider {
-      mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-      -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+      height: 50px;
     }
   }
 
   @media (max-width: 480px) {
+    .hero {
+      min-height: 100vh;
+    }
+    
+    .hero__title {
+      font-size: 2rem;
+    }
+
+    .hero__description {
+      font-size: 1rem;
+    }
+
+    .logo-container {
+      margin-bottom: 1rem;
+    }
+
+    .hero-logo {
+      width: 100px;
+      height: 100px;
+    }
+
+    .hero__title {
+      font-size: 1.75rem;
+      line-height: 0.95;
+      padding: 0;
+      max-width: 100%;
+    }
+
+    .title-line {
+      font-size: 1.5rem;
+      display: block;
+    }
+
+    .title-line-2 {
+      font-size: 1.5rem;
+    }
+
+    /* Slider en móvil pequeño */
     .logo-item {
       padding: 0 1.5rem;
     }
 
     .logo-item img {
-      height: 25px;
+      height: 40px;
     }
 
     .logos-slider::before,
@@ -633,5 +946,32 @@ if (!titleLine1 || !titleLine2) {
       width: 30px;
     }
   }
-
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Parallax effect
+  let ticking = false;
+  
+  function updateParallax() {
+    const scrolled = window.pageYOffset;
+    const parallax = scrolled * 0.5;
+    
+    const background = document.querySelector('.hero__background');
+    if (background) {
+      background.style.transform = `translateY(${parallax}px)`;
+    }
+    
+    ticking = false;
+  }
+  
+  function requestTick() {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }
+  
+  window.addEventListener('scroll', requestTick);
+});
+</script>

@@ -1,11 +1,13 @@
 // astro.config.ts
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react'; // Importa la integración
+import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    react() // Añade la integración aquí
+    react(), // Añade la integración aquí
+    tailwind() // Integración de Tailwind CSS
     // ...otras integraciones que puedas tener
   ],
   vite: {

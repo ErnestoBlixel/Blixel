@@ -1,0 +1,338 @@
+---
+// MagicCardsFINAL.astro - Componente completamente nuevo con espaciado forzado
+---
+
+<div class="cards-final-wrapper">
+  <div id="cards-final-container"></div>
+</div>
+
+<script>
+  import React from 'react';
+  import { createRoot } from 'react-dom/client';
+
+  // Componente que renderiza 5 tarjetas con espaciado forzado
+  const FinalCardsList = ({ children }) => {
+    const [currentIndex, setCurrentIndex] = React.useState(0);
+    const [fadeClass, setFadeClass] = React.useState('fade-in');
+    const childrenArray = React.Children.toArray(children);
+    
+    // Obtener 5 tarjetas consecutivas
+    const getCurrentCards = () => {
+      const cards = [];
+      for (let i = 0; i < 5; i++) {
+        const index = (currentIndex + i) % childrenArray.length;
+        cards.push(childrenArray[index]);
+      }
+      return cards;
+    };
+
+    React.useEffect(() => {
+      const interval = setInterval(() => {
+        setFadeClass('fade-out');
+        
+        setTimeout(() => {
+          setCurrentIndex(prev => (prev + 1) % childrenArray.length);
+          setFadeClass('fade-in');
+        }, 300);
+      }, 3000);
+      
+      return () => clearInterval(interval);
+    }, [childrenArray.length]);
+
+    return React.createElement('div', {
+      className: `final-cards-list ${fadeClass}`,
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '2rem', // ESPACIADO FORZADO AQUÍ
+        height: '100%',
+        justifyContent: 'center',
+        padding: '2rem 0'
+      }
+    }, getCurrentCards().map((card, index) => 
+      React.cloneElement(card, {
+        key: `final-card-${currentIndex}-${index}`,
+        cardIndex: index
+      })
+    ));
+  };
+
+  // Tarjeta individual con estilo inline forzado
+  const FinalCard = ({ name, description, icon, time, cardIndex }) => {
+    return React.createElement('div', {
+      className: 'final-card-item',
+      style: {
+        // ESTILOS INLINE PARA FORZAR APLICACIÓN
+        backgroundColor: 'white',
+        borderRadius: '12px',
+        padding: '1.25rem',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        transition: 'all 0.2s ease',
+        cursor: 'pointer',
+        marginBottom: '0', // Sin margin bottom porque usamos gap
+        transform: 'scale(1)',
+        opacity: 1
+      },
+      onMouseEnter: (e) => {
+        e.target.style.transform = 'scale(1.02)';
+        e.target.style.boxShadow = '0 4px 16px rgba(0,0,0,0.15)';
+      },
+      onMouseLeave: (e) => {
+        e.target.style.transform = 'scale(1)';
+        e.target.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+      }
+    }, 
+      React.createElement('div', {
+        style: {
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: '1rem'
+        }
+      }, [
+        // Check verde
+        React.createElement('div', {
+          key: 'check',
+          style: {
+            width: '3rem',
+            height: '3rem',
+            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+            border: '1px solid rgba(34, 197, 94, 0.2)',
+            borderRadius: '8px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0
+          }
+        }, 
+          React.createElement('div', {
+            style: {
+              width: '2rem',
+              height: '2rem',
+              backgroundColor: '#22c55e',
+              borderRadius: '6px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }
+          },
+            React.createElement('svg', {
+              width: '16',
+              height: '16',
+              viewBox: '0 0 24 24',
+              fill: 'none',
+              stroke: 'white',
+              strokeWidth: '2.5'
+            },
+              React.createElement('path', {
+                d: 'M20 6L9 17l-5-5'
+              })
+            )
+          )
+        ),
+        
+        // Contenido
+        React.createElement('div', {
+          key: 'content',
+          style: {
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem'
+          }
+        }, [
+          React.createElement('div', {
+            key: 'header',
+            style: {
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem'
+            }
+          }, [
+            React.createElement('span', {
+              key: 'icon',
+              style: {
+                fontSize: '1rem',
+                width: '1.5rem',
+                height: '1.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }
+            }, icon),
+            React.createElement('span', {
+              key: 'title',
+              style: {
+                fontSize: '1rem',
+                fontWeight: '700',
+                color: '#1f2937',
+                flex: 1
+              }
+            }, name),
+            React.createElement('span', {
+              key: 'time',
+              style: {
+                fontSize: '0.875rem',
+                color: '#6b7280',
+                fontWeight: '500'
+              }
+            }, time)
+          ]),
+          React.createElement('p', {
+            key: 'description',
+            style: {
+              margin: '0',
+              fontSize: '0.875rem',
+              color: '#4b5563',
+              lineHeight: '1.4'
+            }
+          }, description)
+        ])
+      ])
+    );
+  };
+
+  // Datos de las notificaciones
+  const notifications = [
+    { name: "Factura procesada", description: "Sistema automático OCR", time: "hace 2s", icon: "📄" },
+    { name: "Email categorizado", description: "IA clasifica correos", time: "hace 5s", icon: "📧" },
+    { name: "Cliente atendido", description: "Chatbot resolvió consulta", time: "hace 8s", icon: "💬" },
+    { name: "Pedido procesado", description: "E-commerce automatizado", time: "hace 12s", icon: "🛒" },
+    { name: "Reunión agendada", description: "Asistente coordinó cita", time: "hace 15s", icon: "📅" },
+    { name: "Informe generado", description: "Análisis de datos completado", time: "hace 18s", icon: "📊" },
+    { name: "Inventario actualizado", description: "Control automático de stock", time: "hace 22s", icon: "📦" },
+    { name: "Traducción completada", description: "Documento multiidioma", time: "hace 25s", icon: "🌐" },
+    { name: "Fraude detectado", description: "Sistema de seguridad activado", time: "hace 28s", icon: "🔒" },
+    { name: "Contenido optimizado", description: "SEO automático aplicado", time: "hace 32s", icon: "🚀" },
+    { name: "Lead calificado", description: "Prospecto evaluado", time: "hace 35s", icon: "🎯" },
+    { name: "Backup completado", description: "Respaldo automático exitoso", time: "hace 38s", icon: "💾" },
+    { name: "Precio ajustado", description: "Competencia analizada", time: "hace 42s", icon: "💰" },
+    { name: "Anomalía detectada", description: "Sistema de monitoreo alertó", time: "hace 45s", icon: "⚠️" },
+    { name: "Campaña optimizada", description: "Marketing automático mejorado", time: "hace 48s", icon: "📈" },
+    { name: "Documento firmado", description: "Proceso legal automatizado", time: "hace 52s", icon: "✍️" },
+    { name: "Personal programado", description: "Turnos optimizados por IA", time: "hace 55s", icon: "👥" },
+    { name: "Calidad verificada", description: "Inspección automática", time: "hace 58s", icon: "🔍" },
+    { name: "Envío programado", description: "Logística optimizada", time: "hace 1m", icon: "🚚" },
+    { name: "Riesgo evaluado", description: "Análisis predictivo", time: "hace 1m 5s", icon: "⚖️" }
+  ];
+
+  // Componente principal
+  const FinalApp = () => {
+    return React.createElement(FinalCardsList, {}, 
+      notifications.map((item, idx) => 
+        React.createElement(FinalCard, {
+          ...item,
+          key: `final-notification-${idx}`
+        })
+      )
+    );
+  };
+
+  // Inicializar
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('cards-final-container');
+    if (container) {
+      console.log('🚀 INICIANDO COMPONENTE FINAL CON ESPACIADO FORZADO');
+      const root = createRoot(container);
+      root.render(React.createElement(FinalApp));
+    }
+  });
+</script>
+
+<style>
+  .cards-final-wrapper {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 24px !important;
+    padding: 2rem !important;
+    height: 650px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    width: 100% !important;
+    max-width: 550px !important;
+  }
+
+  #cards-final-container {
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .final-cards-list {
+    transition: opacity 0.3s ease !important;
+  }
+
+  .final-cards-list.fade-in {
+    opacity: 1 !important;
+  }
+
+  .final-cards-list.fade-out {
+    opacity: 0 !important;
+  }
+
+  /* Forzar gap entre elementos usando CSS Grid como backup */
+  .final-cards-list {
+    display: grid !important;
+    grid-template-rows: repeat(5, 1fr) !important;
+    gap: 2rem !important;
+    height: 100% !important;
+    align-content: center !important;
+    padding: 2rem 0 !important;
+  }
+
+  .final-card-item {
+    width: 100% !important;
+  }
+
+  /* Gradientes */
+  .cards-final-wrapper::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 15% !important;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.05), transparent) !important;
+    pointer-events: none !important;
+    border-radius: 24px 24px 0 0 !important;
+    z-index: 1 !important;
+  }
+
+  .cards-final-wrapper::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 15% !important;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.05), transparent) !important;
+    pointer-events: none !important;
+    border-radius: 0 0 24px 24px !important;
+    z-index: 1 !important;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .cards-final-wrapper {
+      height: 550px !important;
+      padding: 1.5rem !important;
+    }
+    
+    .final-cards-list {
+      gap: 1.5rem !important;
+      padding: 1.5rem 0 !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .cards-final-wrapper {
+      height: 480px !important;
+      padding: 1.25rem !important;
+    }
+    
+    .final-cards-list {
+      gap: 1.25rem !important;
+      padding: 1rem 0 !important;
+    }
+  }
+</style>
