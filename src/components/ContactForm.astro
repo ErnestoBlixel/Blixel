@@ -398,7 +398,7 @@ try {
     const form = document.querySelector('.gravity-form');
     
     if (form) {
-      console.log('✅ Formulario de Gravity Forms inicializado');
+      console.log('✅ Formulario inicializado');
       
       form.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -416,86 +416,40 @@ try {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
         
-        console.log('📤 Enviando datos del formulario:', data);
-        
-        // Validar campos requeridos en el frontend
-        if (!data['input_1.3'] || !data['input_4']) {
-          messageDiv.textContent = 'Por favor, completa el nombre y email.';
-          messageDiv.className = 'form-message error';
-          messageDiv.style.display = 'block';
-          
-          submitButton.disabled = false;
-          submitButton.textContent = originalText;
-          return;
-        }
+        console.log('📤 Datos del formulario:', data);
 
         try {
-          // Usar endpoint de Astro como proxy
           const response = await fetch('/api/submit-form', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               nombre: data['input_1.3'] || '',
               empresa: data['input_6'] || '',
               trabajadores: data['input_7'] || '',
               telefono: data['input_5'] || '',
               email: data['input_4'] || '',
-              comentarios: data['input_3'] || '',
-              timestamp: new Date().toISOString(),
-              source: 'Formulario Astro'
+              comentarios: data['input_3'] || ''
             })
           });
           
-          console.log('📨 Respuesta del servidor - Status:', response.status);
+          console.log('📨 Response status:', response.status);
           
-          let result;
-          try {
-            result = await response.json();
-          } catch (jsonError) {
-            console.error('❌ Error parsing JSON:', jsonError);
-            throw new Error('Respuesta inválida del servidor');
-          }
-          
-          console.log('📋 Resultado:', result);
+          const result = await response.json();
+          console.log('📋 Result:', result);
           
           if (result.success) {
-            console.log('✅ Formulario enviado exitosamente a WordPress');
-            
-            // Mostrar éxito
+            console.log('✅ Formulario enviado exitosamente');
             messageDiv.textContent = '¡Gracias! Hemos recibido tu mensaje y te contactaremos pronto.';
             messageDiv.className = 'form-message success';
             messageDiv.style.display = 'block';
-            
             form.reset();
-            
-            // Analytics opcional
-            if (typeof gtag !== 'undefined') {
-              gtag('event', 'form_submit', {
-                event_category: 'Contact',
-                event_label: 'Gravity Forms via Astro'
-              });
-            }
           } else {
             throw new Error(result.error || 'Error desconocido');
           }
           
         } catch (error) {
-          console.error('❌ Error enviando formulario:', error);
-          
-          let errorMessage = 'Error al enviar el formulario. Por favor, inténtalo de nuevo.';
-          
-          // Personalizar mensaje según el tipo de error
-          if (error.message.includes('validación')) {
-            errorMessage = 'Por favor, verifica que todos los campos estén correctamente completados.';
-          } else if (error.message.includes('requeridos')) {
-            errorMessage = 'Por favor, completa todos los campos requeridos.';
-          } else if (error.message.includes('fetch')) {
-            errorMessage = 'Error de conexión. Verifica tu conexión a internet.';
-          }
-          
-          messageDiv.textContent = errorMessage;
+          console.error('❌ Error:', error);
+          messageDiv.textContent = 'Error al enviar el formulario. Por favor, inténtalo de nuevo.';
           messageDiv.className = 'form-message error';
           messageDiv.style.display = 'block';
         } finally {

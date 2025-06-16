@@ -1,133 +1,66 @@
 // src/pages/api/submit-form.js
-// Endpoint de Astro que hace de proxy para enviar a WordPress
+// Endpoint simplificado para Gravity Forms
 
 export async function POST({ request }) {
   try {
     const formData = await request.json();
     
-    console.log('📤 Recibiendo formulario para enviar a WordPress...');
-    console.log('📋 Datos recibidos:', formData);
+    console.log('📤 Enviando a WordPress:', formData);
     
-    // Validar campos requeridos
-    if (!formData.nombre || !formData.email) {
-      console.log('❌ Faltan campos requeridos');
-      return new Response(JSON.stringify({
-        success: false,
-        error: 'Nombre y email son campos requeridos'
-      }), {
-        status: 400,
-        headers: { 
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
-    }
+    // Crear FormData para WordPress
+    const wpForm = new FormData();
+    wpForm.append('input_1.3', formData.nombre || '');
+    wpForm.append('input_4', formData.email || '');
+    wpForm.append('input_6', formData.empresa || '');
+    wpForm.append('input_7', formData.trabajadores || '');
+    wpForm.append('input_5', formData.telefono || '');
+    wpForm.append('input_3', formData.comentarios || '');
     
-    // Crear FormData para enviar a WordPress
-    const wpFormData = new FormData();
+    // Campos requeridos por Gravity Forms
+    wpForm.append('gform_submit', '1');
+    wpForm.append('is_submit_1', '1');
+    wpForm.append('gform_submit_button_1', 'Enviar');
+    wpForm.append('gform_unique_id', '');
+    wpForm.append('state_1', '');
+    wpForm.append('gform_target_page_number_1', '0');
+    wpForm.append('gform_source_page_number_1', '1');
+    wpForm.append('gform_field_values', '');
     
-    // Mapear campos del formulario
-    wpFormData.append('input_1.3', formData.nombre || '');
-    wpFormData.append('input_6', formData.empresa || '');
-    wpFormData.append('input_7', formData.trabajadores || '');
-    wpFormData.append('input_5', formData.telefono || '');
-    wpFormData.append('input_4', formData.email || '');
-    wpFormData.append('input_3', formData.comentarios || '');
-    
-    // Campos obligatorios de Gravity Forms
-    wpFormData.append('gform_submit', '1');
-    wpFormData.append('is_submit_1', '1');
-    wpFormData.append('gform_submit_button_1', 'Enviar');
-    wpFormData.append('gform_unique_id', '');
-    wpFormData.append('state_1', '');
-    wpFormData.append('gform_target_page_number_1', '0');
-    wpFormData.append('gform_source_page_number_1', '1');
-    wpFormData.append('gform_field_values', '');
-    
-    console.log('🔄 Enviando a WordPress...');
-    
-    // Enviar a WordPress con más opciones
+    // Enviar a WordPress
     const response = await fetch('https://cms.blixel.es/', {
       method: 'POST',
-      body: wpFormData,
+      body: wpForm,
       headers: {
-        'Referer': 'https://cms.blixel.es/',
-        'User-Agent': 'Mozilla/5.0 (compatible; AstroForm/1.0)',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'es-ES,es;q=0.8,en-US;q=0.5,en;q=0.3',
-        'Accept-Encoding': 'gzip, deflate'
-      },
-      // Añadir timeout
-      signal: AbortSignal.timeout(10000) // 10 segundos
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        'Referer': 'https://cms.blixel.es/'
+      }
     });
     
-    console.log('📨 Respuesta de WordPress - Status:', response.status);
-    console.log('📨 Headers:', Object.fromEntries(response.headers.entries()));
+    console.log('📨 WordPress response status:', response.status);
     
-    const responseText = await response.text();
-    console.log('📄 Respuesta completa:', responseText.substring(0, 500) + '...');
-    
-    if (response.ok) {
-      // Verificar si hay errores de validación en la respuesta
-      if (responseText.includes('validation_error') || 
-          responseText.includes('gform_validation_errors') ||
-          responseText.includes('Please enter a valid') ||
-          responseText.includes('This field is required')) {
-        console.log('❌ Error de validación en WordPress');
-        return new Response(JSON.stringify({
-          success: false,
-          error: 'Error de validación en el formulario. Verifica que todos los campos estén correctos.'
-        }), {
-          status: 400,
-          headers: { 
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-          }
-        });
-      }
-      
-      // Verificar si el formulario fue enviado correctamente
-      if (responseText.includes('gform_confirmation_message') || 
-          responseText.includes('Thank you') ||
-          responseText.includes('Gracias') ||
-          response.status === 200) {
-        console.log('✅ Formulario enviado a WordPress exitosamente');
-        
-        return new Response(JSON.stringify({
-          success: true,
-          message: 'Formulario enviado correctamente'
-        }), {
-          status: 200,
-          headers: { 
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-          }
-        });
-      }
-      
-      // Si llegamos aquí, algo raro pasó
-      console.log('⚠️ Respuesta extraña de WordPress');
+    // Si WordPress responde con 200 o 302 (redirect), consideramos éxito
+    if (response.ok || response.status === 302) {
+      console.log('✅ Formulario enviado correctamente');
       return new Response(JSON.stringify({
-        success: false,
-        error: 'Respuesta inesperada del servidor'
+        success: true,
+        message: 'Formulario enviado correctamente'
       }), {
-        status: 500,
+        status: 200,
         headers: { 
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         }
       });
-      
     } else {
-      throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
+      throw new Error(`HTTP ${response.status}`);
     }
     
   } catch (error) {
-    console.error('❌ Error procesando formulario:', error);
+    console.error('❌ Error:', error);
     
     return new Response(JSON.stringify({
       success: false,
-      error: 'Error interno del servidor. Por favor, inténtalo de nuevo.'
+      error: 'Error al enviar formulario'
     }), {
       status: 500,
       headers: { 
@@ -138,8 +71,7 @@ export async function POST({ request }) {
   }
 }
 
-// Manejar preflight requests de CORS
-export async function OPTIONS({ request }) {
+export async function OPTIONS() {
   return new Response(null, {
     status: 200,
     headers: {
