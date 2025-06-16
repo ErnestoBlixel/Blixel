@@ -310,23 +310,7 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     </div>
   </div>
 
-  <!-- Debug minimalista (solo visible en desarrollo) -->
-  {import.meta.env.DEV && (
-    <div class="debug-info">
-      <div class="debug-status">
-        <span class={`status-dot ${debugInfo.found ? 'success' : 'error'}`}></span>
-        <span class="status-text">
-          {debugInfo.found ? 'Connected' : 'Disconnected'}
-        </span>
-      </div>
-      {debugInfo.hasImage && (
-        <div class="debug-success">✅ Featured image loaded</div>
-      )}
-      {debugInfo.error && (
-        <div class="debug-error">Error: {debugInfo.error}</div>
-      )}
-    </div>
-  )}
+
 
 
 </section>
@@ -344,52 +328,7 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
     justify-content: center;
   }
 
-  /* Debug info minimalista y seguro */
-  .debug-info {
-    position: fixed;
-    top: 100px;
-    right: 20px;
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    z-index: 1000;
-    border: 1px solid #333;
-  }
 
-  .debug-status {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #ef4444;
-  }
-
-  .status-dot.success {
-    background: #22c55e;
-  }
-
-  .status-text {
-    font-weight: 500;
-  }
-
-  .debug-success {
-    margin-top: 0.5rem;
-    color: #86efac;
-    font-size: 0.65rem;
-  }
-
-  .debug-error {
-    margin-top: 0.5rem;
-    color: #fca5a5;
-    font-size: 0.65rem;
-  }
 
   /* Fondo limpio */
   .hero__background {
@@ -882,15 +821,7 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
       display: none;
     }
 
-    .debug-info {
-      position: relative;
-      top: auto;
-      right: auto;
-      margin-top: 2rem;
-      max-width: 100%;
-    }
 
-    /* Slider responsive */
     .logos-slider-wrapper {
       padding: 1.5rem 0;
     }

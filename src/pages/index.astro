@@ -261,16 +261,22 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
 
           <div class="stats-grid">
             <div class="stat-item">
-              <strong class="stat-number">24/7</strong>
-              <span class="stat-label">Sin descansos</span>
+              <div class="stat-card-mini">
+                <strong class="stat-number">24/7</strong>
+                <span class="stat-label">Sin descansos</span>
+              </div>
             </div>
             <div class="stat-item">
-              <strong class="stat-number">-80%</strong>
-              <span class="stat-label">Menos errores</span>
+              <div class="stat-card-mini">
+                <strong class="stat-number">-80%</strong>
+                <span class="stat-label">Menos errores</span>
+              </div>
             </div>
             <div class="stat-item">
-              <strong class="stat-number">10x</strong>
-              <span class="stat-label">Más rápido</span>
+              <div class="stat-card-mini">
+                <strong class="stat-number">10x</strong>
+                <span class="stat-label">Más rápido</span>
+              </div>
             </div>
           </div>
 
@@ -1221,6 +1227,45 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
     gap: 0.25rem;
   }
 
+  /* Tarjetas minimalistas para estadísticas */
+  .stat-card-mini {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    border-radius: 12px;
+    padding: 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card-mini::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .stat-card-mini:hover {
+    transform: translateY(-2px);
+    border-color: rgba(96, 165, 250, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 8px 24px rgba(96, 165, 250, 0.15);
+  }
+
+  .stat-card-mini:hover::before {
+    opacity: 1;
+  }
+
   .stat-number {
     font-family: 'Inter Tight', -apple-system, sans-serif;
     font-size: 2rem;
@@ -1305,6 +1350,10 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
       justify-content: center;
     }
 
+    .stat-card-mini {
+      padding: 1rem 0.75rem;
+    }
+
     .stat-number {
       font-size: 1.75rem;
     }
@@ -1334,6 +1383,10 @@ const pageDescription = 'Implementamos soluciones de IA para empresas con ROI ga
 
     .stats-grid {
       gap: 1.5rem;
+    }
+
+    .stat-card-mini {
+      padding: 0.875rem 0.625rem;
     }
 
     .stat-number {

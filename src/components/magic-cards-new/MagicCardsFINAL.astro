@@ -44,10 +44,10 @@
       style: {
         display: 'flex',
         flexDirection: 'column',
-        gap: '2rem', // ESPACIADO FORZADO AQUÍ
+        gap: '1.25rem', // ESPACIADO REDUCIDO AQUÍ
         height: '100%',
         justifyContent: 'center',
-        padding: '2rem 0'
+        padding: '1.5rem 0'
       }
     }, getCurrentCards().map((card, index) => 
       React.cloneElement(card, {
@@ -243,14 +243,14 @@
     background: rgba(255, 255, 255, 0.03) !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     border-radius: 24px !important;
-    padding: 2rem !important;
-    height: 650px !important;
+    padding: 1.5rem !important;
+    height: 600px !important;
     overflow: hidden !important;
     position: relative !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
     width: 100% !important;
-    max-width: 550px !important;
+    max-width: 520px !important;
   }
 
   #cards-final-container {
@@ -274,10 +274,10 @@
   .final-cards-list {
     display: grid !important;
     grid-template-rows: repeat(5, 1fr) !important;
-    gap: 2rem !important;
+    gap: 1.25rem !important;
     height: 100% !important;
     align-content: center !important;
-    padding: 2rem 0 !important;
+    padding: 1.5rem 0 !important;
   }
 
   .final-card-item {
