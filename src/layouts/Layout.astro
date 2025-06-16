@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from '../components/ThemeToggle.astro';
+import CookieBanner from '../components/CookieBanner.astro';
 import '../styles/globals.css';
 import '../styles/light-mode-override.css';
 // import MagicNotifications from '../components/MagicNotifications.astro'; // Removed during cleanup
@@ -87,6 +88,9 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
 <body class={className}>
   <!-- Botón de cambio de tema -->
   <ThemeToggle />
+  
+  <!-- Banner de cookies RGPD -->
+  <CookieBanner />
   
   <!-- Canvas de partículas modernas con tsParticles -->
   <div id="tsparticles"></div>
