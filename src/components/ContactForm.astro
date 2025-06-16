@@ -433,6 +433,11 @@ try {
           });
           
           console.log('📨 Response status:', response.status);
+          console.log('📨 Response headers:', Object.fromEntries(response.headers.entries()));
+          
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
           
           const result = await response.json();
           console.log('📋 Result:', result);
@@ -444,7 +449,7 @@ try {
             messageDiv.style.display = 'block';
             form.reset();
           } else {
-            throw new Error(result.error || 'Error desconocido');
+            throw new Error(result.error || 'Error desconocido del servidor');
           }
           
         } catch (error) {
