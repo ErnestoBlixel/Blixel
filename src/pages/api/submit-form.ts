@@ -1,9 +1,10 @@
 export async function POST({ request }) {
   try {
     const formData = await request.json();
-    console.log('📤 Enviando a WordPress:', formData);
+    console.log('📤 Enviando formulario:', formData);
     
-    const response = await fetch('https://cms.blixel.es/wp-json/blixel/v1/test-form', {
+    // Usar Formspree - reemplaza TU_FORM_ID con el ID que te da Formspree
+    const response = await fetch('https://formspree.io/f/TU_FORM_ID', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -11,18 +12,16 @@ export async function POST({ request }) {
       body: JSON.stringify(formData)
     });
     
-    const result = await response.json();
-    
-    if (response.ok && result.success) {
+    if (response.ok) {
       return new Response(JSON.stringify({ 
         success: true,
-        message: result.message
+        message: 'Formulario enviado correctamente'
       }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' }
       });
     } else {
-      throw new Error(result.message || 'Error al enviar el formulario');
+      throw new Error('Error al enviar el formulario');
     }
     
   } catch (error) {

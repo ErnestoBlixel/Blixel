@@ -1,0 +1,41 @@
+---
+// Componente para embeber Gravity Forms desde WordPress
+---
+
+<div class="gravity-form-container">
+  <iframe 
+    id="gravity-form-iframe"
+    src="https://cms.blixel.es/contacto/"
+    width="100%" 
+    height="600"
+    frameborder="0"
+    scrolling="no"
+    style="border: none; overflow: hidden;">
+  </iframe>
+</div>
+
+<style>
+  .gravity-form-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  #gravity-form-iframe {
+    background: transparent;
+    border-radius: 16px;
+  }
+</style>
+
+<script>
+  // Auto-ajustar altura del iframe
+  window.addEventListener('message', function(e) {
+    if (e.origin !== 'https://cms.blixel.es') return;
+    
+    const iframe = document.getElementById('gravity-form-iframe');
+    if (e.data && e.data.height) {
+      iframe.style.height = e.data.height + 'px';
+    }
+  });
+</script>
