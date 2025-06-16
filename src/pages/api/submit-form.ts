@@ -19,12 +19,12 @@ export async function POST({ request }) {
     wpForm.append('gform_source_page_number_1', '1');
     wpForm.append('gform_field_values', '');
     
-    const response = await fetch('https://cms.blixel.es/', {
+    const response = await fetch('https://cms.blixel.es/contacto/', {
       method: 'POST',
       body: wpForm,
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        'Referer': 'https://cms.blixel.es/'
+        'Referer': 'https://cms.blixel.es/contacto/'
       }
     });
     
