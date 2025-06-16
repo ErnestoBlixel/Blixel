@@ -20,8 +20,8 @@ export async function POST({ request }) {
       }
     };
     
-    // Crear autenticación básica
-    const auth = Buffer.from(`${publicKey}:${privateKey}`).toString('base64');
+    // Crear autenticación básica usando btoa (compatible con Cloudflare)
+    const auth = btoa(`${publicKey}:${privateKey}`);
     
     // Hacer la petición a la API
     const response = await fetch(`https://cms.blixel.es/gravityformsapi/forms/${formId}/submissions`, {
