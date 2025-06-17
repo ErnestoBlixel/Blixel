@@ -10,6 +10,19 @@ export default defineConfig({
     tailwind() // Integración de Tailwind CSS
     // ...otras integraciones que puedas tener
   ],
+  
+  // Configuración de internacionalización
+  i18n: {
+    defaultLocale: 'es',
+    locales: ['es', 'ca'],
+    routing: {
+      prefixDefaultLocale: false
+    }
+  },
+  
+  // Configuración del sitio para SEO
+  site: 'https://blixel.es',
+  
   vite: {
     optimizeDeps: {
       include: ['@apollo/client']

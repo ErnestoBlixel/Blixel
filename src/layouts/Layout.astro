@@ -1,85 +1,68 @@
 ---
 import ThemeToggle from '../components/ThemeToggle.astro';
 import CookieBanner from '../components/CookieBanner.astro';
+import LanguageSelector from '../components/LanguageSelector.astro';
+import SEOHead from '../components/SEOHead.astro';
+import { getLangFromUrl } from '../i18n/config';
 import '../styles/globals.css';
 import '../styles/light-mode-override.css';
-// import MagicNotifications from '../components/MagicNotifications.astro'; // Removed during cleanup
 
 export interface Props {
   title?: string;
   description?: string;
+  keywords?: string;
   className?: string;
   logoUrl?: string;
   logoAlt?: string;
   ogImage?: string;
   ogImageAlt?: string;
+  pageKey?: string;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
 }
 
-// Obtener información del sitio para meta tags
-let siteTitle = "Blixel";
-let siteDescription = "Automatiza tu empresa con IA";
-
-// COMENTADO: Este fetch puede causar problemas de recursión
-// try {
-//   const baseResponse = await fetch('https://blixel.es/wp-json/');
-//   if (baseResponse.ok) {
-//     const baseData = await baseResponse.json();
-//     if (baseData.name) {
-//       siteTitle = baseData.name;
-//     }
-//     if (baseData.description) {
-//       siteDescription = baseData.description;
-//     }
-//   }
-// } catch (error) {
-//   // Usar valores por defecto si hay error
-// }
-
 const { 
-  title = siteTitle, 
-  description = siteDescription,
+  title,
+  description,
+  keywords,
   className = '',
   logoUrl,
   logoAlt,
   ogImage,
-  ogImageAlt = title
+  ogImageAlt,
+  pageKey = 'home',
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  author
 } = Astro.props;
 
-// Construir título completo
-const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
+// Obtener idioma actual
+const currentLang = getLangFromUrl(Astro.url);
 ---
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang={currentLang === 'ca' ? 'ca-ES' : 'es-ES'}>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{fullTitle}</title>
-  <meta name="description" content={description}>
   
-  <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
-  
-  <!-- Meta tags adicionales -->
-  <meta name="robots" content="index, follow">
-  <meta name="author" content="Blixel">
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content={fullTitle}>
-  <meta property="og:description" content={description}>
-  <meta property="og:url" content="https://blixel.es">
-  {ogImage && <meta property="og:image" content={ogImage} />}
-  {ogImage && <meta property="og:image:alt" content={ogImageAlt} />}
-  <meta property="og:site_name" content={siteTitle}>
-  <meta property="og:locale" content="es_ES">
-  
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content={fullTitle}>
-  <meta name="twitter:description" content={description}>
-  {ogImage && <meta name="twitter:image" content={ogImage} />}
-  {ogImage && <meta name="twitter:image:alt" content={ogImageAlt} />}
+  <!-- SEO Head multiidioma -->
+  <SEOHead 
+    title={title}
+    description={description}
+    keywords={keywords}
+    image={ogImage}
+    imageAlt={ogImageAlt}
+    type={type}
+    publishedTime={publishedTime}
+    modifiedTime={modifiedTime}
+    author={author}
+    currentUrl={Astro.url}
+    pageKey={pageKey}
+  />
   
   <!-- Preload fonts for better performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -89,13 +72,11 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
   <!-- Botón de cambio de tema -->
   <ThemeToggle />
   
+  <!-- Selector de idioma -->
+  <LanguageSelector currentUrl={Astro.url} className="fixed top-4 right-20 z-50" />
+  
   <!-- Banner de cookies RGPD -->
   <CookieBanner />
-  
-  <!-- Botón de debug para partículas (temporal) -->
-  <button id="particles-debug" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; padding: 10px; background: #60a5fa; color: white; border: none; border-radius: 8px; cursor: pointer;">
-    🎆 Debug Partículas
-  </button>
   
   <!-- Canvas de partículas modernas con tsParticles -->
   <div id="tsparticles"></div>
@@ -218,30 +199,7 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
         console.log('✅ Partículas cargadas correctamente');
       }).catch((error) => {
         console.error('❌ Error cargando partículas:', error);
-        // Botón de debug para partículas
-      const debugBtn = document.getElementById('particles-debug');
-      if (debugBtn) {
-        debugBtn.addEventListener('click', () => {
-          const container = window.tsParticles?.domItem(0);
-          if (container) {
-            console.log('🎆 Estado de las partículas:');
-            console.log('Container:', container);
-            console.log('Partículas activas:', container.particles.count);
-            console.log('Canvas:', document.querySelector('#tsparticles canvas'));
-            console.log('Opciones:', container.options);
-            
-            // Intentar añadir más partículas
-            container.particles.push(10);
-            console.log('Se añadieron 10 partículas nuevas');
-          } else {
-            console.error('No se encontró el contenedor de partículas');
-            // Intentar cargar de nuevo
-            console.log('Intentando cargar partículas de nuevo...');
-            loadTsParticles();
-          }
-        });
-      }
-    });
+      });
     }
 
     // Función para actualizar partículas según el tema

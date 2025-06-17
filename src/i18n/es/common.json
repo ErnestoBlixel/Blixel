@@ -1,0 +1,117 @@
+{
+  "site": {
+    "name": "Blixel",
+    "tagline": "Inteligencia Artificial para Empresas"
+  },
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre Nosotros",
+    "services": "Servicios",
+    "contact": "Contacto",
+    "language": "Idioma"
+  },
+  "hero": {
+    "title": "Inteligencia Artificial para Empresas",
+    "subtitle": "Automatización Inteligente para tu Empresa",
+    "description": "Transformamos tu empresa con soluciones de IA personalizadas que automatizan procesos, reducen costos y aumentan la eficiencia.",
+    "cta_contact": "Contactar",
+    "cta_schedule": "Agendar Llamada",
+    "trust_companies": "Empresas",
+    "trust_satisfaction": "Satisfacción",
+    "trust_support": "Soporte"
+  },
+  "services": {
+    "title": "Nuestros Servicios",
+    "subtitle": "Soluciones de IA adaptadas a tu negocio",
+    "automation": {
+      "title": "Automatización de Procesos",
+      "description": "Optimiza workflows y reduce tareas repetitivas con IA"
+    },
+    "chatbots": {
+      "title": "Chatbots Inteligentes",
+      "description": "Atención al cliente 24/7 con respuestas personalizadas"
+    },
+    "analytics": {
+      "title": "Análisis de Datos",
+      "description": "Insights valiosos para tomar decisiones informadas"
+    }
+  },
+  "contact": {
+    "title": "Contacta con Nosotros",
+    "subtitle": "¿Listo para transformar tu empresa?",
+    "name": "Nombre",
+    "email": "Email",
+    "company": "Empresa",
+    "message": "Mensaje",
+    "send": "Enviar Mensaje",
+    "success": "¡Mensaje enviado correctamente!",
+    "error": "Error al enviar el mensaje. Inténtalo de nuevo."
+  },
+  "footer": {
+    "about": "Sobre Blixel",
+    "description": "Especialistas en implementar soluciones de IA que transforman empresas.",
+    "services_title": "Servicios",
+    "legal_title": "Legal",
+    "contact_title": "Contacto",
+    "follow_us": "Síguenos",
+    "rights": "Todos los derechos reservados"
+  },
+  "legal": {
+    "privacy": "Política de Privacidad",
+    "terms": "Términos y Condiciones",
+    "cookies": "Política de Cookies"
+  },
+  "cookies": {
+    "title": "Configuración de Cookies",
+    "description": "Utilizamos cookies propias y de terceros para mejorar tu experiencia, analizar el tráfico y mostrarte publicidad personalizada.",
+    "notice": "Por favor, elige una opción para continuar navegando.",
+    "more_info": "Más información sobre nuestra política de cookies",
+    "configure": "Configurar",
+    "reject": "Rechazar",
+    "accept": "Aceptar todo",
+    "technical": "Cookies Técnicas",
+    "technical_desc": "Esenciales para el funcionamiento del sitio web",
+    "analytics": "Cookies de Análisis",
+    "analytics_desc": "Nos ayudan a entender cómo usas el sitio web",
+    "advertising": "Cookies Publicitarias",
+    "advertising_desc": "Para mostrarte anuncios relevantes",
+    "save": "Guardar preferencias"
+  },
+  "meta": {
+    "home": {
+      "title": "Blixel - Inteligencia Artificial para Empresas | Automatización IA",
+      "description": "Automatiza tu empresa con IA. Soluciones personalizadas de inteligencia artificial para optimizar procesos, reducir costos y aumentar la eficiencia.",
+      "keywords": "inteligencia artificial, automatización, IA empresarial, chatbots, análisis de datos, España"
+    },
+    "about": {
+      "title": "Sobre Nosotros - Blixel | Expertos en IA Empresarial",
+      "description": "Conoce al equipo de Blixel. Especialistas en implementar soluciones de inteligencia artificial que transforman empresas.",
+      "keywords": "equipo Blixel, expertos IA, especialistas inteligencia artificial, empresa IA España"
+    },
+    "services": {
+      "title": "Servicios de IA - Blixel | Automatización y Chatbots",
+      "description": "Descubre nuestros servicios de IA: automatización de procesos, chatbots inteligentes y análisis de datos para empresas.",
+      "keywords": "servicios IA, automatización procesos, chatbots empresariales, análisis datos IA"
+    },
+    "contact": {
+      "title": "Contacto - Blixel | Consulta Gratuita IA",
+      "description": "Contacta con Blixel para una consulta gratuita sobre soluciones de IA para tu empresa. Transformamos tu negocio con inteligencia artificial.",
+      "keywords": "contacto Blixel, consulta IA gratuita, soluciones empresariales IA, consultoría inteligencia artificial"
+    }
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "back": "Volver",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "close": "Cerrar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "continue": "Continuar",
+    "learn_more": "Saber más",
+    "read_more": "Leer más",
+    "show_less": "Mostrar menos"
+  }
+}

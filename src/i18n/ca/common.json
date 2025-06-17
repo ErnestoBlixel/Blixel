@@ -1,0 +1,117 @@
+{
+  "site": {
+    "name": "Blixel",
+    "tagline": "Intel·ligència Artificial per a Empreses"
+  },
+  "nav": {
+    "home": "Inici",
+    "about": "Sobre Nosaltres",
+    "services": "Serveis",
+    "contact": "Contacte",
+    "language": "Idioma"
+  },
+  "hero": {
+    "title": "Intel·ligència Artificial per a Empreses",
+    "subtitle": "Automatització Intel·ligent per a la teva Empresa",
+    "description": "Transformem la teva empresa amb solucions d'IA personalitzades que automatitzen processos, redueixen costos i augmenten l'eficiència.",
+    "cta_contact": "Contactar",
+    "cta_schedule": "Programar Trucada",
+    "trust_companies": "Empreses",
+    "trust_satisfaction": "Satisfacció",
+    "trust_support": "Suport"
+  },
+  "services": {
+    "title": "Els Nostres Serveis",
+    "subtitle": "Solucions d'IA adaptades al teu negoci",
+    "automation": {
+      "title": "Automatització de Processos",
+      "description": "Optimitza workflows i redueix tasques repetitives amb IA"
+    },
+    "chatbots": {
+      "title": "Chatbots Intel·ligents",
+      "description": "Atenció al client 24/7 amb respostes personalitzades"
+    },
+    "analytics": {
+      "title": "Anàlisi de Dades",
+      "description": "Insights valuosos per prendre decisions informades"
+    }
+  },
+  "contact": {
+    "title": "Contacta amb Nosaltres",
+    "subtitle": "Preparat per transformar la teva empresa?",
+    "name": "Nom",
+    "email": "Email",
+    "company": "Empresa",
+    "message": "Missatge",
+    "send": "Enviar Missatge",
+    "success": "Missatge enviat correctament!",
+    "error": "Error en enviar el missatge. Torna-ho a provar."
+  },
+  "footer": {
+    "about": "Sobre Blixel",
+    "description": "Especialistes en implementar solucions d'IA que transformen empreses.",
+    "services_title": "Serveis",
+    "legal_title": "Legal",
+    "contact_title": "Contacte",
+    "follow_us": "Segueix-nos",
+    "rights": "Tots els drets reservats"
+  },
+  "legal": {
+    "privacy": "Política de Privacitat",
+    "terms": "Termes i Condicions",
+    "cookies": "Política de Cookies"
+  },
+  "cookies": {
+    "title": "Configuració de Cookies",
+    "description": "Utilitzem cookies pròpies i de tercers per millorar la teva experiència, analitzar el trànsit i mostrar-te publicitat personalitzada.",
+    "notice": "Si us plau, tria una opció per continuar navegant.",
+    "more_info": "Més informació sobre la nostra política de cookies",
+    "configure": "Configurar",
+    "reject": "Rebutjar",
+    "accept": "Acceptar tot",
+    "technical": "Cookies Tècniques",
+    "technical_desc": "Essencials per al funcionament del lloc web",
+    "analytics": "Cookies d'Anàlisi",
+    "analytics_desc": "Ens ajuden a entendre com uses el lloc web",
+    "advertising": "Cookies Publicitàries",
+    "advertising_desc": "Per mostrar-te anuncis rellevants",
+    "save": "Guardar preferències"
+  },
+  "meta": {
+    "home": {
+      "title": "Blixel - Intel·ligència Artificial per a Empreses | Automatització IA",
+      "description": "Automatitza la teva empresa amb IA. Solucions personalitzades d'intel·ligència artificial per optimitzar processos, reduir costos i augmentar l'eficiència.",
+      "keywords": "intel·ligència artificial, automatització, IA empresarial, chatbots, anàlisi de dades, Catalunya"
+    },
+    "about": {
+      "title": "Sobre Nosaltres - Blixel | Experts en IA Empresarial",
+      "description": "Coneix l'equip de Blixel. Especialistes en implementar solucions d'intel·ligència artificial que transformen empreses.",
+      "keywords": "equip Blixel, experts IA, especialistes intel·ligència artificial, empresa IA Catalunya"
+    },
+    "services": {
+      "title": "Serveis d'IA - Blixel | Automatització i Chatbots",
+      "description": "Descobreix els nostres serveis d'IA: automatització de processos, chatbots intel·ligents i anàlisi de dades per a empreses.",
+      "keywords": "serveis IA, automatització processos, chatbots empresarials, anàlisi dades IA"
+    },
+    "contact": {
+      "title": "Contacte - Blixel | Consulta Gratuïta IA",
+      "description": "Contacta amb Blixel per a una consulta gratuïta sobre solucions d'IA per a la teva empresa. Transformem el teu negoci amb intel·ligència artificial.",
+      "keywords": "contacte Blixel, consulta IA gratuïta, solucions empresarials IA, consultoria intel·ligència artificial"
+    }
+  },
+  "common": {
+    "loading": "Carregant...",
+    "error": "Error",
+    "success": "Èxit",
+    "back": "Tornar",
+    "next": "Següent",
+    "previous": "Anterior",
+    "close": "Tancar",
+    "save": "Guardar",
+    "cancel": "Cancel·lar",
+    "continue": "Continuar",
+    "learn_more": "Saber més",
+    "read_more": "Llegir més",
+    "show_less": "Mostrar menys"
+  }
+}
