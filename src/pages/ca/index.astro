@@ -1,1 +1,282 @@
----\nimport Layout from '../../layouts/Layout.astro';\nimport Hero from '../../components/Hero.astro';\nimport MagicCardsFINAL from '../../components/magic-cards-new/MagicCardsFINAL.astro';\nimport ContactForm from '../../components/ContactForm.astro';\n\n// Meta información en catalán\nconst title = \"Blixel - Intel·ligència Artificial per a Empreses\";\nconst description = \"Automatitza la teva empresa amb IA. Solucions personalitzades d'intel·ligència artificial per optimitzar processos, reduir costos i augmentar l'eficiència.\";\nconst keywords = \"intel·ligència artificial, automatització, IA empresarial, chatbots, anàlisi de dades, Catalunya\";\n---\n\n<Layout \n  title={title}\n  description={description}\n  keywords={keywords}\n  pageKey=\"home\"\n>\n  <!-- Hero Section en Catalán -->\n  <Hero \n    pageSlug=\"ca/inicio\"\n    titleLine1=\"Intel·ligència Artificial\"\n    titleLine2=\"per a la teva Empresa\"\n    customTitle={title}\n    customDescription={description}\n  />\n  \n  <!-- Sección de Magic Cards -->\n  <section class=\"magic-cards-section\">\n    <div class=\"container\">\n      <div class=\"magic-cards-wrapper\">\n        <div class=\"magic-cards-content\">\n          <h2 class=\"section-title\">Automatització en Temps Real</h2>\n          <p class=\"section-description\">\n            Mira com la nostra IA processa tasques automàticament,\n            estalviant temps i recursos a la teva empresa.\n          </p>\n        </div>\n        \n        <div class=\"magic-cards-demo\">\n          <MagicCardsFINAL />\n        </div>\n      </div>\n    </div>\n  </section>\n  \n  <!-- Sección de Servicios en Catalán -->\n  <section class=\"services-section\">\n    <div class=\"container\">\n      <div class=\"services-header\">\n        <h2 class=\"services-title\">Els Nostres Serveis</h2>\n        <p class=\"services-subtitle\">Solucions d'IA adaptades al teu negoci</p>\n      </div>\n      \n      <div class=\"services-grid\">\n        <div class=\"service-card\">\n          <div class=\"service-icon\">🤖</div>\n          <h3 class=\"service-title\">Automatització de Processos</h3>\n          <p class=\"service-description\">\n            Optimitza workflows i redueix tasques repetitives amb intel·ligència artificial avançada.\n          </p>\n        </div>\n        \n        <div class=\"service-card\">\n          <div class=\"service-icon\">💬</div>\n          <h3 class=\"service-title\">Chatbots Intel·ligents</h3>\n          <p class=\"service-description\">\n            Atenció al client 24/7 amb respostes personalitzades i comprensió del context.\n          </p>\n        </div>\n        \n        <div class=\"service-card\">\n          <div class=\"service-icon\">📊</div>\n          <h3 class=\"service-title\">Anàlisi de Dades</h3>\n          <p class=\"service-description\">\n            Insights valuosos per prendre decisions informades basades en dades reals.\n          </p>\n        </div>\n      </div>\n    </div>\n  </section>\n  \n  <!-- Formulario de Contacto -->\n  <section id=\"contacte\" class=\"contact-section\">\n    <div class=\"container\">\n      <div class=\"contact-header\">\n        <h2 class=\"contact-title\">Contacta amb Nosaltres</h2>\n        <p class=\"contact-subtitle\">Preparat per transformar la teva empresa amb IA?</p>\n      </div>\n      \n      <ContactForm \n        lang=\"ca\"\n        namePlaceholder=\"El teu nom\"\n        emailPlaceholder=\"El teu email\"\n        companyPlaceholder=\"La teva empresa\"\n        messagePlaceholder=\"Explica'ns el teu projecte...\"\n        submitText=\"Enviar Missatge\"\n        successMessage=\"Missatge enviat correctament!\"\n        errorMessage=\"Error en enviar el missatge. Torna-ho a provar.\"\n      />\n    </div>\n  </section>\n</Layout>\n\n<style>\n  /* Estilos para la versión catalana */\n  .magic-cards-section {\n    padding: 4rem 0;\n    background: transparent;\n  }\n  \n  .container {\n    max-width: 1400px;\n    margin: 0 auto;\n    padding: 0 2rem;\n  }\n  \n  .magic-cards-wrapper {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    gap: 4rem;\n    align-items: center;\n    min-height: 600px;\n  }\n  \n  .magic-cards-content {\n    padding: 2rem 0;\n  }\n  \n  .section-title {\n    font-size: 2.5rem;\n    font-weight: 800;\n    color: #ffffff;\n    margin-bottom: 1.5rem;\n    line-height: 1.2;\n  }\n  \n  html:not(.dark) .section-title {\n    color: #111827;\n  }\n  \n  .section-description {\n    font-size: 1.25rem;\n    color: #9ca3af;\n    line-height: 1.6;\n    max-width: 500px;\n  }\n  \n  html:not(.dark) .section-description {\n    color: #6b7280;\n  }\n  \n  .services-section {\n    padding: 6rem 0;\n  }\n  \n  .services-header {\n    text-align: center;\n    margin-bottom: 4rem;\n  }\n  \n  .services-title {\n    font-size: 2.5rem;\n    font-weight: 800;\n    color: #ffffff;\n    margin-bottom: 1rem;\n  }\n  \n  html:not(.dark) .services-title {\n    color: #111827;\n  }\n  \n  .services-subtitle {\n    font-size: 1.25rem;\n    color: #9ca3af;\n  }\n  \n  html:not(.dark) .services-subtitle {\n    color: #6b7280;\n  }\n  \n  .services-grid {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));\n    gap: 2rem;\n  }\n  \n  .service-card {\n    background: rgba(255, 255, 255, 0.03);\n    border: 1px solid rgba(255, 255, 255, 0.08);\n    border-radius: 16px;\n    padding: 2rem;\n    text-align: center;\n    transition: all 0.3s ease;\n  }\n  \n  html:not(.dark) .service-card {\n    background: rgba(0, 0, 0, 0.03);\n    border: 1px solid rgba(0, 0, 0, 0.08);\n  }\n  \n  .service-card:hover {\n    transform: translateY(-4px);\n    border-color: rgba(96, 165, 250, 0.3);\n  }\n  \n  .service-icon {\n    font-size: 3rem;\n    margin-bottom: 1rem;\n  }\n  \n  .service-title {\n    font-size: 1.5rem;\n    font-weight: 700;\n    color: #ffffff;\n    margin-bottom: 1rem;\n  }\n  \n  html:not(.dark) .service-title {\n    color: #111827;\n  }\n  \n  .service-description {\n    color: #9ca3af;\n    line-height: 1.6;\n  }\n  \n  html:not(.dark) .service-description {\n    color: #6b7280;\n  }\n  \n  .contact-section {\n    padding: 6rem 0;\n  }\n  \n  .contact-header {\n    text-align: center;\n    margin-bottom: 3rem;\n  }\n  \n  .contact-title {\n    font-size: 2.5rem;\n    font-weight: 800;\n    color: #ffffff;\n    margin-bottom: 1rem;\n  }\n  \n  html:not(.dark) .contact-title {\n    color: #111827;\n  }\n  \n  .contact-subtitle {\n    font-size: 1.25rem;\n    color: #9ca3af;\n  }\n  \n  html:not(.dark) .contact-subtitle {\n    color: #6b7280;\n  }\n  \n  /* Responsive */\n  @media (max-width: 768px) {\n    .magic-cards-wrapper {\n      grid-template-columns: 1fr;\n      gap: 2rem;\n      text-align: center;\n    }\n    \n    .section-title {\n      font-size: 2rem;\n    }\n    \n    .services-title,\n    .contact-title {\n      font-size: 2rem;\n    }\n    \n    .services-grid {\n      grid-template-columns: 1fr;\n    }\n  }\n</style>\n
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/Hero.astro';
+import MagicCardsFINAL from '../../components/magic-cards-new/MagicCardsFINAL.astro';
+import ContactForm from '../../components/ContactForm.astro';
+
+// Meta información en catalán (sin caracteres especiales problemáticos)
+const title = "Blixel - Intel·ligencia Artificial per a Empreses";
+const description = "Automatitza la teva empresa amb IA. Solucions personalitzades d'intel·ligencia artificial per optimitzar processos, reduir costos i augmentar l'eficiencia.";
+const keywords = "intel·ligencia artificial, automatitzacio, IA empresarial, chatbots, analisi de dades, Catalunya";
+---
+
+<Layout 
+  title={title}
+  description={description}
+  keywords={keywords}
+  pageKey="home"
+>
+  <!-- Hero Section en Catalan -->
+  <Hero 
+    pageSlug="ca-home"
+    titleLine1="Intel·ligencia Artificial"
+    titleLine2="per a la teva Empresa"
+    customTitle={title}
+    customDescription={description}
+  />
+  
+  <!-- Seccion de Magic Cards -->
+  <section class="magic-cards-section">
+    <div class="container">
+      <div class="magic-cards-wrapper">
+        <div class="magic-cards-content">
+          <h2 class="section-title">Automatitzacio en Temps Real</h2>
+          <p class="section-description">
+            Mira com la nostra IA processa tasques automaticament,
+            estalviant temps i recursos a la teva empresa.
+          </p>
+        </div>
+        
+        <div class="magic-cards-demo">
+          <MagicCardsFINAL />
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Seccion de Servicios en Catalan -->
+  <section class="services-section">
+    <div class="container">
+      <div class="services-header">
+        <h2 class="services-title">Els Nostres Serveis</h2>
+        <p class="services-subtitle">Solucions d'IA adaptades al teu negoci</p>
+      </div>
+      
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🤖</div>
+          <h3 class="service-title">Automatitzacio de Processos</h3>
+          <p class="service-description">
+            Optimitza workflows i redueix tasques repetitives amb intel·ligencia artificial avancada.
+          </p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">💬</div>
+          <h3 class="service-title">Chatbots Intel·ligents</h3>
+          <p class="service-description">
+            Atencio al client 24/7 amb respostes personalitzades i comprensio del context.
+          </p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">📊</div>
+          <h3 class="service-title">Analisi de Dades</h3>
+          <p class="service-description">
+            Insights valuosos per prendre decisions informades basades en dades reals.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Formulario de Contacto -->
+  <section id="contacte" class="contact-section">
+    <div class="container">
+      <div class="contact-header">
+        <h2 class="contact-title">Contacta amb Nosaltres</h2>
+        <p class="contact-subtitle">Preparat per transformar la teva empresa amb IA?</p>
+      </div>
+      
+      <ContactForm 
+        lang="ca"
+        namePlaceholder="El teu nom"
+        emailPlaceholder="El teu email"
+        companyPlaceholder="La teva empresa"
+        messagePlaceholder="Explica'ns el teu projecte..."
+        submitText="Enviar Missatge"
+        successMessage="Missatge enviat correctament!"
+        errorMessage="Error en enviar el missatge. Torna-ho a provar."
+      />
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Estilos para la version catalana */
+  .magic-cards-section {
+    padding: 4rem 0;
+    background: transparent;
+  }
+  
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  .magic-cards-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    min-height: 600px;
+  }
+  
+  .magic-cards-content {
+    padding: 2rem 0;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  
+  html:not(.dark) .section-title {
+    color: #111827;
+  }
+  
+  .section-description {
+    font-size: 1.25rem;
+    color: #9ca3af;
+    line-height: 1.6;
+    max-width: 500px;
+  }
+  
+  html:not(.dark) .section-description {
+    color: #6b7280;
+  }
+  
+  .services-section {
+    padding: 6rem 0;
+  }
+  
+  .services-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  .services-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 1rem;
+  }
+  
+  html:not(.dark) .services-title {
+    color: #111827;
+  }
+  
+  .services-subtitle {
+    font-size: 1.25rem;
+    color: #9ca3af;
+  }
+  
+  html:not(.dark) .services-subtitle {
+    color: #6b7280;
+  }
+  
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .service-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  html:not(.dark) .service-card {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(96, 165, 250, 0.3);
+  }
+  
+  .service-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .service-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1rem;
+  }
+  
+  html:not(.dark) .service-title {
+    color: #111827;
+  }
+  
+  .service-description {
+    color: #9ca3af;
+    line-height: 1.6;
+  }
+  
+  html:not(.dark) .service-description {
+    color: #6b7280;
+  }
+  
+  .contact-section {
+    padding: 6rem 0;
+  }
+  
+  .contact-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .contact-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 1rem;
+  }
+  
+  html:not(.dark) .contact-title {
+    color: #111827;
+  }
+  
+  .contact-subtitle {
+    font-size: 1.25rem;
+    color: #9ca3af;
+  }
+  
+  html:not(.dark) .contact-subtitle {
+    color: #6b7280;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .magic-cards-wrapper {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+    }
+    
+    .services-title,
+    .contact-title {
+      font-size: 2rem;
+    }
+    
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
