@@ -1,1 +1,43 @@
----\n// Configuración de robots.txt\nconst site = 'https://blixel.es';\n\n// Generar contenido del robots.txt\nconst robotsContent = `User-agent: *\nAllow: /\n\n# Sitemap multiidioma\nSitemap: ${site}/sitemap.xml\n\n# Disallow admin areas\nDisallow: /admin/\nDisallow: /wp-admin/\nDisallow: /wp-includes/\nDisallow: /wp-content/plugins/\nDisallow: /wp-content/themes/\n\n# Disallow temporary or test files\nDisallow: /test/\nDisallow: /temp/\nDisallow: /tmp/\n\n# Allow specific resources\nAllow: /wp-content/uploads/\nAllow: /_astro/\nAllow: /css/\nAllow: /js/\nAllow: /images/\nAllow: /logos/\n\n# Crawl delay (optional)\n# Crawl-delay: 1`;\n\n// Configurar respuesta\nAstro.response.headers.set('Content-Type', 'text/plain');\n---\n\n{robotsContent}\n
+import type { APIRoute } from 'astro';
+
+export const GET: APIRoute = () => {
+  // Configuración de robots.txt
+  const site = 'https://blixel.es';
+
+  // Generar contenido del robots.txt
+  const robotsContent = `User-agent: *
+Allow: /
+
+# Sitemap multiidioma
+Sitemap: ${site}/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/themes/
+
+# Disallow temporary or test files
+Disallow: /test/
+Disallow: /temp/
+Disallow: /tmp/
+
+# Allow specific resources
+Allow: /wp-content/uploads/
+Allow: /_astro/
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /logos/
+
+# Crawl delay (optional)
+# Crawl-delay: 1`;
+
+  return new Response(robotsContent, {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/plain'
+    }
+  });
+};

@@ -1,1 +1,44 @@
-import { defineMiddleware } from 'astro:middleware';\nimport { languages, defaultLang, getLangFromUrl, type SupportedLanguage } from './i18n/config';\n\n// Rutas que no necesitan redirección de idioma\nconst excludedPaths = [\n  '/api/',\n  '/admin/',\n  '/_astro/',\n  '/favicon',\n  '/robots.txt',\n  '/sitemap',\n  '/wp-',\n  '/.well-known/'\n];\n\n// Función para detectar el idioma preferido del navegador\nfunction getPreferredLanguage(acceptLanguage: string | null): SupportedLanguage {\n  if (!acceptLanguage) return defaultLang;\n  \n  // Parsear el header Accept-Language\n  const languages = acceptLanguage\n    .split(',')\n    .map(lang => {\n      const [code, weight = '1'] = lang.trim().split(';q=');\n      return {\n        code: code.toLowerCase(),\n        weight: parseFloat(weight)\n      };\n    })\n    .sort((a, b) => b.weight - a.weight);\n  \n  // Buscar coincidencias exactas primero\n  for (const lang of languages) {\n    if (lang.code === 'ca' || lang.code === 'ca-es') {\n      return 'ca';\n    }\n    if (lang.code === 'es' || lang.code === 'es-es') {\n      return 'es';\n    }\n  }\n  \n  // Buscar coincidencias parciales\n  for (const lang of languages) {\n    if (lang.code.startsWith('ca')) {\n      return 'ca';\n    }\n    if (lang.code.startsWith('es')) {\n      return 'es';\n    }\n  }\n  \n  return defaultLang;\n}\n\n// Función para verificar si la ruta debe ser excluida\nfunction shouldExclude(pathname: string): boolean {\n  return excludedPaths.some(excluded => pathname.startsWith(excluded));\n}\n\nexport const onRequest = defineMiddleware(async (context, next) => {\n  const { request, url, redirect } = context;\n  const pathname = url.pathname;\n  \n  // Excluir rutas que no necesitan redirección\n  if (shouldExclude(pathname)) {\n    return next();\n  }\n  \n  // Obtener idioma actual de la URL\n  const currentLang = getLangFromUrl(url);\n  \n  // Si ya tiene un idioma válido en la URL, continuar\n  if (currentLang !== defaultLang && pathname.startsWith(`/${currentLang}`)) {\n    return next();\n  }\n  \n  // Si está en la raíz o en una ruta sin idioma específico\n  if (pathname === '/' || (currentLang === defaultLang && !pathname.startsWith('/ca'))) {\n    // Verificar si ya se ha hecho una redirección automática\n    const hasRedirected = request.headers.get('cookie')?.includes('lang_redirected=true');\n    \n    if (!hasRedirected) {\n      // Detectar idioma preferido del navegador\n      const acceptLanguage = request.headers.get('accept-language');\n      const preferredLang = getPreferredLanguage(acceptLanguage);\n      \n      // Solo redirigir si el idioma preferido no es el por defecto\n      if (preferredLang !== defaultLang) {\n        const newUrl = new URL(url);\n        newUrl.pathname = `/${preferredLang}${pathname === '/' ? '' : pathname}`;\n        \n        // Crear respuesta de redirección con cookie para evitar loops\n        const response = redirect(newUrl.toString(), 302);\n        response.headers.set('Set-Cookie', 'lang_redirected=true; Path=/; Max-Age=86400'); // 24 horas\n        return response;\n      }\n    }\n  }\n  \n  // Verificar que la ruta en catalán existe\n  if (pathname.startsWith('/ca/')) {\n    // Aquí podrías verificar si la página traducida existe\n    // Por ahora, permitir todas las rutas de catalán\n    return next();\n  }\n  \n  return next();\n});\n
+import { defineMiddleware } from 'astro:middleware';
+import { getLangFromUrl, defaultLang } from './i18n/config';
+
+// Rutas que no necesitan redirección de idioma
+const excludedPaths = [
+  '/api/',
+  '/admin/',
+  '/_astro/',
+  '/favicon',
+  '/robots.txt',
+  '/sitemap',
+  '/wp-',
+  '/.well-known/'
+];
+
+// Función para verificar si la ruta debe ser excluida
+function shouldExclude(pathname: string): boolean {
+  return excludedPaths.some(excluded => pathname.startsWith(excluded));
+}
+
+export const onRequest = defineMiddleware(async (context, next) => {
+  const { url } = context;
+  const pathname = url.pathname;
+  
+  // Excluir rutas que no necesitan redirección
+  if (shouldExclude(pathname)) {
+    return next();
+  }
+  
+  // Obtener idioma actual de la URL
+  const currentLang = getLangFromUrl(url);
+  
+  // Si ya tiene un idioma válido en la URL, continuar
+  if (currentLang !== defaultLang && pathname.startsWith(`/${currentLang}`)) {
+    return next();
+  }
+  
+  // Verificar que la ruta en catalán existe
+  if (pathname.startsWith('/ca/')) {
+    return next();
+  }
+  
+  return next();
+});
