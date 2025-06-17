@@ -13,18 +13,15 @@ const { t } = useTranslations(currentLang);
 const alternateUrls = getAlternateUrls(currentUrl.pathname, currentLang);
 ---
 
-<div class={`language-selector ${className}`}>
-  <button id="lang-toggle" class="lang-toggle" aria-label={t('nav.language')}>
-    <span class="current-lang">
-      <span class="flag">{languages[currentLang].flag}</span>
-      <span class="code">{languages[currentLang].code.toUpperCase()}</span>
-      <svg class="chevron" width="12" height="12" viewBox="0 0 12 12" fill="none">
-        <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-      </svg>
+<div class={`language-selector-minimal ${className}`}>
+  <button id="lang-toggle-minimal" class="lang-toggle-minimal" aria-label={t('nav.language')}>
+    <span class="current-lang-minimal">
+      <span class="flag-minimal">{languages[currentLang].flag}</span>
+      <span class="code-minimal">{languages[currentLang].code.toUpperCase()}</span>
     </span>
   </button>
   
-  <div id="lang-menu" class="lang-menu hidden">
+  <div id="lang-menu-minimal" class="lang-menu-minimal hidden">
     {Object.entries(languages).map(([langCode, langInfo]) => {
       const url = alternateUrls[langCode];
       const isActive = langCode === currentLang;
@@ -32,13 +29,13 @@ const alternateUrls = getAlternateUrls(currentUrl.pathname, currentLang);
       return (
         <a 
           href={url}
-          class={`lang-option ${isActive ? 'active' : ''}`}
+          class={`lang-option-minimal ${isActive ? 'active' : ''}`}
           hreflang={langInfo.locale}
           aria-current={isActive ? 'page' : undefined}
         >
-          <span class="flag">{langInfo.flag}</span>
-          <span class="name">{langInfo.name}</span>
-          {isActive && <span class="check">✓</span>}
+          <span class="flag-minimal">{langInfo.flag}</span>
+          <span class="name-minimal">{langInfo.name}</span>
+          {isActive && <span class="check-minimal">✓</span>}
         </a>
       );
     })}
@@ -46,185 +43,232 @@ const alternateUrls = getAlternateUrls(currentUrl.pathname, currentLang);
 </div>
 
 <style>
-.language-selector {
+.language-selector-minimal {
   position: relative;
   display: inline-block;
+  font-family: 'Inter', -apple-system, sans-serif;
 }
 
-.lang-toggle {
+/* Botón principal - más compacto y minimalista */
+.lang-toggle-minimal {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.375rem;
   padding: 0.5rem 0.75rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 8px;
   color: #ffffff;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-  min-width: 80px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.875rem;
+  min-width: 65px;
+  height: 36px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-html:not(.dark) .lang-toggle {
-  background: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.15);
+/* Modo claro */
+html:not(.dark) .lang-toggle-minimal {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   color: #374151;
 }
 
-.lang-toggle:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+.lang-toggle-minimal:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
 }
 
-html:not(.dark) .lang-toggle:hover {
-  background: rgba(0, 0, 0, 0.08);
-  border-color: rgba(0, 0, 0, 0.25);
+html:not(.dark) .lang-toggle-minimal:hover {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.12);
 }
 
-.current-lang {
+/* Contenido del botón */
+.current-lang-minimal {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.375rem;
   width: 100%;
-  justify-content: space-between;
 }
 
-.flag {
-  font-size: 1.1em;
+.flag-minimal {
+  font-size: 1rem;
+  line-height: 1;
 }
 
-.code {
-  font-weight: 500;
-  letter-spacing: 0.5px;
+.code-minimal {
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  font-size: 0.8rem;
 }
 
-.chevron {
-  transition: transform 0.3s ease;
-  opacity: 0.7;
-}
-
-.lang-toggle.active .chevron {
-  transform: rotate(180deg);
-}
-
-.lang-menu {
+/* Menú desplegable - más elegante */
+.lang-menu-minimal {
   position: absolute;
-  top: calc(100% + 0.5rem);
+  top: calc(100% + 0.375rem);
   right: 0;
-  background: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
   overflow: hidden;
-  min-width: 160px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  min-width: 140px;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 10px 20px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   opacity: 1;
-  transform: translateY(0);
-  transition: all 0.3s ease;
+  transform: translateY(0) scale(1);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-html:not(.dark) .lang-menu {
-  background: rgba(255, 255, 255, 0.98);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+html:not(.dark) .lang-menu-minimal {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-.lang-menu.hidden {
+.lang-menu-minimal.hidden {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(-8px) scale(0.95);
   pointer-events: none;
 }
 
-.lang-option {
+/* Opciones del menú */
+.lang-option-minimal {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  gap: 0.625rem;
+  padding: 0.625rem 0.875rem;
   color: #e5e7eb;
   text-decoration: none;
-  transition: all 0.3s ease;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.15s ease;
+  font-size: 0.875rem;
+  position: relative;
 }
 
-html:not(.dark) .lang-option {
+html:not(.dark) .lang-option-minimal {
   color: #374151;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.lang-option:last-child {
-  border-bottom: none;
-}
-
-.lang-option:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-}
-
-html:not(.dark) .lang-option:hover {
-  background: rgba(0, 0, 0, 0.05);
-  color: #111827;
-}
-
-.lang-option.active {
+.lang-option-minimal:hover {
   background: rgba(96, 165, 250, 0.1);
   color: #60a5fa;
 }
 
-html:not(.dark) .lang-option.active {
+html:not(.dark) .lang-option-minimal:hover {
+  background: rgba(59, 130, 246, 0.08);
+  color: #2563eb;
+}
+
+.lang-option-minimal.active {
+  background: rgba(96, 165, 250, 0.15);
+  color: #60a5fa;
+  font-weight: 500;
+}
+
+html:not(.dark) .lang-option-minimal.active {
   background: rgba(59, 130, 246, 0.1);
   color: #2563eb;
 }
 
-.lang-option .name {
+.lang-option-minimal .name-minimal {
   flex: 1;
   font-weight: 500;
 }
 
-.check {
+.check-minimal {
   color: #22c55e;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 0.75rem;
 }
 
-/* Responsive */
+/* Responsive - aún más compacto en móvil */
 @media (max-width: 768px) {
-  .lang-menu {
+  .lang-toggle-minimal {
+    min-width: 55px;
+    padding: 0.425rem 0.625rem;
+    height: 32px;
+  }
+  
+  .code-minimal {
+    font-size: 0.75rem;
+  }
+  
+  .flag-minimal {
+    font-size: 0.9rem;
+  }
+  
+  .lang-menu-minimal {
     right: auto;
     left: 0;
-    min-width: 140px;
+    min-width: 120px;
   }
   
-  .lang-toggle {
-    min-width: 70px;
-    padding: 0.5rem;
+  .lang-option-minimal {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .lang-toggle-minimal {
+    min-width: 50px;
+    padding: 0.375rem 0.5rem;
+    height: 30px;
   }
   
-  .code {
-    display: none;
+  .code-minimal {
+    display: none; /* Solo bandera en pantallas muy pequeñas */
   }
+  
+  .current-lang-minimal {
+    justify-content: center;
+  }
+}
+
+/* Animación sutil al abrir */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.lang-menu-minimal:not(.hidden) {
+  animation: slideDown 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const toggle = document.getElementById('lang-toggle');
-  const menu = document.getElementById('lang-menu');
+  const toggle = document.getElementById('lang-toggle-minimal');
+  const menu = document.getElementById('lang-menu-minimal');
   
   if (!toggle || !menu) return;
   
-  // Toggle del menu
+  // Toggle del menú
   toggle.addEventListener('click', (e) => {
     e.stopPropagation();
     menu.classList.toggle('hidden');
-    toggle.classList.toggle('active');
   });
   
   // Cerrar al hacer clic fuera
   document.addEventListener('click', (e) => {
     if (!toggle.contains(e.target) && !menu.contains(e.target)) {
       menu.classList.add('hidden');
-      toggle.classList.remove('active');
     }
   });
   
@@ -232,8 +276,16 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       menu.classList.add('hidden');
-      toggle.classList.remove('active');
     }
+  });
+  
+  // Cerrar al hacer scroll
+  let scrollTimeout;
+  window.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      menu.classList.add('hidden');
+    }, 100);
   });
 });
 </script>
