@@ -102,10 +102,10 @@
 
   /* Mejorar visibilidad en modo oscuro */
   .dark #tsparticles {
-    filter: contrast(1.1) brightness(1.1);
+    filter: contrast(1.05) brightness(1.05);
   }
 
   .dark #tsparticles canvas {
-    mix-blend-mode: screen;
+    mix-blend-mode: normal;
   }
 }

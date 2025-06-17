@@ -45,10 +45,10 @@ html:not(.dark) .faq-item.active .faq-chevron {
 /* Partículas en modo claro - mejorar visibilidad */
 html:not(.dark) #tsparticles {
   opacity: 1 !important;
-  filter: contrast(1.2) brightness(0.8);
+  filter: none;
 }
 
 html:not(.dark) #tsparticles canvas {
-  mix-blend-mode: multiply;
-  opacity: 0.9 !important;
+  mix-blend-mode: normal;
+  opacity: 1 !important;
 }

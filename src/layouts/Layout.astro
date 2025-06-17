@@ -168,8 +168,8 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
             color: '#60a5fa',
             distance: 150,
             enable: true,
-            opacity: 0.6,
-            width: 2,
+            opacity: 0.4,
+            width: 1.5,
           },
           collisions: {
             enable: false,
@@ -187,16 +187,16 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
           number: {
             density: {
               enable: true,
-              area: 600,
+              area: 700,
             },
-            value: 80,
+            value: 70,
           },
           opacity: {
-            value: 0.8,
+            value: 0.6,
             animation: {
               enable: true,
               speed: 1.5,
-              minimumValue: 0.3,
+              minimumValue: 0.2,
               sync: false,
             },
           },
@@ -204,11 +204,11 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
             type: 'circle',
           },
           size: {
-            value: { min: 3, max: 7 },
+            value: { min: 2, max: 5 },
             animation: {
               enable: true,
               speed: 2,
-              minimumValue: 1,
+              minimumValue: 0.8,
               sync: false,
             },
           },
@@ -253,19 +253,19 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
         // Actualizar colores de partículas
         container.options.particles.color.value = isDark 
           ? ['#60a5fa', '#3b82f6', '#2563eb', '#93c5fd', '#1e40af']
-          : ['#3b82f6', '#1e40af', '#1d4ed8', '#60a5fa', '#2563eb'];
+          : ['#1e40af', '#2563eb', '#1d4ed8', '#3b82f6', '#60a5fa'];
         
         // Actualizar enlaces
-        container.options.particles.links.color = isDark ? '#60a5fa' : '#3b82f6';
-        container.options.particles.links.opacity = isDark ? 0.6 : 0.7;
+        container.options.particles.links.color = isDark ? '#60a5fa' : '#2563eb';
+        container.options.particles.links.opacity = isDark ? 0.4 : 0.6;
         
-        // Actualizar opacidad - MÁS VISIBLES
-        container.options.particles.opacity.value = isDark ? 0.8 : 0.9;
-        container.options.particles.opacity.animation.minimumValue = isDark ? 0.3 : 0.4;
+        // Actualizar opacidad - BALANCEADO
+        container.options.particles.opacity.value = isDark ? 0.6 : 0.8;
+        container.options.particles.opacity.animation.minimumValue = isDark ? 0.2 : 0.3;
         
         // Refrescar partículas
         container.refresh();
-        console.log(`🎆 Partículas actualizadas para modo ${isDark ? 'oscuro' : 'claro'}`);
+        console.log(`🎆 Partículas balanceadas para modo ${isDark ? 'oscuro' : 'claro'}`);
       }
     }
 
