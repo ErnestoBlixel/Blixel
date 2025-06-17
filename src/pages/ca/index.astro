@@ -1,282 +1,53 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Hero from '../../components/Hero.astro';
-import MagicCardsFINAL from '../../components/magic-cards-new/MagicCardsFINAL.astro';
-import ContactForm from '../../components/ContactForm.astro';
+// Redirigir a la página principal con el idioma catalán detectado automáticamente
+export const prerender = false;
 
-// Meta información en catalán (sin caracteres especiales problemáticos)
-const title = "Blixel - Intel·ligencia Artificial per a Empreses";
-const description = "Automatitza la teva empresa amb IA. Solucions personalitzades d'intel·ligencia artificial per optimitzar processos, reduir costos i augmentar l'eficiencia.";
-const keywords = "intel·ligencia artificial, automatitzacio, IA empresarial, chatbots, analisi de dades, Catalunya";
+// Esta página simplemente importa la página principal
+// El sistema de i18n detectará automáticamente que estamos en /ca/ y mostrará el contenido en catalán
 ---
 
-<Layout 
-  title={title}
-  description={description}
-  keywords={keywords}
-  pageKey="home"
->
-  <!-- Hero Section en Catalan -->
-  <Hero 
-    pageSlug="ca-home"
-    titleLine1="Intel·ligencia Artificial"
-    titleLine2="per a la teva Empresa"
-    customTitle={title}
-    customDescription={description}
-  />
+<script>
+  // Redirección inmediata a la página principal con detección de idioma
+  if (typeof window !== 'undefined') {
+    // Si estamos en /ca/, redirigir a /ca 
+    const currentPath = window.location.pathname;
+    if (currentPath === '/ca/index.astro' || currentPath === '/ca/') {
+      window.location.replace('/ca');
+    }
+  }
+</script>
+
+<!-- 
+  Esta página se mantiene por compatibilidad, pero ahora usamos un sistema unificado.
+  La página principal (index.astro) detecta automáticamente el idioma desde la URL
+  y muestra el contenido correspondiente usando el sistema de traducciones.
   
-  <!-- Seccion de Magic Cards -->
-  <section class="magic-cards-section">
-    <div class="container">
-      <div class="magic-cards-wrapper">
-        <div class="magic-cards-content">
-          <h2 class="section-title">Automatitzacio en Temps Real</h2>
-          <p class="section-description">
-            Mira com la nostra IA processa tasques automaticament,
-            estalviant temps i recursos a la teva empresa.
-          </p>
-        </div>
-        
-        <div class="magic-cards-demo">
-          <MagicCardsFINAL />
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Seccion de Servicios en Catalan -->
-  <section class="services-section">
-    <div class="container">
-      <div class="services-header">
-        <h2 class="services-title">Els Nostres Serveis</h2>
-        <p class="services-subtitle">Solucions d'IA adaptades al teu negoci</p>
-      </div>
-      
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon">🤖</div>
-          <h3 class="service-title">Automatitzacio de Processos</h3>
-          <p class="service-description">
-            Optimitza workflows i redueix tasques repetitives amb intel·ligencia artificial avancada.
-          </p>
-        </div>
-        
-        <div class="service-card">
-          <div class="service-icon">💬</div>
-          <h3 class="service-title">Chatbots Intel·ligents</h3>
-          <p class="service-description">
-            Atencio al client 24/7 amb respostes personalitzades i comprensio del context.
-          </p>
-        </div>
-        
-        <div class="service-card">
-          <div class="service-icon">📊</div>
-          <h3 class="service-title">Analisi de Dades</h3>
-          <p class="service-description">
-            Insights valuosos per prendre decisions informades basades en dades reals.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Formulario de Contacto -->
-  <section id="contacte" class="contact-section">
-    <div class="container">
-      <div class="contact-header">
-        <h2 class="contact-title">Contacta amb Nosaltres</h2>
-        <p class="contact-subtitle">Preparat per transformar la teva empresa amb IA?</p>
-      </div>
-      
-      <ContactForm 
-        lang="ca"
-        namePlaceholder="El teu nom"
-        emailPlaceholder="El teu email"
-        companyPlaceholder="La teva empresa"
-        messagePlaceholder="Explica'ns el teu projecte..."
-        submitText="Enviar Missatge"
-        successMessage="Missatge enviat correctament!"
-        errorMessage="Error en enviar el missatge. Torna-ho a provar."
-      />
-    </div>
-  </section>
-</Layout>
+  Para agregar contenido específico de catalán, usa las funciones de traducción
+  en los archivos JSON correspondientes.
+-->
 
 <style>
-  /* Estilos para la version catalana */
-  .magic-cards-section {
-    padding: 4rem 0;
-    background: transparent;
-  }
-  
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-  
-  .magic-cards-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+  /* Página de redirección temporal - sin estilos necesarios */
+  body {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    min-height: 600px;
+    min-height: 100vh;
+    background: #000;
+    color: #fff;
+    font-family: system-ui;
   }
   
-  .magic-cards-content {
-    padding: 2rem 0;
-  }
-  
-  .section-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #ffffff;
-    margin-bottom: 1.5rem;
-    line-height: 1.2;
-  }
-  
-  html:not(.dark) .section-title {
-    color: #111827;
-  }
-  
-  .section-description {
-    font-size: 1.25rem;
-    color: #9ca3af;
-    line-height: 1.6;
-    max-width: 500px;
-  }
-  
-  html:not(.dark) .section-description {
-    color: #6b7280;
-  }
-  
-  .services-section {
-    padding: 6rem 0;
-  }
-  
-  .services-header {
+  .loading {
     text-align: center;
-    margin-bottom: 4rem;
   }
   
-  .services-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #ffffff;
-    margin-bottom: 1rem;
-  }
-  
-  html:not(.dark) .services-title {
-    color: #111827;
-  }
-  
-  .services-subtitle {
-    font-size: 1.25rem;
-    color: #9ca3af;
-  }
-  
-  html:not(.dark) .services-subtitle {
-    color: #6b7280;
-  }
-  
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-  }
-  
-  .service-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 2rem;
-    text-align: center;
-    transition: all 0.3s ease;
-  }
-  
-  html:not(.dark) .service-card {
-    background: rgba(0, 0, 0, 0.03);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-  }
-  
-  .service-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(96, 165, 250, 0.3);
-  }
-  
-  .service-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
-  
-  .service-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 1rem;
-  }
-  
-  html:not(.dark) .service-title {
-    color: #111827;
-  }
-  
-  .service-description {
-    color: #9ca3af;
-    line-height: 1.6;
-  }
-  
-  html:not(.dark) .service-description {
-    color: #6b7280;
-  }
-  
-  .contact-section {
-    padding: 6rem 0;
-  }
-  
-  .contact-header {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-  
-  .contact-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #ffffff;
-    margin-bottom: 1rem;
-  }
-  
-  html:not(.dark) .contact-title {
-    color: #111827;
-  }
-  
-  .contact-subtitle {
-    font-size: 1.25rem;
-    color: #9ca3af;
-  }
-  
-  html:not(.dark) .contact-subtitle {
-    color: #6b7280;
-  }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .magic-cards-wrapper {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      text-align: center;
-    }
-    
-    .section-title {
-      font-size: 2rem;
-    }
-    
-    .services-title,
-    .contact-title {
-      font-size: 2rem;
-    }
-    
-    .services-grid {
-      grid-template-columns: 1fr;
-    }
+  html:not(.dark) body {
+    background: #fff;
+    color: #000;
   }
 </style>
+
+<div class="loading">
+  <p>Carregant / Cargando...</p>
+</div>

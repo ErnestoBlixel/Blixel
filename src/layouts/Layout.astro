@@ -72,8 +72,8 @@ const currentLang = getLangFromUrl(Astro.url);
   <!-- Botón de cambio de tema -->
   <ThemeToggle />
   
-  <!-- Selector de idioma -->
-  <LanguageSelector currentUrl={Astro.url} className="fixed top-4 right-20 z-50" />
+  <!-- Selector de idioma MUY VISIBLE -->
+  <LanguageSelector currentUrl={Astro.url} className="language-selector-main" />
   
   <!-- Banner de cookies RGPD -->
   <CookieBanner />
@@ -377,6 +377,30 @@ const currentLang = getLangFromUrl(Astro.url);
     position: relative;
     background: transparent;
     z-index: 10;
+  }
+
+  /* Selector de idioma MUY VISIBLE */
+  .language-selector-main {
+    position: fixed !important;
+    top: 20px !important;
+    right: 100px !important;
+    z-index: 9999 !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+    padding: 8px 16px !important;
+    border-radius: 12px !important;
+    border: 2px solid #60a5fa !important;
+    box-shadow: 0 4px 20px rgba(96, 165, 250, 0.5) !important;
+  }
+
+  html:not(.dark) .language-selector-main {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 2px solid #2563eb !important;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3) !important;
+  }
+
+  /* Asegurar que el selector sea clickeable */
+  .language-selector-main * {
+    pointer-events: auto !important;
   }
 
 
