@@ -3,18 +3,11 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import MagicUICards from '../components/magic-cards-new/MagicCardsFINAL.astro';
 import ContactForm from '../components/ContactForm.astro';
-import { getLangFromUrl, siteInfo } from '../i18n/config';
-import { useTranslations } from '../i18n/utils';
 
-// Obtener idioma actual
-const currentLang = getLangFromUrl(Astro.url);
-const { t } = useTranslations(currentLang);
-
-// Datos básicos para el sitio usando el sistema de traducciones
+// Datos básicos para el sitio
 const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
-const pageTitle = t('meta.home.title');
-const pageDescription = t('meta.home.description');
-const siteData = siteInfo[currentLang];
+const pageTitle = 'Inteligencia Artificial para Empresas | Blixel';
+const pageDescription = 'Implementamos soluciones de IA para empresas con ROI garantizado en 90 días.';
 ---
 
 <Layout 
@@ -22,14 +15,12 @@ const siteData = siteInfo[currentLang];
   logoAlt="BLIXEL logo"
   title={pageTitle}
   description={pageDescription}
-  keywords={t('meta.home.keywords')}
-  pageKey="home"
 >
   <!-- HEADER SIMPLE -->
   <header class="simple-header">
     <div class="header-container">
       <!-- Logo a la izquierda -->
-      <a href={currentLang === 'es' ? '/' : `/${currentLang}`} class="logo-link">
+      <a href="/" class="logo-link">
         <img 
           src={logoUrl} 
           alt="BLIXEL logo" 
@@ -38,6 +29,8 @@ const siteData = siteInfo[currentLang];
           crossorigin="anonymous"
         />
       </a>
+      
+
     </div>
   </header>
 
@@ -45,10 +38,10 @@ const siteData = siteInfo[currentLang];
   <Hero 
     logoUrl={logoUrl}
     logoAlt="BLIXEL logo"
-    customTitle={t('hero.title')}
-    customDescription={t('hero.description')}
-    titleLine1={t('hero.title')}
-    titleLine2=""
+    customTitle="Aplica Inteligencia Artificial en tu empresa"
+    customDescription="Inteligencia artificial en tu empresa HOY o quiebras mañana. ROI en 90 días. Mientras dudas, tu competencia factura."
+    titleLine1="Aplica Inteligencia Artificial"
+    titleLine2="en tu empresa"
   />
 
   <!-- SECCIÓN DE SERVICIOS -->
@@ -57,16 +50,17 @@ const siteData = siteInfo[currentLang];
       <!-- Título principal -->
       <div class="services-header">
         <h2 class="services-title">
-          {t('services.title')} <span class="title-highlight">{t('services.subtitle')}</span>
+          Nuestras soluciones de <span class="title-highlight">inteligencia artificial</span> para empresas
         </h2>
         <p class="services-description">
-          {t('hero.description')}
+          Te ayudamos a aplicar la Inteligencia Artificial donde marca la diferencia en tu empresa:
+          procesos, decisiones y clientes
         </p>
       </div>
 
       <!-- Grid de servicios -->
       <div class="services-grid">
-        <!-- Servicio 1: Automatización -->
+        <!-- Servicio 1: Formación aplicada IA -->
         <div class="service-card" data-service="1">
           <div class="service-icon">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -74,14 +68,14 @@ const siteData = siteInfo[currentLang];
               <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
             </svg>
           </div>
-          <h3 class="service-title">{t('services.automation.title')}</h3>
+          <h3 class="service-title">Formación IA<br>para Empresas</h3>
           <p class="service-description">
-            {t('services.automation.description')}
+            Convertimos a tu equipo en usuarios avanzados de IA. Formación práctica adaptada a tu sector con casos reales y herramientas específicas.
           </p>
           <div class="service-beam"></div>
         </div>
 
-        <!-- Servicio 2: Chatbots -->
+        <!-- Servicio 2: Automatización procesos -->
         <div class="service-card" data-service="2">
           <div class="service-icon">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -90,14 +84,14 @@ const siteData = siteInfo[currentLang];
               <line x1="9" y1="21" x2="9" y2="9"></line>
             </svg>
           </div>
-          <h3 class="service-title">{t('services.chatbots.title')}</h3>
+          <h3 class="service-title">Automatización<br>de Procesos</h3>
           <p class="service-description">
-            {t('services.chatbots.description')}
+            Eliminamos tareas repetitivas de tu día a día. Conectamos sistemas, digitalizamos flujos y liberamos tiempo para lo importante.
           </p>
           <div class="service-beam"></div>
         </div>
 
-        <!-- Servicio 3: Análisis -->
+        <!-- Servicio 3: Agentes inteligentes IA -->
         <div class="service-card" data-service="3">
           <div class="service-icon">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -111,9 +105,30 @@ const siteData = siteInfo[currentLang];
               <line x1="17" y1="7" x2="22" y2="7"></line>
             </svg>
           </div>
-          <h3 class="service-title">{t('services.analytics.title')}</h3>
+          <h3 class="service-title">Agentes IA<br>Automatizados 24/7</h3>
           <p class="service-description">
-            {t('services.analytics.description')}
+            Creamos asistentes que trabajan 24/7. Atención al cliente automatizada, análisis de datos y generación de informes sin intervención humana.
+          </p>
+          <div class="service-beam"></div>
+        </div>
+
+        <!-- Servicio 4: Desarrollo microSaaS -->
+        <div class="service-card" data-service="4">
+          <div class="service-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+              <line x1="7" y1="2" x2="7" y2="22"></line>
+              <line x1="17" y1="2" x2="17" y2="22"></line>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <line x1="2" y1="7" x2="7" y2="7"></line>
+              <line x1="2" y1="17" x2="7" y2="17"></line>
+              <line x1="17" y1="17" x2="22" y2="17"></line>
+              <line x1="17" y1="7" x2="22" y2="7"></line>
+            </svg>
+          </div>
+          <h3 class="service-title">Desarrollo SaaS<br>con IA Integrada</h3>
+          <p class="service-description">
+            Construimos soluciones concretas que resuelven problemas reales. Apps a medida con IA para optimizar áreas clave de tu negocio.
           </p>
           <div class="service-beam"></div>
         </div>
@@ -129,29 +144,26 @@ const siteData = siteInfo[currentLang];
         <!-- Título principal con animación -->
         <div class="urgency-title-container">
           <h2 class="urgency-title">
-            <span class="title-regular">
-              {currentLang === 'es' ? '¿Por qué el momento es' : 'Per què el moment és'}
-            </span>
+            <span class="title-regular">¿Por qué el</span>
             <br>
-            <span class="title-highlight">
-              {currentLang === 'es' ? 'AHORA?' : 'ARA?'}
-            </span>
+            <span class="title-regular">momento es</span>
+            <br>
+            <span class="title-highlight">AHORA?</span>
           </h2>
         </div>
 
         <!-- Descripción -->
         <div class="urgency-description-container">
           <p class="urgency-description">
-            {currentLang === 'es' 
-              ? 'La Inteligencia Artificial no es el futuro. Es el presente que está transformando empresas cada día. Mientras lees esto, tu competencia ya está automatizando procesos, mejorando su eficiencia y capturando más mercado.'
-              : 'La Intel·ligència Artificial no és el futur. És el present que està transformant empreses cada dia. Mentre llegeixes això, la teva competència ja està automatitzant processos, millorant la seva eficiència i capturant més mercat.'
-            }
+            La Inteligencia Artificial no es el futuro. Es el presente que está 
+            transformando empresas cada día. Mientras lees esto, tu competencia 
+            ya está automatizando procesos, mejorando su eficiencia y capturando más mercado.
           </p>
           <p class="urgency-description-secondary">
-            {currentLang === 'es'
-              ? 'Cada día sin IA es dinero perdido en tareas automatizables, talento desperdiciado en procesos obsoletos y terreno cedido a competidores más ágiles. La pregunta no es si implementar IA, sino cuándo. Y la respuesta es clara: el momento es ahora.'
-              : 'Cada dia sense IA és diners perduts en tasques automatitzables, talent malgastat en processos obsolets i terreny cedit a competidors més àgils. La pregunta no és si implementar IA, sinó quan. I la resposta és clara: el moment és ara.'
-            }
+            Cada día sin IA es dinero perdido en tareas automatizables, talento 
+            desperdiciado en procesos obsoletos y terreno cedido a competidores más 
+            ágiles. La pregunta no es si implementar IA, sino cuándo. Y la respuesta 
+            es clara: el momento es ahora.
           </p>
         </div>
       </div>
@@ -164,8 +176,8 @@ const siteData = siteInfo[currentLang];
             <span class="stat-number">73%</span>
           </div>
           <div class="stat-text">
-            <span class="stat-primary">{currentLang === 'es' ? 'de empresas con IA reportan' : 'd\'empreses amb IA reporten'}</span>
-            <span class="stat-secondary">{currentLang === 'es' ? '+25% en productividad' : '+25% en productivitat'}</span>
+            <span class="stat-primary">de empresas con IA reportan</span>
+            <span class="stat-secondary">+25% en productividad</span>
           </div>
         </div>
 
@@ -175,8 +187,8 @@ const siteData = siteInfo[currentLang];
             <span class="stat-number">50%</span>
           </div>
           <div class="stat-text">
-            <span class="stat-primary">{currentLang === 'es' ? 'de trabajos administrativos' : 'de treballs administratius'}</span>
-            <span class="stat-secondary">{currentLang === 'es' ? 'desaparecerán en 2 años' : 'desapareixeran en 2 anys'}</span>
+            <span class="stat-primary">de trabajos administrativos</span>
+            <span class="stat-secondary">desaparecerán en 2 años</span>
           </div>
         </div>
 
@@ -186,8 +198,8 @@ const siteData = siteInfo[currentLang];
             <span class="stat-number">3x</span>
           </div>
           <div class="stat-text">
-            <span class="stat-primary">{currentLang === 'es' ? 'más rápido avanzan las empresas' : 'més ràpid avancen les empreses'}</span>
-            <span class="stat-secondary">{currentLang === 'es' ? 'con IA' : 'amb IA'}</span>
+            <span class="stat-primary">más rápido avanzan las empresas</span>
+            <span class="stat-secondary">con IA</span>
           </div>
         </div>
 
@@ -197,15 +209,15 @@ const siteData = siteInfo[currentLang];
             <span class="stat-number">2026</span>
           </div>
           <div class="stat-text">
-            <span class="stat-primary">{currentLang === 'es' ? 'empresas sin IA no sobrevivirán' : 'empreses sense IA no sobreviuran'}</span>
-            <span class="stat-secondary">{currentLang === 'es' ? 'más allá' : 'més enllà'}</span>
+            <span class="stat-primary">empresas sin IA no sobrevivirán</span>
+            <span class="stat-secondary">más allá</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SECCIÓN DE EJEMPLOS ANIMADOS CON MAGIC UI -->
+  <!-- SECCIÓN DE EJEMPLOS ANIMADOS CON MAGIC UI - MOVIDA AL FINAL -->
   <section class="examples-section">
     <div class="examples-container">
       <div class="examples-grid">
@@ -215,42 +227,37 @@ const siteData = siteInfo[currentLang];
         <!-- Columna de texto -->
         <div class="text-content">
           <h2 class="examples-title">
-            {currentLang === 'es' 
-              ? <>Pon a trabajar la <span class="title-highlight">IA</span><br/>en tu empresa.</>
-              : <>Posa a treballar la <span class="title-highlight">IA</span><br/>a la teva empresa.</>
-            }
+            Pon a trabajar la <span class="title-highlight">IA</span><br>
+            en tu empresa.
           </h2>
           
           <p class="examples-description">
-            {currentLang === 'es'
-              ? 'Mientras lees esto, miles de empresas están ahorrando tiempo y dinero con IA. Sus sistemas trabajan 24/7 procesando facturas, atendiendo clientes, generando informes y tomando decisiones inteligentes.'
-              : 'Mentre llegeixes això, milers d\'empreses estan estalviant temps i diners amb IA. Els seus sistemes treballen 24/7 processant factures, atenent clients, generant informes i prenent decisions intel·ligents.'
-            }
+            Mientras lees esto, miles de empresas están ahorrando tiempo y dinero con IA. Sus sistemas trabajan 24/7 procesando facturas, atendiendo clientes, generando informes y tomando decisiones inteligentes.
           </p>
 
           <div class="stats-grid">
             <div class="stat-item">
               <div class="stat-card-mini">
                 <strong class="stat-number">24/7</strong>
-                <span class="stat-label">{currentLang === 'es' ? 'Sin descansos' : 'Sense descansos'}</span>
+                <span class="stat-label">Sin descansos</span>
               </div>
             </div>
             <div class="stat-item">
               <div class="stat-card-mini">
                 <strong class="stat-number">-80%</strong>
-                <span class="stat-label">{currentLang === 'es' ? 'Menos errores' : 'Menys errors'}</span>
+                <span class="stat-label">Menos errores</span>
               </div>
             </div>
             <div class="stat-item">
               <div class="stat-card-mini">
                 <strong class="stat-number">10x</strong>
-                <span class="stat-label">{currentLang === 'es' ? 'Más rápido' : 'Més ràpid'}</span>
+                <span class="stat-label">Más rápido</span>
               </div>
             </div>
           </div>
 
           <a href="#contacto" class="examples-cta" id="cta-automatizar">
-            <span>{currentLang === 'es' ? 'Empieza a automatizar hoy' : 'Comença a automatitzar avui'}</span>
+            <span>Empieza a automatizar hoy</span>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -266,13 +273,10 @@ const siteData = siteInfo[currentLang];
       <!-- Título de la sección -->
       <div class="faq-header">
         <h2 class="faq-title">
-          {currentLang === 'es' ? 'Preguntas' : 'Preguntes'} <span class="title-highlight">{currentLang === 'es' ? 'frecuentes' : 'freqüents'}</span>
+          Preguntas <span class="title-highlight">frecuentes</span>
         </h2>
         <p class="faq-description">
-          {currentLang === 'es' 
-            ? 'Resolvemos las dudas más comunes sobre implementación de IA en empresas'
-            : 'Resolem els dubtes més comuns sobre implementació d\'IA a empreses'
-          }
+          Resolvemos las dudas más comunes sobre implementación de IA en empresas
         </p>
       </div>
 
@@ -281,69 +285,78 @@ const siteData = siteInfo[currentLang];
         <!-- FAQ 1 -->
         <div class="faq-item" data-faq="1">
           <button class="faq-question">
-            <span>
-              {currentLang === 'es' 
-                ? '¿Cuánto tiempo tarda implementar IA en mi empresa?'
-                : 'Quant temps triga implementar IA a la meva empresa?'
-              }
-            </span>
+            <span>¿Cuánto tiempo tarda implementar IA en mi empresa?</span>
             <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <div class="faq-answer">
-            <p>
-              {currentLang === 'es'
-                ? 'Dependiendo del proyecto, entre 2-8 semanas. Proyectos simples como chatbots o automatización de emails pueden estar listos en 2-3 semanas. Soluciones más complejas como análisis predictivo o sistemas personalizados pueden tomar 6-8 semanas. Garantizamos ROI visible en los primeros 90 días.'
-                : 'Depenent del projecte, entre 2-8 setmanes. Projectes simples com chatbots o automatització d\'emails poden estar llestos en 2-3 setmanes. Solucions més complexes com anàlisi predictiu o sistemes personalitzats poden prendre 6-8 setmanes. Garantim ROI visible en els primers 90 dies.'
-              }
-            </p>
+            <p>Dependiendo del proyecto, entre 2-8 semanas. Proyectos simples como chatbots o automatización de emails pueden estar listos en 2-3 semanas. Soluciones más complejas como análisis predictivo o sistemas personalizados pueden tomar 6-8 semanas. Garantizamos ROI visible en los primeros 90 días.</p>
           </div>
         </div>
 
         <!-- FAQ 2 -->
         <div class="faq-item" data-faq="2">
           <button class="faq-question">
-            <span>
-              {currentLang === 'es' 
-                ? '¿Qué cuesta implementar inteligencia artificial?'
-                : 'Què costa implementar intel·ligència artificial?'
-              }
-            </span>
+            <span>¿Qué cuesta implementar inteligencia artificial?</span>
             <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <div class="faq-answer">
-            <p>
-              {currentLang === 'es'
-                ? 'Los costes varían según el alcance: desde 3.000€ para automatizaciones básicas hasta 25.000€ para soluciones empresariales complejas. Ofrecemos consulta gratuita para evaluar tu caso y crear un presupuesto personalizado. Todos nuestros proyectos incluyen formación del equipo y soporte post-implementación.'
-                : 'Els costos varien segons l\'abast: des de 3.000€ per automatitzacions bàsiques fins a 25.000€ per solucions empresarials complexes. Oferim consulta gratuïta per avaluar el teu cas i crear un pressupost personalitzat. Tots els nostres projectes inclouen formació de l\'equip i suport post-implementació.'
-              }
-            </p>
+            <p>Los costes varían según el alcance: desde 3.000€ para automatizaciones básicas hasta 25.000€ para soluciones empresariales complejas. Ofrecemos consulta gratuita para evaluar tu caso y crear un presupuesto personalizado. Todos nuestros proyectos incluyen formación del equipo y soporte post-implementación.</p>
           </div>
         </div>
 
         <!-- FAQ 3 -->
         <div class="faq-item" data-faq="3">
           <button class="faq-question">
-            <span>
-              {currentLang === 'es' 
-                ? '¿Necesito conocimientos técnicos para usar IA?'
-                : 'Necessito coneixements tècnics per usar IA?'
-              }
-            </span>
+            <span>¿Necesito conocimientos técnicos para usar IA?</span>
             <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
           <div class="faq-answer">
-            <p>
-              {currentLang === 'es'
-                ? 'No. Diseñamos todas nuestras soluciones para ser intuitivas y fáciles de usar. Además, incluimos formación completa para tu equipo. Nuestras interfaces son tan simples como usar WhatsApp o Gmail. Tu equipo estará operando con confianza en pocos días.'
-                : 'No. Dissenyem totes les nostres solucions per ser intuïtives i fàcils d\'usar. A més, incloem formació completa per al teu equip. Les nostres interfícies són tan simples com usar WhatsApp o Gmail. El teu equip estarà operant amb confiança en pocs dies.'
-              }
-            </p>
+            <p>No. Diseñamos todas nuestras soluciones para ser intuitivas y fáciles de usar. Además, incluimos formación completa para tu equipo. Nuestras interfaces son tan simples como usar WhatsApp o Gmail. Tu equipo estará operando con confianza en pocos días.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item" data-faq="4">
+          <button class="faq-question">
+            <span>¿Qué pasa si la IA no funciona como esperaba?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>Ofrecemos garantía de ROI en 90 días. Si no ves resultados medibles en ese tiempo, ajustamos la solución sin coste adicional. Además, proporcionamos 6 meses de soporte incluido y optimización continua. Tu éxito es nuestro éxito.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item" data-faq="5">
+          <button class="faq-question">
+            <span>¿Puede la IA integrarse con mis sistemas actuales?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>Sí, trabajamos con todos los sistemas populares: CRM (Salesforce, HubSpot), ERP (SAP, Odoo), e-commerce (Shopify, WooCommerce), bases de datos, APIs y herramientas de oficina. Si tienes sistemas personalizados, creamos conectores a medida. La integración es parte de nuestro servicio estándar.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-item" data-faq="6">
+          <button class="faq-question">
+            <span>¿Qué tipos de procesos se pueden automatizar?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>Prácticamente cualquier proceso repetitivo: procesamiento de facturas, atención al cliente, clasificación de emails, generación de informes, gestión de inventario, análisis de datos, programación de citas, seguimiento de leads, control de calidad y mucho más. Si lo haces manualmente y es repetitivo, probablemente lo podemos automatizar.</p>
           </div>
         </div>
       </div>
@@ -356,34 +369,32 @@ const siteData = siteInfo[currentLang];
       <!-- Header de la sección -->
       <div class="contact-form-header">
         <h2 class="contact-form-title">
-          {t('contact.title')} <span class="title-highlight">IA</span> {currentLang === 'es' ? 'en tu empresa?' : 'a la teva empresa?'}
+          ¿Listo para aplicar <span class="title-highlight">IA</span> en tu empresa?
         </h2>
         <p class="contact-form-description">
-          {currentLang === 'es'
-            ? 'Completa el formulario y te responderemos en menos de 24 horas con un plan personalizado para tu empresa.'
-            : 'Completa el formulari i et respondrem en menys de 24 hores amb un pla personalitzat per a la teva empresa.'
-          }
+          Completa el formulario y te responderemos en menos de 24 horas con un plan personalizado para tu empresa.
         </p>
       </div>
 
       <!-- Formulario de contacto -->
       <div class="form-embed-container">
-        <ContactForm currentLang={currentLang} />
+        <!-- Formulario de contacto con idioma español -->
+        <ContactForm currentLang="es" />
       </div>
 
       <!-- Trust badges -->
       <div class="contact-trust-badges">
         <div class="contact-trust-item">
           <div class="contact-trust-icon">🔒</div>
-          <span>{currentLang === 'es' ? 'Datos 100% seguros' : 'Dades 100% segures'}</span>
+          <span>Datos 100% seguros</span>
         </div>
         <div class="contact-trust-item">
           <div class="contact-trust-icon">⚡</div>
-          <span>{currentLang === 'es' ? 'Respuesta en 24h' : 'Resposta en 24h'}</span>
+          <span>Respuesta en 24h</span>
         </div>
         <div class="contact-trust-item">
           <div class="contact-trust-icon">🎯</div>
-          <span>{currentLang === 'es' ? 'Sin compromiso' : 'Sense compromís'}</span>
+          <span>Sin compromiso</span>
         </div>
       </div>
     </div>
@@ -402,24 +413,24 @@ const siteData = siteInfo[currentLang];
             loading="lazy"
           />
           <p class="footer-description">
-            {t('footer.description')}
+            Implementamos soluciones de inteligencia artificial para empresas con ROI garantizado en 90 días.
           </p>
         </div>
 
         <!-- Enlaces rápidos -->
         <div class="footer-links">
-          <h3 class="footer-title">{t('footer.services_title')}</h3>
+          <h3 class="footer-title">Enlaces</h3>
           <ul class="footer-list">
-            <li><a href={currentLang === 'es' ? '/' : `/${currentLang}`} class="footer-link">{t('nav.home')}</a></li>
-            <li><a href="#contacto" class="footer-link">{t('nav.contact')}</a></li>
-            <li><a href="/legal/aviso-legal" class="footer-link">{t('legal.terms')}</a></li>
-            <li><a href="/legal/politica-cookies" class="footer-link">{t('legal.cookies')}</a></li>
+            <li><a href="#" class="footer-link">Inicio</a></li>
+            <li><a href="#contacto" class="footer-link">Contacto</a></li>
+            <li><a href="/legal/aviso-legal" class="footer-link">Aviso Legal</a></li>
+            <li><a href="/legal/politica-cookies" class="footer-link">Política de Cookies</a></li>
           </ul>
         </div>
 
         <!-- Contacto -->
         <div class="footer-contact">
-          <h3 class="footer-title">{t('footer.contact_title')}</h3>
+          <h3 class="footer-title">Contacto</h3>
           <ul class="footer-list">
             <li>
               <a href="mailto:hola@blixel.es" class="footer-link">
@@ -445,7 +456,7 @@ const siteData = siteInfo[currentLang];
       <!-- Copyright -->
       <div class="footer-bottom">
         <p class="footer-copyright">
-          © 2024 BLIXEL GROUP SL. {t('footer.rights')}.
+          © 2024 BLIXEL GROUP SL. Todos los derechos reservados.
         </p>
       </div>
     </div>
@@ -453,7 +464,6 @@ const siteData = siteInfo[currentLang];
 
 </Layout>
 
-<!-- Incluir todos los estilos del archivo original -->
 <style>
   /* ==================== HEADER SIMPLE ==================== */
   .simple-header {
@@ -466,23 +476,417 @@ const siteData = siteInfo[currentLang];
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 1.25rem 0;
+    padding: 1.25rem 0; /* Aumentado de 1rem a 1.25rem */
     transition: all 0.3s ease;
   }
 
+  /* Header en modo claro */
   html:not(.dark) .simple-header {
     background: rgba(255, 255, 255, 0.95);
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
-  .header-container {
-    max-width: 1400px;
+  /* ==================== SECCIÓN DE PREGUNTAS FRECUENTES ==================== */
+  .faq-section {
+    position: relative;
+    padding: 8rem 0;
+    background: #000000;
+    overflow: hidden;
+  }
+
+  .faq-container {
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .faq-header {
+    text-align: center;
+    margin-bottom: 5rem;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .faq-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  .faq-description {
+    font-size: 1.25rem;
+    color: #9ca3af;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+  }
+
+  /* Grid de preguntas */
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* Item individual de FAQ */
+  .faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out backwards;
+  }
+
+  .faq-item:nth-child(1) { animation-delay: 0.1s; }
+  .faq-item:nth-child(2) { animation-delay: 0.2s; }
+  .faq-item:nth-child(3) { animation-delay: 0.3s; }
+  .faq-item:nth-child(4) { animation-delay: 0.4s; }
+  .faq-item:nth-child(5) { animation-delay: 0.5s; }
+  .faq-item:nth-child(6) { animation-delay: 0.6s; }
+
+  .faq-item:hover {
+    border-color: rgba(96, 165, 250, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  /* Botón de pregunta */
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s ease;
+    color: #ffffff;
+  }
+
+  .faq-question span {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .faq-question:hover {
+    color: #60a5fa;
+  }
+
+  .faq-question:focus {
+    outline: 2px solid rgba(96, 165, 250, 0.3);
+    outline-offset: -2px;
+  }
+
+  /* Chevron del FAQ */
+  .faq-chevron {
+    color: #9ca3af;
+    transition: all 0.3s ease;
+    transform: rotate(0deg);
+    flex-shrink: 0;
+  }
+
+  .faq-item.active .faq-chevron {
+    transform: rotate(180deg);
+    color: #60a5fa;
+  }
+
+  /* Respuesta del FAQ */
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .faq-item.active .faq-answer {
+    max-height: 300px;
+  }
+
+  .faq-answer p {
+    padding: 0 2rem 2rem;
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    transition: color 0.3s ease;
+  }
+
+  /* Efecto de borde animado para FAQ activo */
+  .faq-item.active {
+    border-color: rgba(96, 165, 250, 0.3);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 4px 20px rgba(96, 165, 250, 0.1);
+  }
+
+  .faq-item.active .faq-question {
+    color: #60a5fa;
+  }
+
+  /* Responsive para FAQ */
+  @media (max-width: 768px) {
+    .faq-section {
+      padding: 6rem 0;
+    }
+
+    .faq-container {
+      padding: 0 1rem;
+    }
+
+    .faq-header {
+      margin-bottom: 3rem;
+    }
+
+    .faq-title {
+      font-size: 2.5rem;
+    }
+
+    .faq-description {
+      font-size: 1.125rem;
+    }
+
+    .faq-question {
+      padding: 1.5rem;
+    }
+
+    .faq-question span {
+      font-size: 1rem;
+    }
+
+    .faq-answer p {
+      padding: 0 1.5rem 1.5rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .faq-section {
+      padding: 4rem 0;
+    }
+
+    .faq-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .faq-title {
+      font-size: 2rem;
+    }
+
+    .faq-description {
+      font-size: 1rem;
+    }
+
+    .faq-question {
+      padding: 1.25rem;
+    }
+
+    .faq-question span {
+      font-size: 0.95rem;
+    }
+
+    .faq-answer p {
+      padding: 0 1.25rem 1.25rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  /* ==================== SECCIÓN DE FORMULARIO DE CONTACTO ==================== */
+  .contact-form-section {
+    position: relative;
+    padding: 8rem 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    overflow: hidden;
+  }
+
+  .contact-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .contact-form-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .contact-form-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  .contact-form-description {
+    font-size: 1.25rem;
+    color: #9ca3af;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+  }
+
+  /* Estilos para el wrapper del formulario nativo */
+  .form-embed-container {
+    margin-bottom: 3rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 3rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    overflow: visible; /* Cambiado de hidden a visible */
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+    min-height: 400px; /* Altura mínima para asegurar visibilidad */
+  }
+
+  .form-embed-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Estilos del contenedor en modo claro */
+  html:not(.dark) .form-embed-container {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Trust badges */
+  .contact-trust-badges {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+    animation: fadeInUp 0.8s ease-out 0.4s backwards;
+  }
+
+  .contact-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #9ca3af;
+    font-size: 0.9rem;
+    font-weight: 500;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .contact-trust-item:hover {
+    border-color: rgba(96, 165, 250, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-2px);
+  }
+
+  .contact-trust-icon {
+    width: 36px;
+    height: 36px;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.125rem;
+    flex-shrink: 0;
+  }
+
+  /* Los estilos del formulario ahora están en ContactForm.astro */
+
+  /* Responsive para la sección de contacto */
+  @media (max-width: 768px) {
+    .contact-form-section {
+      padding: 6rem 0;
+    }
+
+    .contact-form-container {
+      padding: 0 1rem;
+    }
+
+    .contact-form-header {
+      margin-bottom: 3rem;
+    }
+
+    .contact-form-title {
+      font-size: 2.5rem;
+    }
+
+    .contact-form-description {
+      font-size: 1.125rem;
+    }
+
+    .form-embed-container {
+      padding: 2rem;
+    }
+
+    .contact-trust-badges {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .contact-trust-item {
+      padding: 0.75rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .contact-form-section {
+      padding: 4rem 0;
+    }
+
+    .contact-form-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-form-title {
+      font-size: 2rem;
+    }
+
+    .contact-form-description {
+      font-size: 1rem;
+    }
+
+    .form-embed-container {
+      padding: 1.5rem;
+    }
+
+    .contact-trust-badges {
+      margin-top: 2rem;
+    }
+  }
+
+  .header-container {
+    max-width: 1400px; /* Mismo ancho que el hero */
+    margin: 0 auto;
+    padding: 0 2rem; /* Mismo padding que el hero */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Logo izquierda, espacio derecho para el botón flotante */
   }
 
   .logo-link {
@@ -492,15 +896,114 @@ const siteData = siteInfo[currentLang];
   }
 
   .header-logo {
-    height: 45px;
+    height: 45px; /* Aumentado de 40px a 45px */
     width: auto;
     max-width: 150px;
     object-fit: contain;
     transition: all 0.3s ease;
   }
 
+  /* Si el logo es oscuro sobre fondo oscuro */
+  .header-logo.invert {
+    filter: brightness(0) invert(1);
+  }
+
   .logo-link:hover .header-logo {
     transform: scale(1.05);
+  }
+
+  /* ==================== TOGGLE MODO NOCHE ==================== */
+  .dark-mode-toggle {
+    display: flex;
+    align-items: center;
+  }
+
+  .toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+  }
+
+  .toggle-track {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+
+  .toggle-btn:hover .toggle-track {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .toggle-thumb {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 26px;
+    height: 26px;
+    background: #ffffff;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Iconos del toggle */
+  .icon-sun,
+  .icon-moon {
+    position: absolute;
+    color: #374151;
+    transition: all 0.3s ease;
+  }
+
+  .icon-sun {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .icon-moon {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  /* Estado "dark" (aunque no esté implementado) */
+  .toggle-btn.dark .toggle-thumb {
+    transform: translateX(30px);
+    background: #1f2937;
+  }
+
+  .toggle-btn.dark .toggle-track {
+    background: rgba(96, 165, 250, 0.2);
+    border-color: rgba(96, 165, 250, 0.4);
+  }
+
+  .toggle-btn.dark .icon-sun {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  .toggle-btn.dark .icon-moon {
+    opacity: 1;
+    transform: scale(1);
+    color: #60a5fa;
+  }
+
+  /* Animación de click */
+  .toggle-btn:active .toggle-thumb {
+    transform: scale(0.95);
+  }
+
+  .toggle-btn.dark:active .toggle-thumb {
+    transform: translateX(30px) scale(0.95);
   }
 
   /* ==================== ESTILOS GLOBALES ==================== */
@@ -509,14 +1012,20 @@ const siteData = siteInfo[currentLang];
     color: #ffffff;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     overflow-x: hidden;
-    padding-top: 78px;
+    padding-top: 78px; /* Aumentado de 72px a 78px para compensar header más grande */
     transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* REGLA GLOBAL: NUNCA texto blanco en modo claro */
+  html:not(.dark) * {
+    color: inherit;
   }
 
   html:not(.dark) body {
     background: #ffffff;
     color: #111827;
   }
+
 
   .services-section {
     position: relative;
@@ -526,6 +1035,7 @@ const siteData = siteInfo[currentLang];
     transition: background-color 0.3s ease;
   }
 
+  /* Secciones en modo claro */
   html:not(.dark) .services-section,
   html:not(.dark) .urgency-section,
   html:not(.dark) .examples-section,
@@ -535,7 +1045,7 @@ const siteData = siteInfo[currentLang];
   }
 
   .services-container {
-    max-width: 1400px;
+    max-width: 1400px; /* Cambiado de 1200px a 1400px */
     margin: 0 auto;
     padding: 0 2rem;
     position: relative;
@@ -559,6 +1069,7 @@ const siteData = siteInfo[currentLang];
     transition: color 0.3s ease;
   }
 
+  /* Títulos en modo claro - TODOS OSCUROS */
   html:not(.dark) .services-title,
   html:not(.dark) .urgency-title,
   html:not(.dark) .examples-title,
@@ -578,6 +1089,7 @@ const siteData = siteInfo[currentLang];
     color: #111827 !important;
   }
 
+  /* Textos secundarios en modo claro - TODOS OSCUROS */
   html:not(.dark) .urgency-description,
   html:not(.dark) .examples-description,
   html:not(.dark) .faq-description,
@@ -587,6 +1099,7 @@ const siteData = siteInfo[currentLang];
     color: #374151 !important;
   }
 
+  /* Textos terciarios en modo claro */
   html:not(.dark) .urgency-description-secondary,
   html:not(.dark) .stat-secondary,
   html:not(.dark) .stat-label,
@@ -594,6 +1107,7 @@ const siteData = siteInfo[currentLang];
     color: #4b5563 !important;
   }
 
+  /* Degradado azul para todas las palabras destacadas en encabezados */
   .title-highlight {
     background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
     -webkit-background-clip: text;
@@ -613,13 +1127,17 @@ const siteData = siteInfo[currentLang];
     transition: color 0.3s ease;
   }
 
+
+
+  /* Grid de servicios */
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     margin-top: 3rem;
   }
 
+  /* Tarjetas de servicio */
   .service-card {
     position: relative;
     background: rgba(255, 255, 255, 0.02);
@@ -631,13 +1149,18 @@ const siteData = siteInfo[currentLang];
     cursor: pointer;
   }
 
-  html:not(.dark) .service-card {
+  /* Tarjetas en modo claro */
+  html:not(.dark) .service-card,
+  html:not(.dark) .stat-card,
+  html:not(.dark) .faq-item {
     background: rgba(0, 0, 0, 0.03);
     border-color: rgba(0, 0, 0, 0.15);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
-  html:not(.dark) .service-card:hover {
+  html:not(.dark) .service-card:hover,
+  html:not(.dark) .stat-card:hover,
+  html:not(.dark) .faq-item:hover {
     background: rgba(0, 0, 0, 0.06);
     border-color: rgba(37, 99, 235, 0.4);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -665,6 +1188,7 @@ const siteData = siteInfo[currentLang];
     opacity: 1;
   }
 
+  /* Icono del servicio */
   .service-icon {
     width: 64px;
     height: 64px;
@@ -689,6 +1213,28 @@ const siteData = siteInfo[currentLang];
     transform: scale(1.1);
   }
 
+  /* Efecto de luz animada en el icono */
+  .service-icon::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(96, 165, 250, 0.3) 50%,
+      transparent 70%
+    );
+    transform: rotate(45deg) translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+
+  .service-card:hover .service-icon::after {
+    transform: rotate(45deg) translateX(100%);
+  }
+
   .service-card .service-title {
     font-size: 1.25rem;
     font-weight: 700;
@@ -701,6 +1247,14 @@ const siteData = siteInfo[currentLang];
     transition: color 0.3s ease;
   }
 
+
+
+  .service-card .service-title br {
+    display: block;
+    content: "";
+    margin-top: 0.2rem;
+  }
+
   .service-card .service-description {
     font-size: 0.9rem;
     color: #9ca3af;
@@ -708,8 +1262,317 @@ const siteData = siteInfo[currentLang];
     transition: color 0.3s ease;
   }
 
-  /* Resto de estilos igual que el original... */
-  
+
+
+  /* Efecto beam animado */
+  .service-beam {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 16px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .service-beam::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 16px;
+    padding: 2px;
+    background: linear-gradient(90deg, #60a5fa, #3b82f6, #60a5fa);
+    background-size: 200% 100%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: beamMove 3s linear infinite;
+  }
+
+  .service-card:hover .service-beam {
+    opacity: 1;
+  }
+
+  @keyframes beamMove {
+    0% {
+      background-position: 0% 0%;
+    }
+    100% {
+      background-position: 200% 0%;
+    }
+  }
+
+  /* ==================== SECCIÓN DE EJEMPLOS ANIMADOS ==================== */
+  .examples-section {
+    position: relative;
+    padding: 8rem 0;
+    background: #000000;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .examples-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .examples-grid {
+    display: grid;
+    grid-template-columns: 550px 1fr; /* Aumentado de 500px a 550px para las tarjetas */
+    gap: 5rem; /* Aumentado de 4rem a 5rem */
+    align-items: center;
+  }
+
+  /* Contenido de texto */
+  .text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .examples-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: -0.04em;
+  }
+
+  .examples-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    margin: 0;
+    max-width: 500px;
+    transition: color 0.3s ease;
+  }
+
+  .stats-grid {
+    display: flex;
+    gap: 3rem;
+    margin: 1rem 0;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  /* Tarjetas minimalistas para estadísticas */
+  .stat-card-mini {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    border-radius: 12px;
+    padding: 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  html:not(.dark) .stat-card-mini {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(37, 99, 235, 0.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  html:not(.dark) .stat-card-mini:hover {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .stat-card-mini::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .stat-card-mini:hover {
+    transform: translateY(-2px);
+    border-color: rgba(96, 165, 250, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 8px 24px rgba(96, 165, 250, 0.15);
+  }
+
+  .stat-card-mini:hover::before {
+    opacity: 1;
+  }
+
+  .stat-number {
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .stat-label {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .examples-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+    max-width: fit-content;
+  }
+
+  .examples-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(96, 165, 250, 0.4);
+  }
+
+  .examples-cta svg {
+    transition: transform 300ms ease;
+  }
+
+  .examples-cta:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Responsive para ejemplos */
+  @media (max-width: 1024px) {
+    .examples-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .examples-section {
+      padding: 6rem 0;
+      min-height: auto;
+    }
+
+    .examples-container {
+      padding: 0 1rem;
+    }
+
+    .examples-grid {
+      gap: 2.5rem;
+    }
+
+    .examples-title {
+      font-size: 2.5rem;
+      text-align: center;
+    }
+
+    .examples-description {
+      font-size: 1.125rem;
+      text-align: center;
+      max-width: none;
+    }
+
+    .stats-grid {
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .stat-card-mini {
+      padding: 1rem 0.75rem;
+    }
+
+    .stat-number {
+      font-size: 1.75rem;
+    }
+
+    .examples-cta {
+      align-self: center;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .examples-section {
+      padding: 4rem 0;
+    }
+
+    .text-content {
+      gap: 1.5rem;
+    }
+
+    .examples-title {
+      font-size: 2rem;
+    }
+
+    .examples-description {
+      font-size: 1rem;
+    }
+
+    .stats-grid {
+      gap: 1.5rem;
+    }
+
+    .stat-card-mini {
+      padding: 0.875rem 0.625rem;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+    }
+
+    .examples-cta {
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+    }
+  }
+
+  /* Partículas de fondo */
+  .services-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  /* Animación de entrada escalonada */
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -728,21 +1591,23 @@ const siteData = siteInfo[currentLang];
   .service-card:nth-child(1) { animation-delay: 0.1s; }
   .service-card:nth-child(2) { animation-delay: 0.2s; }
   .service-card:nth-child(3) { animation-delay: 0.3s; }
+  .service-card:nth-child(4) { animation-delay: 0.4s; }
 
-  /* Responsive */
+  /* ==================== RESPONSIVE ====================*/
   @media (max-width: 1024px) {
+    /* Tablets - 2 columnas */
     .services-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
-
   @media (max-width: 768px) {
     body {
-      padding-top: 66px;
+      font-size: 16px;
+      padding-top: 66px; /* Header más pequeño en móvil - aumentado de 60px */
     }
 
     .simple-header {
-      padding: 0.875rem 0;
+      padding: 0.875rem 0; /* Aumentado de 0.75rem */
     }
 
     .header-container {
@@ -750,9 +1615,29 @@ const siteData = siteInfo[currentLang];
     }
 
     .header-logo {
-      height: 38px;
+      height: 38px; /* Aumentado de 35px */
     }
 
+    /* Toggle responsive en tablets */
+    .toggle-track {
+      width: 50px;
+      height: 25px;
+    }
+
+    .toggle-thumb {
+      width: 21px;
+      height: 21px;
+    }
+
+    .toggle-btn.dark .toggle-thumb {
+      transform: translateX(25px);
+    }
+
+    .toggle-btn.dark:active .toggle-thumb {
+      transform: translateX(25px) scale(0.95);
+    }
+
+    /* Servicios responsive */
     .services-section {
       padding: 4rem 0;
     }
@@ -773,49 +1658,636 @@ const siteData = siteInfo[currentLang];
     .service-card {
       padding: 2rem;
     }
+
+    .service-icon {
+      width: 60px;
+      height: 60px;
+    }
+
+    .service-icon svg {
+      width: 36px;
+      height: 36px;
+    }
   }
 
-  /* Más estilos del archivo original... incluir TODO el CSS necesario */
-  
+  @media (max-width: 480px) {
+    body {
+      padding-top: 60px; /* Aumentado de 56px */
+    }
+
+    .header-logo {
+      height: 32px; /* Aumentado de 30px */
+    }
+
+    /* Toggle muy pequeño en móviles */
+    .toggle-track {
+      width: 45px;
+      height: 22px;
+    }
+
+    .toggle-thumb {
+      width: 18px;
+      height: 18px;
+    }
+
+    .toggle-btn.dark .toggle-thumb {
+      transform: translateX(23px);
+    }
+
+    .toggle-btn.dark:active .toggle-thumb {
+      transform: translateX(23px) scale(0.95);
+    }
+
+    .icon-sun,
+    .icon-moon {
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  /* ==================== FOOTER ==================== */
+  .site-footer {
+    position: relative;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 4rem 0 2rem;
+    margin-top: 0;
+  }
+
+  html:not(.dark) .site-footer {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+  }
+
+  /* Logo y descripción */
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .footer-logo {
+    height: 50px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+  }
+
+  .footer-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #9ca3af;
+    max-width: 400px;
+  }
+
+  html:not(.dark) .footer-description {
+    color: #6b7280 !important;
+  }
+
+  /* Títulos del footer */
+  .footer-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .footer-title {
+    color: #111827 !important;
+  }
+
+  /* Listas del footer */
+  .footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer-link {
+    color: #9ca3af;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  html:not(.dark) .footer-link {
+    color: #6b7280 !important;
+  }
+
+  .footer-link:hover {
+    color: #60a5fa;
+  }
+
+  html:not(.dark) .footer-link:hover {
+    color: #2563eb !important;
+  }
+
+  .footer-link svg {
+    flex-shrink: 0;
+  }
+
+  /* Copyright */
+  .footer-bottom {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+  }
+
+  html:not(.dark) .footer-bottom {
+    border-top-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .footer-copyright {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+  }
+
+  html:not(.dark) .footer-copyright {
+    color: #9ca3af !important;
+  }
+
+  /* Responsive Footer */
+  @media (max-width: 768px) {
+    .site-footer {
+      padding: 3rem 0 1.5rem;
+    }
+
+    .footer-container {
+      padding: 0 1rem;
+    }
+
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      text-align: center;
+      align-items: center;
+    }
+
+    .footer-description {
+      text-align: center;
+    }
+
+    .footer-links,
+    .footer-contact {
+      text-align: center;
+    }
+
+    .footer-list {
+      align-items: center;
+    }
+
+    .footer-logo {
+      height: 40px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .site-footer {
+      padding: 2.5rem 0 1rem;
+    }
+
+    .footer-content {
+      gap: 2rem;
+    }
+
+    .footer-title {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-description {
+      font-size: 0.9rem;
+    }
+
+    .footer-link {
+      font-size: 0.9rem;
+    }
+
+    .footer-copyright {
+      font-size: 0.8rem;
+    }
+  }
+
+  /* ==================== SECCIÓN DE URGENCIA ==================== */
+  .urgency-section {
+    position: relative;
+    padding: 8rem 0;
+    background: #000000;
+    overflow: hidden;
+  }
+
+  .urgency-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  /* Contenido principal (izquierda) */
+  .urgency-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .urgency-title-container {
+    position: relative;
+  }
+
+  .urgency-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem); /* Mismo tamaño que services-title */
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
+    letter-spacing: -0.04em;
+    animation: slideInLeft 0.8s ease-out;
+  }
+
+  .title-regular {
+    color: #ffffff;
+    display: inline-block;
+  }
+
+  .title-highlight {
+    background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%); /* Mismo gradiente que title-highlight de servicios */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800; /* Mismo peso que el resto */
+    position: relative;
+    display: inline-block;
+    animation: glowPulse 2s ease-in-out infinite alternate;
+  }
+
+  .urgency-description-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    animation: slideInLeft 0.8s ease-out 0.2s backwards;
+  }
+
+  .urgency-description {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: #e5e7eb;
+    margin: 0;
+    font-weight: 400;
+    transition: color 0.3s ease;
+  }
+
+  .urgency-description-secondary {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #9ca3af;
+    margin: 0;
+    font-weight: 400;
+    transition: color 0.3s ease;
+  }
+
+  /* Estadísticas (derecha) */
+  .urgency-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    position: relative;
+  }
+
+  .stat-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(96, 165, 250, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 20px 40px rgba(96, 165, 250, 0.1);
+  }
+
+  .stat-card:hover::before {
+    opacity: 1;
+  }
+
+  .stat-number-container {
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .stat-number {
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    display: block;
+  }
+
+  .stat-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .stat-primary {
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: 600;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+  }
+
+  .stat-secondary {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    font-weight: 500;
+    line-height: 1.3;
+    transition: color 0.3s ease;
+  }
+
+  /* Animaciones escalonadas para las tarjetas */
+  .stat-1 {
+    animation: slideInRight 0.8s ease-out 0.1s backwards;
+  }
+
+  .stat-2 {
+    animation: slideInRight 0.8s ease-out 0.2s backwards;
+  }
+
+  .stat-3 {
+    animation: slideInRight 0.8s ease-out 0.3s backwards;
+  }
+
+  .stat-4 {
+    animation: slideInRight 0.8s ease-out 0.4s backwards;
+  }
+
+  /* Animaciones clave */
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes glowPulse {
+    from {
+      filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.3));
+    }
+    to {
+      filter: drop-shadow(0 0 30px rgba(96, 165, 250, 0.6));
+    }
+  }
+
+  /* Responsive para la sección de urgencia */
+  @media (max-width: 1200px) {
+    .urgency-container {
+      gap: 4rem;
+    }
+  }
+
+  @media (max-width: 968px) {
+    .urgency-section {
+      padding: 6rem 0;
+    }
+
+    .urgency-container {
+      grid-template-columns: 1fr;
+      gap: 4rem;
+      text-align: center;
+    }
+
+    .urgency-stats {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .urgency-section {
+      padding: 4rem 0;
+    }
+
+    .urgency-container {
+      padding: 0 1rem;
+      gap: 3rem;
+    }
+
+    .urgency-title {
+      font-size: clamp(2rem, 8vw, 2.5rem); /* Ajustado para mobile, igual que services-title en responsive */
+    }
+
+    .urgency-description {
+      font-size: 1.125rem;
+    }
+
+    .urgency-description-secondary {
+      font-size: 1rem;
+    }
+
+    .urgency-stats {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      padding: 2rem 1.5rem;
+    }
+
+    .stat-number {
+      font-size: clamp(2.5rem, 8vw, 3.5rem);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .urgency-container {
+      gap: 2.5rem;
+    }
+
+    .urgency-content {
+      gap: 2rem;
+    }
+
+    .urgency-description-container {
+      gap: 1.25rem;
+    }
+
+    .stat-card {
+      padding: 1.5rem 1rem;
+      border-radius: 16px;
+    }
+
+    .stat-number-container {
+      margin-bottom: 1rem;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+    }
+
+    .stat-primary {
+      font-size: 0.9rem;
+    }
+
+    .stat-secondary {
+      font-size: 0.85rem;
+    }
+  }
 </style>
 
 <script>
-  // Scripts del archivo original
+  // Manejar error de carga del logo
   document.addEventListener('DOMContentLoaded', () => {
-    // FAQ functionality
+    const headerLogo = document.querySelector('.header-logo');
+    const footerLogo = document.querySelector('.footer-logo');
+    
+    if (headerLogo) {
+      headerLogo.onerror = function() {
+        console.error('Error cargando el logo del header');
+        const logoLink = document.querySelector('.logo-link');
+        if (logoLink) {
+          logoLink.innerHTML = '<span style="color: #60a5fa; font-size: 1.5rem; font-weight: bold;">BLIXEL</span>';
+        }
+      };
+      
+      if (headerLogo.complete && headerLogo.naturalHeight === 0) {
+        headerLogo.onerror();
+      }
+    }
+
+    // Manejar error del logo del footer
+    if (footerLogo) {
+      footerLogo.onerror = function() {
+        console.error('Error cargando el logo del footer');
+        const footerBrand = document.querySelector('.footer-brand');
+        if (footerBrand) {
+          const textLogo = document.createElement('div');
+          textLogo.style.cssText = 'color: #60a5fa; font-size: 2rem; font-weight: bold; margin-bottom: 1rem;';
+          textLogo.textContent = 'BLIXEL';
+          footerBrand.replaceChild(textLogo, footerLogo);
+        }
+      };
+      
+      if (footerLogo.complete && footerLogo.naturalHeight === 0) {
+        footerLogo.onerror();
+      }
+    }
+
+    // Sistema de FAQ interactivo
     const faqItems = document.querySelectorAll('.faq-item');
     
     faqItems.forEach(item => {
       const question = item.querySelector('.faq-question');
       
       question.addEventListener('click', () => {
+        // Cerrar otros FAQs abiertos
         faqItems.forEach(otherItem => {
           if (otherItem !== item) {
             otherItem.classList.remove('active');
           }
         });
         
+        // Toggle del FAQ actual
         item.classList.toggle('active');
       });
     });
 
-    // Smooth scrolling
-    const ctaButtons = document.querySelectorAll('[href="#contacto"]');
+    // Scroll suave al formulario de contacto
+    const ctaContactar = document.getElementById('cta-contactar');
+    const ctaAutomatizar = document.getElementById('cta-automatizar');
     
-    ctaButtons.forEach(button => {
-      button.addEventListener('click', (e) => {
-        e.preventDefault();
-        const formulario = document.getElementById('contacto');
-        if (formulario) {
-          const headerHeight = document.querySelector('.simple-header')?.offsetHeight || 78;
-          const offsetTop = formulario.offsetTop - headerHeight - 20;
-          
-          window.scrollTo({
-            top: offsetTop,
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
+    function scrollToContacto(e) {
+      e.preventDefault();
+      const formulario = document.getElementById('contacto');
+      if (formulario) {
+        // Calcular posición teniendo en cuenta el header fijo
+        const headerHeight = document.querySelector('.simple-header')?.offsetHeight || 78;
+        const offsetTop = formulario.offsetTop - headerHeight - 20; // 20px extra de espacio
+        
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+      }
+    }
+    
+    if (ctaContactar) {
+      ctaContactar.addEventListener('click', scrollToContacto);
+    }
+    
+    if (ctaAutomatizar) {
+      ctaAutomatizar.addEventListener('click', scrollToContacto);
+    }
+
+    // Formulario nativo ya está cargado, no necesitamos JavaScript adicional
   });
+
+  // El formulario ahora es nativo y no requiere funciones de carga adicionales
 </script>

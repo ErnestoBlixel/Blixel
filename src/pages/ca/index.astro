@@ -1,53 +1,812 @@
 ---
-// Redirigir a la página principal con el idioma catalán detectado automáticamente
-export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/Hero.astro';
+import MagicUICards from '../../components/magic-cards-new/MagicCardsFINAL.astro';
+import ContactForm from '../../components/ContactForm.astro';
 
-// Esta página simplemente importa la página principal
-// El sistema de i18n detectará automáticamente que estamos en /ca/ y mostrará el contenido en catalán
+// Meta información en catalán
+const title = "Intel·ligència Artificial per a Empreses | Blixel";
+const description = "Implementem solucions d'IA per a empreses amb ROI garantit en 90 dies.";
+const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
 ---
 
-<script>
-  // Redirección inmediata a la página principal con detección de idioma
-  if (typeof window !== 'undefined') {
-    // Si estamos en /ca/, redirigir a /ca 
-    const currentPath = window.location.pathname;
-    if (currentPath === '/ca/index.astro' || currentPath === '/ca/') {
-      window.location.replace('/ca');
-    }
-  }
-</script>
+<Layout 
+  logoUrl={logoUrl} 
+  logoAlt="BLIXEL logo"
+  title={title}
+  description={description}
+  pageKey="home"
+>
+  <!-- HEADER SIMPLE -->
+  <header class="simple-header">
+    <div class="header-container">
+      <!-- Logo a la izquierda -->
+      <a href="/ca" class="logo-link">
+        <img 
+          src={logoUrl} 
+          alt="BLIXEL logo" 
+          class="header-logo"
+          loading="eager"
+          crossorigin="anonymous"
+        />
+      </a>
+    </div>
+  </header>
 
-<!-- 
-  Esta página se mantiene por compatibilidad, pero ahora usamos un sistema unificado.
-  La página principal (index.astro) detecta automáticamente el idioma desde la URL
-  y muestra el contenido correspondiente usando el sistema de traducciones.
-  
-  Para agregar contenido específico de catalán, usa las funciones de traducción
-  en los archivos JSON correspondientes.
--->
+  <!-- HERO SECTION -->
+  <Hero 
+    logoUrl={logoUrl}
+    logoAlt="BLIXEL logo"
+    customTitle="Aplica Intel·ligència Artificial a la teva empresa"
+    customDescription="Intel·ligència artificial a la teva empresa AVUI o trenques demà. ROI en 90 dies. Mentre dubtes, la teva competència factura."
+    titleLine1="Aplica Intel·ligència Artificial"
+    titleLine2="a la teva empresa"
+  />
+
+  <!-- SECCIÓN DE SERVICIOS -->
+  <section class="services-section">
+    <div class="services-container">
+      <!-- Título principal -->
+      <div class="services-header">
+        <h2 class="services-title">
+          Les nostres solucions d'<span class="title-highlight">intel·ligència artificial</span> per a empreses
+        </h2>
+        <p class="services-description">
+          T'ajudem a aplicar la Intel·ligència Artificial on marca la diferència a la teva empresa:
+          processos, decisions i clients
+        </p>
+      </div>
+
+      <!-- Grid de servicios -->
+      <div class="services-grid">
+        <!-- Servicio 1: Formación aplicada IA -->
+        <div class="service-card" data-service="1">
+          <div class="service-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="7"></circle>
+              <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+            </svg>
+          </div>
+          <h3 class="service-title">Formació IA<br>per a Empreses</h3>
+          <p class="service-description">
+            Convertim el teu equip en usuaris avançats d'IA. Formació pràctica adaptada al teu sector amb casos reals i eines específiques.
+          </p>
+          <div class="service-beam"></div>
+        </div>
+
+        <!-- Servicio 2: Automatización procesos -->
+        <div class="service-card" data-service="2">
+          <div class="service-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="3" y1="9" x2="21" y2="9"></line>
+              <line x1="9" y1="21" x2="9" y2="9"></line>
+            </svg>
+          </div>
+          <h3 class="service-title">Automatització<br>de Processos</h3>
+          <p class="service-description">
+            Eliminem tasques repetitives del teu dia a dia. Connectem sistemes, digitalitzem fluxos i alliberem temps per a l'important.
+          </p>
+          <div class="service-beam"></div>
+        </div>
+
+        <!-- Servicio 3: Agentes inteligentes IA -->
+        <div class="service-card" data-service="3">
+          <div class="service-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+              <line x1="7" y1="2" x2="7" y2="22"></line>
+              <line x1="17" y1="2" x2="17" y2="22"></line>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <line x1="2" y1="7" x2="7" y2="7"></line>
+              <line x1="2" y1="17" x2="7" y2="17"></line>
+              <line x1="17" y1="17" x2="22" y2="17"></line>
+              <line x1="17" y1="7" x2="22" y2="7"></line>
+            </svg>
+          </div>
+          <h3 class="service-title">Agents IA<br>Automatitzats 24/7</h3>
+          <p class="service-description">
+            Creem assistents que treballen 24/7. Atenció al client automatitzada, anàlisi de dades i generació d'informes sense intervenció humana.
+          </p>
+          <div class="service-beam"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE FORMULARIO DE CONTACTO -->
+  <section id="contacto" class="contact-form-section">
+    <div class="contact-form-container">
+      <!-- Header de la sección -->
+      <div class="contact-form-header">
+        <h2 class="contact-form-title">
+          Preparat per aplicar <span class="title-highlight">IA</span> a la teva empresa?
+        </h2>
+        <p class="contact-form-description">
+          Completa el formulari i et respondrem en menys de 24 hores amb un pla personalitzat per a la teva empresa.
+        </p>
+      </div>
+
+      <!-- Formulario de contacto -->
+      <div class="form-embed-container">
+        <ContactForm currentLang="ca" />
+      </div>
+
+      <!-- Trust badges -->
+      <div class="contact-trust-badges">
+        <div class="contact-trust-item">
+          <div class="contact-trust-icon">🔒</div>
+          <span>Dades 100% segures</span>
+        </div>
+        <div class="contact-trust-item">
+          <div class="contact-trust-icon">⚡</div>
+          <span>Resposta en 24h</span>
+        </div>
+        <div class="contact-trust-item">
+          <div class="contact-trust-icon">🎯</div>
+          <span>Sense compromís</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-content">
+        <!-- Logo y descripción -->
+        <div class="footer-brand">
+          <img 
+            src={logoUrl} 
+            alt="BLIXEL logo" 
+            class="footer-logo"
+            loading="lazy"
+          />
+          <p class="footer-description">
+            Implementem solucions d'intel·ligència artificial per a empreses amb ROI garantit en 90 dies.
+          </p>
+        </div>
+
+        <!-- Enlaces rápidos -->
+        <div class="footer-links">
+          <h3 class="footer-title">Enllaços</h3>
+          <ul class="footer-list">
+            <li><a href="/ca" class="footer-link">Inici</a></li>
+            <li><a href="#contacto" class="footer-link">Contacte</a></li>
+            <li><a href="/legal/aviso-legal" class="footer-link">Avís Legal</a></li>
+            <li><a href="/legal/politica-cookies" class="footer-link">Política de Cookies</a></li>
+          </ul>
+        </div>
+
+        <!-- Contacto -->
+        <div class="footer-contact">
+          <h3 class="footer-title">Contacte</h3>
+          <ul class="footer-list">
+            <li>
+              <a href="mailto:hola@blixel.es" class="footer-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                  <path d="m22 7-10 5L2 7"></path>
+                </svg>
+                hola@blixel.es
+              </a>
+            </li>
+            <li>
+              <a href="tel:+34872003245" class="footer-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                +34 872 003 245
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="footer-bottom">
+        <p class="footer-copyright">
+          © 2024 BLIXEL GROUP SL. Tots els drets reservats.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</Layout>
 
 <style>
-  /* Página de redirección temporal - sin estilos necesarios */
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #000;
-    color: #fff;
-    font-family: system-ui;
+  /* ==================== HEADER SIMPLE ==================== */
+  .simple-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1.25rem 0;
+    transition: all 0.3s ease;
   }
-  
-  .loading {
+
+  html:not(.dark) .simple-header {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .header-logo {
+    height: 45px;
+    width: auto;
+    max-width: 150px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+  }
+
+  .logo-link:hover .header-logo {
+    transform: scale(1.05);
+  }
+
+  /* ==================== ESTILOS GLOBALES ==================== */
+  body {
+    background: #000000;
+    color: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: hidden;
+    padding-top: 78px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  html:not(.dark) body {
+    background: #ffffff;
+    color: #111827;
+  }
+
+  .services-section {
+    position: relative;
+    padding: 6rem 0;
+    background: #000000;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+  }
+
+  html:not(.dark) .services-section,
+  html:not(.dark) .contact-form-section {
+    background: #ffffff;
+  }
+
+  .services-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .services-header {
+    text-align: left;
+    margin-bottom: 4rem;
+    animation: fadeInUp 0.8s ease-out;
+    max-width: 100%;
+  }
+
+  .services-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    transition: color 0.3s ease;
+  }
+
+  html:not(.dark) .services-title,
+  html:not(.dark) .contact-form-title,
+  html:not(.dark) .service-card .service-title,
+  html:not(.dark) h1,
+  html:not(.dark) h2,
+  html:not(.dark) h3,
+  html:not(.dark) h4,
+  html:not(.dark) h5,
+  html:not(.dark) h6 {
+    color: #111827 !important;
+  }
+
+  html:not(.dark) .contact-form-description,
+  html:not(.dark) .services-header .services-description,
+  html:not(.dark) .service-card .service-description {
+    color: #374151 !important;
+  }
+
+  .title-highlight {
+    background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+    position: relative;
+    display: inline-block;
+  }
+
+  .services-header .services-description {
+    font-size: 1.125rem;
+    color: #9ca3af;
+    max-width: 100%;
+    margin: 0;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .service-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  html:not(.dark) .service-card {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  html:not(.dark) .service-card:hover {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(96, 165, 250, 0.3);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .service-card:hover::before {
+    opacity: 1;
+  }
+
+  .service-icon {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 12px;
+    margin-bottom: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-icon svg {
+    color: #60a5fa;
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s ease;
+  }
+
+  .service-card:hover .service-icon svg {
+    transform: scale(1.1);
+  }
+
+  .service-card .service-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+    min-height: 3.5rem;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+  }
+
+  .service-card .service-description {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+  }
+
+  /* ==================== SECCIÓN DE FORMULARIO DE CONTACTO ==================== */
+  .contact-form-section {
+    position: relative;
+    padding: 8rem 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    overflow: hidden;
+  }
+
+  .contact-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .contact-form-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .contact-form-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  .contact-form-description {
+    font-size: 1.25rem;
+    color: #9ca3af;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+  }
+
+  .form-embed-container {
+    margin-bottom: 3rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 3rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    overflow: visible;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+    min-height: 400px;
+  }
+
+  html:not(.dark) .form-embed-container {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .contact-trust-badges {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+    animation: fadeInUp 0.8s ease-out 0.4s backwards;
+  }
+
+  .contact-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #9ca3af;
+    font-size: 0.9rem;
+    font-weight: 500;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .contact-trust-item:hover {
+    border-color: rgba(96, 165, 250, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-2px);
+  }
+
+  .contact-trust-icon {
+    width: 36px;
+    height: 36px;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.125rem;
+    flex-shrink: 0;
+  }
+
+  /* ==================== FOOTER ==================== */
+  .site-footer {
+    position: relative;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 4rem 0 2rem;
+    margin-top: 0;
+  }
+
+  html:not(.dark) .site-footer {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .footer-logo {
+    height: 50px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+  }
+
+  .footer-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #9ca3af;
+    max-width: 400px;
+  }
+
+  html:not(.dark) .footer-description {
+    color: #6b7280 !important;
+  }
+
+  .footer-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .footer-title {
+    color: #111827 !important;
+  }
+
+  .footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer-link {
+    color: #9ca3af;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  html:not(.dark) .footer-link {
+    color: #6b7280 !important;
+  }
+
+  .footer-link:hover {
+    color: #60a5fa;
+  }
+
+  html:not(.dark) .footer-link:hover {
+    color: #2563eb !important;
+  }
+
+  .footer-bottom {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
     text-align: center;
   }
-  
-  html:not(.dark) body {
-    background: #fff;
-    color: #000;
+
+  html:not(.dark) .footer-bottom {
+    border-top-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .footer-copyright {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+  }
+
+  html:not(.dark) .footer-copyright {
+    color: #9ca3af !important;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .service-card {
+    animation: fadeInUp 0.6s ease-out backwards;
+  }
+
+  .service-card:nth-child(1) { animation-delay: 0.1s; }
+  .service-card:nth-child(2) { animation-delay: 0.2s; }
+  .service-card:nth-child(3) { animation-delay: 0.3s; }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding-top: 66px;
+    }
+
+    .simple-header {
+      padding: 0.875rem 0;
+    }
+
+    .header-container {
+      padding: 0 1rem;
+    }
+
+    .header-logo {
+      height: 38px;
+    }
+
+    .services-section {
+      padding: 4rem 0;
+    }
+
+    .services-container {
+      padding: 0 1rem;
+    }
+
+    .services-title {
+      font-size: 2rem;
+    }
+
+    .services-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      padding: 2rem;
+    }
+
+    .contact-form-section {
+      padding: 6rem 0;
+    }
+
+    .contact-form-container {
+      padding: 0 1rem;
+    }
+
+    .contact-form-header {
+      margin-bottom: 3rem;
+    }
+
+    .contact-form-title {
+      font-size: 2.5rem;
+    }
+
+    .contact-form-description {
+      font-size: 1.125rem;
+    }
+
+    .form-embed-container {
+      padding: 2rem;
+    }
+
+    .contact-trust-badges {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .contact-trust-item {
+      padding: 0.75rem;
+    }
+
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      text-align: center;
+      align-items: center;
+    }
+
+    .footer-description {
+      text-align: center;
+    }
+
+    .footer-links,
+    .footer-contact {
+      text-align: center;
+    }
+
+    .footer-list {
+      align-items: center;
+    }
+
+    .footer-logo {
+      height: 40px;
+    }
   }
 </style>
 
-<div class="loading">
-  <p>Carregant / Cargando...</p>
-</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Scroll suave al formulario de contacto
+    const ctaButtons = document.querySelectorAll('[href="#contacto"]');
+    
+    ctaButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const formulario = document.getElementById('contacto');
+        if (formulario) {
+          const headerHeight = document.querySelector('.simple-header')?.offsetHeight || 78;
+          const offsetTop = formulario.offsetTop - headerHeight - 20;
+          
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  });
+</script>
