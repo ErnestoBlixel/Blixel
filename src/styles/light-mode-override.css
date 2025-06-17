@@ -41,3 +41,14 @@ html:not(.dark) .faq-chevron {
 html:not(.dark) .faq-item.active .faq-chevron {
   color: #2563eb !important;
 }
+
+/* Partículas en modo claro - mejorar visibilidad */
+html:not(.dark) #tsparticles {
+  opacity: 1 !important;
+  filter: contrast(1.2) brightness(0.8);
+}
+
+html:not(.dark) #tsparticles canvas {
+  mix-blend-mode: multiply;
+  opacity: 0.9 !important;
+}

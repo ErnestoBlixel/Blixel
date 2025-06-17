@@ -88,4 +88,24 @@
       transform: translateY(0);
     }
   }
+
+  /* Estilos para partículas mejoradas */
+  #tsparticles {
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+  }
+
+  #tsparticles canvas {
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+  }
+
+  /* Mejorar visibilidad en modo oscuro */
+  .dark #tsparticles {
+    filter: contrast(1.1) brightness(1.1);
+  }
+
+  .dark #tsparticles canvas {
+    mix-blend-mode: screen;
+  }
 }

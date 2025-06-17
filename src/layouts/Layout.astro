@@ -92,6 +92,11 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
   <!-- Banner de cookies RGPD -->
   <CookieBanner />
   
+  <!-- Botón de debug para partículas (temporal) -->
+  <button id="particles-debug" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; padding: 10px; background: #60a5fa; color: white; border: none; border-radius: 8px; cursor: pointer;">
+    🎆 Debug Partículas
+  </button>
+  
   <!-- Canvas de partículas modernas con tsParticles -->
   <div id="tsparticles"></div>
   
@@ -122,6 +127,8 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
 
     // Configuración minimalista y moderna de tsParticles
     function initTsParticles() {
+      console.log('🎆 Inicializando partículas...');
+      
       tsParticles.load('tsparticles', {
         background: {
           color: {
@@ -137,32 +144,32 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
             },
             onHover: {
               enable: true,
-              mode: 'repulse',
+              mode: 'grab',
             },
             resize: true,
           },
           modes: {
             push: {
-              quantity: 2,
+              quantity: 4,
             },
-            repulse: {
-              distance: 80,
-              duration: 0.4,
+            grab: {
+              distance: 150,
+              links: {
+                opacity: 0.5,
+              },
             },
           },
         },
         particles: {
           color: {
-            value: document.documentElement.classList.contains('dark') 
-              ? ['#60a5fa', '#3b82f6', '#2563eb']
-              : ['#3b82f6', '#1e40af', '#1d4ed8'],
+            value: ['#60a5fa', '#3b82f6', '#2563eb', '#93c5fd', '#1e40af'],
           },
           links: {
-            color: document.documentElement.classList.contains('dark') ? '#60a5fa' : '#3b82f6',
-            distance: 100,
+            color: '#60a5fa',
+            distance: 150,
             enable: true,
-            opacity: document.documentElement.classList.contains('dark') ? 0.08 : 0.12,
-            width: 1,
+            opacity: 0.6,
+            width: 2,
           },
           collisions: {
             enable: false,
@@ -174,30 +181,18 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
               default: 'bounce',
             },
             random: false,
-            speed: 0.3,
+            speed: 1.2,
             straight: false,
           },
           number: {
             density: {
               enable: true,
-              area: 1500,
+              area: 600,
             },
-            value: 25,
+            value: 80,
           },
           opacity: {
-            value: document.documentElement.classList.contains('dark') ? 0.15 : 0.25,
-            animation: {
-              enable: true,
-              speed: 0.8,
-              minimumValue: document.documentElement.classList.contains('dark') ? 0.05 : 0.1,
-              sync: false,
-            },
-          },
-          shape: {
-            type: 'circle',
-          },
-          size: {
-            value: { min: 1, max: 2.5 },
+            value: 0.8,
             animation: {
               enable: true,
               speed: 1.5,
@@ -205,9 +200,48 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
               sync: false,
             },
           },
+          shape: {
+            type: 'circle',
+          },
+          size: {
+            value: { min: 3, max: 7 },
+            animation: {
+              enable: true,
+              speed: 2,
+              minimumValue: 1,
+              sync: false,
+            },
+          },
         },
         detectRetina: true,
-      });
+      }).then(() => {
+        console.log('✅ Partículas cargadas correctamente');
+      }).catch((error) => {
+        console.error('❌ Error cargando partículas:', error);
+        // Botón de debug para partículas
+      const debugBtn = document.getElementById('particles-debug');
+      if (debugBtn) {
+        debugBtn.addEventListener('click', () => {
+          const container = window.tsParticles?.domItem(0);
+          if (container) {
+            console.log('🎆 Estado de las partículas:');
+            console.log('Container:', container);
+            console.log('Partículas activas:', container.particles.count);
+            console.log('Canvas:', document.querySelector('#tsparticles canvas'));
+            console.log('Opciones:', container.options);
+            
+            // Intentar añadir más partículas
+            container.particles.push(10);
+            console.log('Se añadieron 10 partículas nuevas');
+          } else {
+            console.error('No se encontró el contenedor de partículas');
+            // Intentar cargar de nuevo
+            console.log('Intentando cargar partículas de nuevo...');
+            loadTsParticles();
+          }
+        });
+      }
+    });
     }
 
     // Función para actualizar partículas según el tema
@@ -218,19 +252,20 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
         
         // Actualizar colores de partículas
         container.options.particles.color.value = isDark 
-          ? ['#60a5fa', '#3b82f6', '#2563eb']
-          : ['#3b82f6', '#1e40af', '#1d4ed8'];
+          ? ['#60a5fa', '#3b82f6', '#2563eb', '#93c5fd', '#1e40af']
+          : ['#3b82f6', '#1e40af', '#1d4ed8', '#60a5fa', '#2563eb'];
         
         // Actualizar enlaces
         container.options.particles.links.color = isDark ? '#60a5fa' : '#3b82f6';
-        container.options.particles.links.opacity = isDark ? 0.08 : 0.12;
+        container.options.particles.links.opacity = isDark ? 0.6 : 0.7;
         
-        // Actualizar opacidad
-        container.options.particles.opacity.value = isDark ? 0.15 : 0.25;
-        container.options.particles.opacity.animation.minimumValue = isDark ? 0.05 : 0.1;
+        // Actualizar opacidad - MÁS VISIBLES
+        container.options.particles.opacity.value = isDark ? 0.8 : 0.9;
+        container.options.particles.opacity.animation.minimumValue = isDark ? 0.3 : 0.4;
         
         // Refrescar partículas
         container.refresh();
+        console.log(`🎆 Partículas actualizadas para modo ${isDark ? 'oscuro' : 'claro'}`);
       }
     }
 
@@ -245,12 +280,25 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
 
     // Cargar al inicio
     document.addEventListener('DOMContentLoaded', () => {
+      console.log('🚀 DOM cargado, iniciando partículas...');
       loadTsParticles();
+      
       // Observar cambios en la clase del HTML
       observer.observe(document.documentElement, {
         attributes: true,
         attributeFilter: ['class']
       });
+      
+      // Verificar si las partículas están cargadas después de 3 segundos
+      setTimeout(() => {
+        const particlesCanvas = document.querySelector('#tsparticles canvas');
+        if (particlesCanvas) {
+          console.log('✅ Canvas de partículas encontrado:', particlesCanvas);
+          console.log('Dimensiones:', particlesCanvas.width, 'x', particlesCanvas.height);
+        } else {
+          console.error('❌ No se encontró el canvas de partículas');
+        }
+      }, 3000);
     });
   </script>
 </body>
@@ -277,12 +325,30 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
     overflow-x: hidden;
     padding-top: 0; /* Sin header */
     transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
   }
 
   /* Modo claro */
   html:not(.dark) body {
     color: #1a1a1a;
     background-color: #ffffff;
+  }
+
+  /* Asegurar que el body tenga un fondo de gradiente */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+    z-index: -2;
+    transition: background 0.5s ease;
+  }
+
+  html:not(.dark) body::before {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
   }
 
   /* Layout principal */
@@ -315,15 +381,19 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
-    background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+    z-index: 0;
     pointer-events: none;
-    transition: background 0.5s ease;
+    opacity: 1;
   }
 
-  /* Fondo para modo claro */
-  html:not(.dark) #tsparticles {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+  /* Añadir canvas de tsparticles al contenedor */
+  #tsparticles canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
   }
 
   body {
@@ -348,7 +418,7 @@ const fullTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
   #main-content {
     position: relative;
     background: transparent;
-    z-index: 1;
+    z-index: 10;
   }
 
 
