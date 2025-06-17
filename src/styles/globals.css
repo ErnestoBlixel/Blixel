@@ -100,9 +100,10 @@
     will-change: transform;
   }
 
-  /* Mejorar visibilidad en modo oscuro */
+  /* Mejorar visibilidad en modo oscuro - MUY SUTIL */
   .dark #tsparticles {
-    filter: contrast(1.05) brightness(1.05);
+    filter: contrast(0.9) brightness(0.9);
+    opacity: 0.8;
   }
 
   .dark #tsparticles canvas {

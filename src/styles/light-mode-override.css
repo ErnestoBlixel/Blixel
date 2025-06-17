@@ -42,10 +42,10 @@ html:not(.dark) .faq-item.active .faq-chevron {
   color: #2563eb !important;
 }
 
-/* Partículas en modo claro - mejorar visibilidad */
+/* Partículas en modo claro - ALTA VISIBILIDAD con colores oscuros */
 html:not(.dark) #tsparticles {
   opacity: 1 !important;
-  filter: none;
+  filter: contrast(1.2) brightness(1.1);
 }
 
 html:not(.dark) #tsparticles canvas {
