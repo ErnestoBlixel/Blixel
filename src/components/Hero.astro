@@ -46,7 +46,7 @@ const GQL = `
 `;
 
 let pageTitle = customTitle || 'Inteligencia Artificial para Empresas';
-let pageDescription = customDescription || 'Automatización Inteligente para tu Empresa';
+let pageDescription = customDescription || 'Soluciones de IA con resultados demostrables para tu empresa';
 let featuredImageUrl = null;
 let featuredImageAlt = '';
 let debugInfo = { error: null, found: false, hasData: false, hasImage: false };
@@ -113,7 +113,7 @@ if (typeof import.meta.env.PUBLIC_WP_GRAPHQL_URL !== 'undefined' && import.meta.
           // Prioridad para la descripción: SEO meta description (Yoast) > custom description
           const newDescription = page.seo?.metaDesc || 
                                 page.seo?.opengraphDescription || 
-                                'Automatización Inteligente para tu Empresa';
+                                'Soluciones de IA con resultados demostrables para tu empresa';
           
           pageTitle = newTitle;
           pageDescription = newDescription;
