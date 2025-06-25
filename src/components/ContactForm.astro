@@ -196,7 +196,13 @@ const formFields = [
 
   .form-fields {
     display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
+  }
+
+  /* El textarea ocupará toda la fila */
+  .field-type-textarea {
+    grid-column: 1 / -1;
   }
 
   .form-field {
@@ -320,6 +326,15 @@ const formFields = [
   @media (max-width: 768px) {
     .form-wrapper {
       padding: 1.5rem;
+    }
+
+    .form-fields {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .field-type-textarea {
+      grid-column: 1;
     }
 
     .form-input,

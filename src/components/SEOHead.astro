@@ -77,9 +77,16 @@ const fullImageUrl = image ? (image.startsWith('http') ? image : `https://blixel
 <meta name="twitter:description" content={localizedMeta.description} />
 <meta name="twitter:image" content={fullImageUrl} />
 
-<!-- Favicon -->
+<!-- Favicon con soporte completo -->
+<link rel="icon" href="/logos/LOGO AZUL BLIXEL .png" type="image/png" sizes="any" />
 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="apple-touch-icon" href="/logos/LOGO AZUL BLIXEL .png" />
+<link rel="shortcut icon" href="/logos/LOGO AZUL BLIXEL .png" type="image/png" />
+<meta name="msapplication-TileImage" content="/logos/LOGO AZUL BLIXEL .png" />
+<meta name="msapplication-TileColor" content="#60a5fa" />
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="/manifest.json" />
 
 <!-- Performance -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
