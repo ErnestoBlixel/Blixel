@@ -1,0 +1,486 @@
+---
+// src/pages/404.astro
+import Layout from '../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/config';
+
+// Marcar como página dinámica para manejo correcto de 404
+export const prerender = false;
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Configuración SEO para 404
+const seoConfig = {
+  title: currentLang === 'ca' ? 'Pàgina no trobada - Blixel' : 'Página no encontrada - Blixel',
+  description: currentLang === 'ca' ? 'La pàgina que cerques no existeix.' : 'La página que buscas no existe.',
+  keywords: '404, error, página no encontrada'
+};
+---
+
+<Layout 
+  title={seoConfig.title}
+  description={seoConfig.description}
+  keywords={seoConfig.keywords}
+  className="error-404"
+>
+  <section class="error-404-section">
+    <div class="container">
+      <div class="error-404-content">
+        <!-- Número 404 animado -->
+        <div class="error-number">
+          <span class="digit">4</span>
+          <span class="digit">0</span>
+          <span class="digit">4</span>
+        </div>
+
+        <!-- Mensaje de error -->
+        <div class="error-message">
+          <h1 class="error-title">
+            {currentLang === 'ca' ? 'Pàgina no trobada' : 'Página no encontrada'}
+          </h1>
+          <p class="error-description">
+            {currentLang === 'ca' 
+              ? 'Ho sentim, la pàgina que cerques no existeix o ha estat moguda.' 
+              : 'Lo sentimos, la página que buscas no existe o ha sido movida.'
+            }
+          </p>
+        </div>
+
+        <!-- Acciones -->
+        <div class="error-actions">
+          <a href={currentLang === 'ca' ? '/ca' : '/'} class="btn btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9,22 9,12 15,12 15,22"/>
+            </svg>
+            {currentLang === 'ca' ? 'Tornar a l\'inici' : 'Volver al inicio'}
+          </a>
+          
+          <button onclick="window.history.back()" class="btn btn-secondary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 12H5"/>
+              <path d="M12 19l-7-7 7-7"/>
+            </svg>
+            {currentLang === 'ca' ? 'Tornar enrere' : 'Volver atrás'}
+          </button>
+        </div>
+
+        <!-- Enlaces útiles -->
+        <div class="useful-links">
+          <h3>{currentLang === 'ca' ? 'Pàgines principals:' : 'Páginas principales:'}</h3>
+          <div class="links-grid">
+            <a href={currentLang === 'ca' ? '/ca' : '/'} class="link-item">
+              <span class="link-icon">🏠</span>
+              {currentLang === 'ca' ? 'Inici' : 'Inicio'}
+            </a>
+            <a href={currentLang === 'ca' ? '/ca/sobre-nosotros' : '/sobre-nosotros'} class="link-item">
+              <span class="link-icon">👥</span>
+              {currentLang === 'ca' ? 'Sobre nosaltres' : 'Sobre nosotros'}
+            </a>
+            <a href={currentLang === 'ca' ? '/ca/servicios' : '/servicios'} class="link-item">
+              <span class="link-icon">🚀</span>
+              {currentLang === 'ca' ? 'Serveis' : 'Servicios'}
+            </a>
+            <a href={currentLang === 'ca' ? '/ca/contacto' : '/contacto'} class="link-item">
+              <span class="link-icon">📧</span>
+              {currentLang === 'ca' ? 'Contacte' : 'Contacto'}
+            </a>
+          </div>
+        </div>
+
+        <!-- Robot IA ilustrativo -->
+        <div class="ai-robot">
+          <div class="robot-body">
+            <div class="robot-head">
+              <div class="robot-eyes">
+                <div class="eye"></div>
+                <div class="eye"></div>
+              </div>
+              <div class="robot-antenna"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .error-404-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+    position: relative;
+    background: transparent;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .error-404-content {
+    text-align: center;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Número 404 animado */
+  .error-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    font-family: 'Arial Black', sans-serif;
+  }
+
+  .digit {
+    font-size: 8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #60a5fa 0%, #a855f7 50%, #34d399 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(96, 165, 250, 0.3);
+    position: relative;
+  }
+
+  .digit:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .digit:nth-child(2) {
+    animation-delay: 0.5s;
+    transform: scale(1.1);
+  }
+
+  .digit:nth-child(3) {
+    animation-delay: 1s;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Mensaje de error */
+  .error-message {
+    margin-bottom: 3rem;
+  }
+
+  .error-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  html:not(.dark) .error-title {
+    color: #111827 !important;
+  }
+
+  .error-description {
+    font-size: 1.25rem;
+    color: #9ca3af;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  html:not(.dark) .error-description {
+    color: #6b7280 !important;
+  }
+
+  /* Botones de acción */
+  .error-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(96, 165, 250, 0.4);
+  }
+
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e5e7eb;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  html:not(.dark) .btn-secondary {
+    background: rgba(0, 0, 0, 0.05);
+    color: #374151 !important;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  html:not(.dark) .btn-secondary:hover {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.3);
+  }
+
+  /* Enlaces útiles */
+  .useful-links {
+    margin-bottom: 3rem;
+  }
+
+  .useful-links h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+  }
+
+  html:not(.dark) .useful-links h3 {
+    color: #111827 !important;
+  }
+
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .link-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #e5e7eb;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  html:not(.dark) .link-item {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #374151 !important;
+  }
+
+  .link-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(96, 165, 250, 0.3);
+    transform: translateY(-1px);
+  }
+
+  html:not(.dark) .link-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(37, 99, 235, 0.3);
+  }
+
+  .link-icon {
+    font-size: 1.25rem;
+  }
+
+  /* Robot IA ilustrativo */
+  .ai-robot {
+    position: absolute;
+    top: 50%;
+    right: -100px;
+    transform: translateY(-50%);
+    opacity: 0.1;
+    z-index: 1;
+  }
+
+  .robot-body {
+    position: relative;
+  }
+
+  .robot-head {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #60a5fa, #a855f7);
+    border-radius: 20px;
+    position: relative;
+    animation: robotFloat 3s ease-in-out infinite;
+  }
+
+  .robot-eyes {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    padding: 0 15px;
+  }
+
+  .eye {
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    animation: robotBlink 4s infinite;
+  }
+
+  .robot-antenna {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 20px;
+    background: #60a5fa;
+    border-radius: 2px;
+  }
+
+  .robot-antenna::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background: #34d399;
+    border-radius: 50%;
+    animation: antennaBlink 2s infinite;
+  }
+
+  @keyframes robotFloat {
+    0%, 100% { transform: translateY(-50%); }
+    50% { transform: translateY(-60%); }
+  }
+
+  @keyframes robotBlink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.1); }
+  }
+
+  @keyframes antennaBlink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .digit {
+      font-size: 5rem;
+    }
+
+    .error-title {
+      font-size: 2rem;
+    }
+
+    .error-description {
+      font-size: 1.1rem;
+    }
+
+    .error-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .links-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-robot {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .digit {
+      font-size: 4rem;
+    }
+
+    .error-title {
+      font-size: 1.75rem;
+    }
+
+    .error-description {
+      font-size: 1rem;
+    }
+
+    .container {
+      padding: 0 1rem;
+    }
+  }
+
+  /* Efectos adicionales para el tema oscuro/claro */
+  .error-404-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  html:not(.dark) .error-404-section::before {
+    background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(37, 99, 235, 0.05) 0%, transparent 70%);
+  }
+</style>
+
+<script>
+  // Script para analytics - reportar 404
+  document.addEventListener('DOMContentLoaded', () => {
+    // Reportar 404 a Google Analytics si está disponible
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'page_view', {
+        page_title: '404 - Página no encontrada',
+        page_location: window.location.href
+      });
+    }
+
+    // Reportar 404 a Facebook Pixel si está disponible
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'PageView', {
+        content_name: '404 Error Page'
+      });
+    }
+
+    console.log('📊 404 page viewed:', window.location.href);
+  });
+</script>

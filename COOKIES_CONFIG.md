@@ -9,12 +9,10 @@ Antes de publicar tu sitio web, debes configurar los IDs reales de Google Analyt
 1. Ve al archivo: `src/components/CookieBanner.astro`
 2. Ya está configurado con tu ID: `G-GN6G2XHNTL`
 
-### 2. Facebook Pixel
+### 2. Facebook Pixel ✅ YA CONFIGURADO
 
-1. En el mismo archivo: `src/components/CookieBanner.astro`
-2. Busca la línea: `const FB_PIXEL_ID = 'FB_PIXEL_ID';`
-3. Reemplaza `'FB_PIXEL_ID'` con tu ID real de Facebook Pixel
-   - Ejemplo: `const FB_PIXEL_ID = '1234567890123456';`
+1. Ve al archivo: `src/components/CookieBanner.astro`
+2. Ya está configurado con tu ID: `709784485169854`
 
 ## 📱 Cómo funciona el sistema de cookies
 
@@ -51,7 +49,7 @@ left: 20px;    /* distancia desde la izquierda */
 ## ✅ Checklist antes de publicar
 
 - [✓] Configurar ID de Google Analytics (G-GN6G2XHNTL)
-- [ ] Configurar ID de Facebook Pixel
+- [✓] Configurar ID de Facebook Pixel (709784485169854)
 - [ ] Probar el banner en modo incógnito
 - [ ] Verificar que los scripts se cargan solo con consentimiento
 - [ ] Comprobar que las preferencias se guardan correctamente
