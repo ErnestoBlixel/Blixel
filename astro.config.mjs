@@ -2,13 +2,11 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react'; // Importa la integración
 import tailwind from '@astrojs/tailwind';
-import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
-  // Modo híbrido: páginas estáticas + algunas dinámicas
-  output: 'hybrid',
-  adapter: cloudflare(),
+  // Modo estático con fallback manual para 404
+  output: 'static',
   
   integrations: [
     react(), // Añade la integración aquí

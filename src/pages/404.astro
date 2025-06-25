@@ -1,13 +1,9 @@
 ---
 // src/pages/404.astro
 import Layout from '../layouts/Layout.astro';
-import { getLangFromUrl, useTranslations } from '../i18n/config';
-
-// Marcar como página dinámica para manejo correcto de 404
-export const prerender = false;
+import { getLangFromUrl } from '../i18n/config';
 
 const currentLang = getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
 
 // Configuración SEO para 404
 const seoConfig = {

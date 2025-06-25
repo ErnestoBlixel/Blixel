@@ -1,13 +1,13 @@
-# Cloudflare Pages redirects para manejo correcto de 404
+# Cloudflare Pages redirects - manejo correcto de 404
 
-# SPA fallback - páginas que no existen deben mostrar 404
-/* /404 404
-
-# Redirecciones específicas si las necesitas en el futuro
-# /old-page /new-page 301
-
-# Manejo de archivos estáticos
+# Archivos estáticos y recursos
 /_astro/* /_astro/:splat 200
 /favicon.ico /favicon.ico 200
 /robots.txt /robots.txt 200
 /sitemap.xml /sitemap.xml 200
+/wp-content/* /wp-content/:splat 200
+/images/* /images/:splat 200
+/logos/* /logos/:splat 200
+
+# SPA fallback - páginas que no existen deben mostrar 404
+/* /404.html 404
