@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { languages, routes } from '../i18n/config';
+import { getAllPages } from '../lib/wordpress';
 
 // Configuración del sitemap
 const site = 'https://blixel.es';
@@ -46,7 +47,28 @@ Object.entries(routes).forEach(([routeKey, routeUrls]) => {
   });
 });
 
-export const GET: APIRoute = () => {
+export const GET: APIRoute = async () => {
+  try {
+    // Obtener páginas de WordPress
+    const wpPages = await getAllPages();
+    
+    // Agregar páginas de WordPress al sitemap
+    const excludedSlugs = ['inicio', 'home', 'homepage'];
+    wpPages.forEach((page: any) => {
+      if (!excludedSlugs.includes(page.slug)) {
+        urls.push({
+          url: `${site}/${page.slug}`,
+          changefreq,
+          priority: priority.secondary,
+          lastmod: new Date(page.modified).toISOString().split('T')[0],
+          hreflang: 'es-ES',
+          alternates: []
+        });
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching WordPress pages for sitemap:', error);
+  }
   // Generar XML del sitemap
   const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
