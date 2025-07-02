@@ -1,43 +1,34 @@
 ---
-import { getPageBySlug, getPageSlugs } from '../lib/wordpress';
+// Página temporal con contenido estático para formacion-ia-empresas
 import Layout from '../layouts/Layout.astro';
 
-// Generar rutas estáticas en tiempo de build
-export async function getStaticPaths() {
-  try {
-    const slugs = await getPageSlugs();
-    
-    // Filtrar páginas que ya tienen rutas estáticas (como index)
-    const excludedSlugs = ['inicio', 'home', 'homepage'];
-    const filteredSlugs = slugs.filter((slug: string) => !excludedSlugs.includes(slug));
-    
-    return filteredSlugs.map((slug: string) => ({
-      params: { slug },
-    }));
-  } catch (error) {
-    console.error('Error fetching page slugs:', error);
-    return [];
-  }
-}
-
-// Obtener datos de la página
-const { slug } = Astro.params;
-let page;
-
-try {
-  page = await getPageBySlug(slug);
-} catch (error) {
-  console.error('Error fetching page:', error);
-}
-
-if (!page) {
-  return Astro.redirect('/404');
-}
-
-// Datos básicos del sitio
 const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
-const pageTitle = page.title || 'Blixel';
-const pageDescription = '';
+const pageTitle = 'Formación IA para Empresas | Blixel';
+const pageDescription = 'Formación especializada en Inteligencia Artificial para empresas';
+
+// Contenido temporal mientras resolvemos el problema con WordPress
+const content = `
+<h2>Formación en Inteligencia Artificial para Empresas</h2>
+<p>Transformamos equipos en expertos de IA con formación práctica y aplicada.</p>
+
+<h3>¿Qué incluye nuestra formación?</h3>
+<ul>
+  <li>Introducción práctica a la IA generativa</li>
+  <li>Casos de uso específicos para tu sector</li>
+  <li>Herramientas de IA para productividad</li>
+  <li>Automatización de procesos con IA</li>
+  <li>Mejores prácticas y ética en IA</li>
+</ul>
+
+<h3>Modalidades de formación</h3>
+<ul>
+  <li><strong>Presencial:</strong> En tu oficina o en nuestras instalaciones</li>
+  <li><strong>Online:</strong> Sesiones en vivo con ejercicios prácticos</li>
+  <li><strong>Híbrida:</strong> Combinación de ambas modalidades</li>
+</ul>
+
+<p>Contacta con nosotros para diseñar un programa de formación personalizado para tu empresa.</p>
+`;
 ---
 
 <Layout 
@@ -49,7 +40,6 @@ const pageDescription = '';
   <!-- HEADER SIMPLE -->
   <header class="simple-header">
     <div class="header-container">
-      <!-- Logo a la izquierda -->
       <a href="/" class="logo-link">
         <img 
           src={logoUrl} 
@@ -60,7 +50,6 @@ const pageDescription = '';
         />
       </a>
       
-      <!-- Botón toggle modo día/noche -->
       <button class="theme-toggle" aria-label="Cambiar tema">
         <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="5"></circle>
@@ -80,32 +69,25 @@ const pageDescription = '';
     </div>
   </header>
 
-  <!-- CONTENIDO DE LA PÁGINA -->
   <main class="page-content">
     <div class="page-container">
-      <!-- Hero de la página -->
       <div class="page-hero">
-        <h1 class="page-title">{page.title}</h1>
-        {page.featuredImage && (
-          <img 
-            src={page.featuredImage.node.sourceUrl} 
-            alt={page.featuredImage.node.altText || page.title}
-            class="page-featured-image"
-            loading="lazy"
-          />
-        )}
+        <h1 class="page-title">Formación IA para Empresas</h1>
       </div>
 
-      <!-- Contenido de WordPress -->
-      <div class="wp-content" set:html={page.content} />
+      <div class="wp-content" set:html={content} />
+      
+      <div class="cta-section">
+        <p>¿Listo para formar a tu equipo en IA?</p>
+        <a href="/#contacto" class="cta-button">Solicitar información</a>
+      </div>
     </div>
   </main>
 
-  <!-- FOOTER (copiado del index) -->
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="footer-container">
       <div class="footer-content">
-        <!-- Logo y descripción -->
         <div class="footer-brand">
           <img 
             src={logoUrl} 
@@ -118,7 +100,6 @@ const pageDescription = '';
           </p>
         </div>
 
-        <!-- Enlaces rápidos -->
         <div class="footer-links">
           <h3 class="footer-title">Enlaces</h3>
           <ul class="footer-list">
@@ -129,7 +110,6 @@ const pageDescription = '';
           </ul>
         </div>
 
-        <!-- Contacto -->
         <div class="footer-contact">
           <h3 class="footer-title">Contacto</h3>
           <ul class="footer-list">
@@ -154,7 +134,6 @@ const pageDescription = '';
         </div>
       </div>
 
-      <!-- Copyright -->
       <div class="footer-bottom">
         <p class="footer-copyright">
           © 2024 BLIXEL GROUP SL. Todos los derechos reservados.
@@ -165,7 +144,7 @@ const pageDescription = '';
 </Layout>
 
 <style>
-  /* ==================== ESTILOS HEREDADOS DEL INDEX ==================== */
+  /* Todos los estilos del archivo [slug].astro */
   .simple-header {
     position: fixed;
     top: 0;
@@ -272,9 +251,8 @@ const pageDescription = '';
     transform: scale(0.8) rotate(180deg);
   }
 
-  /* ==================== CONTENIDO DE LA PÁGINA ==================== */
   .page-content {
-    padding-top: 78px; /* Compensar header fijo */
+    padding-top: 78px;
     min-height: calc(100vh - 78px);
     background: #000000;
   }
@@ -308,16 +286,7 @@ const pageDescription = '';
     color: #111827 !important;
   }
 
-  .page-featured-image {
-    width: 100%;
-    max-width: 800px;
-    height: auto;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    margin: 0 auto;
-  }
-
-  /* ==================== CONTENIDO DE WORDPRESS ==================== */
+  /* Contenido WordPress */
   .wp-content {
     font-family: 'Inter', -apple-system, sans-serif;
     font-size: 1.125rem;
@@ -331,7 +300,6 @@ const pageDescription = '';
     color: #374151 !important;
   }
 
-  /* Estilos para contenido de WordPress */
   .wp-content h1,
   .wp-content h2,
   .wp-content h3,
@@ -365,24 +333,6 @@ const pageDescription = '';
     margin-bottom: 1.5rem;
   }
 
-  .wp-content a {
-    color: #60a5fa;
-    text-decoration: underline;
-    transition: color 0.3s ease;
-  }
-
-  .wp-content a:hover {
-    color: #3b82f6;
-  }
-
-  html:not(.dark) .wp-content a {
-    color: #2563eb;
-  }
-
-  html:not(.dark) .wp-content a:hover {
-    color: #1d4ed8;
-  }
-
   .wp-content ul,
   .wp-content ol {
     margin: 1.5rem 0;
@@ -393,52 +343,48 @@ const pageDescription = '';
     margin-bottom: 0.5rem;
   }
 
-  .wp-content blockquote {
-    border-left: 4px solid #60a5fa;
-    padding-left: 1.5rem;
-    margin: 2rem 0;
-    font-style: italic;
-    color: #9ca3af;
+  /* CTA Section */
+  .cta-section {
+    text-align: center;
+    margin-top: 4rem;
+    padding: 3rem 2rem;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 20px;
+    border: 1px solid rgba(96, 165, 250, 0.2);
   }
 
-  html:not(.dark) .wp-content blockquote {
-    color: #6b7280 !important;
-    border-left-color: #2563eb;
+  .cta-section p {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    font-weight: 600;
   }
 
-  .wp-content img {
-    max-width: 100%;
-    height: auto;
+  html:not(.dark) .cta-section p {
+    color: #111827 !important;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    color: white;
+    text-decoration: none;
     border-radius: 12px;
-    margin: 2rem 0;
+    font-weight: 600;
+    font-size: 1.125rem;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
   }
 
-  .wp-content pre {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 1rem;
-    overflow-x: auto;
-    margin: 1.5rem 0;
+  .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(96, 165, 250, 0.4);
   }
 
-  html:not(.dark) .wp-content pre {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
-  }
-
-  .wp-content code {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 0.2em 0.4em;
-    border-radius: 4px;
-    font-size: 0.9em;
-  }
-
-  html:not(.dark) .wp-content code {
-    background: rgba(0, 0, 0, 0.1);
-  }
-
-  /* ==================== FOOTER (copiado del index) ==================== */
+  /* Footer */
   .site-footer {
     position: relative;
     background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
@@ -554,7 +500,6 @@ const pageDescription = '';
     color: #9ca3af !important;
   }
 
-  /* ==================== ANIMACIONES ==================== */
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -566,7 +511,6 @@ const pageDescription = '';
     }
   }
 
-  /* ==================== RESPONSIVE ==================== */
   @media (max-width: 768px) {
     .simple-header {
       padding: 0.875rem 0;
@@ -594,6 +538,14 @@ const pageDescription = '';
 
     .wp-content {
       font-size: 1rem;
+    }
+
+    .cta-section {
+      padding: 2rem 1.5rem;
+    }
+
+    .cta-section p {
+      font-size: 1.25rem;
     }
 
     .footer-container {

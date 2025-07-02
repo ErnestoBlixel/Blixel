@@ -52,7 +52,7 @@ export const QUERIES = {
   // Obtener todas las páginas
   GET_ALL_PAGES: `
     query GetAllPages {
-      pages(first: 100) {
+      pages(first: 100, where: { status: PUBLISH }) {
         nodes {
           id
           slug
@@ -71,30 +71,26 @@ export const QUERIES = {
     }
   `,
 
-  // Obtener una página por slug
+  // Obtener una página por slug usando nodeByUri
   GET_PAGE_BY_SLUG: `
-    query GetPageBySlug($slug: String!) {
-      pageBy(slug: $slug) {
-        id
-        slug
-        title
-        date
-        modified
-        content
-        seo {
+    query GetPageBySlug($uri: String!) {
+      nodeByUri(uri: $uri) {
+        __typename
+        ... on Page {
+          id
+          databaseId
+          slug
+          uri
           title
-          metaDesc
-          canonical
-          opengraphTitle
-          opengraphDescription
-          opengraphImage {
-            sourceUrl
-          }
-        }
-        featuredImage {
-          node {
-            sourceUrl
-            altText
+          date
+          modified
+          content
+          status
+          featuredImage {
+            node {
+              sourceUrl
+              altText
+            }
           }
         }
       }
@@ -104,7 +100,7 @@ export const QUERIES = {
   // Obtener slugs de páginas para generar rutas
   GET_PAGE_SLUGS: `
     query GetPageSlugs {
-      pages(first: 100) {
+      pages(first: 100, where: { status: PUBLISH }) {
         nodes {
           slug
         }
@@ -120,8 +116,10 @@ export async function getAllPages() {
 }
 
 export async function getPageBySlug(slug: string) {
-  const data = await fetchGraphQL(QUERIES.GET_PAGE_BY_SLUG, { slug });
-  return data.pageBy;
+  // Convertir slug a URI (agregar barras)
+  const uri = `/${slug}/`;
+  const data = await fetchGraphQL(QUERIES.GET_PAGE_BY_SLUG, { uri });
+  return data.nodeByUri;
 }
 
 export async function getPageSlugs() {

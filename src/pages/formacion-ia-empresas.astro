@@ -1,43 +1,26 @@
 ---
-import { getPageBySlug, getPageSlugs } from '../lib/wordpress';
+// Página específica para formacion-ia-empresas con la sintaxis correcta
+import { getPageBySlug } from '../lib/wordpress';
 import Layout from '../layouts/Layout.astro';
 
-// Generar rutas estáticas en tiempo de build
-export async function getStaticPaths() {
-  try {
-    const slugs = await getPageSlugs();
-    
-    // Filtrar páginas que ya tienen rutas estáticas (como index)
-    const excludedSlugs = ['inicio', 'home', 'homepage'];
-    const filteredSlugs = slugs.filter((slug: string) => !excludedSlugs.includes(slug));
-    
-    return filteredSlugs.map((slug: string) => ({
-      params: { slug },
-    }));
-  } catch (error) {
-    console.error('Error fetching page slugs:', error);
-    return [];
-  }
-}
-
-// Obtener datos de la página
-const { slug } = Astro.params;
 let page;
+let error = null;
 
 try {
-  page = await getPageBySlug(slug);
-} catch (error) {
-  console.error('Error fetching page:', error);
+  page = await getPageBySlug('formacion-ia-empresas');
+} catch (e) {
+  console.error('Error fetching page:', e);
+  error = e.message;
 }
 
-if (!page) {
+// Si no se encuentra la página, redirigir a 404
+if (!page && !error) {
   return Astro.redirect('/404');
 }
 
-// Datos básicos del sitio
 const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
-const pageTitle = page.title || 'Blixel';
-const pageDescription = '';
+const pageTitle = page?.title || 'Formación IA para Empresas | Blixel';
+const pageDescription = 'Formación especializada en Inteligencia Artificial para empresas';
 ---
 
 <Layout 
@@ -49,7 +32,6 @@ const pageDescription = '';
   <!-- HEADER SIMPLE -->
   <header class="simple-header">
     <div class="header-container">
-      <!-- Logo a la izquierda -->
       <a href="/" class="logo-link">
         <img 
           src={logoUrl} 
@@ -60,7 +42,6 @@ const pageDescription = '';
         />
       </a>
       
-      <!-- Botón toggle modo día/noche -->
       <button class="theme-toggle" aria-label="Cambiar tema">
         <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="5"></circle>
@@ -80,32 +61,42 @@ const pageDescription = '';
     </div>
   </header>
 
-  <!-- CONTENIDO DE LA PÁGINA -->
   <main class="page-content">
     <div class="page-container">
-      <!-- Hero de la página -->
-      <div class="page-hero">
-        <h1 class="page-title">{page.title}</h1>
-        {page.featuredImage && (
-          <img 
-            src={page.featuredImage.node.sourceUrl} 
-            alt={page.featuredImage.node.altText || page.title}
-            class="page-featured-image"
-            loading="lazy"
-          />
-        )}
-      </div>
-
-      <!-- Contenido de WordPress -->
-      <div class="wp-content" set:html={page.content} />
+      {error ? (
+        <div class="error-container">
+          <h1>Error al cargar la página</h1>
+          <p>Hubo un problema al obtener el contenido desde WordPress.</p>
+          <p class="error-details">Error: {error}</p>
+          <a href="/" class="back-link">Volver al inicio</a>
+        </div>
+      ) : page ? (
+        <>
+          <div class="page-hero">
+            <h1 class="page-title">{page.title}</h1>
+            {page.featuredImage && (
+              <img 
+                src={page.featuredImage.node.sourceUrl} 
+                alt={page.featuredImage.node.altText || page.title}
+                class="page-featured-image"
+                loading="lazy"
+              />
+            )}
+          </div>
+          <div class="wp-content" set:html={page.content} />
+        </>
+      ) : (
+        <div class="loading-container">
+          <h1>Cargando contenido...</h1>
+        </div>
+      )}
     </div>
   </main>
 
-  <!-- FOOTER (copiado del index) -->
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="footer-container">
       <div class="footer-content">
-        <!-- Logo y descripción -->
         <div class="footer-brand">
           <img 
             src={logoUrl} 
@@ -118,7 +109,6 @@ const pageDescription = '';
           </p>
         </div>
 
-        <!-- Enlaces rápidos -->
         <div class="footer-links">
           <h3 class="footer-title">Enlaces</h3>
           <ul class="footer-list">
@@ -129,7 +119,6 @@ const pageDescription = '';
           </ul>
         </div>
 
-        <!-- Contacto -->
         <div class="footer-contact">
           <h3 class="footer-title">Contacto</h3>
           <ul class="footer-list">
@@ -154,7 +143,6 @@ const pageDescription = '';
         </div>
       </div>
 
-      <!-- Copyright -->
       <div class="footer-bottom">
         <p class="footer-copyright">
           © 2024 BLIXEL GROUP SL. Todos los derechos reservados.
@@ -165,7 +153,21 @@ const pageDescription = '';
 </Layout>
 
 <style>
-  /* ==================== ESTILOS HEREDADOS DEL INDEX ==================== */
+  /* ESTILOS HEREDADOS DEL INDEX */
+  body {
+    background: #000000;
+    color: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: hidden;
+    padding-top: 78px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  html:not(.dark) body {
+    background: #ffffff;
+    color: #111827;
+  }
+
   .simple-header {
     position: fixed;
     top: 0;
@@ -272,9 +274,9 @@ const pageDescription = '';
     transform: scale(0.8) rotate(180deg);
   }
 
-  /* ==================== CONTENIDO DE LA PÁGINA ==================== */
+  /* CONTENIDO DE LA PÁGINA */
   .page-content {
-    padding-top: 78px; /* Compensar header fijo */
+    padding-top: 78px;
     min-height: calc(100vh - 78px);
     background: #000000;
   }
@@ -315,9 +317,10 @@ const pageDescription = '';
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     margin: 0 auto;
+    display: block;
   }
 
-  /* ==================== CONTENIDO DE WORDPRESS ==================== */
+  /* CONTENIDO DE WORDPRESS */
   .wp-content {
     font-family: 'Inter', -apple-system, sans-serif;
     font-size: 1.125rem;
@@ -331,7 +334,6 @@ const pageDescription = '';
     color: #374151 !important;
   }
 
-  /* Estilos para contenido de WordPress */
   .wp-content h1,
   .wp-content h2,
   .wp-content h3,
@@ -438,7 +440,69 @@ const pageDescription = '';
     background: rgba(0, 0, 0, 0.1);
   }
 
-  /* ==================== FOOTER (copiado del index) ==================== */
+  /* CONTENEDORES DE ERROR Y CARGA */
+  .error-container,
+  .loading-container {
+    text-align: center;
+    padding: 4rem 2rem;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .error-container h1,
+  .loading-container h1 {
+    font-size: 2.5rem;
+    color: #ffffff;
+    margin-bottom: 1rem;
+  }
+
+  html:not(.dark) .error-container h1,
+  html:not(.dark) .loading-container h1 {
+    color: #111827 !important;
+  }
+
+  .error-container p {
+    color: #9ca3af;
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+  }
+
+  html:not(.dark) .error-container p {
+    color: #6b7280 !important;
+  }
+
+  .error-details {
+    font-family: monospace;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    max-width: 600px;
+    word-break: break-word;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 0.75rem 1.5rem;
+    background: #60a5fa;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .back-link:hover {
+    background: #3b82f6;
+    transform: translateY(-2px);
+  }
+
+  /* FOOTER */
   .site-footer {
     position: relative;
     background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
@@ -554,7 +618,7 @@ const pageDescription = '';
     color: #9ca3af !important;
   }
 
-  /* ==================== ANIMACIONES ==================== */
+  /* ANIMACIONES */
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -566,8 +630,13 @@ const pageDescription = '';
     }
   }
 
-  /* ==================== RESPONSIVE ==================== */
+  /* RESPONSIVE */
   @media (max-width: 768px) {
+    body {
+      font-size: 16px;
+      padding-top: 66px;
+    }
+
     .simple-header {
       padding: 0.875rem 0;
     }

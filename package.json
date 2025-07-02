@@ -7,7 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "start": "astro dev",
-    "test:wordpress": "node --loader tsx scripts/test-wordpress.ts"
+    "test:wordpress": "node --import tsx scripts/test-wordpress.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
