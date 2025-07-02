@@ -681,6 +681,7 @@ const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
     filter: blur(40px);
     opacity: 0.5;
     animation: float 20s infinite ease-in-out;
+    transition: opacity 0.5s ease, background 0.5s ease;
   }
 
   /* Orbe 1 - Azul principal */
@@ -753,7 +754,28 @@ const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
 
   /* Reducir opacidad en modo claro */
   html:not(.dark) .orb {
-    opacity: 0.3;
+    opacity: 0.2;
+  }
+
+  /* Ajuste de colores para modo claro */
+  html:not(.dark) .orb-1 {
+    background: radial-gradient(circle at center, rgba(96, 165, 250, 0.15) 0%, transparent 70%);
+  }
+
+  html:not(.dark) .orb-2 {
+    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+  }
+
+  html:not(.dark) .orb-3 {
+    background: radial-gradient(circle at center, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
+  }
+
+  html:not(.dark) .orb-4 {
+    background: radial-gradient(circle at center, rgba(147, 197, 253, 0.1) 0%, transparent 70%);
+  }
+
+  html:not(.dark) .orb-5 {
+    background: radial-gradient(circle at center, rgba(96, 165, 250, 0.12) 0%, transparent 70%);
   }
 
   /* Ocultar en móviles para mejor rendimiento */
