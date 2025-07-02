@@ -1,7 +1,8 @@
 ---
-// Página específica para formacion-ia-empresas con la sintaxis correcta
+// Página mejorada de formación IA para empresas con estilos consistentes con la home
 import { getPageBySlug } from '../lib/wordpress';
 import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm.astro';
 
 let page;
 let error = null;
@@ -20,7 +21,7 @@ if (!page && !error) {
 
 const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
 const pageTitle = page?.title || 'Formación IA para Empresas | Blixel';
-const pageDescription = 'Formación especializada en Inteligencia Artificial para empresas';
+const pageDescription = 'Formación especializada en Inteligencia Artificial para empresas. Transformamos equipos en expertos de IA con formación práctica y aplicada.';
 ---
 
 <Layout 
@@ -29,7 +30,7 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
   title={pageTitle}
   description={pageDescription}
 >
-  <!-- HEADER SIMPLE -->
+  <!-- HEADER SIMPLE (idéntico a la home) -->
   <header class="simple-header">
     <div class="header-container">
       <a href="/" class="logo-link">
@@ -61,39 +62,523 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     </div>
   </header>
 
-  <main class="page-content">
-    <div class="page-container">
-      {error ? (
-        <div class="error-container">
-          <h1>Error al cargar la página</h1>
-          <p>Hubo un problema al obtener el contenido desde WordPress.</p>
-          <p class="error-details">Error: {error}</p>
-          <a href="/" class="back-link">Volver al inicio</a>
+  <!-- HERO SECTION MEJORADO -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          Formación en <span class="title-highlight">Inteligencia Artificial</span> para Empresas
+        </h1>
+        <p class="hero-description">
+          Transformamos equipos en expertos de IA con formación práctica y aplicada. 
+          Tu equipo aprenderá a usar IA para multiplicar su productividad desde el primer día.
+        </p>
+        <div class="hero-ctas">
+          <a href="#contacto" class="cta-primary">
+            <span>Solicitar información</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="#programa" class="cta-secondary">Ver programa completo</a>
         </div>
-      ) : page ? (
-        <>
-          <div class="page-hero">
-            <h1 class="page-title">{page.title}</h1>
-            {page.featuredImage && (
-              <img 
-                src={page.featuredImage.node.sourceUrl} 
-                alt={page.featuredImage.node.altText || page.title}
-                class="page-featured-image"
-                loading="lazy"
-              />
-            )}
+        
+        <!-- Trust badges -->
+        <div class="hero-badges">
+          <div class="badge-item">
+            <span class="badge-number">+500</span>
+            <span class="badge-text">Profesionales formados</span>
           </div>
-          <div class="wp-content" set:html={page.content} />
-        </>
-      ) : (
-        <div class="loading-container">
-          <h1>Cargando contenido...</h1>
+          <div class="badge-item">
+            <span class="badge-number">98%</span>
+            <span class="badge-text">Satisfacción</span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-number">24h</span>
+            <span class="badge-text">Aplicación práctica</span>
+          </div>
+        </div>
+      </div>
+      
+      {page?.featuredImage && (
+        <div class="hero-image">
+          <img 
+            src={page.featuredImage.node.sourceUrl} 
+            alt={page.featuredImage.node.altText || page.title}
+            class="page-featured-image"
+            loading="lazy"
+          />
         </div>
       )}
     </div>
-  </main>
+  </section>
 
-  <!-- FOOTER -->
+  <!-- SECCIÓN DE MÓDULOS DE FORMACIÓN (estilo tarjetas de servicios) -->
+  <section class="modules-section" id="programa">
+    <div class="modules-container">
+      <div class="modules-header">
+        <h2 class="modules-title">
+          Programa completo de <span class="title-highlight">formación IA</span>
+        </h2>
+        <p class="modules-description">
+          Contenido práctico y aplicable desde el primer día. Cada módulo incluye ejercicios reales 
+          adaptados a tu sector y herramientas que podrás usar inmediatamente.
+        </p>
+      </div>
+
+      <div class="modules-grid">
+        <!-- Módulo 1 -->
+        <div class="module-card" data-module="1">
+          <div class="module-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z"></path>
+              <path d="M2 17L12 22L22 17"></path>
+              <path d="M2 12L12 17L22 12"></path>
+            </svg>
+          </div>
+          <h3 class="module-title">Fundamentos de IA<br>para Negocios</h3>
+          <p class="module-description">
+            Comprende qué es la IA, cómo funciona y sus aplicaciones empresariales inmediatas.
+          </p>
+          <ul class="module-features">
+            <li>Introducción práctica a ChatGPT y Claude</li>
+            <li>Prompting efectivo para resultados profesionales</li>
+            <li>Casos de éxito en tu industria</li>
+          </ul>
+          <div class="module-beam"></div>
+        </div>
+
+        <!-- Módulo 2 -->
+        <div class="module-card" data-module="2">
+          <div class="module-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          </div>
+          <h3 class="module-title">Automatización<br>con IA</h3>
+          <p class="module-description">
+            Aprende a crear flujos automatizados que ahorren horas de trabajo manual.
+          </p>
+          <ul class="module-features">
+            <li>Automatización de emails y respuestas</li>
+            <li>Procesamiento inteligente de documentos</li>
+            <li>Integración con herramientas actuales</li>
+          </ul>
+          <div class="module-beam"></div>
+        </div>
+
+        <!-- Módulo 3 -->
+        <div class="module-card" data-module="3">
+          <div class="module-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <h3 class="module-title">Creación de Contenido<br>con IA</h3>
+          <p class="module-description">
+            Genera contenido de calidad 10x más rápido manteniendo tu voz de marca.
+          </p>
+          <ul class="module-features">
+            <li>Redacción de textos persuasivos</li>
+            <li>Creación de imágenes profesionales</li>
+            <li>Edición y mejora de contenidos</li>
+          </ul>
+          <div class="module-beam"></div>
+        </div>
+
+        <!-- Módulo 4 -->
+        <div class="module-card" data-module="4">
+          <div class="module-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <line x1="12" y1="20" x2="12" y2="10"></line>
+              <line x1="18" y1="20" x2="18" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="16"></line>
+            </svg>
+          </div>
+          <h3 class="module-title">Análisis de Datos<br>e Insights con IA</h3>
+          <p class="module-description">
+            Convierte datos en decisiones estratégicas con análisis potenciado por IA.
+          </p>
+          <ul class="module-features">
+            <li>Análisis predictivo simplificado</li>
+            <li>Dashboards inteligentes</li>
+            <li>Reportes automáticos personalizados</li>
+          </ul>
+          <div class="module-beam"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENIDO DE WORDPRESS (si existe) -->
+  {error ? (
+    <section class="wp-section">
+      <div class="wp-container">
+        <div class="error-container">
+          <p>No se pudo cargar el contenido adicional desde WordPress.</p>
+        </div>
+      </div>
+    </section>
+  ) : page && page.content ? (
+    <section class="wp-section">
+      <div class="wp-container">
+        <div class="wp-content" set:html={page.content} />
+      </div>
+    </section>
+  ) : null}
+
+  <!-- SECCIÓN DE BENEFICIOS (estilo urgency de la home) -->
+  <section class="benefits-section">
+    <div class="benefits-container">
+      <div class="benefits-content">
+        <h2 class="benefits-title">
+          ¿Por qué formar a tu equipo en <span class="title-highlight">IA ahora</span>?
+        </h2>
+        <p class="benefits-description">
+          Las empresas que forman a sus equipos en IA están viendo resultados extraordinarios. 
+          No es solo sobre tecnología, es sobre darle superpoderes a tu equipo.
+        </p>
+      </div>
+
+      <div class="benefits-stats">
+        <div class="stat-card">
+          <div class="stat-number-container">
+            <span class="stat-number">4h</span>
+          </div>
+          <div class="stat-text">
+            <span class="stat-primary">ahorradas por empleado</span>
+            <span class="stat-secondary">cada semana</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number-container">
+            <span class="stat-number">60%</span>
+          </div>
+          <div class="stat-text">
+            <span class="stat-primary">menos errores</span>
+            <span class="stat-secondary">en procesos críticos</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number-container">
+            <span class="stat-number">10x</span>
+          </div>
+          <div class="stat-text">
+            <span class="stat-primary">más contenido generado</span>
+            <span class="stat-secondary">con la misma calidad</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number-container">
+            <span class="stat-number">87%</span>
+          </div>
+          <div class="stat-text">
+            <span class="stat-primary">de equipos formados</span>
+            <span class="stat-secondary">usan IA diariamente</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE MODALIDADES -->
+  <section class="modalities-section">
+    <div class="modalities-container">
+      <div class="modalities-header">
+        <h2 class="modalities-title">
+          Modalidades de <span class="title-highlight">formación</span>
+        </h2>
+        <p class="modalities-description">
+          Adaptamos la formación a las necesidades de tu empresa. Elige la modalidad que mejor se ajuste a tu equipo.
+        </p>
+      </div>
+
+      <div class="modalities-grid">
+        <!-- Presencial -->
+        <div class="modality-card">
+          <div class="modality-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h3 class="modality-title">Formación Presencial</h3>
+          <p class="modality-description">
+            En tu oficina o en nuestras instalaciones. Interacción directa y práctica intensiva.
+          </p>
+          <ul class="modality-features">
+            <li>Grupos de 5 a 20 personas</li>
+            <li>Duración: 1-3 días intensivos</li>
+            <li>Material y ejercicios incluidos</li>
+            <li>Certificado de finalización</li>
+          </ul>
+        </div>
+
+        <!-- Online -->
+        <div class="modality-card">
+          <div class="modality-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <h3 class="modality-title">Formación Online</h3>
+          <p class="modality-description">
+            Sesiones en vivo con ejercicios prácticos. Flexibilidad sin perder calidad.
+          </p>
+          <ul class="modality-features">
+            <li>Clases en directo vía Zoom/Teams</li>
+            <li>Sesiones de 2-3 horas</li>
+            <li>Grabaciones disponibles</li>
+            <li>Soporte continuo por chat</li>
+          </ul>
+        </div>
+
+        <!-- Híbrida -->
+        <div class="modality-card">
+          <div class="modality-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+            </svg>
+          </div>
+          <h3 class="modality-title">Formación Híbrida</h3>
+          <p class="modality-description">
+            Lo mejor de ambos mundos. Combina sesiones presenciales con refuerzo online.
+          </p>
+          <ul class="modality-features">
+            <li>Kickoff presencial + seguimiento online</li>
+            <li>Mayor flexibilidad de horarios</li>
+            <li>Práctica continua durante semanas</li>
+            <li>Mentorías personalizadas</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE FAQ ESPECÍFICO DE FORMACIÓN -->
+  <section class="faq-section">
+    <div class="faq-container">
+      <div class="faq-header">
+        <h2 class="faq-title">
+          Preguntas frecuentes sobre la <span class="title-highlight">formación</span>
+        </h2>
+        <p class="faq-description">
+          Resolvemos las dudas más comunes sobre nuestro programa de formación en IA
+        </p>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq-column">
+          <!-- FAQ 1 -->
+          <div class="faq-item" data-faq="1">
+            <button class="faq-question">
+              <span>¿Qué nivel técnico necesita mi equipo?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>Ninguno. Nuestra formación está diseñada para profesionales sin conocimientos técnicos previos. Si saben usar email y navegador web, pueden aprender IA. Adaptamos el contenido al nivel del grupo.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item" data-faq="2">
+            <button class="faq-question">
+              <span>¿Cuánto dura la formación completa?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>El programa básico son 16 horas (2 días presenciales o 4-6 sesiones online). Ofrecemos también programas intensivos de 8 horas y programas avanzados de hasta 40 horas para transformación profunda.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item" data-faq="3">
+            <button class="faq-question">
+              <span>¿Incluye ejercicios prácticos de mi sector?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>Sí, absolutamente. Antes de la formación analizamos tu empresa y sector para personalizar todos los ejercicios. Tu equipo trabajará con casos reales de su día a día, no con ejemplos genéricos.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item" data-faq="4">
+            <button class="faq-question">
+              <span>¿Qué herramientas de IA aprenderemos a usar?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>ChatGPT, Claude, Copilot, Midjourney, y herramientas específicas según tu sector. También enseñamos a evaluar y elegir nuevas herramientas. Incluimos licencias de prueba para que practiquen.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-item" data-faq="5">
+            <button class="faq-question">
+              <span>¿Ofrecen certificación al finalizar?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>Sí, todos los participantes reciben un certificado de "Especialista en IA Aplicada" tras completar el programa y aprobar la evaluación práctica. Es un diferenciador valioso en el CV.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 6 -->
+          <div class="faq-item" data-faq="6">
+            <button class="faq-question">
+              <span>¿Cuál es el precio de la formación?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>Desde 197€ por persona para grupos (mínimo 5 personas). Formación individual desde 497€. Empresas desde 2.997€ incluyendo personalización completa. Solicita presupuesto personalizado sin compromiso.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-column">
+          <!-- FAQ 7 -->
+          <div class="faq-item" data-faq="7">
+            <button class="faq-question">
+              <span>¿Hay soporte después de la formación?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>Incluimos 3 meses de soporte post-formación vía chat/email. Tu equipo puede consultar dudas, compartir casos y recibir feedback. También organizamos sesiones de refuerzo mensuales opcionales.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 8 -->
+          <div class="faq-item" data-faq="8">
+            <button class="faq-question">
+              <span>¿Podemos formar solo a un departamento?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>Por supuesto. Muchas empresas empiezan con un departamento piloto (marketing, ventas, RRHH) y luego expanden. Adaptamos el contenido a las necesidades específicas de cada área.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 9 -->
+          <div class="faq-item" data-faq="9">
+            <button class="faq-question">
+              <span>¿La formación es bonificable por FUNDAE?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>Sí, nuestra formación es 100% bonificable a través de FUNDAE. Te ayudamos con toda la gestión para que puedas recuperar hasta el 100% de la inversión. Muchos clientes forman a su equipo a coste cero.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 10 -->
+          <div class="faq-item" data-faq="10">
+            <button class="faq-question">
+              <span>¿Qué resultados puedo esperar?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>El 87% de equipos formados reportan ahorro de 4+ horas semanales por persona. Verás mejoras inmediatas en creación de contenido, análisis de datos y atención al cliente. ROI típico: recuperas la inversión en 30-60 días.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 11 -->
+          <div class="faq-item" data-faq="11">
+            <button class="faq-question">
+              <span>¿Hacen formación internacional/remota?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>Sí, formamos equipos en toda España, Latinoamérica y Europa. Online podemos llegar a cualquier parte. Presencial en península y Baleares. Contenido disponible en español, catalán e inglés.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 12 -->
+          <div class="faq-item" data-faq="12">
+            <button class="faq-question">
+              <span>¿Cómo reservo la formación para mi empresa?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>Rellena el formulario de contacto o llámanos. En 24h te enviamos propuesta personalizada con temario adaptado, calendario y presupuesto. Podemos empezar en 1-2 semanas desde la confirmación.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE FORMULARIO DE CONTACTO -->
+  <section id="contacto" class="contact-form-section">
+    <div class="contact-form-container">
+      <div class="contact-form-header">
+        <h2 class="contact-form-title">
+          ¿Listo para formar a tu equipo en <span class="title-highlight">IA</span>?
+        </h2>
+        <p class="contact-form-description">
+          Cuéntanos sobre tu empresa y tus objetivos. Te enviaremos una propuesta personalizada en menos de 24 horas.
+        </p>
+      </div>
+
+      <div class="form-embed-container">
+        <ContactForm currentLang="es" />
+      </div>
+
+      <div class="contact-trust-badges">
+        <div class="contact-trust-item">
+          <div class="contact-trust-icon">📚</div>
+          <span>Formación personalizada</span>
+        </div>
+        <div class="contact-trust-item">
+          <div class="contact-trust-icon">🎯</div>
+          <span>100% Bonificable FUNDAE</span>
+        </div>
+        <div class="contact-trust-item">
+          <div class="contact-trust-icon">🏆</div>
+          <span>Certificación incluida</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER (idéntico a la home) -->
   <footer class="site-footer">
     <div class="footer-container">
       <div class="footer-content">
@@ -113,7 +598,7 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
           <h3 class="footer-title">Enlaces</h3>
           <ul class="footer-list">
             <li><a href="/" class="footer-link">Inicio</a></li>
-            <li><a href="/#contacto" class="footer-link">Contacto</a></li>
+            <li><a href="#contacto" class="footer-link">Contacto</a></li>
             <li><a href="/legal/aviso-legal" class="footer-link">Aviso Legal</a></li>
             <li><a href="/legal/politica-cookies" class="footer-link">Política de Cookies</a></li>
           </ul>
@@ -153,7 +638,7 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
 </Layout>
 
 <style>
-  /* ESTILOS HEREDADOS DEL INDEX */
+  /* ==================== ESTILOS GLOBALES (heredados de index) ==================== */
   body {
     background: #000000;
     color: #ffffff;
@@ -168,6 +653,7 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     color: #111827;
   }
 
+  /* ==================== HEADER (idéntico a index) ==================== */
   .simple-header {
     position: fixed;
     top: 0;
@@ -274,53 +760,433 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     transform: scale(0.8) rotate(180deg);
   }
 
-  /* CONTENIDO DE LA PÁGINA */
-  .page-content {
-    padding-top: 78px;
-    min-height: calc(100vh - 78px);
+  /* ==================== HERO SECTION MEJORADO ==================== */
+  .hero-section {
+    position: relative;
+    padding: 6rem 0 4rem;
     background: #000000;
+    overflow: hidden;
   }
 
-  html:not(.dark) .page-content {
+  html:not(.dark) .hero-section {
     background: #ffffff;
   }
 
-  .page-container {
-    max-width: 1200px;
+  .hero-container {
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 4rem 2rem;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
   }
 
-  .page-hero {
-    text-align: center;
-    margin-bottom: 4rem;
-    animation: fadeInUp 0.8s ease-out;
+  .hero-content {
+    animation: fadeInLeft 0.8s ease-out;
   }
 
-  .page-title {
+  .hero-title {
     font-family: 'Inter', -apple-system, sans-serif;
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 800;
     line-height: 1.1;
     color: #ffffff;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
   }
 
-  html:not(.dark) .page-title {
+  html:not(.dark) .hero-title {
     color: #111827 !important;
+  }
+
+  .title-highlight {
+    background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    margin-bottom: 2rem;
+    max-width: 600px;
+  }
+
+  html:not(.dark) .hero-description {
+    color: #374151 !important;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+  }
+
+  .cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(96, 165, 250, 0.4);
+  }
+
+  .cta-primary svg {
+    transition: transform 300ms ease;
+  }
+
+  .cta-primary:hover svg {
+    transform: translateX(4px);
+  }
+
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    background: transparent;
+    color: #60a5fa;
+    text-decoration: none;
+    border: 2px solid rgba(96, 165, 250, 0.3);
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    transition: all 300ms ease;
+  }
+
+  .cta-secondary:hover {
+    background: rgba(96, 165, 250, 0.1);
+    border-color: rgba(96, 165, 250, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: 3rem;
+  }
+
+  .badge-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .badge-number {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #60a5fa;
+  }
+
+  .badge-text {
+    font-size: 0.9rem;
+    color: #9ca3af;
+  }
+
+  html:not(.dark) .badge-text {
+    color: #6b7280 !important;
+  }
+
+  .hero-image {
+    animation: fadeInRight 0.8s ease-out;
   }
 
   .page-featured-image {
     width: 100%;
-    max-width: 800px;
     height: auto;
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    margin: 0 auto;
-    display: block;
   }
 
-  /* CONTENIDO DE WORDPRESS */
+  /* ==================== SECCIÓN DE MÓDULOS ==================== */
+  .modules-section {
+    position: relative;
+    padding: 6rem 0;
+    background: #000000;
+    overflow: hidden;
+  }
+
+  html:not(.dark) .modules-section {
+    background: #ffffff;
+  }
+
+  .modules-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .modules-header {
+    text-align: left;
+    margin-bottom: 4rem;
+    animation: fadeInUp 0.8s ease-out;
+    max-width: 100%;
+  }
+
+  .modules-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .modules-title {
+    color: #111827 !important;
+  }
+
+  .modules-description {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 1.125rem;
+    color: #9ca3af;
+    max-width: 100%;
+    margin: 0;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  html:not(.dark) .modules-description {
+    color: #374151 !important;
+  }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .module-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+    animation: fadeInUp 0.6s ease-out backwards;
+  }
+
+  .module-card:nth-child(1) { animation-delay: 0.1s; }
+  .module-card:nth-child(2) { animation-delay: 0.2s; }
+  .module-card:nth-child(3) { animation-delay: 0.3s; }
+  .module-card:nth-child(4) { animation-delay: 0.4s; }
+
+  html:not(.dark) .module-card {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .module-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .module-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(96, 165, 250, 0.3);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  html:not(.dark) .module-card:hover {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .module-card:hover::before {
+    opacity: 1;
+  }
+
+  .module-icon {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 12px;
+    margin-bottom: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .module-icon svg {
+    color: #60a5fa;
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s ease;
+  }
+
+  .module-card:hover .module-icon svg {
+    transform: scale(1.1);
+  }
+
+  .module-icon::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(96, 165, 250, 0.3) 50%,
+      transparent 70%
+    );
+    transform: rotate(45deg) translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+
+  .module-card:hover .module-icon::after {
+    transform: rotate(45deg) translateX(100%);
+  }
+
+  .module-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+    min-height: 3.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  html:not(.dark) .module-title {
+    color: #111827 !important;
+  }
+
+  .module-description {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 1rem;
+    color: #9ca3af;
+    line-height: 1.5;
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
+
+  html:not(.dark) .module-description {
+    color: #374151 !important;
+  }
+
+  .module-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .module-features li {
+    font-size: 0.9rem;
+    color: #e5e7eb;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  html:not(.dark) .module-features li {
+    color: #4b5563 !important;
+  }
+
+  .module-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #60a5fa;
+    font-weight: bold;
+  }
+
+  .module-beam {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 16px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .module-beam::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 16px;
+    padding: 2px;
+    background: linear-gradient(90deg, #60a5fa, #3b82f6, #60a5fa);
+    background-size: 200% 100%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: beamMove 3s linear infinite;
+  }
+
+  .module-card:hover .module-beam {
+    opacity: 1;
+  }
+
+  @keyframes beamMove {
+    0% {
+      background-position: 0% 0%;
+    }
+    100% {
+      background-position: 200% 0%;
+    }
+  }
+
+  /* ==================== SECCIÓN DE CONTENIDO WORDPRESS ==================== */
+  .wp-section {
+    padding: 4rem 0;
+    background: #000000;
+  }
+
+  html:not(.dark) .wp-section {
+    background: #ffffff;
+  }
+
+  .wp-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
   .wp-content {
     font-family: 'Inter', -apple-system, sans-serif;
     font-size: 1.125rem;
@@ -415,94 +1281,668 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     margin: 2rem 0;
   }
 
-  .wp-content pre {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 1rem;
-    overflow-x: auto;
-    margin: 1.5rem 0;
+  /* ==================== SECCIÓN DE BENEFICIOS ==================== */
+  .benefits-section {
+    position: relative;
+    padding: 8rem 0;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    overflow: hidden;
   }
 
-  html:not(.dark) .wp-content pre {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
+  html:not(.dark) .benefits-section {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
   }
 
-  .wp-content code {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 0.2em 0.4em;
-    border-radius: 4px;
-    font-size: 0.9em;
+  .benefits-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
   }
 
-  html:not(.dark) .wp-content code {
-    background: rgba(0, 0, 0, 0.1);
-  }
-
-  /* CONTENEDORES DE ERROR Y CARGA */
-  .error-container,
-  .loading-container {
+  .benefits-content {
     text-align: center;
-    padding: 4rem 2rem;
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    margin-bottom: 4rem;
+    animation: fadeInUp 0.8s ease-out;
   }
 
-  .error-container h1,
-  .loading-container h1 {
-    font-size: 2.5rem;
+  .benefits-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
     color: #ffffff;
-    margin-bottom: 1rem;
   }
 
-  html:not(.dark) .error-container h1,
-  html:not(.dark) .loading-container h1 {
+  html:not(.dark) .benefits-title {
     color: #111827 !important;
   }
 
-  .error-container p {
-    color: #9ca3af;
-    margin-bottom: 1rem;
-    font-size: 1.125rem;
+  .benefits-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    max-width: 800px;
+    margin: 0 auto;
   }
 
-  html:not(.dark) .error-container p {
+  html:not(.dark) .benefits-description {
+    color: #374151 !important;
+  }
+
+  .benefits-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 4rem;
+  }
+
+  /* Reutilizamos estilos de stat-card de la sección urgency de index */
+  .stat-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: fadeInUp 0.8s ease-out backwards;
+  }
+
+  .stat-card:nth-child(1) { animation-delay: 0.1s; }
+  .stat-card:nth-child(2) { animation-delay: 0.2s; }
+  .stat-card:nth-child(3) { animation-delay: 0.3s; }
+  .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+  html:not(.dark) .stat-card {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(96, 165, 250, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 20px 40px rgba(96, 165, 250, 0.1);
+  }
+
+  html:not(.dark) .stat-card:hover {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .stat-card:hover::before {
+    opacity: 1;
+  }
+
+  .stat-number-container {
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .stat-number {
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    display: block;
+  }
+
+  .stat-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .stat-primary {
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  html:not(.dark) .stat-primary {
+    color: #111827 !important;
+  }
+
+  .stat-secondary {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  html:not(.dark) .stat-secondary {
     color: #6b7280 !important;
   }
 
-  .error-details {
-    font-family: monospace;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 1rem;
-    border-radius: 8px;
-    margin: 1rem 0;
-    max-width: 600px;
-    word-break: break-word;
+  /* ==================== SECCIÓN DE MODALIDADES ==================== */
+  .modalities-section {
+    position: relative;
+    padding: 6rem 0;
+    background: #000000;
+    overflow: hidden;
   }
 
-  .back-link {
-    display: inline-flex;
+  html:not(.dark) .modalities-section {
+    background: #ffffff;
+  }
+
+  .modalities-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .modalities-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .modalities-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .modalities-title {
+    color: #111827 !important;
+  }
+
+  .modalities-description {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 1.125rem;
+    color: #9ca3af;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  html:not(.dark) .modalities-description {
+    color: #374151 !important;
+  }
+
+  .modalities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .modality-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    animation: fadeInUp 0.6s ease-out backwards;
+  }
+
+  .modality-card:nth-child(1) { animation-delay: 0.1s; }
+  .modality-card:nth-child(2) { animation-delay: 0.2s; }
+  .modality-card:nth-child(3) { animation-delay: 0.3s; }
+
+  html:not(.dark) .modality-card {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .modality-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .modality-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(96, 165, 250, 0.3);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  html:not(.dark) .modality-card:hover {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .modality-card:hover::before {
+    opacity: 1;
+  }
+
+  .modality-icon {
+    width: 72px;
+    height: 72px;
+    display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-top: 2rem;
-    padding: 0.75rem 1.5rem;
-    background: #60a5fa;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
+    justify-content: center;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .modality-icon svg {
+    color: #60a5fa;
+    width: 36px;
+    height: 36px;
+    transition: transform 0.3s ease;
+  }
+
+  .modality-card:hover .modality-icon svg {
+    transform: scale(1.1);
+  }
+
+  .modality-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  html:not(.dark) .modality-title {
+    color: #111827 !important;
+  }
+
+  .modality-description {
+    font-size: 1.125rem;
+    color: #9ca3af;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  html:not(.dark) .modality-description {
+    color: #374151 !important;
+  }
+
+  .modality-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .modality-features li {
+    font-size: 1rem;
+    color: #e5e7eb;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  html:not(.dark) .modality-features li {
+    color: #4b5563 !important;
+  }
+
+  .modality-features li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #60a5fa;
+    font-weight: bold;
+  }
+
+  /* ==================== SECCIÓN FAQ (heredada de index) ==================== */
+  .faq-section {
+    position: relative;
+    padding: 8rem 0;
+    background: #000000;
+    overflow: hidden;
+  }
+
+  html:not(.dark) .faq-section {
+    background: #ffffff;
+  }
+
+  .faq-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .faq-header {
+    text-align: center;
+    margin-bottom: 5rem;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .faq-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .faq-title {
+    color: #111827 !important;
+  }
+
+  .faq-description {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 1.125rem;
+    color: #9ca3af;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  html:not(.dark) .faq-description {
+    color: #374151 !important;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .faq-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out backwards;
+  }
+
+  .faq-item:nth-child(1) { animation-delay: 0.1s; }
+  .faq-item:nth-child(2) { animation-delay: 0.2s; }
+  .faq-item:nth-child(3) { animation-delay: 0.3s; }
+  .faq-item:nth-child(4) { animation-delay: 0.4s; }
+  .faq-item:nth-child(5) { animation-delay: 0.5s; }
+  .faq-item:nth-child(6) { animation-delay: 0.6s; }
+
+  html:not(.dark) .faq-item {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .faq-item:hover {
+    border-color: rgba(96, 165, 250, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  html:not(.dark) .faq-item:hover {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s ease;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .faq-question {
+    color: #111827 !important;
+  }
+
+  .faq-question span {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  html:not(.dark) .faq-question span {
+    color: #111827 !important;
+  }
+
+  .faq-question:hover {
+    color: #60a5fa;
+  }
+
+  .faq-question:focus {
+    outline: 2px solid rgba(96, 165, 250, 0.3);
+    outline-offset: -2px;
+  }
+
+  .faq-chevron {
+    color: #9ca3af;
+    transition: all 0.3s ease;
+    transform: rotate(0deg);
+    flex-shrink: 0;
+  }
+
+  .faq-item.active .faq-chevron {
+    transform: rotate(180deg);
+    color: #60a5fa;
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .faq-item.active .faq-answer {
+    max-height: 300px;
+  }
+
+  .faq-answer p {
+    padding: 0 2rem 2rem;
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+  }
+
+  html:not(.dark) .faq-answer p {
+    color: #4b5563 !important;
+  }
+
+  .faq-item.active {
+    border-color: rgba(96, 165, 250, 0.3);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 4px 20px rgba(96, 165, 250, 0.1);
+  }
+
+  .faq-item.active .faq-question {
+    color: #60a5fa;
+  }
+
+  /* ==================== SECCIÓN DE CONTACTO (heredada de index) ==================== */
+  .contact-form-section {
+    position: relative;
+    padding: 8rem 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    overflow: hidden;
+  }
+
+  html:not(.dark) .contact-form-section {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  }
+
+  .contact-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .contact-form-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .contact-form-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .contact-form-title {
+    color: #111827 !important;
+  }
+
+  .contact-form-description {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 1.125rem;
+    color: #9ca3af;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  html:not(.dark) .contact-form-description {
+    color: #374151 !important;
+  }
+
+  .form-embed-container {
+    margin-bottom: 3rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 3rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    overflow: visible;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+    min-height: 400px;
+  }
+
+  html:not(.dark) .form-embed-container {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-embed-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-trust-badges {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+    animation: fadeInUp 0.8s ease-out 0.4s backwards;
+  }
+
+  .contact-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #9ca3af;
+    font-size: 1rem;
+    font-weight: 500;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
     transition: all 0.3s ease;
   }
 
-  .back-link:hover {
-    background: #3b82f6;
+  html:not(.dark) .contact-trust-item {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #6b7280 !important;
+  }
+
+  .contact-trust-item:hover {
+    border-color: rgba(96, 165, 250, 0.2);
+    background: rgba(255, 255, 255, 0.04);
     transform: translateY(-2px);
   }
 
-  /* FOOTER */
+  html:not(.dark) .contact-trust-item:hover {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(37, 99, 235, 0.4);
+  }
+
+  .contact-trust-icon {
+    width: 36px;
+    height: 36px;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.125rem;
+    flex-shrink: 0;
+  }
+
+  /* ==================== FOOTER (heredado de index) ==================== */
   .site-footer {
     position: relative;
     background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
@@ -618,7 +2058,7 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     color: #9ca3af !important;
   }
 
-  /* ANIMACIONES */
+  /* ==================== ANIMACIONES ==================== */
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -630,7 +2070,66 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     }
   }
 
-  /* RESPONSIVE */
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* ==================== RESPONSIVE ==================== */
+  @media (max-width: 1024px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-content {
+      order: 2;
+    }
+
+    .hero-image {
+      order: 1;
+      margin-bottom: 2rem;
+    }
+
+    .hero-ctas {
+      justify-content: center;
+    }
+
+    .hero-badges {
+      justify-content: center;
+    }
+
+    .modules-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .benefits-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .modalities-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
   @media (max-width: 768px) {
     body {
       font-size: 16px;
@@ -649,20 +2148,89 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
       height: 38px;
     }
 
-    .page-content {
-      padding-top: 66px;
+    .hero-section {
+      padding: 4rem 0 3rem;
     }
 
-    .page-container {
-      padding: 3rem 1rem;
-    }
-
-    .page-title {
+    .hero-title {
       font-size: 2rem;
     }
 
-    .wp-content {
+    .hero-description {
+      font-size: 1.125rem;
+    }
+
+    .hero-ctas {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .cta-primary,
+    .cta-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hero-badges {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .modules-section,
+    .benefits-section,
+    .modalities-section,
+    .faq-section,
+    .contact-form-section {
+      padding: 4rem 0;
+    }
+
+    .modules-container,
+    .benefits-container,
+    .modalities-container,
+    .faq-container,
+    .contact-form-container {
+      padding: 0 1rem;
+    }
+
+    .modules-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .module-card {
+      padding: 2rem;
+    }
+
+    .benefits-stats {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .faq-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .faq-question {
+      padding: 1.5rem;
+    }
+
+    .faq-question span {
       font-size: 1rem;
+    }
+
+    .faq-answer p {
+      padding: 0 1.5rem 1.5rem;
+      font-size: 1rem;
+    }
+
+    .form-embed-container {
+      padding: 2rem;
+    }
+
+    .contact-trust-badges {
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
 
     .footer-container {
@@ -695,6 +2263,50 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
 
     .footer-logo {
       height: 40px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    body {
+      padding-top: 60px;
+    }
+
+    .header-logo {
+      height: 32px;
+    }
+
+    .hero-section {
+      padding: 3rem 0 2rem;
+    }
+
+    .modules-title,
+    .benefits-title,
+    .modalities-title,
+    .faq-title,
+    .contact-form-title {
+      font-size: 2rem;
+    }
+
+    .module-icon {
+      width: 56px;
+      height: 56px;
+    }
+
+    .modality-icon {
+      width: 64px;
+      height: 64px;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+    }
+
+    .stat-primary {
+      font-size: 0.9rem;
+    }
+
+    .stat-secondary {
+      font-size: 0.85rem;
     }
   }
 </style>
@@ -741,6 +2353,10 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
           logoLink.innerHTML = '<span style="color: #60a5fa; font-size: 1.5rem; font-weight: bold;">BLIXEL</span>';
         }
       };
+      
+      if (headerLogo.complete && headerLogo.naturalHeight === 0) {
+        headerLogo.onerror();
+      }
     }
 
     if (footerLogo) {
@@ -754,6 +2370,49 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
           footerBrand.replaceChild(textLogo, footerLogo);
         }
       };
+      
+      if (footerLogo.complete && footerLogo.naturalHeight === 0) {
+        footerLogo.onerror();
+      }
     }
+
+    // Sistema de FAQ interactivo
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      
+      question.addEventListener('click', () => {
+        // Cerrar otros FAQs abiertos
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+          }
+        });
+        
+        // Toggle del FAQ actual
+        item.classList.toggle('active');
+      });
+    });
+
+    // Scroll suave para enlaces internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          const headerHeight = document.querySelector('.simple-header')?.offsetHeight || 78;
+          const offsetTop = targetElement.offsetTop - headerHeight - 20;
+          
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
   });
 </script>
