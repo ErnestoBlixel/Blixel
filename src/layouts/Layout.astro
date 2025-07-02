@@ -78,8 +78,8 @@ const currentLang = getLangFromUrl(Astro.url);
   <!-- Banner de cookies RGPD -->
   <CookieBanner />
   
-  <!-- Canvas de partículas modernas con tsParticles -->
-  <div id="tsparticles"></div>
+  <!-- Canvas de partículas modernas con tsParticles - DESACTIVADO -->
+  <!-- <div id="tsparticles"></div> -->
   
   <!-- Header removido para usar el de WordPress -->
   
@@ -91,174 +91,10 @@ const currentLang = getLangFromUrl(Astro.url);
   <!-- Magic UI Notifications System -->
   <!-- MagicNotifications component removed during cleanup -->
   
-  <!-- Sistema de partículas modernas con tsParticles -->
-  <script>
-    // Función para cargar tsParticles modernos y minimalistas
-    async function loadTsParticles() {
-      // Cargar tsParticles desde CDN
-      if (!window.tsParticles) {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js';
-        script.onload = initTsParticles;
-        document.head.appendChild(script);
-      } else {
-        initTsParticles();
-      }
-    }
-
-    // Configuración minimalista y moderna de tsParticles
-    function initTsParticles() {
-      console.log('🎆 Inicializando partículas...');
-      
-      tsParticles.load('tsparticles', {
-        background: {
-          color: {
-            value: 'transparent',
-          },
-        },
-        fpsLimit: 120,
-        interactivity: {
-          events: {
-            onClick: {
-              enable: true,
-              mode: 'push',
-            },
-            onHover: {
-              enable: true,
-              mode: 'grab',
-            },
-            resize: true,
-          },
-          modes: {
-            push: {
-              quantity: 4,
-            },
-            grab: {
-              distance: 150,
-              links: {
-                opacity: 0.5,
-              },
-            },
-          },
-        },
-        particles: {
-          color: {
-            value: ['#60a5fa', '#3b82f6', '#2563eb', '#93c5fd', '#1e40af'],
-          },
-          links: {
-            color: '#60a5fa',
-            distance: 150,
-            enable: true,
-            opacity: 0.25,
-            width: 1,
-          },
-          collisions: {
-            enable: false,
-          },
-          move: {
-            direction: 'none',
-            enable: true,
-            outModes: {
-              default: 'bounce',
-            },
-            random: false,
-            speed: 0.8,
-            straight: false,
-          },
-          number: {
-            density: {
-              enable: true,
-              area: 1000,
-            },
-            value: 45,
-          },
-          opacity: {
-            value: 0.4,
-            animation: {
-              enable: true,
-              speed: 1,
-              minimumValue: 0.1,
-              sync: false,
-            },
-          },
-          shape: {
-            type: 'circle',
-          },
-          size: {
-            value: { min: 1, max: 3 },
-            animation: {
-              enable: true,
-              speed: 1.5,
-              minimumValue: 0.5,
-              sync: false,
-            },
-          },
-        },
-        detectRetina: true,
-      }).then(() => {
-        console.log('✅ Partículas cargadas correctamente');
-      }).catch((error) => {
-        console.error('❌ Error cargando partículas:', error);
-      });
-    }
-
-    // Función para actualizar partículas según el tema
-    function updateParticlesTheme() {
-      if (window.tsParticles && window.tsParticles.domItem(0)) {
-        const isDark = document.documentElement.classList.contains('dark');
-        const container = window.tsParticles.domItem(0);
-        
-        // Actualizar colores de partículas
-        container.options.particles.color.value = isDark 
-          ? ['#60a5fa', '#3b82f6', '#2563eb', '#93c5fd', '#1e40af'] // Modo oscuro: azules suaves
-          : ['#1e293b', '#334155', '#475569', '#64748b', '#0f172a']; // Modo claro: grises oscuros
-        
-        // Actualizar enlaces
-        container.options.particles.links.color = isDark ? '#60a5fa' : '#334155';
-        container.options.particles.links.opacity = isDark ? 0.25 : 0.8;
-        
-        // Actualizar opacidad - MODO CLARO MUY VISIBLE
-        container.options.particles.opacity.value = isDark ? 0.4 : 0.9;
-        container.options.particles.opacity.animation.minimumValue = isDark ? 0.1 : 0.5;
-        
-        // Refrescar partículas
-        container.refresh();
-        console.log(`🎆 Partículas ajustadas: ${isDark ? 'oscuro (suave)' : 'claro (visible)'}`);
-      }
-    }
-
-    // Observar cambios en el tema
-    const observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          updateParticlesTheme();
-        }
-      });
-    });
-
-    // Cargar al inicio
-    document.addEventListener('DOMContentLoaded', () => {
-      console.log('🚀 DOM cargado, iniciando partículas...');
-      loadTsParticles();
-      
-      // Observar cambios en la clase del HTML
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class']
-      });
-      
-      // Verificar si las partículas están cargadas después de 3 segundos
-      setTimeout(() => {
-        const particlesCanvas = document.querySelector('#tsparticles canvas');
-        if (particlesCanvas) {
-          console.log('✅ Canvas de partículas encontrado:', particlesCanvas);
-          console.log('Dimensiones:', particlesCanvas.width, 'x', particlesCanvas.height);
-        } else {
-          console.error('❌ No se encontró el canvas de partículas');
-        }
-      }, 3000);
-    });
-  </script>
+  <!-- Sistema de partículas modernas con tsParticles - DESACTIVADO -->
+  <!-- <script>
+    // tsParticles desactivado - Solo usando orbes CSS en Hero
+  </script> -->
 </body>
 </html>
 
@@ -332,8 +168,8 @@ const currentLang = getLangFromUrl(Astro.url);
   .mt-2 { margin-top: 1rem; }
   .mt-4 { margin-top: 2rem; }
 
-  /* Canvas de partículas modernas tsParticles */
-  #tsparticles {
+  /* Canvas de partículas modernas tsParticles - DESACTIVADO */
+  /* #tsparticles {
     position: fixed;
     top: 0;
     left: 0;
@@ -342,17 +178,17 @@ const currentLang = getLangFromUrl(Astro.url);
     z-index: 0;
     pointer-events: none;
     opacity: 1;
-  }
+  } */
 
-  /* Añadir canvas de tsparticles al contenedor */
-  #tsparticles canvas {
+  /* Añadir canvas de tsparticles al contenedor - DESACTIVADO */
+  /* #tsparticles canvas {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 1;
-  }
+  } */
 
   body {
     position: relative;
