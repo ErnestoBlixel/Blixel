@@ -418,25 +418,22 @@ const courseSchema = {
   <section class="pricing-promo-section">
     <div class="pricing-promo-container">
       <div class="pricing-promo-header">
-        <div class="pricing-promo-badge">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-          </svg>
-          PRECIO LANZAMIENTO GIRONA
-        </div>
-        
         <h2 class="pricing-promo-title">
-          <span class="title-highlight">Inversión en formación IA empresas</span>
+          <span class="title-highlight">Precio lanzamiento Girona - Formación IA empresas presencial</span>
         </h2>
         
         <div class="pricing-promo-pricing">
-          <div class="pricing-promo-price">
-            <span class="price-amount">500€</span>
-            <span class="price-per">/sesión completa</span>
+          <div class="pricing-promo-main">
+            <div class="pricing-promo-price">
+              <span class="price-amount">500€</span>
+              <span class="price-per">/sesión completa</span>
+            </div>
+            <div class="pricing-promo-offer">
+              <span class="offer-location">Solo hasta Septiembre 2025 en Girona</span>
+            </div>
           </div>
-          <div class="pricing-promo-offer">
-            <span class="offer-location">Solo hasta Septiembre 2025 en Girona</span>
-            <span class="offer-original">Precio normal: 1.500€</span>
+          <div class="pricing-promo-normal">
+            <span class="offer-original">Precio normal: 1.000€</span>
           </div>
         </div>
       </div>
@@ -1810,31 +1807,10 @@ const courseSchema = {
     animation: fadeInUp 0.8s ease-out;
   }
 
-  .pricing-promo-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 50px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 15px rgba(96, 165, 250, 0.4);
-    animation: pulse 2s infinite;
-  }
-
-  .pricing-promo-badge svg {
-    animation: bounce 1s infinite;
-  }
-
   .pricing-promo-title {
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
     font-weight: 800;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     color: #ffffff;
     line-height: 1.2;
   }
@@ -1845,10 +1821,17 @@ const courseSchema = {
 
   .pricing-promo-pricing {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .pricing-promo-main {
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: 2rem;
-    margin-bottom: 2.5rem;
     flex-wrap: wrap;
   }
 
@@ -1882,6 +1865,10 @@ const courseSchema = {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  .pricing-promo-normal {
+    text-align: center;
   }
 
   .offer-location {
@@ -3000,7 +2987,7 @@ const courseSchema = {
       gap: 0.75rem;
     }
 
-    .pricing-promo-pricing {
+    .pricing-promo-main {
       flex-direction: column;
       gap: 1.5rem;
     }
