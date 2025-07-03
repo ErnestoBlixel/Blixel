@@ -1,0 +1,132 @@
+/* BorderBeam - Efectos de borde animado para elementos */
+
+/* Animación keyframes para el borde */
+@keyframes border-beam {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+/* Clase base para elementos con borde animado */
+.border-beam {
+  position: relative;
+  overflow: hidden;
+}
+
+.border-beam::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px; /* Grosor del borde */
+  background: linear-gradient(90deg, 
+    transparent, 
+    #60a5fa, 
+    #3b82f6, 
+    transparent
+  );
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+}
+
+.border-beam::after {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(90deg, transparent, #60a5fa, #3b82f6, transparent);
+  border-radius: 50%;
+  filter: blur(10px);
+  animation: border-beam-rotate 4s linear infinite;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+@keyframes border-beam-rotate {
+  0% {
+    transform: translateX(-50%) translateY(-50%) rotate(0deg);
+    top: 0%;
+    left: 0%;
+  }
+  25% {
+    transform: translateX(-50%) translateY(-50%) rotate(90deg);
+    top: 0%;
+    left: 100%;
+  }
+  50% {
+    transform: translateX(-50%) translateY(-50%) rotate(180deg);
+    top: 100%;
+    left: 100%;
+  }
+  75% {
+    transform: translateX(-50%) translateY(-50%) rotate(270deg);
+    top: 100%;
+    left: 0%;
+  }
+  100% {
+    transform: translateX(-50%) translateY(-50%) rotate(360deg);
+    top: 0%;
+    left: 0%;
+  }
+}
+
+/* Variantes de colores */
+.border-beam-blue::before,
+.border-beam-blue::after {
+  background: linear-gradient(90deg, transparent, #60a5fa, #3b82f6, transparent);
+}
+
+.border-beam-purple::before,
+.border-beam-purple::after {
+  background: linear-gradient(90deg, transparent, #a78bfa, #8b5cf6, transparent);
+}
+
+.border-beam-green::before,
+.border-beam-green::after {
+  background: linear-gradient(90deg, transparent, #4ade80, #22c55e, transparent);
+}
+
+.border-beam-orange::before,
+.border-beam-orange::after {
+  background: linear-gradient(90deg, transparent, #fb923c, #f97316, transparent);
+}
+
+/* Variantes de velocidad */
+.border-beam-slow::after {
+  animation-duration: 8s;
+}
+
+.border-beam-normal::after {
+  animation-duration: 4s;
+}
+
+.border-beam-fast::after {
+  animation-duration: 2s;
+}
+
+/* Variante más sutil */
+.border-beam-subtle::before {
+  padding: 1px;
+  opacity: 0.6;
+}
+
+.border-beam-subtle::after {
+  opacity: 0.4;
+  filter: blur(15px);
+}
+
+/* Hover effect */
+.border-beam-hover {
+  transition: all 0.3s ease;
+}
+
+.border-beam-hover:hover::after {
+  animation-duration: 1s;
+  opacity: 1;
+}
