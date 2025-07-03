@@ -73,7 +73,6 @@ const courseSchema = {
   description={pageDescription}
   keywords={pageKeywords}
 >
-  
   <!-- Schema.org para SEO -->
   <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} />
   
@@ -275,54 +274,7 @@ const courseSchema = {
     </div>
   </section>
 
-  <!-- SECCIÓN DE METODOLOGÍA -->
-  <section class="methodology-section">
-    <div class="methodology-container">
-      <h2 class="methodology-title">
-        Cómo funciona nuestra <span class="title-highlight">formación IA empresas</span>
-      </h2>
-      
-      <div class="methodology-steps">
-        <div class="step-card">
-          <div class="step-number">01</div>
-          <h3 class="step-title">Análisis previo</h3>
-          <p class="step-description">
-            Llamada de descubrimiento donde analizamos tu estructura, herramientas actuales 
-            y objetivos específicos. Diseñamos un temario 100% personalizado.
-          </p>
-        </div>
-        
-        <div class="step-card">
-          <div class="step-number">02</div>
-          <h3 class="step-title">Sesión práctica (3h)</h3>
-          <p class="step-description">
-            Sin diapositivas aburridas. Abrimos vuestras plataformas y construimos 
-            automatizaciones reales que podréis usar desde el primer día.
-          </p>
-        </div>
-        
-        <div class="step-card">
-          <div class="step-number">03</div>
-          <h3 class="step-title">Consultoría (1h)</h3>
-          <p class="step-description">
-            Resolvemos todas las dudas y priorizamos las 3 oportunidades 
-            de mayor ROI para implementar inmediatamente.
-          </p>
-        </div>
-        
-        <div class="step-card">
-          <div class="step-number">04</div>
-          <h3 class="step-title">Seguimiento</h3>
-          <p class="step-description">
-            En 48h recibes un informe ejecutivo con el mapa de procesos automatizables, 
-            estimación de ahorro y cronograma de implantación.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECCIÓN DE BENEFICIOS -->
+  <!-- SECCIÓN DE BENEFICIOS (AHORA INMEDIATAMENTE DESPUÉS DE PROBLEMAS) -->
   <section class="benefits-section">
     <div class="benefits-container">
       <div class="benefits-content">
@@ -365,6 +317,53 @@ const courseSchema = {
             <div class="benefit-text">Cultura de innovación</div>
             <div class="benefit-highlight">Tu equipo ve la IA como aliada y propone mejoras constantemente</div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE METODOLOGÍA (AHORA DESPUÉS DE BENEFICIOS) -->
+  <section class="methodology-section">
+    <div class="methodology-container">
+      <h2 class="methodology-title">
+        Cómo funciona nuestra <span class="title-highlight">formación IA empresas</span>
+      </h2>
+      
+      <div class="methodology-steps">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <h3 class="step-title">Análisis previo</h3>
+          <p class="step-description">
+            Llamada de descubrimiento donde analizamos tu estructura, herramientas actuales 
+            y objetivos específicos. Diseñamos un temario 100% personalizado.
+          </p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <h3 class="step-title">Sesión práctica (3h)</h3>
+          <p class="step-description">
+            Sin diapositivas aburridas. Abrimos vuestras plataformas y construimos 
+            automatizaciones reales que podréis usar desde el primer día.
+          </p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <h3 class="step-title">Consultoría (1h)</h3>
+          <p class="step-description">
+            Resolvemos todas las dudas y priorizamos las 3 oportunidades 
+            de mayor ROI para implementar inmediatamente.
+          </p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-number">04</div>
+          <h3 class="step-title">Seguimiento</h3>
+          <p class="step-description">
+            En 48h recibes un informe ejecutivo con el mapa de procesos automatizables, 
+            estimación de ahorro y cronograma de implantación.
+          </p>
         </div>
       </div>
     </div>
@@ -737,7 +736,7 @@ const courseSchema = {
 </Layout>
 
 <style>
-  /* ==================== IMPORTAR Y CONFIGURAR ESTILOS BORDER-BEAM ==================== */
+  /* ==================== ESTILOS BORDER-BEAM INTEGRADOS ==================== */
   
   /* Animación keyframes para el borde */
   @keyframes border-beam {
@@ -1376,106 +1375,6 @@ const courseSchema = {
     color: #6b7280 !important;
   }
 
-  /* ==================== SECCIÓN DE METODOLOGÍA ==================== */
-  .methodology-section {
-    padding: 6rem 0;
-    background: #000000;
-  }
-
-  html:not(.dark) .methodology-section {
-    background: #f8fafc;
-  }
-
-  .methodology-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-
-  .methodology-title {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800;
-    text-align: center;
-    margin-bottom: 4rem;
-    color: #ffffff;
-    animation: fadeInUp 0.8s ease-out;
-  }
-
-  html:not(.dark) .methodology-title {
-    color: #111827 !important;
-  }
-
-  .methodology-steps {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-  }
-
-  .step-card {
-    text-align: center;
-    animation: fadeInUp 0.8s ease-out backwards;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    padding: 2rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  html:not(.dark) .step-card {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  }
-
-  .step-card:nth-child(1) { animation-delay: 0.1s; }
-  .step-card:nth-child(2) { animation-delay: 0.2s; }
-  .step-card:nth-child(3) { animation-delay: 0.3s; }
-  .step-card:nth-child(4) { animation-delay: 0.4s; }
-
-  .step-number {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: white;
-    margin: 0 auto 2rem;
-    box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3);
-    transition: transform 0.3s ease;
-  }
-
-  .step-card:hover .step-number {
-    transform: scale(1.1);
-  }
-
-  .step-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: #ffffff;
-  }
-
-  html:not(.dark) .step-title {
-    color: #111827 !important;
-  }
-
-  .step-description {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #9ca3af;
-    max-width: 280px;
-    margin: 0 auto;
-  }
-
-  html:not(.dark) .step-description {
-    color: #6b7280 !important;
-  }
-
   /* ==================== SECCIÓN DE BENEFICIOS ==================== */
   .benefits-section {
     padding: 6rem 0;
@@ -1607,6 +1506,106 @@ const courseSchema = {
 
   html:not(.dark) .benefit-highlight {
     color: #3b82f6 !important;
+  }
+
+  /* ==================== SECCIÓN DE METODOLOGÍA ==================== */
+  .methodology-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  }
+
+  html:not(.dark) .methodology-section {
+    background: white;
+  }
+
+  .methodology-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .methodology-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: #ffffff;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  html:not(.dark) .methodology-title {
+    color: #111827 !important;
+  }
+
+  .methodology-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .step-card {
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out backwards;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  html:not(.dark) .step-card {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .step-card:nth-child(1) { animation-delay: 0.1s; }
+  .step-card:nth-child(2) { animation-delay: 0.2s; }
+  .step-card:nth-child(3) { animation-delay: 0.3s; }
+  .step-card:nth-child(4) { animation-delay: 0.4s; }
+
+  .step-number {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    margin: 0 auto 2rem;
+    box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3);
+    transition: transform 0.3s ease;
+  }
+
+  .step-card:hover .step-number {
+    transform: scale(1.1);
+  }
+
+  .step-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .step-title {
+    color: #111827 !important;
+  }
+
+  .step-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #9ca3af;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  html:not(.dark) .step-description {
+    color: #6b7280 !important;
   }
 
   /* ==================== SECCIÓN DE CASOS DE USO ==================== */

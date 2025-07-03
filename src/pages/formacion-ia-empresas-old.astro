@@ -73,6 +73,7 @@ const courseSchema = {
   description={pageDescription}
   keywords={pageKeywords}
 >
+  
   <!-- Schema.org para SEO -->
   <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} />
   
@@ -322,7 +323,6 @@ const courseSchema = {
     </div>
   </section>
 
-
   <!-- SECCIÓN DE METODOLOGÍA -->
   <section class="methodology-section">
     <div class="methodology-container">
@@ -365,6 +365,54 @@ const courseSchema = {
             En 48h recibes un informe ejecutivo con el mapa de procesos automatizables, 
             estimación de ahorro y cronograma de implantación.
           </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE BENEFICIOS -->
+  <section class="benefits-section">
+    <div class="benefits-container">
+      <div class="benefits-content">
+        <div class="benefits-text">
+          <h2 class="benefits-title">
+            Ventajas tangibles de la <span class="title-highlight">formación IA empresas</span>
+          </h2>
+          <p class="benefits-description">
+            Adoptar IA sin formación adecuada suele acabar en licencias que nadie usa. 
+            Con nuestro método, el conocimiento se queda en casa:
+          </p>
+        </div>
+        
+        <div class="benefits-stats">
+          <div class="benefit-card">
+            <div class="benefit-number">+25%</div>
+            <div class="benefit-text">Productividad</div>
+            <div class="benefit-highlight">Desde el primer día gracias a flujos que se ejecutan solos</div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-number">-80%</div>
+            <div class="benefit-text">errores humanos</div>
+            <div class="benefit-highlight">Por la validación automática de datos y procesos</div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/>
+              </svg>
+            </div>
+            <div class="benefit-text">Garantía de resultados</div>
+            <div class="benefit-highlight">Si no detectamos tareas automatizables, te devolvemos el dinero</div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+            </div>
+            <div class="benefit-text">Cultura de innovación</div>
+            <div class="benefit-highlight">Tu equipo ve la IA como aliada y propone mejoras constantemente</div>
+          </div>
         </div>
       </div>
     </div>
@@ -737,7 +785,7 @@ const courseSchema = {
 </Layout>
 
 <style>
-  /* ==================== ESTILOS BORDER-BEAM INTEGRADOS ==================== */
+  /* ==================== IMPORTAR Y CONFIGURAR ESTILOS BORDER-BEAM ==================== */
   
   /* Animación keyframes para el borde */
   @keyframes border-beam {
