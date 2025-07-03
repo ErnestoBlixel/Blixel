@@ -1,27 +1,69 @@
 ---
-// Página específica para formacion-ia-empresas con la sintaxis correcta
-import { getPageBySlug } from '../lib/wordpress';
+// Página de Formación IA Empresas optimizada para SEO
 import Layout from '../layouts/Layout.astro';
 import ContactForm from '../components/ContactForm.astro';
 
-let page;
-let error = null;
-
-try {
-  page = await getPageBySlug('formacion-ia-empresas');
-} catch (e) {
-  console.error('Error fetching page:', e);
-  error = e.message;
-}
-
-// Si no se encuentra la página, redirigir a 404
-if (!page && !error) {
-  return Astro.redirect('/404');
-}
-
 const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
-const pageTitle = page?.title || 'Formación IA para Empresas | Blixel';
-const pageDescription = 'Formación especializada en Inteligencia Artificial para empresas. Transformamos equipos en expertos de IA con formación práctica y aplicada.';
+const pageTitle = 'Formación IA Empresas | Curso Inteligencia Artificial 2025';
+const pageDescription = 'Formación IA empresas práctica en 4 horas. Transforma tu equipo con inteligencia artificial. Automatiza procesos y multiplica productividad. ¡Plazas limitadas!';
+const pageKeywords = 'formación IA empresas, curso inteligencia artificial, training AI empresas, automatización procesos, productividad IA, formación corporativa IA, taller IA empresas';
+
+// Schema.org para SEO - Mejorado
+const courseSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Formación IA Empresas",
+  "description": "Formación práctica en Inteligencia Artificial para empresas. Aprende a automatizar procesos y multiplicar la productividad de tu equipo.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Blixel",
+    "url": "https://blixel.es",
+    "sameAs": ["https://blixel.es"],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+34-872-003-245",
+      "contactType": "customer service",
+      "email": "hola@blixel.es"
+    }
+  },
+  "courseMode": ["Presencial", "Online"],
+  "duration": "PT4H",
+  "coursePrerequisites": "Ninguno. No se requieren conocimientos técnicos previos.",
+  "educationalLevel": "Beginner",
+  "inLanguage": "es",
+  "about": [
+    "Inteligencia Artificial",
+    "Automatización de procesos",
+    "Productividad empresarial",
+    "Transformación digital"
+  ],
+  "teaches": [
+    "Uso práctico de herramientas de IA",
+    "Automatización de tareas repetitivas",
+    "Optimización de procesos empresariales",
+    "Implementación de soluciones IA"
+  ],
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Formación Individual",
+      "price": "497",
+      "priceCurrency": "EUR"
+    },
+    {
+      "@type": "Offer",
+      "name": "Formación Empresa",
+      "price": "2997",
+      "priceCurrency": "EUR"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "127",
+    "bestRating": "5"
+  }
+};
 ---
 
 <Layout 
@@ -29,7 +71,45 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
   logoAlt="BLIXEL logo"
   title={pageTitle}
   description={pageDescription}
+  keywords={pageKeywords}
 >
+  <!-- Schema.org para SEO -->
+  <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} />
+  
+  <!-- Schema.org adicional para FAQs -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Qué nivel técnico necesita mi equipo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ninguno. Nuestra formación IA empresas está diseñada para profesionales sin conocimientos técnicos previos. Si saben usar email y navegador web, pueden aprender IA."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Es realmente práctica la formación?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "100% práctica. Trabajamos con vuestras herramientas, datos reales y casos específicos de vuestra empresa. Al terminar, tendréis automatizaciones funcionando."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿La formación es bonificable por FUNDAE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, nuestra formación IA empresas es 100% bonificable. Te ayudamos con toda la gestión para que puedas recuperar hasta el 100% de la inversión."
+          }
+        }
+      ]
+    }
+  </script>
+
   <!-- HEADER SIMPLE (idéntico a la home) -->
   <header class="simple-header">
     <div class="header-container">
@@ -62,59 +142,516 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     </div>
   </header>
 
-  <main class="page-content">
-    <div class="page-container">
-      {error ? (
-        <div class="error-container">
-          <h1>Error al cargar la página</h1>
-          <p>Hubo un problema al obtener el contenido desde WordPress.</p>
-          <p class="error-details">Error: {error}</p>
-          <a href="/" class="back-link">Volver al inicio</a>
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <!-- Breadcrumbs para SEO -->
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Inicio</a></li>
+            <li><span aria-current="page">Formación IA Empresas</span></li>
+          </ol>
+        </nav>
+        
+        <h1 class="hero-title">
+          Formación IA Empresas en <span class="title-highlight">4 horas</span>
+        </h1>
+        <p class="hero-description">
+          <strong>La formación IA empresas de Blixel</strong> es un taller intensivo –tres horas de práctica real y una hora de asesoría estratégica– que convierte la Inteligencia Artificial en un recurso cotidiano para tu equipo. No hablamos de teorías: trabajamos con tus datos y procesos reales.
+        </p>
+        
+        <div class="hero-badges">
+          <div class="badge-item">
+            <span class="badge-icon">🎯</span>
+            <span class="badge-text">100% Práctico</span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-icon">⚡</span>
+            <span class="badge-text">Resultados inmediatos</span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-icon">🏆</span>
+            <span class="badge-text">Certificación incluida</span>
+          </div>
         </div>
-      ) : page ? (
-        <div class="wp-content" set:html={page.content} />
-      ) : (
-        <div class="loading-container">
-          <h1>Cargando contenido...</h1>
+        
+        <div class="hero-ctas">
+          <a href="#contacto" class="cta-primary">
+            <span>Reservar plaza ahora</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="tel:+34872003245" class="cta-secondary">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+              <path d="M2 3a1 1 0 0 1 1-1h2.153a1 1 0 0 1 .986.836l.74 4.435a1 1 0 0 1-.54 1.06l-1.548.773a11.037 11.037 0 0 0 6.105 6.105l.774-1.548a1 1 0 0 1 1.059-.54l4.435.74a1 1 0 0 1 .836.986V17a1 1 0 0 1-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+            </svg>
+            <span>Llamar ahora</span>
+          </a>
         </div>
-      )}
+      </div>
+      
+      <div class="hero-image">
+        <img 
+          src="/images/hero-image.png" 
+          alt="Formación IA para empresas - Taller práctico de automatización" 
+          loading="eager"
+          width="600"
+          height="400"
+        />
+      </div>
     </div>
+  </section>
 
-    <!-- SECCIÓN DE FORMULARIO DE CONTACTO -->
-    <section id="contacto" class="contact-form-section">
-      <div class="contact-form-container">
-        <div class="contact-form-header">
-          <h2 class="contact-form-title">
-            ¿Listo para formar a tu equipo en <span class="title-highlight">IA</span>?
-          </h2>
-          <p class="contact-form-description">
-            Cuéntanos sobre tu empresa y tus objetivos. Te enviaremos una propuesta personalizada en menos de 24 horas.
+  <!-- SECCIÓN DE URGENCIA -->
+  <section class="urgency-section">
+    <div class="urgency-container">
+      <h2 class="urgency-title">
+        Por qué tu empresa necesita <span class="title-highlight">formación IA</span> ahora
+      </h2>
+      <p class="urgency-description">
+        Mientras lees esto, tus competidores ya delegan a la IA la clasificación de correos, 
+        la redacción de propuestas, la conciliación de facturas y el soporte al cliente fuera de horario. 
+        <strong>Cada día sin formación IA empresas es dinero perdido en tareas automatizables.</strong>
+      </p>
+      
+      <div class="urgency-stats">
+        <div class="stat-card">
+          <div class="stat-number">30%</div>
+          <div class="stat-text">más gastarán en 2026 las empresas sin IA</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">4h</div>
+          <div class="stat-text">ahorradas por empleado cada semana</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">80%</div>
+          <div class="stat-text">menos errores en procesos automatizados</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE PROBLEMAS QUE RESOLVEMOS -->
+  <section class="problems-section">
+    <div class="problems-container">
+      <h2 class="problems-title">
+        Problemas que elimina nuestra <span class="title-highlight">formación IA empresas</span>
+      </h2>
+      <p class="problems-description">
+        La mayoría de empresas lidian con silos de datos, hojas de cálculo que nunca cuadran, 
+        atención al cliente saturada y reportes semanales que consumen horas. 
+        Nuestra formación IA empresas aborda exactamente esos cuellos de botella:
+      </p>
+      
+      <div class="problems-grid">
+        <div class="problem-card">
+          <div class="problem-icon">📊</div>
+          <h3 class="problem-title">Datos dispersos</h3>
+          <p class="problem-description">
+            Centralizamos la información y enseñamos a la IA a generar informes sin errores
           </p>
         </div>
-
-        <div class="form-embed-container">
-          <ContactForm currentLang="es" />
+        
+        <div class="problem-card">
+          <div class="problem-icon">🔄</div>
+          <h3 class="problem-title">Tareas repetitivas</h3>
+          <p class="problem-description">
+            Desde etiquetar tickets hasta actualizar CRM, los bots se encargan automáticamente
+          </p>
         </div>
+        
+        <div class="problem-card">
+          <div class="problem-icon">📈</div>
+          <h3 class="problem-title">Decisiones a ciegas</h3>
+          <p class="problem-description">
+            Convertimos tu histórico en predicciones accionables y dashboards inteligentes
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="contact-trust-badges">
-          <div class="contact-trust-item">
-            <div class="contact-trust-icon">📚</div>
-            <span>Formación personalizada</span>
+  <!-- SECCIÓN DE METODOLOGÍA -->
+  <section class="methodology-section">
+    <div class="methodology-container">
+      <h2 class="methodology-title">
+        Cómo funciona nuestra <span class="title-highlight">formación IA empresas</span>
+      </h2>
+      
+      <div class="methodology-steps">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <h3 class="step-title">Análisis previo</h3>
+          <p class="step-description">
+            Llamada de descubrimiento donde analizamos tu estructura, herramientas actuales 
+            y objetivos específicos. Diseñamos un temario 100% personalizado.
+          </p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <h3 class="step-title">Sesión práctica (3h)</h3>
+          <p class="step-description">
+            Sin diapositivas aburridas. Abrimos vuestras plataformas y construimos 
+            automatizaciones reales que podréis usar desde el primer día.
+          </p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <h3 class="step-title">Consultoría (1h)</h3>
+          <p class="step-description">
+            Resolvemos todas las dudas y priorizamos las 3 oportunidades 
+            de mayor ROI para implementar inmediatamente.
+          </p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-number">04</div>
+          <h3 class="step-title">Seguimiento</h3>
+          <p class="step-description">
+            En 48h recibes un informe ejecutivo con el mapa de procesos automatizables, 
+            estimación de ahorro y cronograma de implantación.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE BENEFICIOS -->
+  <section class="benefits-section">
+    <div class="benefits-container">
+      <h2 class="benefits-title">
+        Ventajas tangibles de la <span class="title-highlight">formación IA empresas</span>
+      </h2>
+      <p class="benefits-description">
+        Adoptar IA sin formación adecuada suele acabar en licencias que nadie usa. 
+        Con nuestro método, el conocimiento se queda en casa:
+      </p>
+      
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
           </div>
-          <div class="contact-trust-item">
-            <div class="contact-trust-icon">🎯</div>
-            <span>100% Bonificable FUNDAE</span>
+          <h3 class="benefit-title">Productividad +25%</h3>
+          <p class="benefit-description">
+            Desde el primer día gracias a flujos que se ejecutan solos
+          </p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 11l3 3L22 4"/>
+              <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+            </svg>
           </div>
-          <div class="contact-trust-item">
-            <div class="contact-trust-icon">🏆</div>
-            <span>Certificación incluida</span>
+          <h3 class="benefit-title">-80% errores humanos</h3>
+          <p class="benefit-description">
+            Por la validación automática de datos y procesos
+          </p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/>
+            </svg>
+          </div>
+          <h3 class="benefit-title">ROI en 30 días</h3>
+          <p class="benefit-description">
+            Recuperas la inversión en menos de un mes con los ahorros generados
+          </p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+              <path d="M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+          </div>
+          <h3 class="benefit-title">Cultura de innovación</h3>
+          <p class="benefit-description">
+            Tu equipo ve la IA como aliada y propone mejoras constantemente
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE CASOS DE USO -->
+  <section class="usecases-section">
+    <div class="usecases-container">
+      <h2 class="usecases-title">
+        Casos reales que verás en la <span class="title-highlight">formación IA empresas</span>
+      </h2>
+      <p class="usecases-description">
+        Todo lo montamos contigo, sobre tus datos, para que la demo se convierta en prototipo 
+        y el prototipo en proceso real desde el primer día:
+      </p>
+      
+      <div class="usecases-list">
+        <div class="usecase-item">
+          <div class="usecase-icon">💬</div>
+          <div class="usecase-content">
+            <h3>Atención 24/7 automatizada</h3>
+            <p>Agente conversacional conectado a tu base de conocimientos que resuelve dudas fuera de horario</p>
+          </div>
+        </div>
+        
+        <div class="usecase-item">
+          <div class="usecase-icon">📄</div>
+          <div class="usecase-content">
+            <h3>Generación de documentos</h3>
+            <p>Presupuestos y contratos personalizados desde una simple entrada en tu CRM</p>
+          </div>
+        </div>
+        
+        <div class="usecase-item">
+          <div class="usecase-icon">🔍</div>
+          <div class="usecase-content">
+            <h3>Detección de anomalías</h3>
+            <p>Identifica errores contables antes de que lleguen al auditor</p>
+          </div>
+        </div>
+        
+        <div class="usecase-item">
+          <div class="usecase-icon">🎯</div>
+          <div class="usecase-content">
+            <h3>Calificación de leads</h3>
+            <p>Prioriza automáticamente y asigna al comercial más adecuado</p>
           </div>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <!-- FOOTER (idéntico a la home) -->
+  <!-- SECCIÓN DE GARANTÍA -->
+  <section class="guarantee-section">
+    <div class="guarantee-container">
+      <h2 class="guarantee-title">Garantía "Sin Paja"</h2>
+      <p class="guarantee-description">
+        Si al terminar la <strong>formación IA empresas</strong> no identificamos al menos 
+        tres procesos con retorno claro y alcanzable, te devolvemos el importe íntegro. 
+        Sin letras pequeñas.
+      </p>
+      <div class="guarantee-badges">
+        <span class="guarantee-badge">✓ 100% Satisfacción</span>
+        <span class="guarantee-badge">✓ Sin riesgos</span>
+        <span class="guarantee-badge">✓ Resultados medibles</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE PRECIOS -->
+  <section class="pricing-section">
+    <div class="pricing-container">
+      <h2 class="pricing-title">
+        Inversión en <span class="title-highlight">formación IA empresas</span>
+      </h2>
+      
+      <div class="pricing-cards">
+        <div class="pricing-card">
+          <h3 class="pricing-name">Formación Grupal</h3>
+          <div class="pricing-price">
+            <span class="price-amount">197€</span>
+            <span class="price-per">/persona</span>
+          </div>
+          <ul class="pricing-features">
+            <li>Mínimo 5 personas</li>
+            <li>4 horas intensivas</li>
+            <li>Material incluido</li>
+            <li>Certificación</li>
+            <li>Soporte 30 días</li>
+          </ul>
+          <a href="#contacto" class="pricing-cta">Solicitar información</a>
+        </div>
+        
+        <div class="pricing-card featured">
+          <div class="pricing-badge">Más popular</div>
+          <h3 class="pricing-name">Formación Empresa</h3>
+          <div class="pricing-price">
+            <span class="price-amount">2.997€</span>
+            <span class="price-per">/empresa</span>
+          </div>
+          <ul class="pricing-features">
+            <li>Hasta 20 personas</li>
+            <li>Personalización total</li>
+            <li>Análisis previo incluido</li>
+            <li>Informe ejecutivo</li>
+            <li>Soporte 90 días</li>
+            <li>100% Bonificable FUNDAE</li>
+          </ul>
+          <a href="#contacto" class="pricing-cta">Reservar ahora</a>
+        </div>
+        
+        <div class="pricing-card">
+          <h3 class="pricing-name">Formación Individual</h3>
+          <div class="pricing-price">
+            <span class="price-amount">497€</span>
+            <span class="price-per">/persona</span>
+          </div>
+          <ul class="pricing-features">
+            <li>One-to-one</li>
+            <li>Horario flexible</li>
+            <li>100% personalizado</li>
+            <li>Mentoría incluida</li>
+            <li>Soporte 60 días</li>
+          </ul>
+          <a href="#contacto" class="pricing-cta">Consultar disponibilidad</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE FAQ -->
+  <section class="faq-section">
+    <div class="faq-container">
+      <h2 class="faq-title">
+        Preguntas frecuentes sobre <span class="title-highlight">formación IA empresas</span>
+      </h2>
+      
+      <div class="faq-grid">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Qué nivel técnico necesita mi equipo?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>Ninguno. Nuestra formación IA empresas está diseñada para profesionales sin conocimientos técnicos previos. Si saben usar email y navegador web, pueden aprender IA.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Es realmente práctica la formación?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>100% práctica. Trabajamos con vuestras herramientas, datos reales y casos específicos de vuestra empresa. Al terminar, tendréis automatizaciones funcionando.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Qué herramientas de IA aprenderemos?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>ChatGPT, Claude, Copilot, herramientas de automatización como Zapier/Make, y soluciones específicas de vuestro sector. Incluimos licencias de prueba.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿La formación es bonificable por FUNDAE?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>Sí, nuestra formación IA empresas es 100% bonificable. Te ayudamos con toda la gestión para que puedas recuperar hasta el 100% de la inversión.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Qué resultados puedo esperar?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>El 87% de equipos formados reportan ahorro de 4+ horas semanales por persona. ROI típico: recuperas la inversión en 30-60 días con los procesos automatizados.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Dónde se imparte la formación?</span>
+            <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <p>Presencial en vuestras oficinas o las nuestras (península y Baleares). También online vía Zoom/Teams para cualquier ubicación. Tú eliges.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final-section">
+    <div class="cta-final-container">
+      <h2 class="cta-final-title">
+        Próximo paso para tu <span class="title-highlight">formación IA empresas</span>
+      </h2>
+      <p class="cta-final-description">
+        Completa el formulario y agenda la llamada de diagnóstico. En menos de 24 horas 
+        recibirás la propuesta detallada y una fecha para impartir la formación IA empresas 
+        que transformará tu operativa antes de que el calendario cambie de mes.
+      </p>
+      <div class="cta-final-buttons">
+        <a href="#contacto" class="cta-primary">
+          <span>Reservar formación</span>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE FORMULARIO DE CONTACTO -->
+  <section id="contacto" class="contact-form-section">
+    <div class="contact-form-container">
+      <div class="contact-form-header">
+        <h2 class="contact-form-title">
+          Solicita tu <span class="title-highlight">formación IA empresas</span>
+        </h2>
+        <p class="contact-form-description">
+          Rellena el formulario y te llamamos en menos de 24 horas para diseñar 
+          la formación perfecta para tu equipo.
+        </p>
+      </div>
+
+      <div class="form-embed-container">
+        <ContactForm currentLang="es" />
+      </div>
+
+      <div class="contact-trust-badges">
+        <div class="contact-trust-item">
+          <div class="contact-trust-icon">🎯</div>
+          <span>Sin compromiso</span>
+        </div>
+        <div class="contact-trust-item">
+          <div class="contact-trust-icon">🔒</div>
+          <span>Datos 100% seguros</span>
+        </div>
+        <div class="contact-trust-item">
+          <div class="contact-trust-icon">⚡</div>
+          <span>Respuesta en 24h</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="footer-container">
       <div class="footer-content">
@@ -126,7 +663,8 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
             loading="lazy"
           />
           <p class="footer-description">
-            Implementamos soluciones de inteligencia artificial para empresas con resultados demostrables en 90 días.
+            Formación IA empresas práctica con resultados desde el primer día. 
+            Transforma tu equipo con inteligencia artificial.
           </p>
         </div>
 
@@ -166,7 +704,7 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
 
       <div class="footer-bottom">
         <p class="footer-copyright">
-          © 2024 BLIXEL GROUP SL. Todos los derechos reservados.
+          © 2025 BLIXEL GROUP SL. Todos los derechos reservados.
         </p>
       </div>
     </div>
@@ -174,7 +712,7 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
 </Layout>
 
 <style>
-  /* ==================== ESTILOS GLOBALES (heredados de index) ==================== */
+  /* ==================== ESTILOS GLOBALES ==================== */
   body {
     background: #000000;
     color: #ffffff;
@@ -296,335 +834,377 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     transform: scale(0.8) rotate(180deg);
   }
 
-  /* ==================== CONTENIDO DE LA PÁGINA ==================== */
-  .page-content {
-    min-height: calc(100vh - 78px);
-    background: #000000;
+  /* ==================== HERO SECTION ==================== */
+  .hero-section {
+    position: relative;
+    padding: 2rem 0 4rem;
+    background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+    overflow: hidden;
   }
 
-  html:not(.dark) .page-content {
-    background: #ffffff;
+  html:not(.dark) .hero-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   }
 
-  .page-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-  }
-
-  /* ==================== ESTILOS PARA CONTENIDO DE WORDPRESS ==================== */
-  .wp-content {
-    font-family: 'Inter', -apple-system, sans-serif;
-    font-size: 1.125rem;
-    line-height: 1.8;
-    color: #e5e7eb;
+  .hero-container {
     max-width: 1400px;
     margin: 0 auto;
-    animation: fadeInUp 0.8s ease-out;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
   }
 
-  html:not(.dark) .wp-content {
-    color: #374151 !important;
+  /* Breadcrumbs */
+  .breadcrumbs {
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.6s ease-out;
   }
 
-  /* HERO DE WORDPRESS (primer bloque con imagen de fondo) */
-  .wp-content > .wp-block-cover:first-child {
-    margin: -4rem calc(-50vw + 50%);
-    width: 100vw;
-    padding: 8rem 2rem;
-    border-radius: 0;
-    position: relative;
-    overflow: hidden;
-    min-height: 600px;
+  .breadcrumbs ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
   }
 
-  .wp-content > .wp-block-cover:first-child .wp-block-cover__inner-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-    z-index: 2;
+  .breadcrumbs li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
-  html:not(.dark) .wp-content > .wp-block-group:first-child,
-  html:not(.dark) .wp-content > .wp-block-cover:first-child {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.95));
+  .breadcrumbs a {
+    color: #60a5fa;
+    text-decoration: none;
+    transition: color 0.3s ease;
   }
 
-  /* Imágenes de fondo en bloques cover */
-  .wp-content .wp-block-cover {
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    border-radius: 20px;
-    overflow: hidden;
-    margin: 2rem 0;
+  .breadcrumbs a:hover {
+    color: #3b82f6;
   }
 
-  .wp-content .wp-block-cover__inner-container {
-    position: relative;
-    z-index: 2;
-    padding: 4rem 2rem;
-    background: rgba(0, 0, 0, 0.7);
+  .breadcrumbs li:not(:last-child)::after {
+    content: '/';
+    color: #6b7280;
+    margin-left: 0.5rem;
   }
 
-  html:not(.dark) .wp-content .wp-block-cover__inner-container {
-    background: rgba(255, 255, 255, 0.9);
+  .breadcrumbs span {
+    color: #9ca3af;
   }
 
-  /* Títulos de WordPress */
-  .wp-content h1,
-  .wp-content h2,
-  .wp-content h3,
-  .wp-content h4,
-  .wp-content h5,
-  .wp-content h6 {
+  html:not(.dark) .breadcrumbs span {
+    color: #6b7280;
+  }
+
+  .hero-content {
+    animation: fadeInLeft 0.8s ease-out;
+  }
+
+  .hero-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 800;
-    line-height: 1.2;
-    margin-top: 3rem;
+    line-height: 1.1;
     margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
     color: #ffffff;
-    letter-spacing: -0.02em;
   }
 
-  /* Títulos dentro del hero */
-  .wp-content .wp-block-cover h1 {
-    margin-top: 0;
-    margin-bottom: 2rem;
-    animation: fadeInUp 0.8s ease-out;
-  }
-
-  .wp-content .wp-block-cover p {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
-    opacity: 0.9;
-    animation: fadeInUp 0.8s ease-out 0.2s backwards;
-  }
-
-  html:not(.dark) .wp-content h1,
-  html:not(.dark) .wp-content h2,
-  html:not(.dark) .wp-content h3,
-  html:not(.dark) .wp-content h4,
-  html:not(.dark) .wp-content h5,
-  html:not(.dark) .wp-content h6 {
+  html:not(.dark) .hero-title {
     color: #111827 !important;
   }
 
-  .wp-content h1 { 
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    letter-spacing: -0.04em;
-  }
-  .wp-content h2 { 
-    font-size: 2.5rem;
-    position: relative;
-    padding-bottom: 1rem;
-  }
-
-  /* Título con highlight azul */
-  .wp-content h2 span,
-  .wp-content h2 strong {
+  .title-highlight {
     background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    font-weight: 800;
+    position: relative;
+    display: inline-block;
   }
 
-  .wp-content h3 { font-size: 2rem; }
-  .wp-content h4 { font-size: 1.5rem; }
-  .wp-content h5 { font-size: 1.25rem; }
-  .wp-content h6 { font-size: 1.125rem; }
-
-  /* Párrafos */
-  .wp-content p {
-    margin-bottom: 1.5rem;
-  }
-
-  /* Párrafos con tamaño grande */
-  .wp-content p.has-large-font-size {
+  .hero-description {
     font-size: 1.25rem;
     line-height: 1.6;
-    opacity: 0.9;
+    color: #e5e7eb;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
   }
 
-  .wp-content p.has-x-large-font-size {
+  html:not(.dark) .hero-description {
+    color: #374151 !important;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    animation: fadeInUp 0.8s ease-out 0.3s backwards;
+  }
+
+  .badge-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .badge-icon {
+    font-size: 1.5rem;
+  }
+
+  .badge-text {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    font-weight: 500;
+  }
+
+  html:not(.dark) .badge-text {
+    color: #6b7280 !important;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    animation: fadeInUp 0.8s ease-out 0.4s backwards;
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+  }
+
+  .cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(96, 165, 250, 0.4);
+  }
+
+  .cta-primary svg {
+    transition: transform 300ms ease;
+  }
+
+  .cta-primary:hover svg {
+    transform: translateX(4px);
+  }
+
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    background: transparent;
+    color: #60a5fa;
+    text-decoration: none;
+    border: 2px solid rgba(96, 165, 250, 0.3);
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    transition: all 300ms ease;
+  }
+
+  .cta-secondary:hover {
+    background: rgba(96, 165, 250, 0.1);
+    border-color: rgba(96, 165, 250, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .hero-image {
+    animation: fadeInRight 0.8s ease-out 0.2s backwards;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  html:not(.dark) .hero-image img {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  /* ==================== SECCIÓN DE URGENCIA ==================== */
+  .urgency-section {
+    padding: 6rem 0;
+    background: #000000;
+  }
+
+  html:not(.dark) .urgency-section {
+    background: #f8fafc;
+  }
+
+  .urgency-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+  }
+
+  .urgency-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  html:not(.dark) .urgency-title {
+    color: #111827 !important;
+  }
+
+  .urgency-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  }
+
+  html:not(.dark) .urgency-description {
+    color: #374151 !important;
+  }
+
+  .urgency-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .urgency-section .stat-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    animation: fadeInUp 0.8s ease-out backwards;
+  }
+
+  .urgency-section .stat-card:nth-child(1) { animation-delay: 0.3s; }
+  .urgency-section .stat-card:nth-child(2) { animation-delay: 0.4s; }
+  .urgency-section .stat-card:nth-child(3) { animation-delay: 0.5s; }
+
+  html:not(.dark) .urgency-section .stat-card {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .urgency-section .stat-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(96, 165, 250, 0.3);
+  }
+
+  .stat-number {
     font-size: 3rem;
     font-weight: 800;
-    line-height: 1.2;
-    margin: 0.5rem 0;
     background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    margin-bottom: 0.5rem;
   }
 
-  /* Enlaces */
-  .wp-content a {
-    color: #60a5fa;
-    text-decoration: underline;
-    transition: color 0.3s ease;
-  }
-
-  .wp-content a:hover {
-    color: #3b82f6;
-  }
-
-  html:not(.dark) .wp-content a {
-    color: #2563eb;
-  }
-
-  html:not(.dark) .wp-content a:hover {
-    color: #1d4ed8;
-  }
-
-  /* Listas */
-  .wp-content ul,
-  .wp-content ol {
-    margin: 2rem 0;
-    padding-left: 2rem;
-  }
-
-  .wp-content li {
-    margin-bottom: 1rem;
-    line-height: 1.8;
-    position: relative;
-    padding-left: 0.5rem;
-  }
-
-  .wp-content ul li::marker {
-    color: #60a5fa;
-  }
-
-  /* Lista dentro de grupos con fondo */
-  .wp-content .wp-block-group ul {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    padding: 1.5rem 2rem 1.5rem 3rem;
-    margin: 1.5rem 0;
-  }
-
-  html:not(.dark) .wp-content .wp-block-group ul {
-    background: rgba(0, 0, 0, 0.05);
-  }
-
-  /* Blockquotes */
-  .wp-content blockquote {
-    border-left: 4px solid #60a5fa;
-    padding-left: 1.5rem;
-    margin: 2rem 0;
-    font-style: italic;
+  .stat-text {
+    font-size: 1rem;
     color: #9ca3af;
   }
 
-  html:not(.dark) .wp-content blockquote {
+  html:not(.dark) .stat-text {
     color: #6b7280 !important;
-    border-left-color: #2563eb;
   }
 
-  /* Imágenes */
-  .wp-content img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 12px;
-    margin: 2rem auto;
-    display: block;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  /* ==================== SECCIÓN DE PROBLEMAS ==================== */
+  .problems-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
   }
 
-  html:not(.dark) .wp-content img {
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  html:not(.dark) .problems-section {
+    background: white;
   }
 
-  /* Bloques de WordPress */
-  .wp-content .wp-block-group {
-    margin: 4rem 0;
-    padding: 4rem 3rem;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 24px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+  .problems-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
   }
 
-  .wp-content .wp-block-group::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.05) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  html:not(.dark) .wp-content .wp-block-group {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.15);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Grupos con colores de fondo específicos */
-  .wp-content .wp-block-group.has-very-dark-gray-background-color {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    border: none;
+  .problems-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 1.5rem;
     color: #ffffff;
+    animation: fadeInUp 0.8s ease-out;
   }
 
-  .wp-content .wp-block-group.has-vivid-cyan-blue-background-color {
-    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-    border: none;
-    color: #ffffff;
+  html:not(.dark) .problems-title {
+    color: #111827 !important;
   }
 
-  .wp-content .wp-block-group.has-luminous-vivid-orange-background-color {
-    background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
-    border: none;
-    color: #ffffff;
+  .problems-description {
+    text-align: center;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
   }
 
-  html:not(.dark) .wp-content .wp-block-group.has-background {
-    color: #ffffff;
+  html:not(.dark) .problems-description {
+    color: #374151 !important;
   }
 
-  /* Columnas de WordPress */
-  .wp-content .wp-block-columns {
+  .problems-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
-    margin: 4rem 0;
   }
 
-  .wp-content .wp-block-column {
+  .problem-card {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 2.5rem;
+    text-align: center;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    cursor: pointer;
+    animation: fadeInUp 0.8s ease-out backwards;
   }
 
-  /* Columnas dentro de grupos con fondo */
-  .wp-content .wp-block-group.has-background .wp-block-column {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-  }
+  .problem-card:nth-child(1) { animation-delay: 0.1s; }
+  .problem-card:nth-child(2) { animation-delay: 0.2s; }
+  .problem-card:nth-child(3) { animation-delay: 0.3s; }
 
-  html:not(.dark) .wp-content .wp-block-group.has-background .wp-block-column {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-
-  html:not(.dark) .wp-content .wp-block-column {
+  html:not(.dark) .problem-card {
     background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.15);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
 
-  .wp-content .wp-block-column::before {
+  .problem-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -636,350 +1216,756 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     transition: opacity 0.3s ease;
   }
 
-  .wp-content .wp-block-column:hover {
-    transform: translateY(-4px);
+  .problem-card:hover {
+    transform: translateY(-5px);
     border-color: rgba(96, 165, 250, 0.3);
-    background: rgba(255, 255, 255, 0.04);
   }
 
-  html:not(.dark) .wp-content .wp-block-column:hover {
-    background: rgba(0, 0, 0, 0.06);
-    border-color: rgba(37, 99, 235, 0.4);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  .wp-content .wp-block-column:hover::before {
+  .problem-card:hover::before {
     opacity: 1;
   }
 
-  /* Iconos en columnas */
-  .wp-content .wp-block-column > *:first-child {
-    margin-top: 0;
+  .problem-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
   }
 
-  .wp-content .wp-block-column > p:first-child,
-  .wp-content .wp-block-column > h3:first-child,
-  .wp-content .wp-block-column > h4:first-child {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  .problem-title {
+    font-size: 1.5rem;
     font-weight: 700;
-    color: #ffffff;
     margin-bottom: 1rem;
+    color: #ffffff;
   }
 
-  html:not(.dark) .wp-content .wp-block-column > p:first-child,
-  html:not(.dark) .wp-content .wp-block-column > h3:first-child,
-  html:not(.dark) .wp-content .wp-block-column > h4:first-child {
+  html:not(.dark) .problem-title {
     color: #111827 !important;
   }
 
-  /* Iconos SVG o emojis grandes */
-  .wp-content .wp-block-column > *:first-child::before {
-    content: '';
-    width: 48px;
-    height: 48px;
-    background: rgba(96, 165, 250, 0.1);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+  .problem-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #9ca3af;
   }
 
-  /* Botones de WordPress */
-  .wp-content .wp-block-buttons {
-    display: flex;
-    gap: 1rem;
-    margin: 2rem 0;
-    flex-wrap: wrap;
-    animation: fadeInUp 0.8s ease-out 0.4s backwards;
-  }
-
-  .wp-content .wp-block-buttons.is-content-justification-center {
-    justify-content: center;
-  }
-
-  .wp-content .wp-block-button {
+  .problem-card .problem-description {
     margin: 0;
   }
 
-  .wp-content .wp-block-button__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1.25rem 2rem;
+  html:not(.dark) .problem-card .problem-description {
+    color: #6b7280 !important;
+  }
+
+  /* ==================== SECCIÓN DE METODOLOGÍA ==================== */
+  .methodology-section {
+    padding: 6rem 0;
+    background: #000000;
+  }
+
+  html:not(.dark) .methodology-section {
+    background: #f8fafc;
+  }
+
+  .methodology-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .methodology-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: #ffffff;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  html:not(.dark) .methodology-title {
+    color: #111827 !important;
+  }
+
+  .methodology-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .step-card {
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out backwards;
+  }
+
+  .step-card:nth-child(1) { animation-delay: 0.1s; }
+  .step-card:nth-child(2) { animation-delay: 0.2s; }
+  .step-card:nth-child(3) { animation-delay: 0.3s; }
+  .step-card:nth-child(4) { animation-delay: 0.4s; }
+
+  .step-number {
+    width: 80px;
+    height: 80px;
     background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-    color: white !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    margin: 0 auto 2rem;
+    box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3);
+    transition: transform 0.3s ease;
+  }
+
+  .step-card:hover .step-number {
+    transform: scale(1.1);
+  }
+
+  .step-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .step-title {
+    color: #111827 !important;
+  }
+
+  .step-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #9ca3af;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  html:not(.dark) .step-description {
+    color: #6b7280 !important;
+  }
+
+  /* ==================== SECCIÓN DE BENEFICIOS ==================== */
+  .benefits-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  }
+
+  html:not(.dark) .benefits-section {
+    background: white;
+  }
+
+  .benefits-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .benefits-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  html:not(.dark) .benefits-title {
+    color: #111827 !important;
+  }
+
+  .benefits-description {
+    text-align: center;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    max-width: 700px;
+    margin: 0 auto 4rem;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  }
+
+  html:not(.dark) .benefits-description {
+    color: #374151 !important;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .benefit-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.8s ease-out backwards;
+  }
+
+  .benefit-card:nth-child(1) { animation-delay: 0.1s; }
+  .benefit-card:nth-child(2) { animation-delay: 0.2s; }
+  .benefit-card:nth-child(3) { animation-delay: 0.3s; }
+  .benefit-card:nth-child(4) { animation-delay: 0.4s; }
+
+  html:not(.dark) .benefit-card {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .benefit-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(96, 165, 250, 0.3);
+  }
+
+  .benefit-card:hover::before {
+    opacity: 1;
+  }
+
+  .benefit-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+  }
+
+  .benefit-icon svg {
+    color: #60a5fa;
+  }
+
+  .benefit-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .benefit-title {
+    color: #111827 !important;
+  }
+
+  .benefit-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #9ca3af;
+  }
+
+  .benefit-card .benefit-description {
+    margin: 0;
+  }
+
+  html:not(.dark) .benefit-card .benefit-description {
+    color: #6b7280 !important;
+  }
+
+  /* ==================== SECCIÓN DE CASOS DE USO ==================== */
+  .usecases-section {
+    padding: 6rem 0;
+    background: #000000;
+  }
+
+  html:not(.dark) .usecases-section {
+    background: #f8fafc;
+  }
+
+  .usecases-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .usecases-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  html:not(.dark) .usecases-title {
+    color: #111827 !important;
+  }
+
+  .usecases-description {
+    text-align: center;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    max-width: 700px;
+    margin: 0 auto 4rem;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  }
+
+  html:not(.dark) .usecases-description {
+    color: #374151 !important;
+  }
+
+  .usecases-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .usecase-item {
+    display: flex;
+    gap: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.8s ease-out backwards;
+  }
+
+  .usecase-item:nth-child(1) { animation-delay: 0.1s; }
+  .usecase-item:nth-child(2) { animation-delay: 0.2s; }
+  .usecase-item:nth-child(3) { animation-delay: 0.3s; }
+  .usecase-item:nth-child(4) { animation-delay: 0.4s; }
+
+  html:not(.dark) .usecase-item {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .usecase-item:hover {
+    transform: translateX(5px);
+    border-color: rgba(96, 165, 250, 0.3);
+  }
+
+  .usecase-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .usecase-content h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .usecase-content h3 {
+    color: #111827 !important;
+  }
+
+  .usecase-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #9ca3af;
+    margin: 0;
+  }
+
+  html:not(.dark) .usecase-content p {
+    color: #6b7280 !important;
+  }
+
+  /* ==================== SECCIÓN DE GARANTÍA ==================== */
+  .guarantee-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+    text-align: center;
+  }
+
+  .guarantee-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .guarantee-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1.5rem;
+  }
+
+  .guarantee-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 2rem;
+  }
+
+  .guarantee-badges {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .guarantee-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    color: white;
+  }
+
+  /* ==================== SECCIÓN DE PRECIOS ==================== */
+  .pricing-section {
+    padding: 6rem 0;
+    background: #000000;
+  }
+
+  html:not(.dark) .pricing-section {
+    background: white;
+  }
+
+  .pricing-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .pricing-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: #ffffff;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  html:not(.dark) .pricing-title {
+    color: #111827 !important;
+  }
+
+  .pricing-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .pricing-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.8s ease-out backwards;
+  }
+
+  .pricing-card:nth-child(1) { animation-delay: 0.1s; }
+  .pricing-card:nth-child(2) { animation-delay: 0.2s; }
+  .pricing-card:nth-child(3) { animation-delay: 0.3s; }
+
+  html:not(.dark) .pricing-card {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .pricing-card.featured {
+    border-color: rgba(96, 165, 250, 0.3);
+    transform: scale(1.05);
+  }
+
+  html:not(.dark) .pricing-card.featured {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(96, 165, 250, 0.3);
+  }
+
+  .pricing-card.featured:hover {
+    transform: scale(1.05) translateY(-5px);
+  }
+
+  .pricing-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    color: white;
+    padding: 0.25rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .pricing-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .pricing-name {
+    color: #111827 !important;
+  }
+
+  .pricing-price {
+    margin-bottom: 2rem;
+  }
+
+  .price-amount {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .price-per {
+    font-size: 1rem;
+    color: #9ca3af;
+  }
+
+  html:not(.dark) .price-per {
+    color: #6b7280 !important;
+  }
+
+  .pricing-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .pricing-features li {
+    color: #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  html:not(.dark) .pricing-features li {
+    color: #374151 !important;
+  }
+
+  .pricing-features li::before {
+    content: '✓';
+    color: #60a5fa;
+    font-weight: bold;
+  }
+
+  .pricing-cta {
+    display: inline-block;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 2px solid rgba(96, 165, 250, 0.3);
+    color: #60a5fa;
     text-decoration: none;
     border-radius: 12px;
     font-weight: 600;
-    font-size: 1.125rem;
-    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
-    border: none;
+    transition: all 0.3s ease;
   }
 
-  .wp-content .wp-block-button__link:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(96, 165, 250, 0.4);
-    color: white !important;
+  .pricing-card.featured .pricing-cta {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    border-color: transparent;
+    color: white;
   }
 
-  /* Botón outline */
-  .wp-content .wp-block-button.is-style-outline .wp-block-button__link {
-    background: transparent;
-    border: 2px solid rgba(96, 165, 250, 0.5);
-    color: #60a5fa !important;
-    box-shadow: none;
-  }
-
-  .wp-content .wp-block-button.is-style-outline .wp-block-button__link:hover {
+  .pricing-cta:hover {
     background: rgba(96, 165, 250, 0.1);
     border-color: #60a5fa;
     transform: translateY(-2px);
   }
 
-  /* Tablas */
-  .wp-content table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 2rem 0;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    overflow: hidden;
+  .pricing-card.featured .pricing-cta:hover {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
   }
 
-  html:not(.dark) .wp-content table {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.15);
+  /* ==================== SECCIÓN FAQ ==================== */
+  .faq-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
   }
 
-  .wp-content th,
-  .wp-content td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  html:not(.dark) .faq-section {
+    background: #f8fafc;
   }
 
-  html:not(.dark) .wp-content th,
-  html:not(.dark) .wp-content td {
-    border-bottom-color: rgba(0, 0, 0, 0.1);
+  .faq-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
   }
 
-  .wp-content th {
-    background: rgba(96, 165, 250, 0.1);
-    font-weight: 700;
-  }
-
-  /* Separadores */
-  .wp-content hr {
-    border: none;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(96, 165, 250, 0.3), transparent);
-    margin: 3rem 0;
-  }
-
-  /* Pre y Code */
-  .wp-content pre {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 1rem;
-    overflow-x: auto;
-    margin: 1.5rem 0;
-  }
-
-  html:not(.dark) .wp-content pre {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
-  }
-
-  .wp-content code {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 0.2em 0.4em;
-    border-radius: 4px;
-    font-size: 0.9em;
-  }
-
-  html:not(.dark) .wp-content code {
-    background: rgba(0, 0, 0, 0.1);
-  }
-
-  /* Badges o etiquetas */
-  .wp-content .has-text-align-center {
+  .faq-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
     text-align: center;
-  }
-
-  .wp-content .has-text-align-right {
-    text-align: right;
-  }
-
-  /* Contenido con fondo destacado */
-  .wp-content .has-background {
-    padding: 2rem;
-    border-radius: 12px;
-    margin: 2rem 0;
-  }
-
-  /* Espaciador de WordPress */
-  .wp-content .wp-block-spacer {
-    clear: both;
-  }
-
-  /* Títulos con emojis */
-  .wp-content h3,
-  .wp-content h4 {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  /* Emojis en títulos */
-  .wp-content h3:first-letter,
-  .wp-content h4:first-letter {
-    font-size: 1.5em;
-  }
-
-  /* Alineación de imágenes */
-  .wp-content .aligncenter {
-    display: block;
-    margin: 2rem auto;
-  }
-
-  .wp-content .alignleft {
-    float: left;
-    margin: 0 2rem 2rem 0;
-  }
-
-  .wp-content .alignright {
-    float: right;
-    margin: 0 0 2rem 2rem;
-  }
-
-  /* Galerías */
-  .wp-content .wp-block-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-    margin: 2rem 0;
-  }
-
-  .wp-content .wp-block-gallery img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-  }
-
-  .wp-content .wp-block-gallery img:hover {
-    transform: scale(1.05);
-  }
-
-  /* Media queries para contenido WordPress */
-  @media (max-width: 768px) {
-    .wp-content .wp-block-columns {
-      grid-template-columns: 1fr;
-    }
-
-    .wp-content h1 {
-      font-size: 2rem;
-    }
-
-    .wp-content h2 {
-      font-size: 1.75rem;
-    }
-
-    .wp-content h3 {
-      font-size: 1.5rem;
-    }
-
-    .wp-content .wp-block-column {
-      padding: 1.5rem;
-    }
-
-    .wp-content > .wp-block-cover:first-child {
-      margin: -3rem calc(-50vw + 50%);
-      padding: 4rem 1.5rem;
-      min-height: 500px;
-    }
-
-    .wp-content .wp-block-group {
-      padding: 3rem 2rem;
-      margin: 3rem 0;
-    }
-
-    .wp-content .wp-block-columns {
-      gap: 1.5rem;
-    }
-
-    .wp-content p.has-x-large-font-size {
-      font-size: 2rem;
-    }
-  }
-
-  /* ==================== CONTENEDORES DE ERROR Y CARGA ==================== */
-  .error-container,
-  .loading-container {
-    text-align: center;
-    padding: 4rem 2rem;
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .error-container h1,
-  .loading-container h1 {
-    font-size: 2.5rem;
+    margin-bottom: 4rem;
     color: #ffffff;
-    margin-bottom: 1rem;
+    animation: fadeInUp 0.8s ease-out;
   }
 
-  html:not(.dark) .error-container h1,
-  html:not(.dark) .loading-container h1 {
+  html:not(.dark) .faq-title {
     color: #111827 !important;
   }
 
-  .error-container p {
-    color: #9ca3af;
-    margin-bottom: 1rem;
-    font-size: 1.125rem;
+  .faq-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 
-  html:not(.dark) .error-container p {
-    color: #6b7280 !important;
+  .faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out backwards;
   }
 
-  .error-details {
-    font-family: monospace;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 1rem;
-    border-radius: 8px;
-    margin: 1rem 0;
-    max-width: 600px;
-    word-break: break-word;
+  .faq-item:nth-child(1) { animation-delay: 0.1s; }
+  .faq-item:nth-child(2) { animation-delay: 0.2s; }
+  .faq-item:nth-child(3) { animation-delay: 0.3s; }
+  .faq-item:nth-child(4) { animation-delay: 0.4s; }
+  .faq-item:nth-child(5) { animation-delay: 0.5s; }
+  .faq-item:nth-child(6) { animation-delay: 0.6s; }
+
+  html:not(.dark) .faq-item {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
 
-  .back-link {
-    display: inline-flex;
+  .faq-item:hover {
+    border-color: rgba(96, 165, 250, 0.2);
+  }
+
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.5rem 2rem;
+    display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-top: 2rem;
-    padding: 0.75rem 1.5rem;
-    background: #60a5fa;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s ease;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .faq-question {
+    color: #111827 !important;
+  }
+
+  .faq-question span {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .faq-question:hover {
+    color: #60a5fa;
+  }
+
+  .faq-chevron {
+    color: #9ca3af;
+    transition: all 0.3s ease;
+    transform: rotate(0deg);
+    flex-shrink: 0;
+  }
+
+  .faq-item.active .faq-chevron {
+    transform: rotate(180deg);
+    color: #60a5fa;
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
     transition: all 0.3s ease;
   }
 
-  .back-link:hover {
-    background: #3b82f6;
-    transform: translateY(-2px);
+  .faq-item.active .faq-answer {
+    max-height: 300px;
+  }
+
+  .faq-answer p {
+    padding: 0 2rem 1.5rem;
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+  }
+
+  html:not(.dark) .faq-answer p {
+    color: #4b5563 !important;
+  }
+
+  /* ==================== CTA FINAL ==================== */
+  .cta-final-section {
+    padding: 6rem 0;
+    background: #000000;
+    text-align: center;
+  }
+
+  html:not(.dark) .cta-final-section {
+    background: white;
+  }
+
+  .cta-final-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .cta-final-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .cta-final-title {
+    color: #111827 !important;
+  }
+
+  .cta-final-description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    margin-bottom: 2.5rem;
+  }
+
+  html:not(.dark) .cta-final-description {
+    color: #374151 !important;
+  }
+
+  .cta-final-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
   }
 
   /* ==================== SECCIÓN DE CONTACTO ==================== */
@@ -1035,16 +2021,6 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     color: #374151 !important;
   }
 
-  .title-highlight {
-    background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 800;
-    position: relative;
-    display: inline-block;
-  }
-
   .form-embed-container {
     margin-bottom: 3rem;
     background: rgba(255, 255, 255, 0.02);
@@ -1063,17 +2039,6 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     background: rgba(0, 0, 0, 0.03);
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-
-  .form-embed-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.05) 0%, transparent 70%);
-    pointer-events: none;
   }
 
   .contact-trust-badges {
@@ -1109,11 +2074,6 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     border-color: rgba(96, 165, 250, 0.2);
     background: rgba(255, 255, 255, 0.04);
     transform: translateY(-2px);
-  }
-
-  html:not(.dark) .contact-trust-item:hover {
-    background: rgba(0, 0, 0, 0.06);
-    border-color: rgba(37, 99, 235, 0.4);
   }
 
   .contact-trust-icon {
@@ -1256,10 +2216,79 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     }
   }
 
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
   /* ==================== RESPONSIVE ==================== */
+  @media (max-width: 1024px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-content {
+      order: 2;
+    }
+
+    .hero-image {
+      order: 1;
+      margin-bottom: 2rem;
+    }
+
+    .hero-badges {
+      justify-content: center;
+    }
+
+    .urgency-stats,
+    .problems-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .methodology-steps,
+    .benefits-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .usecases-list {
+      grid-template-columns: 1fr;
+    }
+
+    .pricing-cards {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .pricing-card.featured {
+      transform: scale(1);
+    }
+
+    .pricing-card.featured:hover {
+      transform: translateY(-5px);
+    }
+  }
+
   @media (max-width: 768px) {
     body {
-      font-size: 16px;
       padding-top: 66px;
     }
 
@@ -1275,12 +2304,77 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
       height: 38px;
     }
 
-    .page-container {
-      padding: 3rem 1rem;
+    .hero-section {
+      padding: 1rem 0 3rem;
     }
 
-    .wp-content {
-      font-size: 1rem;
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-description {
+      font-size: 1.125rem;
+    }
+
+    .hero-ctas {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .cta-primary,
+    .cta-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hero-badges {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .urgency-section,
+    .problems-section,
+    .methodology-section,
+    .benefits-section,
+    .usecases-section,
+    .pricing-section,
+    .faq-section,
+    .cta-final-section,
+    .contact-form-section {
+      padding: 4rem 0;
+    }
+
+    .urgency-container,
+    .problems-container,
+    .methodology-container,
+    .benefits-container,
+    .usecases-container,
+    .pricing-container,
+    .faq-container,
+    .cta-final-container,
+    .contact-form-container {
+      padding: 0 1rem;
+    }
+
+    .urgency-title,
+    .problems-title,
+    .methodology-title,
+    .benefits-title,
+    .usecases-title,
+    .pricing-title,
+    .faq-title,
+    .cta-final-title {
+      font-size: 2rem;
+    }
+
+    .methodology-steps,
+    .benefits-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .guarantee-section {
+      padding: 3rem 0;
     }
 
     .form-embed-container {
@@ -1290,10 +2384,6 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     .contact-trust-badges {
       grid-template-columns: 1fr;
       gap: 1rem;
-    }
-
-    .footer-container {
-      padding: 0 1rem;
     }
 
     .footer-content {
@@ -1334,8 +2424,34 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
       height: 32px;
     }
 
-    .page-container {
-      padding: 2rem 1rem;
+    .breadcrumbs {
+      font-size: 0.8rem;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+    }
+
+    .problem-icon {
+      font-size: 2.5rem;
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      font-size: 1.25rem;
+    }
+
+    .price-amount {
+      font-size: 2.5rem;
+    }
+
+    .guarantee-title {
+      font-size: 2rem;
+    }
+
+    .cta-final-buttons {
+      flex-direction: column;
     }
   }
 </style>
@@ -1404,6 +2520,25 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
         footerLogo.onerror();
       }
     }
+
+    // Sistema de FAQ interactivo
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      
+      question.addEventListener('click', () => {
+        // Cerrar otros FAQs abiertos
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+          }
+        });
+        
+        // Toggle del FAQ actual
+        item.classList.toggle('active');
+      });
+    });
 
     // Scroll suave para enlaces internos
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

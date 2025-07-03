@@ -14,7 +14,38 @@ const priority = {
 // Generar URLs para todos los idiomas
 const urls: any[] = [];
 
-// Páginas principales
+// Páginas estáticas importantes
+const staticPages = [
+  {
+    url: '/formacion-ia-empresas',
+    priority: priority.main,
+    changefreq: 'monthly'
+  },
+  {
+    url: '/legal/aviso-legal',
+    priority: priority.secondary,
+    changefreq: 'yearly'
+  },
+  {
+    url: '/legal/politica-cookies',
+    priority: priority.secondary,
+    changefreq: 'yearly'
+  }
+];
+
+// Agregar páginas estáticas
+staticPages.forEach(page => {
+  urls.push({
+    url: `${site}${page.url}`,
+    changefreq: page.changefreq,
+    priority: page.priority,
+    lastmod: new Date().toISOString().split('T')[0],
+    hreflang: 'es-ES',
+    alternates: []
+  });
+});
+
+// Páginas principales multiidioma
 Object.entries(routes).forEach(([routeKey, routeUrls]) => {
   Object.entries(routeUrls).forEach(([lang, url]) => {
     const fullUrl = `${site}${url}`;
