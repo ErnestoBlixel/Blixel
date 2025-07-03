@@ -224,43 +224,42 @@ const courseSchema = {
   <section class="methodology-section">
     <div class="methodology-container">
       <h2 class="methodology-title">
-        Cómo funciona nuestra <span class="title-highlight">formación IA empresas</span>
+        Cómo funciona nuestra <span class="title-highlight">formación IA para empresas</span>
       </h2>
+      <p class="methodology-description">
+        Descubre nuestro método paso a paso para enseñar herramientas de IA, analizar casos de uso sectoriales y entregar un informe-auditoría con oportunidades reales de automatización.
+      </p>
       
       <div class="methodology-steps">
         <div class="step-card">
           <div class="step-number">01</div>
           <h3 class="step-title">Análisis previo</h3>
           <p class="step-description">
-            Llamada de descubrimiento donde analizamos tu estructura, herramientas actuales 
-            y objetivos específicos. Diseñamos un temario 100% personalizado.
+            Llamada de descubrimiento para mapear tu estructura, herramientas actuales y objetivos clave, y diseñar un temario 100 % personalizado que responda a tus necesidades reales y retos específicos.
           </p>
         </div>
         
         <div class="step-card">
           <div class="step-number">02</div>
-          <h3 class="step-title">Sesión práctica (3h)</h3>
+          <h3 class="step-title">Sesión de herramientas y casos de uso (3 h)</h3>
           <p class="step-description">
-            Sin diapositivas aburridas. Abrimos vuestras plataformas y construimos 
-            automatizaciones reales que podréis usar desde el primer día.
+            Mostramos las plataformas de IA más efectivas para tu sector y analizamos casos reales de empresas que han mejorado su productividad y reducido errores gracias a soluciones adaptadas a su negocio.
           </p>
         </div>
         
         <div class="step-card">
           <div class="step-number">03</div>
-          <h3 class="step-title">Consultoría (1h)</h3>
+          <h3 class="step-title">Consultoría estratégica (1 h)</h3>
           <p class="step-description">
-            Resolvemos todas las dudas y priorizamos las 3 oportunidades 
-            de mayor ROI para implementar inmediatamente.
+            Resolución de dudas sobre funcionalidades, metodologías y criterios de implementación; priorizamos las tres iniciativas con mayor retorno de inversión (ROI) para que puedas ponerlas en marcha de inmediato.
           </p>
         </div>
         
         <div class="step-card">
           <div class="step-number">04</div>
-          <h3 class="step-title">Seguimiento</h3>
+          <h3 class="step-title">Auditoría y plan de acción</h3>
           <p class="step-description">
-            En 48h recibes un informe ejecutivo con el mapa de procesos automatizables, 
-            estimación de ahorro y cronograma de implantación.
+            En 48 h recibirás un informe ejecutivo con el mapeo de procesos automatizables, la estimación de ahorro en tiempo y reducción de errores, y un cronograma de implantación con o sin IA.
           </p>
         </div>
       </div>
@@ -1528,13 +1527,27 @@ const courseSchema = {
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 800;
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 1.5rem;
     color: #ffffff;
     animation: fadeInUp 0.8s ease-out;
   }
 
   html:not(.dark) .methodology-title {
     color: #111827 !important;
+  }
+
+  .methodology-description {
+    text-align: center;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  }
+
+  html:not(.dark) .methodology-description {
+    color: #374151 !important;
   }
 
   .methodology-steps {
