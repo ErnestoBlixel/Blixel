@@ -318,7 +318,7 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     font-size: 1.125rem;
     line-height: 1.8;
     color: #e5e7eb;
-    max-width: none;
+    max-width: 1400px;
     margin: 0 auto;
     animation: fadeInUp 0.8s ease-out;
   }
@@ -328,17 +328,24 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
   }
 
   /* HERO DE WORDPRESS (primer bloque con imagen de fondo) */
-  .wp-content > .wp-block-group:first-child,
   .wp-content > .wp-block-cover:first-child {
-    margin: -4rem -2rem 4rem;
-    padding: 6rem 2rem;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9));
+    margin: -4rem calc(-50vw + 50%);
+    width: 100vw;
+    padding: 8rem 2rem;
     border-radius: 0;
     position: relative;
     overflow: hidden;
-    min-height: 500px;
+    min-height: 600px;
     display: flex;
     align-items: center;
+    justify-content: center;
+  }
+
+  .wp-content > .wp-block-cover:first-child .wp-block-cover__inner-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    z-index: 2;
   }
 
   html:not(.dark) .wp-content > .wp-block-group:first-child,
@@ -379,6 +386,21 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     margin-top: 3rem;
     margin-bottom: 1.5rem;
     color: #ffffff;
+    letter-spacing: -0.02em;
+  }
+
+  /* Títulos dentro del hero */
+  .wp-content .wp-block-cover h1 {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .wp-content .wp-block-cover p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
   }
 
   html:not(.dark) .wp-content h1,
@@ -419,6 +441,24 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     margin-bottom: 1.5rem;
   }
 
+  /* Párrafos con tamaño grande */
+  .wp-content p.has-large-font-size {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  .wp-content p.has-x-large-font-size {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0.5rem 0;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
   /* Enlaces */
   .wp-content a {
     color: #60a5fa;
@@ -441,13 +481,31 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
   /* Listas */
   .wp-content ul,
   .wp-content ol {
-    margin: 1.5rem 0;
+    margin: 2rem 0;
     padding-left: 2rem;
   }
 
   .wp-content li {
-    margin-bottom: 0.75rem;
-    line-height: 1.6;
+    margin-bottom: 1rem;
+    line-height: 1.8;
+    position: relative;
+    padding-left: 0.5rem;
+  }
+
+  .wp-content ul li::marker {
+    color: #60a5fa;
+  }
+
+  /* Lista dentro de grupos con fondo */
+  .wp-content .wp-block-group ul {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.5rem 2rem 1.5rem 3rem;
+    margin: 1.5rem 0;
+  }
+
+  html:not(.dark) .wp-content .wp-block-group ul {
+    background: rgba(0, 0, 0, 0.05);
   }
 
   /* Blockquotes */
@@ -480,36 +538,84 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
 
   /* Bloques de WordPress */
   .wp-content .wp-block-group {
-    margin: 3rem 0;
-    padding: 2rem;
+    margin: 4rem 0;
+    padding: 4rem 3rem;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
+    border-radius: 24px;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .wp-content .wp-block-group::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(96, 165, 250, 0.05) 0%, transparent 70%);
+    pointer-events: none;
   }
 
   html:not(.dark) .wp-content .wp-block-group {
     background: rgba(0, 0, 0, 0.03);
     border-color: rgba(0, 0, 0, 0.15);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Grupos con colores de fondo específicos */
+  .wp-content .wp-block-group.has-very-dark-gray-background-color {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border: none;
+    color: #ffffff;
+  }
+
+  .wp-content .wp-block-group.has-vivid-cyan-blue-background-color {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    border: none;
+    color: #ffffff;
+  }
+
+  .wp-content .wp-block-group.has-luminous-vivid-orange-background-color {
+    background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+    border: none;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .wp-content .wp-block-group.has-background {
+    color: #ffffff;
   }
 
   /* Columnas de WordPress */
   .wp-content .wp-block-columns {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
-    margin: 3rem 0;
+    margin: 4rem 0;
   }
 
   .wp-content .wp-block-column {
     background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2.5rem;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
+  }
+
+  /* Columnas dentro de grupos con fondo */
+  .wp-content .wp-block-group.has-background .wp-block-column {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  html:not(.dark) .wp-content .wp-block-group.has-background .wp-block-column {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
   }
 
   html:not(.dark) .wp-content .wp-block-column {
@@ -582,8 +688,20 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
   }
 
   /* Botones de WordPress */
-  .wp-content .wp-block-button {
+  .wp-content .wp-block-buttons {
+    display: flex;
+    gap: 1rem;
     margin: 2rem 0;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease-out 0.4s backwards;
+  }
+
+  .wp-content .wp-block-buttons.is-content-justification-center {
+    justify-content: center;
+  }
+
+  .wp-content .wp-block-button {
+    margin: 0;
   }
 
   .wp-content .wp-block-button__link {
@@ -599,11 +717,27 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     font-size: 1.125rem;
     transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+    border: none;
   }
 
   .wp-content .wp-block-button__link:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 24px rgba(96, 165, 250, 0.4);
+    color: white !important;
+  }
+
+  /* Botón outline */
+  .wp-content .wp-block-button.is-style-outline .wp-block-button__link {
+    background: transparent;
+    border: 2px solid rgba(96, 165, 250, 0.5);
+    color: #60a5fa !important;
+    box-shadow: none;
+  }
+
+  .wp-content .wp-block-button.is-style-outline .wp-block-button__link:hover {
+    background: rgba(96, 165, 250, 0.1);
+    border-color: #60a5fa;
+    transform: translateY(-2px);
   }
 
   /* Tablas */
@@ -689,6 +823,25 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
     margin: 2rem 0;
   }
 
+  /* Espaciador de WordPress */
+  .wp-content .wp-block-spacer {
+    clear: both;
+  }
+
+  /* Títulos con emojis */
+  .wp-content h3,
+  .wp-content h4 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* Emojis en títulos */
+  .wp-content h3:first-letter,
+  .wp-content h4:first-letter {
+    font-size: 1.5em;
+  }
+
   /* Alineación de imágenes */
   .wp-content .aligncenter {
     display: block;
@@ -747,10 +900,23 @@ const pageDescription = 'Formación especializada en Inteligencia Artificial par
       padding: 1.5rem;
     }
 
-    .wp-content > .wp-block-group:first-child,
     .wp-content > .wp-block-cover:first-child {
-      margin: -3rem -1rem 3rem;
+      margin: -3rem calc(-50vw + 50%);
       padding: 4rem 1.5rem;
+      min-height: 500px;
+    }
+
+    .wp-content .wp-block-group {
+      padding: 3rem 2rem;
+      margin: 3rem 0;
+    }
+
+    .wp-content .wp-block-columns {
+      gap: 1.5rem;
+    }
+
+    .wp-content p.has-x-large-font-size {
+      font-size: 2rem;
     }
   }
 
