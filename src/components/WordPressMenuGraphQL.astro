@@ -1,0 +1,268 @@
+---
+// Configuración del WordPress GraphQL
+const WP_GRAPHQL_URL = 'https://cms.blixel.es/graphql'; // 👈 CAMBIAR por tu URL
+const MENU_LOCATION = 'HEADER_MENU'; // 👈 CAMBIAR por tu location (en mayúsculas)
+
+// Query GraphQL para obtener el menú
+const MENU_QUERY = `
+  query GetMenu($location: MenuLocationEnum!) {
+    menuItems(where: { location: $location }) {
+      nodes {
+        id
+        label
+        url
+        target
+        parentId
+        cssClasses
+        children {
+          nodes {
+            id
+            label
+            url
+            target
+            cssClasses
+          }
+        }
+      }
+    }
+  }
+`;
+
+// Función para obtener el menú vía GraphQL
+async function getWordPressMenuGraphQL() {
+  try {
+    const response = await fetch(WP_GRAPHQL_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: MENU_QUERY,
+        variables: {
+          location: MENU_LOCATION
+        }
+      })
+    });
+
+    if (!response.ok) {
+      console.error('GraphQL request failed:', response.status);
+      return [];
+    }
+
+    const result = await response.json();
+    
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      return [];
+    }
+
+    // Procesar los items del menú
+    const menuItems = result.data?.menuItems?.nodes || [];
+    
+    // Filtrar solo items principales (sin padre)
+    const mainItems = menuItems
+      .filter(item => !item.parentId)
+      .map(item => ({
+        id: item.id,
+        title: item.label,
+        url: item.url,
+        target: item.target || '_self',
+        cssClasses: item.cssClasses || [],
+        children: item.children?.nodes || []
+      }));
+
+    return mainItems;
+
+  } catch (error) {
+    console.error('Error fetching WordPress menu via GraphQL:', error);
+    return [];
+  }
+}
+
+// Obtener el menú
+const menuItems = await getWordPressMenuGraphQL();
+---
+
+<!-- Componente del menú GraphQL -->
+<nav class="wp-menu-gql" role="navigation" aria-label="Menú principal">
+  {menuItems.length > 0 ? (
+    <ul class="menu-list">
+      {menuItems.map(item => (
+        <li 
+          key={item.id} 
+          class={`menu-item ${item.cssClasses.join(' ')}`}
+          data-has-children={item.children.length > 0}
+        >
+          <a 
+            href={item.url} 
+            target={item.target}
+            class="menu-link"
+            rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
+          >
+            {item.title}
+          </a>
+          
+          {/* Submenú si tiene hijos */}
+          {item.children.length > 0 && (
+            <ul class="submenu">
+              {item.children.map(child => (
+                <li 
+                  key={child.id} 
+                  class={`submenu-item ${child.cssClasses?.join(' ') || ''}`}
+                >
+                  <a 
+                    href={child.url} 
+                    target={child.target}
+                    class="submenu-link"
+                    rel={child.target === '_blank' ? 'noopener noreferrer' : undefined}
+                  >
+                    {child.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <div class="menu-fallback">
+      <a href="/" class="menu-link">Inicio</a>
+      <a href="#contacto" class="menu-link">Contacto</a>
+    </div>
+  )}
+</nav>
+
+<style>
+  /* Los mismos estilos que WordPressMenu.astro */
+  .wp-menu-gql {
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-list {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .menu-item {
+    position: relative;
+  }
+
+  .menu-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+  }
+
+  html:not(.dark) .menu-link {
+    color: #111827;
+  }
+
+  .menu-link:hover {
+    color: #60a5fa;
+    border-bottom-color: #60a5fa;
+  }
+
+  /* Resto de estilos iguales a WordPressMenu.astro... */
+  .submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+
+  html:not(.dark) .submenu {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .menu-item:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .submenu-item {
+    list-style: none;
+  }
+
+  .submenu-link {
+    display: block;
+    color: #e5e7eb;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+
+  html:not(.dark) .submenu-link {
+    color: #374151;
+  }
+
+  .submenu-link:hover {
+    background: rgba(96, 165, 250, 0.1);
+    color: #60a5fa;
+  }
+
+  .menu-fallback {
+    display: flex;
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .menu-list {
+      gap: 1rem;
+    }
+
+    .menu-link {
+      font-size: 0.9rem;
+    }
+
+    .submenu {
+      position: static;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      background: transparent;
+      border: none;
+      padding: 0;
+      min-width: auto;
+    }
+
+    .submenu-link {
+      padding: 0.5rem 0;
+    }
+  }
+
+  .menu-item[data-has-children="true"] .menu-link::after {
+    content: '▼';
+    font-size: 0.7rem;
+    margin-left: 0.5rem;
+    opacity: 0.7;
+    transition: transform 0.3s ease;
+  }
+
+  .menu-item[data-has-children="true"]:hover .menu-link::after {
+    transform: rotate(180deg);
+  }
+</style>

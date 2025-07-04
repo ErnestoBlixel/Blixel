@@ -1,0 +1,355 @@
+---
+// Configuración del WordPress
+const WP_BASE_URL = 'https://cms.blixel.es'; // 👈 Tu URL de WordPress
+const MENU_LOCATION = 'primary'; // 👈 Ubicación del menú (primary, header, main, etc.)
+
+// Función para obtener el menú
+async function getWordPressMenu() {
+  try {
+    // Intentar obtener menús vía REST API v2
+    let menusResponse;
+    
+    // Primero intentamos con el endpoint de menús (si está disponible)
+    try {
+      menusResponse = await fetch(`${WP_BASE_URL}/wp-json/wp/v2/menu-locations`);
+      
+      if (menusResponse.ok) {
+        const menuLocations = await menusResponse.json();
+        console.log('Menu locations found:', menuLocations);
+        
+        // Buscar el menú en la ubicación primary o header
+        const primaryMenu = menuLocations[MENU_LOCATION] || menuLocations['primary'] || menuLocations['header'];
+        
+        if (primaryMenu) {
+          // Obtener items del menú específico
+          const menuItemsResponse = await fetch(`${WP_BASE_URL}/wp-json/wp/v2/menu-items?menus=${primaryMenu}&per_page=100&orderby=menu_order&order=asc`);
+          
+          if (menuItemsResponse.ok) {
+            const menuItems = await menuItemsResponse.json();
+            return processMenuItems(menuItems);
+          }
+        }
+      }
+    } catch (e) {
+      console.log('Menu locations endpoint not available, trying alternative approach');
+    }
+    
+    // Si no funciona, intentar obtener todos los menús
+    try {
+      menusResponse = await fetch(`${WP_BASE_URL}/wp-json/wp/v2/menus`);
+      
+      if (menusResponse.ok) {
+        const menus = await menusResponse.json();
+        console.log('Available menus:', menus);
+        
+        // Buscar menú por nombre o slug
+        const targetMenu = menus.find(menu => 
+          menu.slug === 'primary' ||
+          menu.slug === 'header' ||
+          menu.slug === 'main' ||
+          menu.name.toLowerCase().includes('navigation') ||
+          menu.name.toLowerCase().includes('navegación') ||
+          menu.name.toLowerCase().includes('principal') ||
+          menu.name.toLowerCase().includes('header')
+        ) || menus[0]; // Tomar el primero si no encuentra ninguno específico
+        
+        if (targetMenu) {
+          // Obtener items del menú
+          const menuItemsResponse = await fetch(
+            `${WP_BASE_URL}/wp-json/wp/v2/menu-items?menus=${targetMenu.id}&per_page=100&orderby=menu_order&order=asc`
+          );
+          
+          if (menuItemsResponse.ok) {
+            const menuItems = await menuItemsResponse.json();
+            return processMenuItems(menuItems);
+          }
+        }
+      }
+    } catch (e) {
+      console.log('Menus endpoint not available');
+    }
+    
+    // Si nada funciona, intentar con wp_navigation (WordPress 6.0+)
+    try {
+      const navResponse = await fetch(`${WP_BASE_URL}/wp-json/wp/v2/navigation?per_page=10`);
+      
+      if (navResponse.ok) {
+        const navigations = await navResponse.json();
+        console.log('Navigation blocks found:', navigations);
+        
+        if (navigations.length > 0) {
+          // Tomar la primera navegación disponible
+          const navigation = navigations[0];
+          return parseNavigationContent(navigation.content?.rendered || '');
+        }
+      }
+    } catch (e) {
+      console.log('Navigation blocks not available');
+    }
+    
+    console.warn('No WordPress menu found, using fallback');
+    return [];
+    
+  } catch (error) {
+    console.error('Error fetching WordPress menu:', error);
+    return [];
+  }
+}
+
+// Procesar items del menú estándar
+function processMenuItems(menuItems) {
+  if (!menuItems || !Array.isArray(menuItems)) return [];
+  
+  const processedItems = menuItems
+    .filter(item => item.menu_item_parent === 0) // Solo items principales
+    .map(item => ({
+      id: item.id,
+      title: item.title?.rendered || item.title,
+      url: item.url,
+      target: item.target || '_self',
+      children: menuItems.filter(child => child.menu_item_parent === item.id)
+        .map(child => ({
+          id: child.id,
+          title: child.title?.rendered || child.title,
+          url: child.url,
+          target: child.target || '_self'
+        }))
+    }));
+  
+  return processedItems;
+}
+
+// Parsear contenido de navegación (WordPress 6.0+)
+function parseNavigationContent(content) {
+  if (!content) return [];
+  
+  // Esta es una implementación básica para extraer enlaces del HTML
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(content, 'text/html');
+  const links = doc.querySelectorAll('a');
+  
+  const menuItems = Array.from(links).map((link, index) => ({
+    id: `nav-${index}`,
+    title: link.textContent?.trim() || '',
+    url: link.href || '#',
+    target: link.target || '_self',
+    children: []
+  }));
+  
+  return menuItems;
+}
+
+// Obtener el menú
+const menuItems = await getWordPressMenu();
+---
+
+<!-- Componente del menú -->
+<nav class="wp-menu" role="navigation" aria-label="Menú principal">
+  {menuItems.length > 0 ? (
+    <ul class="menu-list">
+      {menuItems.map(item => (
+        <li key={item.id} class="menu-item" data-has-children={item.children.length > 0}>
+          <a 
+            href={item.url} 
+            target={item.target}
+            class="menu-link"
+            rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
+          >
+            {item.title}
+          </a>
+          
+          {/* Submenú si tiene hijos */}
+          {item.children.length > 0 && (
+            <ul class="submenu">
+              {item.children.map(child => (
+                <li key={child.id} class="submenu-item">
+                  <a 
+                    href={child.url} 
+                    target={child.target}
+                    class="submenu-link"
+                    rel={child.target === '_blank' ? 'noopener noreferrer' : undefined}
+                  >
+                    {child.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <div class="menu-fallback">
+      <a href="/" class="menu-link">Inicio</a>
+      <a href="#contacto" class="menu-link">Contacto</a>
+    </div>
+  )}
+</nav>
+
+<style>
+  .wp-menu {
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-list {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .menu-item {
+    position: relative;
+  }
+
+  .menu-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+  }
+
+  html:not(.dark) .menu-link {
+    color: #111827;
+  }
+
+  .menu-link:hover {
+    color: #60a5fa;
+    border-bottom-color: #60a5fa;
+  }
+
+  /* Submenú */
+  .submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+
+  html:not(.dark) .submenu {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .menu-item:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .submenu-item {
+    list-style: none;
+  }
+
+  .submenu-link {
+    display: block;
+    color: #e5e7eb;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+
+  html:not(.dark) .submenu-link {
+    color: #374151;
+  }
+
+  .submenu-link:hover {
+    background: rgba(96, 165, 250, 0.1);
+    color: #60a5fa;
+  }
+
+  /* Fallback menu */
+  .menu-fallback {
+    display: flex;
+    gap: 2rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .menu-list {
+      gap: 1rem;
+    }
+
+    .menu-link {
+      font-size: 0.9rem;
+    }
+
+    .submenu {
+      position: static;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      background: transparent;
+      border: none;
+      padding: 0;
+      min-width: auto;
+    }
+
+    .submenu-link {
+      padding: 0.5rem 0;
+    }
+  }
+
+  /* Indicador de submenú */
+  .menu-item[data-has-children="true"] .menu-link::after {
+    content: '▼';
+    font-size: 0.7rem;
+    margin-left: 0.5rem;
+    opacity: 0.7;
+    transition: transform 0.3s ease;
+  }
+
+  .menu-item[data-has-children="true"]:hover .menu-link::after {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  // Mejorar la accesibilidad del menú
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuItems = document.querySelectorAll('.menu-item[data-has-children="true"]');
+    
+    menuItems.forEach(item => {
+      const link = item.querySelector('.menu-link');
+      const submenu = item.querySelector('.submenu');
+      
+      if (link && submenu) {
+        // Keyboard navigation
+        link.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowDown' || e.key === 'Enter') {
+            e.preventDefault();
+            const firstSubmenuLink = submenu.querySelector('.submenu-link');
+            if (firstSubmenuLink) {
+              firstSubmenuLink.focus();
+            }
+          }
+        });
+
+        // Close submenu on Escape
+        submenu.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            link.focus();
+          }
+        });
+      }
+    });
+  });
+</script>

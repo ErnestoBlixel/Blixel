@@ -4,6 +4,7 @@ import Hero from '../components/Hero.astro';
 import MagicUICards from '../components/magic-cards-new/MagicCardsFINAL.astro';
 import ContactForm from '../components/ContactForm.astro';
 import LanguageSelector from '../components/LanguageSelector.astro';
+import WordPressMenu from '../components/WordPressMenu.astro'; // 👈 NUEVO
 
 // Datos básicos para el sitio
 const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
@@ -30,6 +31,11 @@ const pageDescription = 'Blixel implementa Inteligencia Artificial para empresas
           crossorigin="anonymous"
         />
       </a>
+      
+      <!-- Menú de WordPress en el centro -->
+      <div class="header-menu">
+        <WordPressMenu />
+      </div>
       
       <!-- Botón toggle modo día/noche -->
       <!-- Controles del header: theme toggle y banderas -->
@@ -1466,7 +1472,15 @@ const pageDescription = 'Blixel implementa Inteligencia Artificial para empresas
     padding: 0 2rem; /* Mismo padding que el hero */
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Logo izquierda, controles derecha */
+    justify-content: space-between; /* Logo izquierda, menú centro, controles derecha */
+    gap: 2rem; /* Espacio entre elementos */
+  }
+
+  .header-menu {
+    flex: 1; /* Toma el espacio disponible en el centro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .header-controls {
