@@ -3,7 +3,7 @@ export const languages = {
   es: {
     code: 'es',
     name: 'Español',
-    flag: '🇪🇸',
+    flag: '/images/ES.png',
     dir: 'ltr',
     locale: 'es-ES',
     default: true
@@ -11,7 +11,7 @@ export const languages = {
   ca: {
     code: 'ca',
     name: 'Català',
-    flag: '🇪🇸',
+    flag: '/images/CA.png',
     dir: 'ltr',
     locale: 'ca-ES',
     default: false

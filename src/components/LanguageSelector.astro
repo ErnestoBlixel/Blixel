@@ -23,8 +23,13 @@ const alternateUrls = getAlternateUrls(currentUrl.pathname, currentLang);
         class={`flag ${isActive ? 'active' : ''}`}
         hreflang={langInfo.locale}
         aria-current={isActive ? 'page' : undefined}
+        title={langInfo.name}
       >
-        {langInfo.flag}
+        <img 
+          src={`/images/${langCode.toUpperCase()}.png`} 
+          alt={`Bandera ${langInfo.name}`}
+          class="flag-image"
+        />
       </a>
     );
   })}
@@ -33,18 +38,60 @@ const alternateUrls = getAlternateUrls(currentUrl.pathname, currentLang);
 <style>
 .language-selector {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.75rem;
   padding: 0.5rem;
+  align-items: center;
 }
 
 .flag {
-  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.2s;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .flag:hover {
   opacity: 1;
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(96, 165, 250, 0.5);
+}
+
+.flag.active {
+  opacity: 1;
+  background: rgba(96, 165, 250, 0.2);
+  border-color: rgba(96, 165, 250, 0.6);
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
+}
+
+.flag-image {
+  width: 24px;
+  height: 18px;
+  object-fit: cover;
+  border-radius: 2px;
+  display: block;
+}
+
+/* Estilos para modo claro */
+html:not(.dark) .flag {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+html:not(.dark) .flag:hover {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(37, 99, 235, 0.5);
+}
+
+html:not(.dark) .flag.active {
+  background: rgba(37, 99, 235, 0.15);
+  border-color: rgba(37, 99, 235, 0.6);
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.2);
 }
 </style>
