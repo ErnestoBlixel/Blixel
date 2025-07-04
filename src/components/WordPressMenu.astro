@@ -108,8 +108,11 @@ function parseNavigationContent(content) {
   let index = 0;
   
   while ((match = linkRegex.exec(content)) !== null) {
-    const url = match[1].trim();
+    let url = match[1].trim();
     const title = match[2].trim();
+    
+    // 🔧 TRANSFORMAR URLs de cms.blixel.es a blixel.es
+    url = transformWordPressUrl(url);
     
     if (url && title) {
       menuItems.push({
@@ -129,8 +132,11 @@ function parseNavigationContent(content) {
     const simpleLinkRegex = /<a[^>]+href=["']([^"']+)["'][^>]*>([^<]+)<\/a>/g;
     
     while ((match = simpleLinkRegex.exec(content)) !== null) {
-      const url = match[1].trim();
+      let url = match[1].trim();
       const title = match[2].trim();
+      
+      // 🔧 TRANSFORMAR URLs de cms.blixel.es a blixel.es
+      url = transformWordPressUrl(url);
       
       if (url && title && !title.includes('<') && title.length > 0) {
         menuItems.push({
@@ -149,6 +155,27 @@ function parseNavigationContent(content) {
   return menuItems;
 }
 
+// 🔧 Transformar URLs de WordPress (cms.blixel.es) al sitio principal (blixel.es)
+function transformWordPressUrl(url) {
+  if (!url) return url;
+  
+  // Cambiar cms.blixel.es por blixel.es
+  let transformedUrl = url.replace('https://cms.blixel.es/', 'https://blixel.es/');
+  transformedUrl = transformedUrl.replace('http://cms.blixel.es/', 'https://blixel.es/');
+  
+  // Si empieza con /wp-content, /wp-admin, etc. mantener en cms
+  if (url.includes('/wp-content/') || url.includes('/wp-admin/') || url.includes('/wp-json/')) {
+    return url; // Mantener URLs de WordPress en cms.blixel.es
+  }
+  
+  // Log para debugging
+  if (url !== transformedUrl) {
+    console.log(`🔄 URL transformada: ${url} → ${transformedUrl}`);
+  }
+  
+  return transformedUrl;
+}
+
 // Procesar items del menú estándar
 function processMenuItems(menuItems) {
   if (!menuItems || !Array.isArray(menuItems)) {
@@ -164,14 +191,14 @@ function processMenuItems(menuItems) {
       ).map(child => ({
         id: child.id,
         title: child.title?.rendered || child.title,
-        url: child.url,
+        url: transformWordPressUrl(child.url), // 🔧 Transformar URL
         target: child.target || '_self'
       }));
 
       return {
         id: item.id,
         title: item.title?.rendered || item.title,
-        url: item.url,
+        url: transformWordPressUrl(item.url), // 🔧 Transformar URL
         target: item.target || '_self',
         children
       };
@@ -191,12 +218,12 @@ function processPluginMenus(pluginMenus) {
   return menu.items.map(item => ({
     id: item.ID,
     title: item.title,
-    url: item.url,
+    url: transformWordPressUrl(item.url), // 🔧 Transformar URL
     target: item.target || '_self',
     children: item.children ? item.children.map(child => ({
       id: child.ID,
       title: child.title,
-      url: child.url,
+      url: transformWordPressUrl(child.url), // 🔧 Transformar URL
       target: child.target || '_self'
     })) : []
   }));
