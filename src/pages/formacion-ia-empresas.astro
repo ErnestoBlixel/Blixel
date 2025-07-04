@@ -1,4 +1,6 @@
----
+    .cta-final-buttons {
+      flex-direction: column;
+    }---
 // Página de Formación IA Empresas optimizada para SEO con efectos MagicUI
 import Layout from '../layouts/Layout.astro';
 import ContactForm from '../components/ContactForm.astro';
@@ -574,77 +576,11 @@ const courseSchema = {
     </div>
   </section>
 
-  <!-- SECCIÓN DE PARTNER IA -->
-  <section class="partner-section">
-    <div class="partner-container">
-      <h2 class="partner-title">No basta con aprender IA una vez</h2>
-      <p class="partner-description">
-        La IA evoluciona cada semana. Nuevas herramientas, actualizaciones críticas, 
-        cambios en algoritmos. <strong>Necesitas un partner tecnológico</strong> que mantenga 
-        tus sistemas actualizados y tu equipo al día de las últimas novedades.
-      </p>
-      <div class="partner-benefits">
-        <div class="partner-item">
-          <div class="partner-icon">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
-          </div>
-          <h3>Actualizaciones constantes</h3>
-          <p>Te mantenemos al día de cada nueva herramienta y funcionalidad</p>
-        </div>
-        <div class="partner-item">
-          <div class="partner-icon">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-            </svg>
-          </div>
-          <h3>Soporte técnico continuo</h3>
-          <p>Resolvemos problemas antes de que afecten tu productividad</p>
-        </div>
-        <div class="partner-item">
-          <div class="partner-icon">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-          </div>
-          <h3>Evolución estratégica</h3>
-          <p>Adaptamos tu estrategia IA conforme crece tu empresa</p>
-        </div>
-      </div>
-      <div class="partner-warning">
-        <p><strong>⚠️ REALIDAD:</strong> Las empresas que no se adapten rápidamente a la revolución IA 
-        tendrán que cerrar en los próximos 2-3 años. No es una exageración, es matemática empresarial.</p>
-      </div>
-    </div>
-  </section>
 
 
 
 
 
-  <!-- CTA FINAL -->
-  <section class="cta-final-section">
-    <div class="cta-final-container">
-      <h2 class="cta-final-title">
-        Próximo paso para tu <span class="title-highlight">formación IA empresas</span>
-      </h2>
-      <p class="cta-final-description">
-        Completa el formulario y agenda la llamada de diagnóstico. En menos de 24 horas 
-        recibirás la propuesta detallada y una fecha para impartir la formación IA empresas 
-        que transformará tu operativa antes de que el calendario cambie de mes.
-      </p>
-      <div class="cta-final-buttons">
-        <a href="#contacto" class="cta-primary">
-          <span>Reservar formación</span>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
-    </div>
-  </section>
 
   <!-- SECCIÓN DE FORMULARIO DE CONTACTO Y FAQ -->
   <section id="contacto" class="contact-form-section">
@@ -661,53 +597,12 @@ const courseSchema = {
 
       <!-- Layout de dos columnas -->
       <div class="contact-content-grid">
-        <!-- Columna izquierda: Formulario -->
-        <div class="contact-form-column">
-          <div class="form-embed-container">
-            <ContactForm currentLang="es" />
-          </div>
-          
-          <div class="contact-trust-badges">
-            <div class="contact-trust-item">
-              <div class="contact-trust-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"/>
-                  <path d="M12 6v6l4 2"/>
-                </svg>
-              </div>
-              <span>Sin compromiso</span>
-            </div>
-            <div class="contact-trust-item">
-              <div class="contact-trust-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                  <circle cx="12" cy="16" r="1"/>
-                  <path d="M7 11V7a5 5 0 0110 0v4"/>
-                </svg>
-              </div>
-              <span>Datos 100% seguros</span>
-            </div>
-            <div class="contact-trust-item">
-              <div class="contact-trust-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                </svg>
-              </div>
-              <span>Respuesta en 24h</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Columna derecha: FAQ -->
+        <!-- Columna izquierda: FAQ -->
         <div class="contact-faq-column">
-          <h3 class="faq-title-inline">
-            Preguntas frecuentes sobre <span class="title-highlight">formación IA empresas</span>
-          </h3>
-          
           <div class="faq-grid">
             <div class="faq-item">
               <button class="faq-question">
-                <span>¿Qué voy a obtener de la formación inteligencia artificial en empresas?</span>
+                <h3>¿Qué voy a obtener de la formación inteligencia artificial en empresas?</h3>
                 <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -719,7 +614,7 @@ const courseSchema = {
             
             <div class="faq-item">
               <button class="faq-question">
-                <span>¿Dónde realizo la formación inteligencia artificial en empresas?</span>
+                <h3>¿Dónde realizo la formación inteligencia artificial en empresas?</h3>
                 <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -731,7 +626,7 @@ const courseSchema = {
             
             <div class="faq-item">
               <button class="faq-question">
-                <span>¿Qué herramientas dominaré tras la formación inteligencia artificial en empresas?</span>
+                <h3>¿Qué herramientas dominaré tras la formación inteligencia artificial en empresas?</h3>
                 <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -743,7 +638,7 @@ const courseSchema = {
             
             <div class="faq-item">
               <button class="faq-question">
-                <span>¿Qué nivel técnico necesito para la formación inteligencia artificial en empresas?</span>
+                <h3>¿Qué nivel técnico necesito para la formación inteligencia artificial en empresas?</h3>
                 <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -755,7 +650,7 @@ const courseSchema = {
             
             <div class="faq-item">
               <button class="faq-question">
-                <span>¿Puedo descargar kits de automatización en la formación inteligencia artificial en empresas?</span>
+                <h3>¿Puedo descargar kits de automatización en la formación inteligencia artificial en empresas?</h3>
                 <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -767,7 +662,7 @@ const courseSchema = {
             
             <div class="faq-item">
               <button class="faq-question">
-                <span>¿Cómo ajustamos la formación inteligencia artificial en empresas a la realidad de mi empresa?</span>
+                <h3>¿Cómo ajustamos la formación inteligencia artificial en empresas a la realidad de mi empresa?</h3>
                 <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -777,6 +672,95 @@ const courseSchema = {
               </div>
             </div>
           </div>
+        </div>
+        
+        <!-- Columna derecha: Formulario -->
+        <div class="contact-form-column">
+          <div class="form-embed-container">
+            <ContactForm currentLang="es" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE PARTNER TECNOLÓGICO CON CTA -->
+  <section class="partner-cta-section">
+    <div class="partner-cta-container">
+      <h2 class="partner-cta-title">No basta con aprender IA una vez</h2>
+      <p class="partner-cta-description">
+        La IA evoluciona cada semana. Nuevas herramientas, actualizaciones críticas, 
+        cambios en algoritmos. <strong>Necesitas un partner tecnológico</strong> que mantenga 
+        tus sistemas actualizados y tu equipo al día de las últimas novedades.
+      </p>
+      
+      <div class="partner-cta-benefits">
+        <div class="partner-cta-item">
+          <div class="partner-cta-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </div>
+          <h3>Actualizaciones constantes</h3>
+          <p>Te mantenemos al día de cada nueva herramienta y funcionalidad</p>
+        </div>
+        <div class="partner-cta-item">
+          <div class="partner-cta-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+          </div>
+          <h3>Soporte técnico continuo</h3>
+          <p>Resolvemos problemas antes de que afecten tu productividad</p>
+        </div>
+        <div class="partner-cta-item">
+          <div class="partner-cta-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+          <h3>Evolución estratégica</h3>
+          <p>Adaptamos tu estrategia IA conforme crece tu empresa</p>
+        </div>
+      </div>
+      
+      <div class="partner-cta-warning">
+        <p><strong>⚠️ REALIDAD:</strong> Las empresas que no se adapten rápidamente a la revolución IA 
+        tendrán que cerrar en los próximos 2-3 años. No es una exageración, es matemática empresarial.</p>
+      </div>
+      
+      <!-- CALL TO ACTION DUAL -->
+      <div class="partner-cta-options">
+        <div class="partner-cta-choice">
+          <h3 class="choice-title">Opción 1: Avancemos juntos</h3>
+          <p class="choice-description">
+            Nos convertimos en tu <strong>partner tecnológico en IA y automatización</strong>. 
+            Gestionamos toda la implementación, mantenimiento y evolución de tus sistemas 
+            mientras tú te centras en hacer crecer tu negocio.
+          </p>
+          <a href="#contacto" class="choice-cta choice-cta-primary">
+            <span>Quiero un partner tecnológico</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+        
+        <div class="partner-cta-choice">
+          <h3 class="choice-title">Opción 2: Voy por libre</h3>
+          <p class="choice-description">
+            Apúntate a nuestra <strong>newsletter especializada en IA empresarial</strong> y 
+            cada día te darás cuenta de las oportunidades que podrías estar aplicando 
+            y no lo estás haciendo... mientras tu competencia sí.
+          </p>
+          <a href="https://blixel.es/#newsletter" class="choice-cta choice-cta-secondary">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+              <rect x="2" y="4" width="16" height="12" rx="2"></rect>
+              <path d="m22 7-10 5L2 7"></path>
+            </svg>
+            <span>Suscribirme a la newsletter</span>
+          </a>
         </div>
       </div>
     </div>
@@ -2119,28 +2103,28 @@ const courseSchema = {
     color: #6b7280 !important;
   }
 
-  /* ==================== SECCIÓN DE PARTNER IA ==================== */
-  .partner-section {
+  /* ==================== SECCIÓN DE PARTNER TECNOLÓGICO CON CTA ==================== */
+  .partner-cta-section {
     padding: 6rem 0;
     background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
     text-align: center;
   }
 
-  .partner-container {
-    max-width: 1200px;
+  .partner-cta-container {
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 2rem;
     animation: fadeInUp 0.8s ease-out;
   }
 
-  .partner-title {
+  .partner-cta-title {
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 800;
     color: white;
     margin-bottom: 1.5rem;
   }
 
-  .partner-description {
+  .partner-cta-description {
     font-size: 1.25rem;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.95);
@@ -2150,14 +2134,14 @@ const courseSchema = {
     margin-right: auto;
   }
 
-  .partner-benefits {
+  .partner-cta-benefits {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     margin-bottom: 3rem;
   }
 
-  .partner-item {
+  .partner-cta-item {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     padding: 2rem;
@@ -2165,16 +2149,16 @@ const courseSchema = {
     animation: fadeInUp 0.8s ease-out backwards;
   }
 
-  .partner-item:nth-child(1) { animation-delay: 0.1s; }
-  .partner-item:nth-child(2) { animation-delay: 0.2s; }
-  .partner-item:nth-child(3) { animation-delay: 0.3s; }
+  .partner-cta-item:nth-child(1) { animation-delay: 0.1s; }
+  .partner-cta-item:nth-child(2) { animation-delay: 0.2s; }
+  .partner-cta-item:nth-child(3) { animation-delay: 0.3s; }
 
-  .partner-item:hover {
+  .partner-cta-item:hover {
     background: rgba(255, 255, 255, 0.15);
     transform: translateY(-5px);
   }
 
-  .partner-icon {
+  .partner-cta-icon {
     width: 64px;
     height: 64px;
     background: rgba(255, 255, 255, 0.1);
@@ -2185,38 +2169,135 @@ const courseSchema = {
     margin: 0 auto 1rem;
   }
 
-  .partner-icon svg {
+  .partner-cta-icon svg {
     color: rgba(255, 255, 255, 0.9);
   }
 
-  .partner-item h3 {
+  .partner-cta-item h3 {
     font-size: 1.25rem;
     font-weight: 700;
     color: white;
     margin-bottom: 0.75rem;
   }
 
-  .partner-item p {
+  .partner-cta-item p {
     font-size: 1rem;
     color: rgba(255, 255, 255, 0.9);
     line-height: 1.5;
     margin: 0;
   }
 
-  .partner-warning {
+  .partner-cta-warning {
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px;
     padding: 2rem;
-    margin-top: 2rem;
+    margin-bottom: 4rem;
   }
 
-  .partner-warning p {
+  .partner-cta-warning p {
     font-size: 1.125rem;
     font-weight: 600;
     color: white;
     margin: 0;
     line-height: 1.5;
+  }
+
+  /* Call to Action Dual */
+  .partner-cta-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .partner-cta-choice {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    animation: fadeInUp 0.8s ease-out backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .partner-cta-choice:nth-child(1) { animation-delay: 0.2s; }
+  .partner-cta-choice:nth-child(2) { animation-delay: 0.4s; }
+
+  .partner-cta-choice:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .choice-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .choice-description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2.5rem;
+  }
+
+  .choice-description strong {
+    color: white;
+    font-weight: 700;
+  }
+
+  .choice-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .choice-cta-primary {
+    background: rgba(255, 255, 255, 0.95);
+    color: #dc2626;
+    border: 2px solid transparent;
+  }
+
+  .choice-cta-primary:hover {
+    background: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+  }
+
+  .choice-cta-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+  }
+
+  .choice-cta-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+    transform: translateY(-3px);
+  }
+
+  .choice-cta svg {
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .choice-cta:hover svg {
+    transform: translateX(4px);
   }
 
   /* ==================== SECCIÓN DE PRECIOS ==================== */
@@ -2493,10 +2574,12 @@ const courseSchema = {
     color: #111827 !important;
   }
 
-  .faq-question span {
+  .faq-question h3 {
     font-size: 1.125rem;
     font-weight: 600;
     line-height: 1.4;
+    margin: 0;
+    text-align: left;
   }
 
   .faq-question:hover {
@@ -2535,52 +2618,6 @@ const courseSchema = {
 
   html:not(.dark) .faq-answer p {
     color: #4b5563 !important;
-  }
-
-  /* ==================== CTA FINAL ==================== */
-  .cta-final-section {
-    padding: 6rem 0;
-    background: #000000;
-    text-align: center;
-  }
-
-  html:not(.dark) .cta-final-section {
-    background: white;
-  }
-
-  .cta-final-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    animation: fadeInUp 0.8s ease-out;
-  }
-
-  .cta-final-title {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800;
-    margin-bottom: 1.5rem;
-    color: #ffffff;
-  }
-
-  html:not(.dark) .cta-final-title {
-    color: #111827 !important;
-  }
-
-  .cta-final-description {
-    font-size: 1.125rem;
-    line-height: 1.6;
-    color: #e5e7eb;
-    margin-bottom: 2.5rem;
-  }
-
-  html:not(.dark) .cta-final-description {
-    color: #374151 !important;
-  }
-
-  .cta-final-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
   }
 
   /* ==================== SECCIÓN DE CONTACTO ==================== */
@@ -2787,10 +2824,12 @@ const courseSchema = {
     color: #111827 !important;
   }
 
-  .contact-faq-column .faq-question span {
+  .contact-faq-column .faq-question h3 {
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.4;
+    margin: 0;
+    text-align: left;
   }
 
   .contact-faq-column .faq-question:hover {
@@ -3003,9 +3042,14 @@ const courseSchema = {
       justify-content: center;
     }
 
-    .partner-benefits {
+    .partner-cta-benefits {
       grid-template-columns: 1fr;
       gap: 1.5rem;
+    }
+
+    .partner-cta-options {
+      grid-template-columns: 1fr;
+      gap: 2rem;
     }
 
     .problems-grid {
@@ -3188,7 +3232,6 @@ const courseSchema = {
     .automation-areas-section,
     .pricing-section,
     .faq-section,
-    .cta-final-section,
     .contact-form-section,
     .partner-section {
       padding: 4rem 0;
@@ -3200,7 +3243,6 @@ const courseSchema = {
     .automation-areas-container,
     .pricing-container,
     .faq-container,
-    .cta-final-container,
     .contact-form-container,
     .partner-container {
       padding: 0 1rem;
@@ -3212,7 +3254,6 @@ const courseSchema = {
     .automation-areas-title,
     .pricing-title,
     .faq-title,
-    .cta-final-title,
     .partner-title {
       font-size: 2rem;
     }
@@ -3231,17 +3272,26 @@ const courseSchema = {
       gap: 1rem;
     }
 
-    .partner-section {
+    .partner-cta-section {
       padding: 3rem 0;
     }
 
-    .partner-benefits {
+    .partner-cta-benefits {
       grid-template-columns: 1fr;
       gap: 1.5rem;
     }
 
-    .partner-item {
+    .partner-cta-item {
       padding: 1.5rem;
+    }
+
+    .partner-cta-options {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .partner-cta-choice {
+      padding: 2rem 1.5rem;
     }
 
     .form-embed-container {
@@ -3336,16 +3386,33 @@ const courseSchema = {
       font-size: 2.5rem;
     }
 
-    .partner-title {
+    .partner-cta-title {
       font-size: 1.75rem;
     }
 
-    .partner-description {
+    .partner-cta-description {
       font-size: 1.125rem;
     }
 
-    .partner-item {
+    .partner-cta-item {
       padding: 1.25rem;
+    }
+
+    .partner-cta-choice {
+      padding: 1.5rem 1rem;
+    }
+
+    .choice-title {
+      font-size: 1.25rem;
+    }
+
+    .choice-description {
+      font-size: 1rem;
+    }
+
+    .choice-cta {
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
     }
 
     .cta-final-buttons {
