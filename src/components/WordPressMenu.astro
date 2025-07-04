@@ -1,145 +1,208 @@
 ---
 // Configuración del WordPress
-const WP_BASE_URL = 'https://cms.blixel.es'; // 👈 Tu URL de WordPress
-const MENU_LOCATION = 'primary'; // 👈 Ubicación del menú (primary, header, main, etc.)
+const WP_BASE_URL = 'https://cms.blixel.es';
 
-// Función para obtener el menú
+// Función para obtener el menú REAL desde el servidor
 async function getWordPressMenu() {
   try {
-    // Intentar obtener menús vía REST API v2
-    let menusResponse;
-    
-    // Primero intentamos con el endpoint de menús (si está disponible)
-    try {
-      menusResponse = await fetch(`${WP_BASE_URL}/wp-json/wp/v2/menu-locations`);
-      
-      if (menusResponse.ok) {
-        const menuLocations = await menusResponse.json();
-        console.log('Menu locations found:', menuLocations);
-        
-        // Buscar el menú en la ubicación primary o header
-        const primaryMenu = menuLocations[MENU_LOCATION] || menuLocations['primary'] || menuLocations['header'];
-        
-        if (primaryMenu) {
-          // Obtener items del menú específico
-          const menuItemsResponse = await fetch(`${WP_BASE_URL}/wp-json/wp/v2/menu-items?menus=${primaryMenu}&per_page=100&orderby=menu_order&order=asc`);
-          
-          if (menuItemsResponse.ok) {
-            const menuItems = await menuItemsResponse.json();
-            return processMenuItems(menuItems);
-          }
-        }
-      }
-    } catch (e) {
-      console.log('Menu locations endpoint not available, trying alternative approach');
+    console.log('Obteniendo menú de WordPress desde:', WP_BASE_URL);
+
+    // Verificar si la API está disponible
+    const baseCheck = await fetch(`${WP_BASE_URL}/wp-json/`);
+    if (!baseCheck.ok) {
+      console.error('WordPress REST API no disponible');
+      return [];
     }
-    
-    // Si no funciona, intentar obtener todos los menús
+
+    // PRIMERO: Intentar con Navigation Blocks (WordPress 6.0+)
+    console.log('Intentando obtener Navigation Blocks...');
     try {
-      menusResponse = await fetch(`${WP_BASE_URL}/wp-json/wp/v2/menus`);
-      
-      if (menusResponse.ok) {
-        const menus = await menusResponse.json();
-        console.log('Available menus:', menus);
-        
-        // Buscar menú por nombre o slug
-        const targetMenu = menus.find(menu => 
-          menu.slug === 'primary' ||
-          menu.slug === 'header' ||
-          menu.slug === 'main' ||
-          menu.name.toLowerCase().includes('navigation') ||
-          menu.name.toLowerCase().includes('navegación') ||
-          menu.name.toLowerCase().includes('principal') ||
-          menu.name.toLowerCase().includes('header')
-        ) || menus[0]; // Tomar el primero si no encuentra ninguno específico
-        
-        if (targetMenu) {
-          // Obtener items del menú
-          const menuItemsResponse = await fetch(
-            `${WP_BASE_URL}/wp-json/wp/v2/menu-items?menus=${targetMenu.id}&per_page=100&orderby=menu_order&order=asc`
-          );
-          
-          if (menuItemsResponse.ok) {
-            const menuItems = await menuItemsResponse.json();
-            return processMenuItems(menuItems);
-          }
-        }
-      }
-    } catch (e) {
-      console.log('Menus endpoint not available');
-    }
-    
-    // Si nada funciona, intentar con wp_navigation (WordPress 6.0+)
-    try {
-      const navResponse = await fetch(`${WP_BASE_URL}/wp-json/wp/v2/navigation?per_page=10`);
-      
+      const navResponse = await fetch(`${WP_BASE_URL}/wp-json/wp/v2/navigation`);
       if (navResponse.ok) {
         const navigations = await navResponse.json();
-        console.log('Navigation blocks found:', navigations);
+        console.log('Navigation blocks encontrados:', navigations);
         
-        if (navigations.length > 0) {
-          // Tomar la primera navegación disponible
+        if (navigations && navigations.length > 0) {
           const navigation = navigations[0];
-          return parseNavigationContent(navigation.content?.rendered || '');
+          console.log('Usando navigation block:', navigation.title?.rendered || 'Sin título');
+          const menuItems = parseNavigationContent(navigation.content?.rendered || '');
+          if (menuItems.length > 0) {
+            console.log('Menú procesado desde Navigation Block:', menuItems);
+            return menuItems;
+          }
+        }
+      } else {
+        console.log('Navigation blocks no disponible:', navResponse.status);
+      }
+    } catch (e) {
+      console.log('Error con Navigation blocks:', e.message);
+    }
+
+    // SEGUNDO: Intentar con menús tradicionales
+    console.log('Intentando obtener menús tradicionales...');
+    const menusResponse = await fetch(`${WP_BASE_URL}/wp-json/wp/v2/menus`);
+    if (menusResponse.ok) {
+      const menus = await menusResponse.json();
+      console.log('Menús tradicionales encontrados:', menus);
+
+      if (menus && menus.length > 0) {
+        const menu = menus[0];
+        console.log(`Usando menú tradicional: "${menu.name}" (ID: ${menu.id})`);
+
+        const itemsResponse = await fetch(
+          `${WP_BASE_URL}/wp-json/wp/v2/menu-items?menus=${menu.id}&per_page=100&orderby=menu_order&order=asc`
+        );
+
+        if (itemsResponse.ok) {
+          const menuItems = await itemsResponse.json();
+          console.log(`Items del menú obtenidos: ${menuItems.length}`);
+          const processedItems = processMenuItems(menuItems);
+          if (processedItems.length > 0) {
+            return processedItems;
+          }
+        }
+      }
+    } else {
+      console.log('Menús tradicionales no disponibles:', menusResponse.status);
+    }
+
+    // TERCERO: Intentar con wp-api-menus plugin
+    console.log('Intentando con wp-api-menus plugin...');
+    try {
+      const pluginResponse = await fetch(`${WP_BASE_URL}/wp-json/wp-api-menus/v2/menus`);
+      if (pluginResponse.ok) {
+        const pluginMenus = await pluginResponse.json();
+        console.log('Menús encontrados via plugin:', pluginMenus);
+        const processedItems = processPluginMenus(pluginMenus);
+        if (processedItems.length > 0) {
+          return processedItems;
         }
       }
     } catch (e) {
-      console.log('Navigation blocks not available');
+      console.log('Plugin wp-api-menus no disponible:', e.message);
     }
-    
-    console.warn('No WordPress menu found, using fallback');
+
+    console.warn('No se encontró ningún menú válido');
     return [];
-    
+
   } catch (error) {
-    console.error('Error fetching WordPress menu:', error);
+    console.error('Error obteniendo menú de WordPress:', error);
     return [];
   }
 }
 
-// Procesar items del menú estándar
-function processMenuItems(menuItems) {
-  if (!menuItems || !Array.isArray(menuItems)) return [];
-  
-  const processedItems = menuItems
-    .filter(item => item.menu_item_parent === 0) // Solo items principales
-    .map(item => ({
-      id: item.id,
-      title: item.title?.rendered || item.title,
-      url: item.url,
-      target: item.target || '_self',
-      children: menuItems.filter(child => child.menu_item_parent === item.id)
-        .map(child => ({
-          id: child.id,
-          title: child.title?.rendered || child.title,
-          url: child.url,
-          target: child.target || '_self'
-        }))
-    }));
-  
-  return processedItems;
-}
-
-// Parsear contenido de navegación (WordPress 6.0+)
+// Parsear contenido de Navigation Blocks (WordPress 6.0+)
 function parseNavigationContent(content) {
-  if (!content) return [];
+  console.log('Parseando Navigation Block content...');
+  if (!content) {
+    console.log('No hay contenido para parsear');
+    return [];
+  }
+
+  const menuItems = [];
   
-  // Esta es una implementación básica para extraer enlaces del HTML
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(content, 'text/html');
-  const links = doc.querySelectorAll('a');
+  // Regex mejorado para extraer enlaces de Navigation Blocks
+  const linkRegex = /<li[^>]*class="[^"]*wp-block-navigation-item[^"]*"[^>]*>.*?<a[^>]+href=["']([^"']+)["'][^>]*>.*?<span[^>]*class="[^"]*wp-block-navigation-item__label[^"]*"[^>]*>([^<]+)<\/span>.*?<\/a>.*?<\/li>/gs;
   
-  const menuItems = Array.from(links).map((link, index) => ({
-    id: `nav-${index}`,
-    title: link.textContent?.trim() || '',
-    url: link.href || '#',
-    target: link.target || '_self',
-    children: []
-  }));
+  let match;
+  let index = 0;
   
+  while ((match = linkRegex.exec(content)) !== null) {
+    const url = match[1].trim();
+    const title = match[2].trim();
+    
+    if (url && title) {
+      menuItems.push({
+        id: `nav-block-${index}`,
+        title: title,
+        url: url,
+        target: url.startsWith('http') && !url.includes('blixel.es') ? '_blank' : '_self',
+        children: []
+      });
+      index++;
+    }
+  }
+  
+  // Fallback: regex más simple si el anterior no funciona
+  if (menuItems.length === 0) {
+    console.log('Intentando regex fallback...');
+    const simpleLinkRegex = /<a[^>]+href=["']([^"']+)["'][^>]*>([^<]+)<\/a>/g;
+    
+    while ((match = simpleLinkRegex.exec(content)) !== null) {
+      const url = match[1].trim();
+      const title = match[2].trim();
+      
+      if (url && title && !title.includes('<') && title.length > 0) {
+        menuItems.push({
+          id: `nav-simple-${index}`,
+          title: title,
+          url: url,
+          target: url.startsWith('http') && !url.includes('blixel.es') ? '_blank' : '_self',
+          children: []
+        });
+        index++;
+      }
+    }
+  }
+  
+  console.log('Items extraidos del Navigation Block:', menuItems);
   return menuItems;
 }
 
-// Obtener el menú
+// Procesar items del menú estándar
+function processMenuItems(menuItems) {
+  if (!menuItems || !Array.isArray(menuItems)) {
+    console.warn('Items del menú no válidos');
+    return [];
+  }
+  
+  const processedItems = menuItems
+    .filter(item => item.menu_item_parent === 0 || item.menu_item_parent === '0')
+    .map(item => {
+      const children = menuItems.filter(child => 
+        child.menu_item_parent === item.id || child.menu_item_parent === String(item.id)
+      ).map(child => ({
+        id: child.id,
+        title: child.title?.rendered || child.title,
+        url: child.url,
+        target: child.target || '_self'
+      }));
+
+      return {
+        id: item.id,
+        title: item.title?.rendered || item.title,
+        url: item.url,
+        target: item.target || '_self',
+        children
+      };
+    });
+  
+  console.log('Menú procesado:', processedItems);
+  return processedItems;
+}
+
+// Procesar menús del plugin wp-api-menus
+function processPluginMenus(pluginMenus) {
+  if (!Array.isArray(pluginMenus) || pluginMenus.length === 0) return [];
+  
+  const menu = pluginMenus[0];
+  if (!menu.items) return [];
+  
+  return menu.items.map(item => ({
+    id: item.ID,
+    title: item.title,
+    url: item.url,
+    target: item.target || '_self',
+    children: item.children ? item.children.map(child => ({
+      id: child.ID,
+      title: child.title,
+      url: child.url,
+      target: child.target || '_self'
+    })) : []
+  }));
+}
+
+// Obtener el menú (esto se ejecuta en el servidor durante la construcción)
 const menuItems = await getWordPressMenu();
 ---
 
