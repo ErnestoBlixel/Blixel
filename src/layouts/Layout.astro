@@ -1,7 +1,6 @@
 ---
-import ThemeToggle from '../components/ThemeToggle.astro';
 import CookieBanner from '../components/CookieBanner.astro';
-import LanguageSelector from '../components/LanguageSelector.astro';
+// ThemeToggle y LanguageSelector movidos al header de index.astro
 import SEOHead from '../components/SEOHead.astro';
 import { getLangFromUrl } from '../i18n/config';
 import '../styles/globals.css';
@@ -69,11 +68,7 @@ const currentLang = getLangFromUrl(Astro.url);
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body class={className}>
-  <!-- Botón de cambio de tema -->
-  <ThemeToggle />
-  
-  <!-- Selector de idioma MUY VISIBLE -->
-  <LanguageSelector currentUrl={Astro.url} className="language-selector-main" />
+  <!-- ThemeToggle y LanguageSelector eliminados - ahora están en el header de index.astro -->
   
   <!-- Banner de cookies RGPD -->
   <CookieBanner />
@@ -215,29 +210,7 @@ const currentLang = getLangFromUrl(Astro.url);
     z-index: 10;
   }
 
-  /* Selector de idioma MUY VISIBLE */
-  .language-selector-main {
-    position: fixed !important;
-    top: 20px !important;
-    right: 100px !important;
-    z-index: 9999 !important;
-    background: rgba(0, 0, 0, 0.9) !important;
-    padding: 8px 16px !important;
-    border-radius: 12px !important;
-    border: 2px solid #60a5fa !important;
-    box-shadow: 0 4px 20px rgba(96, 165, 250, 0.5) !important;
-  }
-
-  html:not(.dark) .language-selector-main {
-    background: rgba(255, 255, 255, 0.95) !important;
-    border: 2px solid #2563eb !important;
-    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3) !important;
-  }
-
-  /* Asegurar que el selector sea clickeable */
-  .language-selector-main * {
-    pointer-events: auto !important;
-  }
+  /* Selector de idioma movido al header - estilos eliminados */
 
 
 

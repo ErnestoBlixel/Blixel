@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import MagicUICards from '../components/magic-cards-new/MagicCardsFINAL.astro';
 import ContactForm from '../components/ContactForm.astro';
-// LanguageSelector eliminado del header
+import LanguageSelector from '../components/LanguageSelector.astro';
 
 // Datos básicos para el sitio
 const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
@@ -32,23 +32,28 @@ const pageDescription = 'Blixel implementa Inteligencia Artificial para empresas
       </a>
       
       <!-- Botón toggle modo día/noche -->
-      <button class="theme-toggle" aria-label="Cambiar tema">
-        <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-        <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-      </button>
-      <!-- Selector de idioma eliminado del header -->
+      <!-- Controles del header: theme toggle y banderas -->
+      <div class="header-controls">
+        <button class="theme-toggle" aria-label="Cambiar tema">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        
+        <!-- Selector de idioma con estilo redondo azul -->
+        <LanguageSelector currentUrl={Astro.url} />
+      </div>
     </div>
   </header>
 
@@ -1461,7 +1466,13 @@ const pageDescription = 'Blixel implementa Inteligencia Artificial para empresas
     padding: 0 2rem; /* Mismo padding que el hero */
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Logo izquierda, espacio derecho para el botón flotante */
+    justify-content: space-between; /* Logo izquierda, controles derecha */
+  }
+
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 
   .logo-link {
@@ -1492,7 +1503,7 @@ const pageDescription = 'Blixel implementa Inteligencia Artificial para empresas
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
-    padding: 0.75rem;
+    padding: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -1500,6 +1511,8 @@ const pageDescription = 'Blixel implementa Inteligencia Artificial para empresas
     transition: all 0.3s ease;
     position: relative;
     color: #ffffff;
+    width: 40px;
+    height: 40px;
   }
 
   html:not(.dark) .theme-toggle {
@@ -2174,24 +2187,34 @@ const pageDescription = 'Blixel implementa Inteligencia Artificial para empresas
       height: 38px; /* Aumentado de 35px */
     }
 
-    /* Toggle responsive en tablets */
-    .toggle-track {
-      width: 50px;
-      height: 25px;
+    .header-controls {
+      gap: 0.75rem;
     }
 
-    .toggle-thumb {
-      width: 21px;
-      height: 21px;
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      padding: 6px;
     }
 
-    .toggle-btn.dark .toggle-thumb {
-      transform: translateX(25px);
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
     }
 
-    .toggle-btn.dark:active .toggle-thumb {
-      transform: translateX(25px) scale(0.95);
+    /* Language selector responsive */
+    .language-selector .flag {
+      width: 36px;
+      height: 36px;
+      padding: 6px;
     }
+
+    .language-selector .flag-image {
+      width: 18px;
+      height: 14px;
+    }
+
+    /* Estilos del toggle antiguo eliminados */
 
     /* Servicios responsive */
     .services-section {
@@ -2235,30 +2258,34 @@ const pageDescription = 'Blixel implementa Inteligencia Artificial para empresas
       height: 32px; /* Aumentado de 30px */
     }
 
-    /* Toggle muy pequeño en móviles */
-    .toggle-track {
-      width: 45px;
-      height: 22px;
+    .header-controls {
+      gap: 0.5rem;
     }
 
-    .toggle-thumb {
-      width: 18px;
-      height: 18px;
+    .theme-toggle {
+      width: 32px;
+      height: 32px;
+      padding: 4px;
     }
 
-    .toggle-btn.dark .toggle-thumb {
-      transform: translateX(23px);
+    .theme-toggle svg {
+      width: 16px;
+      height: 16px;
     }
 
-    .toggle-btn.dark:active .toggle-thumb {
-      transform: translateX(23px) scale(0.95);
+    /* Language selector muy pequeño */
+    .language-selector .flag {
+      width: 32px;
+      height: 32px;
+      padding: 4px;
     }
 
-    .icon-sun,
-    .icon-moon {
-      width: 12px;
+    .language-selector .flag-image {
+      width: 16px;
       height: 12px;
     }
+
+    /* Estilos del toggle obsoleto eliminados */
   }
 
   /* ==================== FOOTER ==================== */
@@ -2787,10 +2814,13 @@ const pageDescription = 'Blixel implementa Inteligencia Artificial para empresas
     // Inicializar tema
     initTheme();
 
-    // Agregar botón de toggle (si existe)
+    // Agregar botón de toggle theme (en el header)
     const toggleBtn = document.querySelector('.theme-toggle');
     if (toggleBtn) {
       toggleBtn.addEventListener('click', toggleTheme);
+      console.log('Theme toggle configurado correctamente');
+    } else {
+      console.warn('Theme toggle no encontrado');
     }
 
     // Atajo de teclado para cambiar tema (Ctrl/Cmd + Shift + L)
