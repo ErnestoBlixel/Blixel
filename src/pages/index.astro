@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import MagicUICards from '../components/magic-cards-new/MagicCardsFINAL.astro';
 import ContactForm from '../components/ContactForm.astro';
+import LanguageSelector from '../components/LanguageSelector.astro';
 
 // Datos básicos para el sitio
 const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
@@ -47,7 +48,7 @@ const pageDescription = 'Blixel implementa Inteligencia Artificial para empresas
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
       </button>
-
+      <LanguageSelector currentUrl={Astro.url} />
     </div>
   </header>
 
@@ -1548,99 +1549,7 @@ const pageDescription = 'Blixel implementa Inteligencia Artificial para empresas
     transform: scale(0.8) rotate(180deg);
   }
 
-  /* ==================== TOGGLE MODO NOCHE ==================== */
-  .dark-mode-toggle {
-    display: flex;
-    align-items: center;
-  }
-
-  .toggle-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    outline: none;
-  }
-
-  .toggle-track {
-    position: relative;
-    width: 60px;
-    height: 30px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
-    transition: all 0.3s ease;
-    overflow: hidden;
-  }
-
-  .toggle-btn:hover .toggle-track {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-  }
-
-  .toggle-thumb {
-    position: absolute;
-    left: 2px;
-    top: 2px;
-    width: 26px;
-    height: 26px;
-    background: #ffffff;
-    border-radius: 50%;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Iconos del toggle */
-  .icon-sun,
-  .icon-moon {
-    position: absolute;
-    color: #374151;
-    transition: all 0.3s ease;
-  }
-
-  .icon-sun {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .icon-moon {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-
-  /* Estado "dark" (aunque no esté implementado) */
-  .toggle-btn.dark .toggle-thumb {
-    transform: translateX(30px);
-    background: #1f2937;
-  }
-
-  .toggle-btn.dark .toggle-track {
-    background: rgba(96, 165, 250, 0.2);
-    border-color: rgba(96, 165, 250, 0.4);
-  }
-
-  .toggle-btn.dark .icon-sun {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-
-  .toggle-btn.dark .icon-moon {
-    opacity: 1;
-    transform: scale(1);
-    color: #60a5fa;
-  }
-
-  /* Animación de click */
-  .toggle-btn:active .toggle-thumb {
-    transform: scale(0.95);
-  }
-
-  .toggle-btn.dark:active .toggle-thumb {
-    transform: translateX(30px) scale(0.95);
-  }
+  /* ==================== TOGGLE MODO NOCHE (ELIMINADO) ==================== */
 
   /* ==================== ESTILOS GLOBALES ==================== */
   body {

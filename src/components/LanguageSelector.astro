@@ -13,279 +13,38 @@ const { t } = useTranslations(currentLang);
 const alternateUrls = getAlternateUrls(currentUrl.pathname, currentLang);
 ---
 
-<div class={`language-selector-minimal ${className}`}>
-  <button id="lang-toggle-minimal" class="lang-toggle-minimal" aria-label={t('nav.language')}>
-    <span class="current-lang-minimal">
-      <span class="flag-minimal">{languages[currentLang].flag}</span>
-      <span class="code-minimal">{languages[currentLang].code.toUpperCase()}</span>
-    </span>
-  </button>
-  
-  <div id="lang-menu-minimal" class="lang-menu-minimal hidden">
-    {Object.entries(languages).map(([langCode, langInfo]) => {
-      const url = alternateUrls[langCode];
-      const isActive = langCode === currentLang;
-      
-      return (
-        <a 
-          href={url}
-          class={`lang-option-minimal ${isActive ? 'active' : ''}`}
-          hreflang={langInfo.locale}
-          aria-current={isActive ? 'page' : undefined}
-        >
-          <span class="flag-minimal">{langInfo.flag}</span>
-          <span class="name-minimal">{langInfo.name}</span>
-          {isActive && <span class="check-minimal">✓</span>}
-        </a>
-      );
-    })}
-  </div>
+<div class="language-selector">
+  {Object.entries(languages).map(([langCode, langInfo]) => {
+    const url = alternateUrls[langCode];
+    const isActive = langCode === currentLang;
+    return (
+      <a
+        href={url}
+        class={`flag ${isActive ? 'active' : ''}`}
+        hreflang={langInfo.locale}
+        aria-current={isActive ? 'page' : undefined}
+      >
+        {langInfo.flag}
+      </a>
+    );
+  })}
 </div>
 
 <style>
-.language-selector-minimal {
-  position: relative;
-  display: inline-block;
-  font-family: 'Inter', -apple-system, sans-serif;
+.language-selector {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
 }
 
-/* Botón principal - más compacto y minimalista */
-.lang-toggle-minimal {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.5rem 0.75rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
-  color: #ffffff;
+.flag {
+  font-size: 1.2rem;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  font-size: 0.875rem;
-  min-width: 65px;
-  height: 36px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  opacity: 0.7;
+  transition: opacity 0.2s;
 }
 
-/* Modo claro */
-html:not(.dark) .lang-toggle-minimal {
-  background: rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  color: #374151;
-}
-
-.lang-toggle-minimal:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-1px);
-}
-
-html:not(.dark) .lang-toggle-minimal:hover {
-  background: rgba(0, 0, 0, 0.06);
-  border-color: rgba(0, 0, 0, 0.12);
-}
-
-/* Contenido del botón */
-.current-lang-minimal {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  width: 100%;
-}
-
-.flag-minimal {
-  font-size: 1rem;
-  line-height: 1;
-}
-
-.code-minimal {
-  font-weight: 600;
-  letter-spacing: 0.025em;
-  font-size: 0.8rem;
-}
-
-/* Menú desplegable - más elegante */
-.lang-menu-minimal {
-  position: absolute;
-  top: calc(100% + 0.375rem);
-  right: 0;
-  background: rgba(0, 0, 0, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  overflow: hidden;
-  min-width: 140px;
-  box-shadow: 
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06),
-    0 10px 20px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
+.flag:hover {
   opacity: 1;
-  transform: translateY(0) scale(1);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-html:not(.dark) .lang-menu-minimal {
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06),
-    0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.lang-menu-minimal.hidden {
-  opacity: 0;
-  transform: translateY(-8px) scale(0.95);
-  pointer-events: none;
-}
-
-/* Opciones del menú */
-.lang-option-minimal {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  padding: 0.625rem 0.875rem;
-  color: #e5e7eb;
-  text-decoration: none;
-  transition: all 0.15s ease;
-  font-size: 0.875rem;
-  position: relative;
-}
-
-html:not(.dark) .lang-option-minimal {
-  color: #374151;
-}
-
-.lang-option-minimal:hover {
-  background: rgba(96, 165, 250, 0.1);
-  color: #60a5fa;
-}
-
-html:not(.dark) .lang-option-minimal:hover {
-  background: rgba(59, 130, 246, 0.08);
-  color: #2563eb;
-}
-
-.lang-option-minimal.active {
-  background: rgba(96, 165, 250, 0.15);
-  color: #60a5fa;
-  font-weight: 500;
-}
-
-html:not(.dark) .lang-option-minimal.active {
-  background: rgba(59, 130, 246, 0.1);
-  color: #2563eb;
-}
-
-.lang-option-minimal .name-minimal {
-  flex: 1;
-  font-weight: 500;
-}
-
-.check-minimal {
-  color: #22c55e;
-  font-weight: 600;
-  font-size: 0.75rem;
-}
-
-/* Responsive - aún más compacto en móvil */
-@media (max-width: 768px) {
-  .lang-toggle-minimal {
-    min-width: 55px;
-    padding: 0.425rem 0.625rem;
-    height: 32px;
-  }
-  
-  .code-minimal {
-    font-size: 0.75rem;
-  }
-  
-  .flag-minimal {
-    font-size: 0.9rem;
-  }
-  
-  .lang-menu-minimal {
-    right: auto;
-    left: 0;
-    min-width: 120px;
-  }
-  
-  .lang-option-minimal {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .lang-toggle-minimal {
-    min-width: 50px;
-    padding: 0.375rem 0.5rem;
-    height: 30px;
-  }
-  
-  .code-minimal {
-    display: none; /* Solo bandera en pantallas muy pequeñas */
-  }
-  
-  .current-lang-minimal {
-    justify-content: center;
-  }
-}
-
-/* Animación sutil al abrir */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.lang-menu-minimal:not(.hidden) {
-  animation: slideDown 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const toggle = document.getElementById('lang-toggle-minimal');
-  const menu = document.getElementById('lang-menu-minimal');
-  
-  if (!toggle || !menu) return;
-  
-  // Toggle del menú
-  toggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    menu.classList.toggle('hidden');
-  });
-  
-  // Cerrar al hacer clic fuera
-  document.addEventListener('click', (e) => {
-    if (!toggle.contains(e.target) && !menu.contains(e.target)) {
-      menu.classList.add('hidden');
-    }
-  });
-  
-  // Cerrar con Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      menu.classList.add('hidden');
-    }
-  });
-  
-  // Cerrar al hacer scroll
-  let scrollTimeout;
-  window.addEventListener('scroll', () => {
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      menu.classList.add('hidden');
-    }, 100);
-  });
-});
-</script>
