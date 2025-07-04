@@ -32,24 +32,28 @@ const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
         />
       </a>
       
-      <!-- Botó toggle mode dia/nit -->
-      <button class="theme-toggle" aria-label="Canviar tema">
-        <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-        <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-      </button>
-      <LanguageSelector currentUrl={Astro.url} />
+      <!-- Controles del header: theme toggle y banderas -->
+      <div class="header-controls">
+        <button class="theme-toggle" aria-label="Canviar tema">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        
+        <!-- Selector de idioma con estilo redondo azul -->
+        <LanguageSelector currentUrl={Astro.url} />
+      </div>
     </div>
   </header>
 
@@ -664,7 +668,13 @@ const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
     padding: 0 2rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* Logo izquierda, controles derecha */
+  }
+
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 
   .logo-link {
@@ -690,7 +700,7 @@ const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
-    padding: 0.75rem;
+    padding: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -698,6 +708,8 @@ const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
     transition: all 0.3s ease;
     position: relative;
     color: #ffffff;
+    width: 40px;
+    height: 40px;
   }
 
   html:not(.dark) .theme-toggle {
@@ -2157,6 +2169,33 @@ const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
       height: 38px;
     }
 
+    .header-controls {
+      gap: 0.75rem;
+    }
+
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      padding: 6px;
+    }
+
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Language selector responsive */
+    .language-selector .flag {
+      width: 36px;
+      height: 36px;
+      padding: 6px;
+    }
+
+    .language-selector .flag-image {
+      width: 18px;
+      height: 14px;
+    }
+
     /* Servicios responsive */
     .services-section {
       padding: 4rem 0;
@@ -2197,6 +2236,33 @@ const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
 
     .header-logo {
       height: 32px;
+    }
+
+    .header-controls {
+      gap: 0.5rem;
+    }
+
+    .theme-toggle {
+      width: 32px;
+      height: 32px;
+      padding: 4px;
+    }
+
+    .theme-toggle svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Language selector muy pequeño */
+    .language-selector .flag {
+      width: 32px;
+      height: 32px;
+      padding: 4px;
+    }
+
+    .language-selector .flag-image {
+      width: 16px;
+      height: 12px;
     }
   }
 
@@ -2725,10 +2791,13 @@ const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
     // Inicializar tema
     initTheme();
 
-    // Agregar botón de toggle (si existe)
+    // Agregar botón de toggle theme (en el header)
     const toggleBtn = document.querySelector('.theme-toggle');
     if (toggleBtn) {
       toggleBtn.addEventListener('click', toggleTheme);
+      console.log('Theme toggle configurado correctamente');
+    } else {
+      console.warn('Theme toggle no encontrado');
     }
 
     // Atajo de teclado para cambiar tema (Ctrl/Cmd + Shift + L)
