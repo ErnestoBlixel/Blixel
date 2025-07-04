@@ -1,0 +1,4186 @@
+---
+// Página de Formación IA Empresas optimizada para SEO con efectos MagicUI
+import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import LanguageSelector from '../components/LanguageSelector.astro';
+import WordPressMenu from '../components/WordPressMenu.astro';
+
+const logoUrl = '/logos/LOGO AZUL BLIXEL .png';
+const pageTitle = 'Formación IA Empresas | Curso Inteligencia Artificial 2025';
+const pageDescription = 'Formación IA empresas práctica en 4 horas. Transforma tu equipo con inteligencia artificial. Automatiza procesos y multiplica productividad. ¡Plazas limitadas!';
+const pageKeywords = 'formación IA empresas, curso inteligencia artificial, training AI empresas, automatización procesos, productividad IA, formación corporativa IA, taller IA empresas';
+
+// Schema.org para SEO - Mejorado
+const courseSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Formación IA Empresas",
+  "description": "Formación práctica en Inteligencia Artificial para empresas. Aprende a automatizar procesos y multiplicar la productividad de tu equipo.",
+  "provider": {
+    "@type": "Organization",
+    "name": "Blixel",
+    "url": "https://blixel.es",
+    "sameAs": ["https://blixel.es"],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+34-872-003-245",
+      "contactType": "customer service",
+      "email": "hola@blixel.es"
+    }
+  },
+  "courseMode": ["Presencial", "Online"],
+  "duration": "PT4H",
+  "coursePrerequisites": "Ninguno. No se requieren conocimientos técnicos previos.",
+  "educationalLevel": "Beginner",
+  "inLanguage": "es",
+  "about": [
+    "Inteligencia Artificial",
+    "Automatización de procesos",
+    "Productividad empresarial",
+    "Transformación digital"
+  ],
+  "teaches": [
+    "Uso práctico de herramientas de IA",
+    "Automatización de tareas repetitivas",
+    "Optimización de procesos empresariales",
+    "Implementación de soluciones IA"
+  ],
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Formación Individual",
+      "price": "497",
+      "priceCurrency": "EUR"
+    },
+    {
+      "@type": "Offer",
+      "name": "Formación Empresa",
+      "price": "2997",
+      "priceCurrency": "EUR"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "127",
+    "bestRating": "5"
+  }
+};
+---
+
+<Layout 
+  logoUrl={logoUrl} 
+  logoAlt="BLIXEL logo"
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+>
+  <!-- Schema.org para SEO -->
+  <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} />
+  
+  <!-- Schema.org adicional para FAQs -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Qué voy a obtener de la formación inteligencia artificial en empresas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Os garantizo que antes de acabar habremos detectado al menos tres áreas totalmente automatizables o donde la IA aporte un salto real; si no lo conseguimos, os devolvemos el dinero. Y, de propina, fliparéis con todo lo que podéis hacer hoy y aún no hacéis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Dónde realizo la formación inteligencia artificial en empresas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Solo la impartimos in situ en vuestras oficinas: nos adaptamos a vuestro espacio y horario, no al revés. En cuanto lancemos plazas online con grupos reducidos y casos en tiempo real, os avisaremos."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué herramientas dominaré tras la formación inteligencia artificial en empresas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Os presentaremos los LLM más avanzados (ChatGPT, Claude y Gemini) y os enseñaremos la lógica de n8n y Make. No vais a convertiros en power users en unas horas, pero entenderéis su potencial, sabréis diseñar flujos básicos y descubriréis qué palancas accionar en vuestro negocio."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué nivel técnico necesito para la formación inteligencia artificial en empresas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ninguno o todo el que queráis: empezamos desde cero con la lógica de flujos y subimos hasta scripting ligero en JavaScript/Python y llamadas a webhooks. Adaptamos ejercicios al nivel real de cada participante."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Puedo descargar kits de automatización en la formación inteligencia artificial en empresas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Por supuesto: os entregamos plantillas listas para importar en n8n y Make, con ejemplos prácticos para probar al instante. Vosotros los instaláis y ajustáis; si preferís, podéis contratarnos como partner para que lo gestionemos nosotros."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo ajustamos la formación inteligencia artificial en empresas a la realidad de mi empresa?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Antes de arrancar analizamos vuestro stack y vuestros casos reales. No damos la misma charla a todos: diseñamos un programa a medida con vuestros datos y workflows para que saquéis el máximo partido desde el primer día."
+          }
+        }
+      ]
+    }
+  </script>
+
+  <!-- HEADER SIMPLE (idéntico a la home) -->
+  <header class="simple-header">
+    <div class="header-container">
+      <!-- Logo a la izquierda -->
+      <a href="/" class="logo-link">
+        <img 
+          src={logoUrl} 
+          alt="BLIXEL logo" 
+          class="header-logo"
+          loading="eager"
+          crossorigin="anonymous"
+        />
+      </a>
+      
+      <!-- Menú de WordPress en el centro -->
+      <div class="header-menu">
+        <WordPressMenu />
+      </div>
+      
+      <!-- Controles del header: theme toggle y banderas -->
+      <div class="header-controls">
+        <button class="theme-toggle" aria-label="Cambiar tema">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        
+        <!-- Selector de idioma con estilo redondo azul -->
+        <LanguageSelector currentUrl={Astro.url} />
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <!-- Breadcrumbs para SEO -->
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Inicio</a></li>
+            <li><span aria-current="page">Formación IA Empresas</span></li>
+          </ol>
+        </nav>
+        
+        <h1 class="hero-title">
+          <span class="title-highlight">Formación IA</span> en empresas
+        </h1>
+        <p class="hero-description">
+          <strong>La formación IA en empresas</strong> de Blixel es una formación de descubrimiento donde te enseñamos herramientas para aumentar tu productividad con automatización e inteligencia artificial. Adaptamos la formación a tu empresa, a las herramientas que ya utilizan tus trabajadores.
+        </p>
+        
+        <div class="hero-badges">
+          <div class="badge-item">
+            <div class="badge-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <span class="badge-text">Ahorro de tiempo</span>
+          </div>
+          <div class="badge-item">
+            <div class="badge-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+            </div>
+            <span class="badge-text">Formación personalizada</span>
+          </div>
+          <div class="badge-item">
+            <div class="badge-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 12l2 2 4-4"/>
+                <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
+                <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
+              </svg>
+            </div>
+            <span class="badge-text">Certificación incluida</span>
+          </div>
+        </div>
+        
+        <div class="hero-ctas">
+          <a href="#contacto" class="cta-primary">
+            <span>Reservar plaza ahora</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="tel:+34872003245" class="cta-secondary">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+              <path d="M2 3a1 1 0 0 1 1-1h2.153a1 1 0 0 1 .986.836l.74 4.435a1 1 0 0 1-.54 1.06l-1.548.773a11.037 11.037 0 0 0 6.105 6.105l.774-1.548a1 1 0 0 1 1.059-.54l4.435.74a1 1 0 0 1 .836.986V17a1 1 0 0 1-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+            </svg>
+            <span>Llamar ahora</span>
+          </a>
+        </div>
+      </div>
+      
+      <div class="hero-image">
+        <img 
+          src="http://cms.blixel.es/wp-content/uploads/2025/07/ChatGPT-Image-3-jul-2025-12_11_45.png" 
+          alt="Formación IA para empresas - Taller práctico de automatización" 
+          loading="eager"
+          width="600"
+          height="400"
+          class="border-beam border-beam-blue border-beam-subtle border-beam-hover"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE METODOLOGÍA -->
+  <section class="methodology-section">
+    <div class="methodology-container">
+      <h2 class="methodology-title">
+        Nuestro método de <span class="title-highlight">formación IA para empresas</span>
+      </h2>
+      <p class="methodology-description">
+        Descubre nuestro método paso a paso para enseñar herramientas de IA, analizar casos de uso sectoriales y entregar un informe-auditoría con oportunidades reales de automatización.
+      </p>
+      
+      <div class="methodology-steps">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <h3 class="step-title">Análisis previo</h3>
+          <p class="step-description">
+            Llamada de descubrimiento para mapear tu estructura, herramientas actuales y objetivos clave, y diseñar un temario 100 % personalizado que responda a tus necesidades.
+          </p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <h3 class="step-title">Formación personalizada</h3>
+          <p class="step-description">
+            Te mostramos las plataformas de IA más efectivas para tu sector y analizamos cómo mejorar tu productividad y reducir errores con soluciones adaptadas a tu negocio.
+          </p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <h3 class="step-title">Consultoría estratégica</h3>
+          <p class="step-description">
+            Resolvemos dudas sobre funcionalidades, metodologías y criterios de implementación junto a cada departamento, para que puedas ponerlo en práctica.
+          </p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-number">04</div>
+          <h3 class="step-title">Auditoría y plan de acción</h3>
+          <p class="step-description">
+            En pocos días recibirás un informe ejecutivo con el mapeo de procesos automatizables, la estimación de ahorro en tiempo y el cronograma de implantación, con o sin IA.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE ÁREAS AUTOMATIZABLES -->
+  <section class="automation-areas-section">
+    <div class="automation-areas-container">
+      <div class="automation-areas-content">
+        <div class="automation-areas-text">
+          <h2 class="automation-areas-title">
+            Descubre qué puedes <span class="title-highlight">automatizar en tu empresa</span>
+          </h2>
+          <p class="automation-areas-description">
+            Muchas empresas en 2025 aún desconocen el verdadero potencial de automatización que tienen al alcance. Durante nuestra formación, exploramos juntos cada departamento para descubrir procesos ocultos, tareas repetitivas y flujos de trabajo que podrían optimizarse con IA. Te sorprenderás de las oportunidades que identificaremos.
+          </p>
+          
+          <div class="automation-ctas">
+            <a href="#contacto" class="cta-primary">
+              <span>Reservar plaza ahora</span>
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a href="tel:+34872003245" class="cta-secondary">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+                <path d="M2 3a1 1 0 0 1 1-1h2.153a1 1 0 0 1 .986.836l.74 4.435a1 1 0 0 1-.54 1.06l-1.548.773a11.037 11.037 0 0 0 6.105 6.105l.774-1.548a1 1 0 0 1 1.059-.54l4.435.74a1 1 0 0 1 .836.986V17a1 1 0 0 1-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+              </svg>
+              <span>Llamar ahora</span>
+            </a>
+          </div>
+        </div>
+        
+        <div class="automation-opportunities">
+          <p class="opportunities-intro">
+            <strong>Ejemplos reales de automatización</strong> que muchas empresas desconocen y que podemos implementar juntos según tu sector:
+          </p>
+          
+          <div class="opportunities-list">
+            <div class="opportunity-item">
+              <div class="opportunity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div class="opportunity-content">
+                <h4>Captación y gestión de leads</h4>
+                <p>Calificación automática y asignación inteligente al comercial adecuado</p>
+              </div>
+            </div>
+            
+            <div class="opportunity-item">
+              <div class="opportunity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                </svg>
+              </div>
+              <div class="opportunity-content">
+                <h4>Soporte al cliente automatizado</h4>
+                <p>Chatbots inteligentes conectados a tu base de conocimientos empresarial</p>
+              </div>
+            </div>
+            
+            <div class="opportunity-item">
+              <div class="opportunity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+              </div>
+              <div class="opportunity-content">
+                <h4>Gestión de emails corporativos</h4>
+                <p>Respuestas automáticas, clasificación y seguimiento de correspondencia</p>
+              </div>
+            </div>
+            
+            <div class="opportunity-item">
+              <div class="opportunity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                  <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+                </svg>
+              </div>
+              <div class="opportunity-content">
+                <h4>Redacción de informes automática</h4>
+                <p>Generación automática de presupuestos, contratos y reportes ejecutivos</p>
+              </div>
+            </div>
+            
+            <div class="opportunity-item">
+              <div class="opportunity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 6v6l4 2"/>
+                </svg>
+              </div>
+              <div class="opportunity-content">
+                <h4>Contabilidad y finanzas inteligentes</h4>
+                <p>Detección de anomalías, categorización automática y reconciliación</p>
+              </div>
+            </div>
+            
+            <div class="opportunity-item">
+              <div class="opportunity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div class="opportunity-content">
+                <h4>Gestión de recursos humanos</h4>
+                <p>Selección de CVs, onboarding automático y gestión de nóminas</p>
+              </div>
+            </div>
+            
+            <div class="opportunity-item">
+              <div class="opportunity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="16 18 22 12 16 6"/>
+                  <polyline points="8 6 2 12 8 18"/>
+                </svg>
+              </div>
+              <div class="opportunity-content">
+                <h4>Apps y herramientas a medida</h4>
+                <p>Desarrollo de soluciones específicas adaptadas a tu flujo de trabajo</p>
+              </div>
+            </div>
+            
+            <div class="opportunity-item">
+              <div class="opportunity-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 7h14l-1 10H6L5 7z"/>
+                  <path d="M5 7l-1-4H2"/>
+                  <circle cx="9" cy="20" r="1"/>
+                  <circle cx="20" cy="20" r="1"/>
+                </svg>
+              </div>
+              <div class="opportunity-content">
+                <h4>Traducciones y correcciones</h4>
+                <p>Revisión automática de textos y traducción multiidioma de contenidos</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNER PROMOCIONAL GIRONA -->
+  <section class="pricing-promo-section">
+    <div class="pricing-promo-container">
+      <div class="pricing-promo-header">
+        <h2 class="pricing-promo-title">
+          <span class="title-highlight">Precio lanzamiento Girona - Formación IA empresas presencial</span>
+        </h2>
+        
+        <div class="pricing-promo-pricing">
+          <div class="pricing-promo-main">
+            <div class="pricing-promo-price">
+              <span class="price-amount">500€</span>
+              <span class="price-per">/sesión completa</span>
+            </div>
+            <div class="pricing-promo-offer">
+              <span class="offer-location">Solo hasta Septiembre 2025 en Girona</span>
+            </div>
+          </div>
+          <div class="pricing-promo-normal">
+            <span class="offer-original">Precio normal: 1.000€</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="pricing-promo-features">
+        <div class="pricing-promo-grid">
+          <div class="pricing-promo-feature">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span>Máximo 10-15 personas por sesión</span>
+          </div>
+          <div class="pricing-promo-feature">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span>4 horas de formación práctica en vuestras oficinas</span>
+          </div>
+          <div class="pricing-promo-feature">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span>Guía completa sobre los temas tratados en la formación</span>
+          </div>
+          <div class="pricing-promo-feature">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span>Informe completo de áreas automatizables</span>
+          </div>
+          <div class="pricing-promo-feature">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span>1h de consulta con responsables de departamentos para analizar automatizaciones e IA</span>
+          </div>
+          <div class="pricing-promo-feature">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span>Conocimiento de nuevas herramientas productivas</span>
+          </div>
+          <div class="pricing-promo-feature">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span>Certificación de participación</span>
+          </div>
+          <div class="pricing-promo-feature">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span>Soporte post-formación 30 días</span>
+          </div>
+        </div>
+        
+        <div class="pricing-promo-cta">
+          <a href="#contacto" class="cta-primary">
+            <span>Reservar precio promocional</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE BENEFICIOS (DESPUÉS DE PROBLEMAS) -->
+  <section class="benefits-section">
+    <div class="benefits-container">
+      <div class="benefits-content">
+        <div class="benefits-text">
+          <h2 class="benefits-title">
+            Ventajas tangibles de la <span class="title-highlight">formación IA empresas</span>
+          </h2>
+          <p class="benefits-description">
+            Adoptar IA sin formación adecuada suele acabar en licencias que nadie usa. 
+            Con nuestro método, el conocimiento se queda en casa:
+          </p>
+        </div>
+        
+        <div class="benefits-stats">
+          <div class="benefit-card">
+            <div class="benefit-number">+25%</div>
+            <div class="benefit-text">Productividad</div>
+            <div class="benefit-highlight">Desde el primer día gracias a flujos que se ejecutan solos</div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-number">-80%</div>
+            <div class="benefit-text">errores humanos</div>
+            <div class="benefit-highlight">Por la validación automática de datos y procesos</div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/>
+              </svg>
+            </div>
+            <div class="benefit-text">Garantía de resultados</div>
+            <div class="benefit-highlight">Si no detectamos tareas automatizables, te devolvemos el dinero</div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+            </div>
+            <div class="benefit-text">Cultura de innovación</div>
+            <div class="benefit-highlight">Tu equipo ve la IA como aliada y propone mejoras constantemente</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+  <!-- SECCIÓN DE FORMULARIO DE CONTACTO Y FAQ -->
+  <section id="contacto" class="contact-form-section">
+    <div class="contact-form-container">
+      <div class="contact-form-header">
+        <h2 class="contact-form-title">
+          Solicita tu <span class="title-highlight">formación IA empresas</span>
+        </h2>
+        <p class="contact-form-description">
+          Rellena el formulario y te llamamos en menos de 24 horas para diseñar 
+          la formación perfecta para tu equipo.
+        </p>
+      </div>
+
+      <!-- Layout de dos columnas -->
+      <div class="contact-content-grid">
+        <!-- Columna izquierda: FAQ -->
+        <div class="contact-faq-column">
+          <div class="faq-grid">
+            <div class="faq-item">
+              <button class="faq-question">
+                <h3>¿Qué voy a obtener de la formación inteligencia artificial en empresas?</h3>
+                <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <p>Os garantizo que antes de acabar habremos detectado al menos tres áreas totalmente automatizables o donde la IA aporte un salto real; si no lo conseguimos, os devolvemos el dinero. Y, de propina, fliparéis con todo lo que podéis hacer hoy y aún no hacéis.</p>
+              </div>
+            </div>
+            
+            <div class="faq-item">
+              <button class="faq-question">
+                <h3>¿Dónde realizo la formación inteligencia artificial en empresas?</h3>
+                <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <p>Solo la impartimos in situ en vuestras oficinas: nos adaptamos a vuestro espacio y horario, no al revés. En cuanto lancemos plazas online con grupos reducidos y casos en tiempo real, os avisaremos.</p>
+              </div>
+            </div>
+            
+            <div class="faq-item">
+              <button class="faq-question">
+                <h3>¿Qué herramientas dominaré tras la formación inteligencia artificial en empresas?</h3>
+                <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <p>Os presentaremos los LLM más avanzados (ChatGPT, Claude y Gemini) y os enseñaremos la lógica de n8n y Make. No vais a convertiros en "power users" en unas horas, pero entenderéis su potencial, sabréis diseñar flujos básicos y descubriréis qué palancas accionar en vuestro negocio. Como cada empresa tiene un stack distinto, personalizamos cada sesión para que trabajéis con las herramientas que realmente usáis.</p>
+              </div>
+            </div>
+            
+            <div class="faq-item">
+              <button class="faq-question">
+                <h3>¿Qué nivel técnico necesito para la formación inteligencia artificial en empresas?</h3>
+                <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <p>Ninguno o todo el que queráis: empezamos desde cero con la lógica de flujos y subimos hasta scripting ligero en JavaScript/Python y llamadas a webhooks. Adaptamos ejercicios al nivel real de cada participante.</p>
+              </div>
+            </div>
+            
+            <div class="faq-item">
+              <button class="faq-question">
+                <h3>¿Puedo descargar kits de automatización en la formación inteligencia artificial en empresas?</h3>
+                <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <p>Por supuesto: os entregamos plantillas listas para importar en n8n y Make, con ejemplos prácticos para probar al instante. Vosotros los instaláis y ajustáis; si preferís, podéis contratarnos como partner para que lo gestionemos nosotros.</p>
+              </div>
+            </div>
+            
+            <div class="faq-item">
+              <button class="faq-question">
+                <h3>¿Cómo ajustamos la formación inteligencia artificial en empresas a la realidad de mi empresa?</h3>
+                <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="faq-answer">
+                <p>Antes de arrancar analizamos vuestro stack y vuestros casos reales. No damos la misma charla a todos: diseñamos un programa a medida con vuestros datos y workflows para que saquéis el máximo partido desde el primer día.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Columna derecha: Formulario -->
+        <div class="contact-form-column">
+          <div class="form-embed-container">
+            <ContactForm currentLang="es" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE PARTNER TECNOLÓGICO CON CTA -->
+  <section class="partner-cta-section">
+    <div class="partner-cta-container">
+      <h2 class="partner-cta-title">No basta con aprender IA una vez</h2>
+      <p class="partner-cta-description">
+        La IA evoluciona cada semana. Nuevas herramientas, actualizaciones críticas, 
+        cambios en algoritmos. <strong>Necesitas un partner tecnológico</strong> que mantenga 
+        tus sistemas actualizados y tu equipo al día de las últimas novedades.
+      </p>
+      
+      <div class="partner-cta-benefits">
+        <div class="partner-cta-item">
+          <div class="partner-cta-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </div>
+          <h3>Actualizaciones constantes</h3>
+          <p>Te mantenemos al día de cada nueva herramienta y funcionalidad</p>
+        </div>
+        <div class="partner-cta-item">
+          <div class="partner-cta-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+          </div>
+          <h3>Soporte técnico continuo</h3>
+          <p>Resolvemos problemas antes de que afecten tu productividad</p>
+        </div>
+        <div class="partner-cta-item">
+          <div class="partner-cta-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+          <h3>Evolución estratégica</h3>
+          <p>Adaptamos tu estrategia IA conforme crece tu empresa</p>
+        </div>
+      </div>
+      
+      <div class="partner-cta-warning">
+        <p><strong>⚠️ REALIDAD:</strong> Las empresas que no se adapten rápidamente a la revolución IA 
+        tendrán que cerrar en los próximos 2-3 años. No es una exageración, es matemática empresarial.</p>
+      </div>
+      
+      <!-- CALL TO ACTION DUAL -->
+      <div class="partner-cta-options">
+        <div class="partner-cta-choice">
+          <h3 class="choice-title">Opción 1: Avancemos juntos</h3>
+          <p class="choice-description">
+            <strong>Contrata nuestra formación</strong> y te entregaremos un informe completo 
+            con todas las áreas automatizables detectadas. Si quieres, te acompañamos 
+            en todo el proceso de implementación... si no, tienes la opción 2.
+          </p>
+          <a href="#contacto" class="choice-cta choice-cta-primary">
+            <span>Contratar formación + acompañamiento</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+        
+        <div class="partner-cta-choice">
+          <h3 class="choice-title">Opción 2: Voy por libre</h3>
+          <p class="choice-description">
+            Apúntate a nuestra <strong>newsletter especializada en IA empresarial</strong> y 
+            cada día te darás cuenta de las oportunidades que podrías estar aplicando 
+            y no lo estás haciendo... mientras tu competencia sí.
+          </p>
+          <a href="https://blixel.es/#newsletter" class="choice-cta choice-cta-secondary">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+              <rect x="2" y="4" width="16" height="12" rx="2"></rect>
+              <path d="m22 7-10 5L2 7"></path>
+            </svg>
+            <span>Suscribirme a la newsletter</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <img 
+            src={logoUrl} 
+            alt="BLIXEL logo" 
+            class="footer-logo"
+            loading="lazy"
+          />
+          <p class="footer-description">
+            Formación IA empresas práctica con resultados desde el primer día. 
+            Transforma tu equipo con inteligencia artificial.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <h3 class="footer-title">Enlaces</h3>
+          <ul class="footer-list">
+            <li><a href="/" class="footer-link">Inicio</a></li>
+            <li><a href="#contacto" class="footer-link">Contacto</a></li>
+            <li><a href="/legal/aviso-legal" class="footer-link">Aviso Legal</a></li>
+            <li><a href="/legal/politica-cookies" class="footer-link">Política de Cookies</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact">
+          <h3 class="footer-title">Contacto</h3>
+          <ul class="footer-list">
+            <li>
+              <a href="mailto:hola@blixel.es" class="footer-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                  <path d="m22 7-10 5L2 7"></path>
+                </svg>
+                hola@blixel.es
+              </a>
+            </li>
+            <li>
+              <a href="tel:+34872003245" class="footer-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                +34 872 003 245
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copyright">
+          © 2025 BLIXEL GROUP SL. Todos los derechos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  /* ==================== ESTILOS BORDER-BEAM INTEGRADOS ==================== */
+  
+  /* Animación keyframes para el borde */
+  @keyframes border-beam {
+    0% {
+      offset-distance: 0%;
+    }
+    100% {
+      offset-distance: 100%;
+    }
+  }
+
+  /* Clase base para elementos con borde animado */
+  .border-beam {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .border-beam::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px; /* Grosor del borde */
+    background: linear-gradient(90deg, 
+      transparent, 
+      #60a5fa, 
+      #3b82f6, 
+      transparent
+    );
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+  }
+
+  .border-beam::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(90deg, transparent, #60a5fa, #3b82f6, transparent);
+    border-radius: 50%;
+    filter: blur(10px);
+    animation: border-beam-rotate 4s linear infinite;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  @keyframes border-beam-rotate {
+    0% {
+      transform: translateX(-50%) translateY(-50%) rotate(0deg);
+      top: 0%;
+      left: 0%;
+    }
+    25% {
+      transform: translateX(-50%) translateY(-50%) rotate(90deg);
+      top: 0%;
+      left: 100%;
+    }
+    50% {
+      transform: translateX(-50%) translateY(-50%) rotate(180deg);
+      top: 100%;
+      left: 100%;
+    }
+    75% {
+      transform: translateX(-50%) translateY(-50%) rotate(270deg);
+      top: 100%;
+      left: 0%;
+    }
+    100% {
+      transform: translateX(-50%) translateY(-50%) rotate(360deg);
+      top: 0%;
+      left: 0%;
+    }
+  }
+
+  /* Variantes de colores */
+  .border-beam-blue::before,
+  .border-beam-blue::after {
+    background: linear-gradient(90deg, transparent, #60a5fa, #3b82f6, transparent);
+  }
+
+  .border-beam-purple::before,
+  .border-beam-purple::after {
+    background: linear-gradient(90deg, transparent, #a78bfa, #8b5cf6, transparent);
+  }
+
+  .border-beam-green::before,
+  .border-beam-green::after {
+    background: linear-gradient(90deg, transparent, #4ade80, #22c55e, transparent);
+  }
+
+  .border-beam-orange::before,
+  .border-beam-orange::after {
+    background: linear-gradient(90deg, transparent, #fb923c, #f97316, transparent);
+  }
+
+  /* Variantes de velocidad */
+  .border-beam-slow::after {
+    animation-duration: 8s;
+  }
+
+  .border-beam-normal::after {
+    animation-duration: 4s;
+  }
+
+  .border-beam-fast::after {
+    animation-duration: 2s;
+  }
+
+  /* Variante más sutil */
+  .border-beam-subtle::before {
+    padding: 1px;
+    opacity: 0.6;
+  }
+
+  .border-beam-subtle::after {
+    opacity: 0.4;
+    filter: blur(15px);
+  }
+
+  /* Hover effect */
+  .border-beam-hover {
+    transition: all 0.3s ease;
+  }
+
+  .border-beam-hover:hover::after {
+    animation-duration: 1s;
+    opacity: 1;
+  }
+  
+  /* ==================== ESTILOS GLOBALES ==================== */
+  body {
+    background: #000000;
+    color: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: hidden;
+    padding-top: 78px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  html:not(.dark) body {
+    background: #ffffff;
+    color: #111827;
+  }
+
+  /* ==================== HEADER (idéntico a index) ==================== */
+  .simple-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1.25rem 0;
+    transition: all 0.3s ease;
+  }
+
+  html:not(.dark) .simple-header {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .header-container {
+    max-width: 1400px; /* Mismo ancho que el hero */
+    margin: 0 auto;
+    padding: 0 2rem; /* Mismo padding que el hero */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Logo izquierda, menú centro, controles derecha */
+    gap: 2rem; /* Espacio entre elementos */
+  }
+
+  .header-menu {
+    flex: 1; /* Toma el espacio disponible en el centro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .logo-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .header-logo {
+    height: 45px;
+    width: auto;
+    max-width: 150px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+  }
+
+  .logo-link:hover .header-logo {
+    transform: scale(1.05);
+  }
+
+  .theme-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .theme-toggle {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #111827;
+  }
+
+  .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+
+  html:not(.dark) .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .sun-icon,
+  .moon-icon {
+    width: 20px;
+    height: 20px;
+    transition: all 0.3s ease;
+    position: absolute;
+  }
+
+  .dark .sun-icon {
+    opacity: 0;
+    transform: scale(0.8) rotate(-180deg);
+  }
+
+  .dark .moon-icon {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+
+  :not(.dark) .sun-icon {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+
+  :not(.dark) .moon-icon {
+    opacity: 0;
+    transform: scale(0.8) rotate(180deg);
+  }
+
+  /* ==================== HERO SECTION ==================== */
+  .hero-section {
+    position: relative;
+    padding: 2rem 0 4rem;
+    background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+    overflow: hidden;
+  }
+
+  html:not(.dark) .hero-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  }
+
+  .hero-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  /* Breadcrumbs */
+  .breadcrumbs {
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .breadcrumbs ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .breadcrumbs li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .breadcrumbs a {
+    color: #60a5fa;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .breadcrumbs a:hover {
+    color: #3b82f6;
+  }
+
+  .breadcrumbs li:not(:last-child)::after {
+    content: '/';
+    color: #6b7280;
+    margin-left: 0.5rem;
+  }
+
+  .breadcrumbs span {
+    color: #9ca3af;
+  }
+
+  html:not(.dark) .breadcrumbs span {
+    color: #6b7280;
+  }
+
+  .hero-content {
+    animation: fadeInLeft 0.8s ease-out;
+  }
+
+  .hero-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .hero-title {
+    color: #111827 !important;
+  }
+
+  .title-highlight {
+    background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  }
+
+  html:not(.dark) .hero-description {
+    color: #374151 !important;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    animation: fadeInUp 0.8s ease-out 0.3s backwards;
+  }
+
+  .badge-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .badge-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .badge-icon svg {
+    color: #60a5fa;
+  }
+
+  .badge-text {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    font-weight: 500;
+  }
+
+  html:not(.dark) .badge-text {
+    color: #6b7280 !important;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    animation: fadeInUp 0.8s ease-out 0.4s backwards;
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+  }
+
+  .cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(96, 165, 250, 0.4);
+  }
+
+  .cta-primary svg {
+    transition: transform 300ms ease;
+  }
+
+  .cta-primary:hover svg {
+    transform: translateX(4px);
+  }
+
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    background: transparent;
+    color: #60a5fa;
+    text-decoration: none;
+    border: 2px solid rgba(96, 165, 250, 0.3);
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    transition: all 300ms ease;
+  }
+
+  .cta-secondary:hover {
+    background: rgba(96, 165, 250, 0.1);
+    border-color: rgba(96, 165, 250, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .hero-image {
+    animation: fadeInRight 0.8s ease-out 0.2s backwards;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    /* Removido box-shadow para imagen sin fondo */
+  }
+
+  /* Ajustar border-beam para elementos img */
+  img.border-beam {
+    position: relative;
+    display: block;
+  }
+
+  img.border-beam::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    padding: 2px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      #60a5fa, 
+      #3b82f6, 
+      transparent
+    );
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  img.border-beam::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(90deg, transparent, #60a5fa, #3b82f6, transparent);
+    border-radius: 50%;
+    filter: blur(10px);
+    animation: border-beam-rotate 4s linear infinite;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  img.border-beam-hover:hover::after {
+    animation-duration: 1s;
+    opacity: 1;
+  }
+
+  img.border-beam-subtle::before {
+    padding: 1px;
+    opacity: 0.6;
+  }
+
+  img.border-beam-subtle::after {
+    opacity: 0.4;
+    filter: blur(15px);
+  }
+
+  /* ==================== SECCIÓN DE PROBLEMAS ==================== */
+  .problems-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  }
+
+  html:not(.dark) .problems-section {
+    background: white;
+  }
+
+  .problems-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .problems-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  html:not(.dark) .problems-title {
+    color: #111827 !important;
+  }
+
+  .problems-description {
+    text-align: center;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  }
+
+  html:not(.dark) .problems-description {
+    color: #374151 !important;
+  }
+
+  .problems-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .problem-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.8s ease-out backwards;
+  }
+
+  .problem-card:nth-child(1) { animation-delay: 0.1s; }
+  .problem-card:nth-child(2) { animation-delay: 0.2s; }
+  .problem-card:nth-child(3) { animation-delay: 0.3s; }
+
+  html:not(.dark) .problem-card {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .problem-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(96, 165, 250, 0.3);
+  }
+
+  .problem-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+  }
+
+  .problem-icon svg {
+    color: #60a5fa;
+  }
+
+  .problem-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .problem-title {
+    color: #111827 !important;
+  }
+
+  .problem-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #9ca3af;
+  }
+
+  .problem-card .problem-description {
+    margin: 0;
+  }
+
+  html:not(.dark) .problem-card .problem-description {
+    color: #6b7280 !important;
+  }
+
+  /* ==================== SECCIÓN DE BENEFICIOS ==================== */
+  .benefits-section {
+    padding: 6rem 0;
+    background: #000000;
+  }
+
+  html:not(.dark) .benefits-section {
+    background: #f8fafc;
+  }
+
+  .benefits-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .benefits-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .benefits-text {
+    animation: fadeInLeft 0.8s ease-out;
+  }
+
+  .benefits-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    margin-bottom: 2rem;
+    color: #ffffff;
+    line-height: 1.1;
+  }
+
+  html:not(.dark) .benefits-title {
+    color: #111827 !important;
+  }
+
+  .benefits-description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    margin-bottom: 1.5rem;
+  }
+
+  html:not(.dark) .benefits-description {
+    color: #374151 !important;
+  }
+
+  .benefits-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    animation: fadeInRight 0.8s ease-out;
+  }
+
+  .benefits-section .benefit-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    animation: fadeInUp 0.8s ease-out backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .benefits-section .benefit-card:nth-child(1) { animation-delay: 0.1s; }
+  .benefits-section .benefit-card:nth-child(2) { animation-delay: 0.2s; }
+  .benefits-section .benefit-card:nth-child(3) { animation-delay: 0.3s; }
+  .benefits-section .benefit-card:nth-child(4) { animation-delay: 0.4s; }
+
+  html:not(.dark) .benefits-section .benefit-card {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .benefits-section .benefit-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(96, 165, 250, 0.3);
+    background: rgba(96, 165, 250, 0.05);
+  }
+
+  .benefit-number {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+  }
+
+  .benefits-section .benefit-card .benefit-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+
+  .benefits-section .benefit-card .benefit-icon svg {
+    color: #60a5fa;
+  }
+
+  .benefit-text {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    margin-bottom: 0.25rem;
+  }
+
+  html:not(.dark) .benefit-text {
+    color: #6b7280 !important;
+  }
+
+  .benefit-highlight {
+    font-size: 0.85rem;
+    color: #60a5fa;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  html:not(.dark) .benefit-highlight {
+    color: #3b82f6 !important;
+  }
+
+  /* ==================== SECCIÓN DE METODOLOGÍA ==================== */
+  .methodology-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  }
+
+  html:not(.dark) .methodology-section {
+    background: white;
+  }
+
+  .methodology-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .methodology-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    animation: fadeInUp 0.8s ease-out;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  html:not(.dark) .methodology-title {
+    color: #111827 !important;
+  }
+
+  .methodology-description {
+    text-align: center;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    max-width: 1400px;
+    margin: 0 auto 4rem;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  }
+
+  html:not(.dark) .methodology-description {
+    color: #374151 !important;
+  }
+
+  .methodology-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .step-card {
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out backwards;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  html:not(.dark) .step-card {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .step-card:nth-child(1) { animation-delay: 0.1s; }
+  .step-card:nth-child(2) { animation-delay: 0.2s; }
+  .step-card:nth-child(3) { animation-delay: 0.3s; }
+  .step-card:nth-child(4) { animation-delay: 0.4s; }
+
+  .step-number {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    margin: 0 auto 2rem;
+    box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3);
+    transition: transform 0.3s ease;
+  }
+
+  .step-card:hover .step-number {
+    transform: scale(1.1);
+  }
+
+  .step-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .step-title {
+    color: #111827 !important;
+  }
+
+  .step-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #9ca3af;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  html:not(.dark) .step-description {
+    color: #6b7280 !important;
+  }
+
+  /* ==================== BANNER PROMOCIONAL GIRONA ==================== */
+  .pricing-promo-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  }
+
+  html:not(.dark) .pricing-promo-section {
+    background: white;
+  }
+
+  .pricing-promo-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .pricing-promo-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .pricing-promo-title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 800;
+    margin-bottom: 3rem;
+    color: #ffffff;
+    line-height: 1.2;
+  }
+
+  html:not(.dark) .pricing-promo-title {
+    color: #111827 !important;
+  }
+
+  .pricing-promo-pricing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .pricing-promo-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .pricing-promo-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .pricing-promo-price .price-amount {
+    font-size: 4rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 0.9;
+  }
+
+  .pricing-promo-price .price-per {
+    font-size: 1.125rem;
+    color: #9ca3af;
+    font-weight: 600;
+  }
+
+  html:not(.dark) .pricing-promo-price .price-per {
+    color: #6b7280 !important;
+  }
+
+  .pricing-promo-offer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .pricing-promo-normal {
+    text-align: center;
+  }
+
+  .offer-location {
+    font-size: 1.125rem;
+    color: #60a5fa;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(96, 165, 250, 0.2);
+  }
+
+  html:not(.dark) .offer-location {
+    color: #3b82f6 !important;
+  }
+
+  .offer-original {
+    font-size: 1rem;
+    color: #9ca3af;
+    text-decoration: line-through;
+    font-weight: 500;
+  }
+
+  html:not(.dark) .offer-original {
+    color: #6b7280 !important;
+  }
+
+  .pricing-promo-features {
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  }
+
+  .pricing-promo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .pricing-promo-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    text-align: left;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out backwards;
+  }
+
+  html:not(.dark) .pricing-promo-feature {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .pricing-promo-feature:nth-child(1) { animation-delay: 0.1s; }
+  .pricing-promo-feature:nth-child(2) { animation-delay: 0.15s; }
+  .pricing-promo-feature:nth-child(3) { animation-delay: 0.2s; }
+  .pricing-promo-feature:nth-child(4) { animation-delay: 0.25s; }
+  .pricing-promo-feature:nth-child(5) { animation-delay: 0.3s; }
+  .pricing-promo-feature:nth-child(6) { animation-delay: 0.35s; }
+  .pricing-promo-feature:nth-child(7) { animation-delay: 0.4s; }
+  .pricing-promo-feature:nth-child(8) { animation-delay: 0.45s; }
+
+  .pricing-promo-feature:hover {
+    background: rgba(96, 165, 250, 0.05);
+    border-color: rgba(96, 165, 250, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .pricing-promo-feature svg {
+    color: #60a5fa;
+    flex-shrink: 0;
+  }
+
+  .pricing-promo-feature span {
+    font-size: 0.95rem;
+    color: #e5e7eb;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  html:not(.dark) .pricing-promo-feature span {
+    color: #374151 !important;
+  }
+
+  .pricing-promo-cta {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  /* ==================== SECCIÓN DE ÁREAS AUTOMATIZABLES ==================== */
+  .automation-areas-section {
+    padding: 6rem 0;
+    background: #000000;
+  }
+
+  html:not(.dark) .automation-areas-section {
+    background: #f8fafc;
+  }
+
+  .automation-areas-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .automation-areas-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .automation-areas-text {
+    animation: fadeInLeft 0.8s ease-out;
+  }
+
+  .automation-areas-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 2rem;
+    color: #ffffff;
+    line-height: 1.1;
+  }
+
+  html:not(.dark) .automation-areas-title {
+    color: #111827 !important;
+  }
+
+  .automation-areas-description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+    margin: 0 0 2rem;
+  }
+
+  html:not(.dark) .automation-areas-description {
+    color: #374151 !important;
+  }
+
+  .automation-ctas {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 2rem;
+  }
+
+  .automation-ctas .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 3px 8px rgba(96, 165, 250, 0.3);
+  }
+
+  .automation-ctas .cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(96, 165, 250, 0.4);
+  }
+
+  .automation-ctas .cta-primary svg {
+    transition: transform 300ms ease;
+  }
+
+  .automation-ctas .cta-primary:hover svg {
+    transform: translateX(3px);
+  }
+
+  .automation-ctas .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    background: transparent;
+    color: #60a5fa;
+    text-decoration: none;
+    border: 2px solid rgba(96, 165, 250, 0.3);
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 300ms ease;
+  }
+
+  .automation-ctas .cta-secondary:hover {
+    background: rgba(96, 165, 250, 0.1);
+    border-color: rgba(96, 165, 250, 0.5);
+    transform: translateY(-1px);
+  }
+
+  .automation-opportunities {
+    animation: fadeInRight 0.8s ease-out;
+  }
+
+  .opportunities-intro {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #e5e7eb;
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    background: rgba(96, 165, 250, 0.05);
+    border: 1px solid rgba(96, 165, 250, 0.1);
+    border-radius: 10px;
+  }
+
+  html:not(.dark) .opportunities-intro {
+    color: #374151 !important;
+    background: rgba(96, 165, 250, 0.03);
+  }
+
+  .opportunities-intro strong {
+    color: #60a5fa;
+  }
+
+  html:not(.dark) .opportunities-intro strong {
+    color: #3b82f6 !important;
+  }
+
+  .opportunities-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .opportunity-item {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out backwards;
+  }
+
+  .opportunity-item:nth-child(1) { animation-delay: 0.1s; }
+  .opportunity-item:nth-child(2) { animation-delay: 0.2s; }
+  .opportunity-item:nth-child(3) { animation-delay: 0.3s; }
+  .opportunity-item:nth-child(4) { animation-delay: 0.4s; }
+  .opportunity-item:nth-child(5) { animation-delay: 0.5s; }
+  .opportunity-item:nth-child(6) { animation-delay: 0.6s; }
+  .opportunity-item:nth-child(7) { animation-delay: 0.7s; }
+  .opportunity-item:nth-child(8) { animation-delay: 0.8s; }
+
+  html:not(.dark) .opportunity-item {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .opportunity-item:hover {
+    transform: translateX(5px);
+    border-color: rgba(96, 165, 250, 0.3);
+    background: rgba(96, 165, 250, 0.02);
+  }
+
+  .opportunity-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .opportunity-icon svg {
+    color: #60a5fa;
+  }
+
+  .opportunity-content h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: #ffffff;
+    line-height: 1.3;
+  }
+
+  html:not(.dark) .opportunity-content h4 {
+    color: #111827 !important;
+  }
+
+  .opportunity-content p {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: #9ca3af;
+    margin: 0;
+  }
+
+  html:not(.dark) .opportunity-content p {
+    color: #6b7280 !important;
+  }
+
+  /* ==================== SECCIÓN DE PARTNER TECNOLÓGICO CON CTA ==================== */
+  .partner-cta-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    text-align: center;
+  }
+
+  .partner-cta-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .partner-cta-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1.5rem;
+  }
+
+  .partner-cta-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .partner-cta-benefits {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .partner-cta-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.8s ease-out backwards;
+  }
+
+  .partner-cta-item:nth-child(1) { animation-delay: 0.1s; }
+  .partner-cta-item:nth-child(2) { animation-delay: 0.2s; }
+  .partner-cta-item:nth-child(3) { animation-delay: 0.3s; }
+
+  .partner-cta-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-5px);
+  }
+
+  .partner-cta-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+
+  .partner-cta-icon svg {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .partner-cta-item h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.75rem;
+  }
+
+  .partner-cta-item p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .partner-cta-warning {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .partner-cta-warning p {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Call to Action Dual */
+  .partner-cta-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .partner-cta-choice {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    animation: fadeInUp 0.8s ease-out backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .partner-cta-choice:nth-child(1) { animation-delay: 0.2s; }
+  .partner-cta-choice:nth-child(2) { animation-delay: 0.4s; }
+
+  .partner-cta-choice:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .choice-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .choice-description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2.5rem;
+  }
+
+  .choice-description strong {
+    color: white;
+    font-weight: 700;
+  }
+
+  .choice-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .choice-cta-primary {
+    background: rgba(255, 255, 255, 0.95);
+    color: #dc2626;
+    border: 2px solid transparent;
+  }
+
+  .choice-cta-primary:hover {
+    background: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+  }
+
+  .choice-cta-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+  }
+
+  .choice-cta-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+    transform: translateY(-3px);
+  }
+
+  .choice-cta svg {
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .choice-cta:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* ==================== SECCIÓN DE PRECIOS ==================== */
+  .pricing-section {
+    padding: 6rem 0;
+    background: #000000;
+  }
+
+  html:not(.dark) .pricing-section {
+    background: white;
+  }
+
+  .pricing-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .pricing-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: #ffffff;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  html:not(.dark) .pricing-title {
+    color: #111827 !important;
+  }
+
+  .pricing-cards {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .pricing-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.8s ease-out backwards;
+    overflow: hidden;
+  }
+
+  .pricing-card:nth-child(1) { animation-delay: 0.1s; }
+  .pricing-card:nth-child(2) { animation-delay: 0.2s; }
+  .pricing-card:nth-child(3) { animation-delay: 0.3s; }
+
+  html:not(.dark) .pricing-card {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .pricing-card.featured {
+    border-color: rgba(96, 165, 250, 0.3);
+    transform: scale(1.05);
+  }
+
+  html:not(.dark) .pricing-card.featured {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(96, 165, 250, 0.3);
+  }
+
+  .pricing-card.featured:hover {
+    transform: scale(1.05) translateY(-5px);
+  }
+
+  .pricing-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    color: white;
+    padding: 0.25rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .pricing-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .pricing-name {
+    color: #111827 !important;
+  }
+
+  .pricing-price {
+    margin-bottom: 2rem;
+  }
+
+  .price-amount {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .price-per {
+    font-size: 1rem;
+    color: #9ca3af;
+  }
+
+  html:not(.dark) .price-per {
+    color: #6b7280 !important;
+  }
+
+  .pricing-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .pricing-features li {
+    color: #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  html:not(.dark) .pricing-features li {
+    color: #374151 !important;
+  }
+
+  .pricing-features li::before {
+    content: '✓';
+    color: #60a5fa;
+    font-weight: bold;
+  }
+
+  .pricing-cta {
+    display: inline-block;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 2px solid rgba(96, 165, 250, 0.3);
+    color: #60a5fa;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .pricing-card.featured .pricing-cta {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    border-color: transparent;
+    color: white;
+  }
+
+  .pricing-cta:hover {
+    background: rgba(96, 165, 250, 0.1);
+    border-color: #60a5fa;
+    transform: translateY(-2px);
+  }
+
+  .pricing-card.featured .pricing-cta:hover {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+  }
+
+
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: translateX(-50%) scale(1);
+    }
+    50% {
+      transform: translateX(-50%) scale(1.05);
+    }
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-3px); }
+    60% { transform: translateY(-2px); }
+  }
+
+  /* ==================== SECCIÓN FAQ ==================== */
+  .faq-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  }
+
+  html:not(.dark) .faq-section {
+    background: #f8fafc;
+  }
+
+  .faq-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .faq-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: #ffffff;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  html:not(.dark) .faq-title {
+    color: #111827 !important;
+  }
+
+  .faq-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out backwards;
+  }
+
+  .faq-item:nth-child(1) { animation-delay: 0.1s; }
+  .faq-item:nth-child(2) { animation-delay: 0.2s; }
+  .faq-item:nth-child(3) { animation-delay: 0.3s; }
+  .faq-item:nth-child(4) { animation-delay: 0.4s; }
+  .faq-item:nth-child(5) { animation-delay: 0.5s; }
+  .faq-item:nth-child(6) { animation-delay: 0.6s; }
+
+  html:not(.dark) .faq-item {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .faq-item:hover {
+    border-color: rgba(96, 165, 250, 0.2);
+  }
+
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s ease;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .faq-question {
+    color: #111827 !important;
+  }
+
+  .faq-question h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0;
+    text-align: left;
+  }
+
+  .faq-question:hover {
+    color: #60a5fa;
+  }
+
+  .faq-chevron {
+    color: #9ca3af;
+    transition: all 0.3s ease;
+    transform: rotate(0deg);
+    flex-shrink: 0;
+  }
+
+  .faq-item.active .faq-chevron {
+    transform: rotate(180deg);
+    color: #60a5fa;
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .faq-item.active .faq-answer {
+    max-height: 300px;
+  }
+
+  .faq-answer p {
+    padding: 0 2rem 1.5rem;
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+  }
+
+  html:not(.dark) .faq-answer p {
+    color: #4b5563 !important;
+  }
+
+  /* ==================== SECCIÓN DE CONTACTO ==================== */
+  .contact-form-section {
+    position: relative;
+    padding: 8rem 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    overflow: hidden;
+  }
+
+  html:not(.dark) .contact-form-section {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  }
+
+  .contact-form-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .contact-form-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .contact-form-title {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .contact-form-title {
+    color: #111827 !important;
+  }
+
+  .contact-form-description {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 1.125rem;
+    color: #9ca3af;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  html:not(.dark) .contact-form-description {
+    color: #374151 !important;
+  }
+
+  /* Layout de dos columnas */
+  .contact-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  }
+
+  /* Columna del formulario */
+  .contact-form-column {
+    animation: fadeInLeft 0.8s ease-out 0.3s backwards;
+  }
+
+  .form-embed-container {
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 3rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+  }
+
+  html:not(.dark) .form-embed-container {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .contact-trust-badges {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .contact-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #9ca3af;
+    font-size: 0.9rem;
+    font-weight: 500;
+    justify-content: flex-start;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  html:not(.dark) .contact-trust-item {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #6b7280 !important;
+  }
+
+  .contact-trust-item:hover {
+    border-color: rgba(96, 165, 250, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-2px);
+  }
+
+  .contact-trust-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-trust-icon svg {
+    color: #60a5fa;
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Columna de FAQ */
+  .contact-faq-column {
+    animation: fadeInRight 0.8s ease-out 0.4s backwards;
+  }
+
+  .faq-title-inline {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  html:not(.dark) .faq-title-inline {
+    color: #111827 !important;
+  }
+
+  .contact-faq-column .faq-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-faq-column .faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out backwards;
+  }
+
+  .contact-faq-column .faq-item:nth-child(1) { animation-delay: 0.1s; }
+  .contact-faq-column .faq-item:nth-child(2) { animation-delay: 0.15s; }
+  .contact-faq-column .faq-item:nth-child(3) { animation-delay: 0.2s; }
+  .contact-faq-column .faq-item:nth-child(4) { animation-delay: 0.25s; }
+  .contact-faq-column .faq-item:nth-child(5) { animation-delay: 0.3s; }
+  .contact-faq-column .faq-item:nth-child(6) { animation-delay: 0.35s; }
+
+  html:not(.dark) .contact-faq-column .faq-item {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .contact-faq-column .faq-item:hover {
+    border-color: rgba(96, 165, 250, 0.2);
+  }
+
+  .contact-faq-column .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s ease;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .contact-faq-column .faq-question {
+    color: #111827 !important;
+  }
+
+  .contact-faq-column .faq-question h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0;
+    text-align: left;
+  }
+
+  .contact-faq-column .faq-question:hover {
+    color: #60a5fa;
+  }
+
+  .contact-faq-column .faq-chevron {
+    color: #9ca3af;
+    transition: all 0.3s ease;
+    transform: rotate(0deg);
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+  }
+
+  .contact-faq-column .faq-item.active .faq-chevron {
+    transform: rotate(180deg);
+    color: #60a5fa;
+  }
+
+  .contact-faq-column .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .contact-faq-column .faq-item.active .faq-answer {
+    max-height: 200px;
+  }
+
+  .contact-faq-column .faq-answer p {
+    padding: 0 1.5rem 1.25rem;
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #e5e7eb;
+  }
+
+  html:not(.dark) .contact-faq-column .faq-answer p {
+    color: #4b5563 !important;
+  }
+
+  /* ==================== FOOTER ==================== */
+  .site-footer {
+    position: relative;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 4rem 0 2rem;
+    margin-top: 0;
+  }
+
+  html:not(.dark) .site-footer {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .footer-logo {
+    height: 50px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+  }
+
+  .footer-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #9ca3af;
+    max-width: 400px;
+  }
+
+  html:not(.dark) .footer-description {
+    color: #6b7280 !important;
+  }
+
+  .footer-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+  }
+
+  html:not(.dark) .footer-title {
+    color: #111827 !important;
+  }
+
+  .footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer-link {
+    color: #9ca3af;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  html:not(.dark) .footer-link {
+    color: #6b7280 !important;
+  }
+
+  .footer-link:hover {
+    color: #60a5fa;
+  }
+
+  html:not(.dark) .footer-link:hover {
+    color: #2563eb !important;
+  }
+
+  .footer-link svg {
+    flex-shrink: 0;
+  }
+
+  .footer-bottom {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+  }
+
+  html:not(.dark) .footer-bottom {
+    border-top-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .footer-copyright {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+  }
+
+  html:not(.dark) .footer-copyright {
+    color: #9ca3af !important;
+  }
+
+  /* ==================== ANIMACIONES ==================== */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* ==================== RESPONSIVE ==================== */
+  @media (max-width: 1024px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-content {
+      order: 2;
+    }
+
+    .hero-image {
+      order: 1;
+      margin-bottom: 2rem;
+    }
+
+    .hero-badges {
+      justify-content: center;
+    }
+
+    .partner-cta-benefits {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .partner-cta-options {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .problems-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .methodology-steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .benefits-content {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      text-align: center;
+    }
+
+    .benefits-stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .usecases-list {
+      grid-template-columns: 1fr;
+    }
+
+    .automation-areas-content {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .automation-areas-text {
+      text-align: center;
+    }
+
+    .opportunities-list {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .promo-features-grid {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .promo-pricing {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .pricing-promo-grid {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .pricing-promo-main {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .pricing-cards {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .pricing-card {
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .pricing-card.featured {
+      transform: scale(1);
+    }
+
+    .pricing-card.featured:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Layout de contacte en tablet */
+    .contact-content-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .faq-title-inline {
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding-top: 66px;
+    }
+
+    .simple-header {
+      padding: 0.875rem 0;
+    }
+
+    .header-container {
+      padding: 0 1rem;
+    }
+
+    .header-logo {
+      height: 38px;
+    }
+
+    .header-controls {
+      gap: 0.75rem;
+    }
+
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      padding: 6px;
+    }
+
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .hero-section {
+      padding: 1rem 0 3rem;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-description {
+      font-size: 1.125rem;
+    }
+
+    .hero-ctas {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .cta-primary,
+    .cta-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hero-badges {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .promo-banner-section {
+      padding: 3rem 0;
+    }
+
+    .promo-banner-container {
+      padding: 0 1rem;
+    }
+
+    .promo-banner-content {
+      padding: 2rem 1.5rem;
+    }
+
+    .promo-title {
+      font-size: 1.75rem;
+    }
+
+    .price-amount {
+      font-size: 3rem;
+    }
+
+    .promo-button {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+    }
+
+    .pricing-promo-section {
+      padding: 4rem 0;
+    }
+
+    .pricing-promo-container {
+      padding: 0 1rem;
+    }
+
+    .pricing-promo-title {
+      font-size: 1.75rem;
+    }
+
+    .pricing-promo-price .price-amount {
+      font-size: 3rem;
+    }
+
+    .problems-section,
+    .methodology-section,
+    .benefits-section,
+    .automation-areas-section,
+    .pricing-section,
+    .faq-section,
+    .contact-form-section,
+    .partner-section {
+      padding: 4rem 0;
+    }
+
+    .problems-container,
+    .methodology-container,
+    .benefits-container,
+    .automation-areas-container,
+    .pricing-container,
+    .faq-container,
+    .contact-form-container,
+    .partner-container {
+      padding: 0 1rem;
+    }
+
+    .problems-title,
+    .methodology-title,
+    .benefits-title,
+    .automation-areas-title,
+    .pricing-title,
+    .faq-title,
+    .partner-title {
+      font-size: 2rem;
+    }
+
+    .methodology-steps {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .benefits-content {
+      gap: 2rem;
+    }
+
+    .benefits-stats {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .partner-cta-section {
+      padding: 3rem 0;
+    }
+
+    .partner-cta-benefits {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .partner-cta-item {
+      padding: 1.5rem;
+    }
+
+    .partner-cta-options {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .partner-cta-choice {
+      padding: 2rem 1.5rem;
+    }
+
+    .form-embed-container {
+      padding: 2rem;
+    }
+
+    .contact-trust-badges {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+
+    .contact-trust-item {
+      font-size: 0.8rem;
+      padding: 0.5rem;
+      flex-direction: column;
+      text-align: center;
+      gap: 0.5rem;
+    }
+
+    .contact-trust-icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .contact-trust-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .contact-form-container {
+      padding: 0 1rem;
+    }
+
+    .contact-content-grid {
+      gap: 2rem;
+    }
+
+    .faq-title-inline {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      text-align: center;
+      align-items: center;
+    }
+
+    .footer-description {
+      text-align: center;
+    }
+
+    .footer-links,
+    .footer-contact {
+      text-align: center;
+    }
+
+    .footer-list {
+      align-items: center;
+    }
+
+    .footer-logo {
+      height: 40px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    body {
+      padding-top: 60px;
+    }
+
+    .header-logo {
+      height: 32px;
+    }
+
+    .header-controls {
+      gap: 0.5rem;
+    }
+
+    .theme-toggle {
+      width: 32px;
+      height: 32px;
+      padding: 4px;
+    }
+
+    .theme-toggle svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .breadcrumbs {
+      font-size: 0.8rem;
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      font-size: 1.25rem;
+    }
+
+    .price-amount {
+      font-size: 2.5rem;
+    }
+
+    .partner-cta-title {
+      font-size: 1.75rem;
+    }
+
+    .partner-cta-description {
+      font-size: 1.125rem;
+    }
+
+    .partner-cta-item {
+      padding: 1.25rem;
+    }
+
+    .partner-cta-choice {
+      padding: 1.5rem 1rem;
+    }
+
+    .choice-title {
+      font-size: 1.25rem;
+    }
+
+    .choice-description {
+      font-size: 1rem;
+    }
+
+    .choice-cta {
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+    }
+
+    .cta-final-buttons {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<script>
+  // Sistema de mode dia/nit
+  document.addEventListener('DOMContentLoaded', () => {
+    const initTheme = () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    };
+
+    const toggleTheme = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      if (isDark) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    };
+
+    initTheme();
+
+    const toggleBtn = document.querySelector('.theme-toggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', toggleTheme);
+    }
+
+    // Gestionar errors de logo
+    const headerLogo = document.querySelector('.header-logo');
+    const footerLogo = document.querySelector('.footer-logo');
+    
+    if (headerLogo) {
+      headerLogo.onerror = function() {
+        console.error('Error carregant el logo del header');
+        const logoLink = document.querySelector('.logo-link');
+        if (logoLink) {
+          logoLink.innerHTML = '<span style="color: #60a5fa; font-size: 1.5rem; font-weight: bold;">BLIXEL</span>';
+        }
+      };
+      
+      if (headerLogo.complete && headerLogo.naturalHeight === 0) {
+        headerLogo.onerror();
+      }
+    }
+
+    if (footerLogo) {
+      footerLogo.onerror = function() {
+        console.error('Error carregant el logo del footer');
+        const footerBrand = document.querySelector('.footer-brand');
+        if (footerBrand) {
+          const textLogo = document.createElement('div');
+          textLogo.style.cssText = 'color: #60a5fa; font-size: 2rem; font-weight: bold; margin-bottom: 1rem;';
+          textLogo.textContent = 'BLIXEL';
+          footerBrand.replaceChild(textLogo, footerLogo);
+        }
+      };
+      
+      if (footerLogo.complete && footerLogo.naturalHeight === 0) {
+        footerLogo.onerror();
+      }
+    }
+
+    // Sistema de FAQ interactiu
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      
+      question.addEventListener('click', () => {
+        // Tancar altres FAQs oberts
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+          }
+        });
+        
+        // Toggle del FAQ actual
+        item.classList.toggle('active');
+      });
+    });
+
+    // Scroll suau per enllaços interns
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          const headerHeight = document.querySelector('.simple-header')?.offsetHeight || 78;
+          const offsetTop = targetElement.offsetTop - headerHeight - 20;
+          
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  });
+</script>important;
+  }
+
+  .footer-link:hover {
+    color: #60a5fa;
+  }
+
+  html:not(.dark) .footer-link:hover {
+    color: #2563eb !important;
+  }
+
+  .footer-link svg {
+    flex-shrink: 0;
+  }
+
+  .footer-bottom {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+  }
+
+  html:not(.dark) .footer-bottom {
+    border-top-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .footer-copyright {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+  }
+
+  html:not(.dark) .footer-copyright {
+    color: #9ca3af !important;
+  }
+
+  /* ==================== ANIMACIONES ==================== */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* ==================== RESPONSIVE ==================== */
+  @media (max-width: 1024px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-content {
+      order: 2;
+    }
+
+    .hero-image {
+      order: 1;
+      margin-bottom: 2rem;
+    }
+
+    .hero-badges {
+      justify-content: center;
+    }
+
+    .partner-cta-benefits {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .partner-cta-options {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .problems-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .methodology-steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .benefits-content {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      text-align: center;
+    }
+
+    .benefits-stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .usecases-list {
+      grid-template-columns: 1fr;
+    }
+
+    .automation-areas-content {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .automation-areas-text {
+      text-align: center;
+    }
+
+    .opportunities-list {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .promo-features-grid {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .promo-pricing {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .pricing-promo-grid {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .pricing-promo-main {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .pricing-cards {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .pricing-card {
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .pricing-card.featured {
+      transform: scale(1);
+    }
+
+    .pricing-card.featured:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Layout de contacto en tablet */
+    .contact-content-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .faq-title-inline {
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding-top: 66px;
+    }
+
+    .simple-header {
+      padding: 0.875rem 0;
+    }
+
+    .header-container {
+      padding: 0 1rem;
+    }
+
+    .header-logo {
+      height: 38px;
+    }
+
+    .header-controls {
+      gap: 0.75rem;
+    }
+
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      padding: 6px;
+    }
+
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .hero-section {
+      padding: 1rem 0 3rem;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-description {
+      font-size: 1.125rem;
+    }
+
+    .hero-ctas {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .cta-primary,
+    .cta-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hero-badges {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .promo-banner-section {
+      padding: 3rem 0;
+    }
+
+    .promo-banner-container {
+      padding: 0 1rem;
+    }
+
+    .promo-banner-content {
+      padding: 2rem 1.5rem;
+    }
+
+    .promo-title {
+      font-size: 1.75rem;
+    }
+
+    .price-amount {
+      font-size: 3rem;
+    }
+
+    .promo-button {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+    }
+
+    .pricing-promo-section {
+      padding: 4rem 0;
+    }
+
+    .pricing-promo-container {
+      padding: 0 1rem;
+    }
+
+    .pricing-promo-title {
+      font-size: 1.75rem;
+    }
+
+    .pricing-promo-price .price-amount {
+      font-size: 3rem;
+    }
+
+    .problems-section,
+    .methodology-section,
+    .benefits-section,
+    .automation-areas-section,
+    .pricing-section,
+    .faq-section,
+    .contact-form-section,
+    .partner-section {
+      padding: 4rem 0;
+    }
+
+    .problems-container,
+    .methodology-container,
+    .benefits-container,
+    .automation-areas-container,
+    .pricing-container,
+    .faq-container,
+    .contact-form-container,
+    .partner-container {
+      padding: 0 1rem;
+    }
+
+    .problems-title,
+    .methodology-title,
+    .benefits-title,
+    .automation-areas-title,
+    .pricing-title,
+    .faq-title,
+    .partner-title {
+      font-size: 2rem;
+    }
+
+    .methodology-steps {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .benefits-content {
+      gap: 2rem;
+    }
+
+    .benefits-stats {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .partner-cta-section {
+      padding: 3rem 0;
+    }
+
+    .partner-cta-benefits {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .partner-cta-item {
+      padding: 1.5rem;
+    }
+
+    .partner-cta-options {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .partner-cta-choice {
+      padding: 2rem 1.5rem;
+    }
+
+    .form-embed-container {
+      padding: 2rem;
+    }
+
+    .contact-trust-badges {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+
+    .contact-trust-item {
+      font-size: 0.8rem;
+      padding: 0.5rem;
+      flex-direction: column;
+      text-align: center;
+      gap: 0.5rem;
+    }
+
+    .contact-trust-icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .contact-trust-icon svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .contact-form-container {
+      padding: 0 1rem;
+    }
+
+    .contact-content-grid {
+      gap: 2rem;
+    }
+
+    .faq-title-inline {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      text-align: center;
+      align-items: center;
+    }
+
+    .footer-description {
+      text-align: center;
+    }
+
+    .footer-links,
+    .footer-contact {
+      text-align: center;
+    }
+
+    .footer-list {
+      align-items: center;
+    }
+
+    .footer-logo {
+      height: 40px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    body {
+      padding-top: 60px;
+    }
+
+    .header-logo {
+      height: 32px;
+    }
+
+    .header-controls {
+      gap: 0.5rem;
+    }
+
+    .theme-toggle {
+      width: 32px;
+      height: 32px;
+      padding: 4px;
+    }
+
+    .theme-toggle svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .breadcrumbs {
+      font-size: 0.8rem;
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      font-size: 1.25rem;
+    }
+
+    .price-amount {
+      font-size: 2.5rem;
+    }
+
+    .partner-cta-title {
+      font-size: 1.75rem;
+    }
+
+    .partner-cta-description {
+      font-size: 1.125rem;
+    }
+
+    .partner-cta-item {
+      padding: 1.25rem;
+    }
+
+    .partner-cta-choice {
+      padding: 1.5rem 1rem;
+    }
+
+    .choice-title {
+      font-size: 1.25rem;
+    }
+
+    .choice-description {
+      font-size: 1rem;
+    }
+
+    .choice-cta {
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+    }
+
+    .cta-final-buttons {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<script>
+  // Sistema de modo día/noche
+  document.addEventListener('DOMContentLoaded', () => {
+    const initTheme = () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    };
+
+    const toggleTheme = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      if (isDark) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    };
+
+    initTheme();
+
+    const toggleBtn = document.querySelector('.theme-toggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', toggleTheme);
+    }
+
+    // Manejar errores de logo
+    const headerLogo = document.querySelector('.header-logo');
+    const footerLogo = document.querySelector('.footer-logo');
+    
+    if (headerLogo) {
+      headerLogo.onerror = function() {
+        console.error('Error cargando el logo del header');
+        const logoLink = document.querySelector('.logo-link');
+        if (logoLink) {
+          logoLink.innerHTML = '<span style="color: #60a5fa; font-size: 1.5rem; font-weight: bold;">BLIXEL</span>';
+        }
+      };
+      
+      if (headerLogo.complete && headerLogo.naturalHeight === 0) {
+        headerLogo.onerror();
+      }
+    }
+
+    if (footerLogo) {
+      footerLogo.onerror = function() {
+        console.error('Error cargando el logo del footer');
+        const footerBrand = document.querySelector('.footer-brand');
+        if (footerBrand) {
+          const textLogo = document.createElement('div');
+          textLogo.style.cssText = 'color: #60a5fa; font-size: 2rem; font-weight: bold; margin-bottom: 1rem;';
+          textLogo.textContent = 'BLIXEL';
+          footerBrand.replaceChild(textLogo, footerLogo);
+        }
+      };
+      
+      if (footerLogo.complete && footerLogo.naturalHeight === 0) {
+        footerLogo.onerror();
+      }
+    }
+
+    // Sistema de FAQ interactivo
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      
+      question.addEventListener('click', () => {
+        // Cerrar otros FAQs abiertos
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+          }
+        });
+        
+        // Toggle del FAQ actual
+        item.classList.toggle('active');
+      });
+    });
+
+    // Scroll suave para enlaces internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          const headerHeight = document.querySelector('.simple-header')?.offsetHeight || 78;
+          const offsetTop = targetElement.offsetTop - headerHeight - 20;
+          
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  });
+</script>
