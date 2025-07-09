@@ -8,8 +8,18 @@ export async function getStaticPaths() {
     const slugs = await getPageSlugs();
     
     // Filtrar páginas que ya tienen rutas estáticas (como index)
-    const excludedSlugs = ['inicio', 'home', 'homepage'];
-    const filteredSlugs = slugs.filter((slug: string) => !excludedSlugs.includes(slug));
+    const excludedSlugs = ['inicio', 'home', 'homepage', 'formacion-ia-empresas'];
+    const filteredSlugs = slugs.filter((slug: string) => {
+      // Excluir slugs de la lista
+      if (excludedSlugs.includes(slug)) return false;
+      
+      // No capturar rutas que podrían tener versiones en idiomas
+      // (páginas que empiecen con prefijos de idioma se manejan estáticamente)
+      const hasLanguageVersion = ['formacion-ia-empresas'].includes(slug);
+      if (hasLanguageVersion) return false;
+      
+      return true;
+    });
     
     return filteredSlugs.map((slug: string) => ({
       params: { slug },
